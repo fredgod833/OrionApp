@@ -1,0 +1,22 @@
+:host{
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+}
+
+#back-btn{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}

@@ -1,0 +1,7 @@
+$width-smartphone: 620px;
+
+@mixin phone-screen {
+    @media (max-width: $width-smartphone), (max-height: $width-smartphone) {
+        @content;
+    }
+}
