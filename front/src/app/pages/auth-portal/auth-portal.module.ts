@@ -6,10 +6,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AppIconComponent } from 'src/app/core/components/app-icon/app-icon.component';
 import { MatButtonModule } from '@angular/material/button';
-import { AppRoutingModule } from 'src/app/app-routing.module';
 import { RouterModule } from '@angular/router';
+import { SharedModule } from 'src/app/core/components/shared.module';
 
 @NgModule({
     imports: [
@@ -20,13 +19,13 @@ import { RouterModule } from '@angular/router';
         ReactiveFormsModule,
         MatButtonModule,
         RouterModule,
+        SharedModule,
     ],
     exports: [],
     declarations: [
         AuthPortalComponent,
         LoginComponent,
-        RegisterComponent,
-        AppIconComponent,
+        RegisterComponent
     ],
     providers: [],
 })

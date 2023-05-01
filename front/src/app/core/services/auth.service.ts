@@ -53,6 +53,13 @@ export class AuthService {
         return this.isLoggedIn;
     }
 
+    public tryAutoLogin(){
+        if(!this.getToken()){
+            return Promise.resolve(false);
+        }
+        return this.me();
+    }
+
     public get isLoggedIn(){
         return !!this.userInfo$.value;
     }

@@ -8,7 +8,6 @@ import { AppComponent } from './app.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
 import { AuthPortalModule } from './pages/auth-portal/auth-portal.module';
-import { RouterModule } from '@angular/router';
 import { HomeModule } from './pages/home/home.module';
 
 @NgModule({
