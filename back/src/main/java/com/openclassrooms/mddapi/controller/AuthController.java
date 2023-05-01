@@ -42,10 +42,15 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<RegisterResponse> register(@RequestBody @Valid RegisterRequest req){
-        final Optional<User> user = this.userService.findByEmail(req.getEmail());
-        if(user.isPresent()){
+
+        if(this.userService.findByEmail(req.getEmail()).isPresent()){
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
+
+        if(this.userService.findByUsername(req.getUsername()).isPresent()){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+
         final User newUser = User.builder()
                 .username(req.getUsername())
                 .email(req.getEmail())

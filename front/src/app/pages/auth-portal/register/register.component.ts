@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { RegisterRequest } from 'src/app/core/models/auth/requests/register-request.interface';
 import { AuthService } from 'src/app/core/services/auth.service';
 
@@ -22,7 +23,8 @@ export class RegisterComponent implements OnInit {
 
     constructor(
         private fb: FormBuilder,
-        private auth: AuthService
+        private auth: AuthService,
+        private router: Router
     ) { }
 
     ngOnInit() { }
@@ -46,9 +48,9 @@ export class RegisterComponent implements OnInit {
             password: this.registerForm.value.password!
         }
 
-        this.auth.register(registerReq).then(() => {
-            if(!this.auth.isLoggedIn){ return; }
-            alert(JSON.stringify(this.auth.userData));
+        this.auth.register(registerReq).then(logged => {
+            if(!logged){ return; }
+            this.router.navigateByUrl('/home');
         })
     }
 }

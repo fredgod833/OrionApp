@@ -2,7 +2,7 @@ package com.openclassrooms.mddapi.security;
 
 import com.openclassrooms.mddapi.security.filter.EntryPoint;
 import com.openclassrooms.mddapi.security.filter.JwtFilter;
-import com.openclassrooms.mddapi.service.UserService;
+import com.openclassrooms.mddapi.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -31,7 +31,7 @@ public class SecurityConfiguration {
     private JwtFilter jwtFilter;
 
     @Autowired
-    private UserService userService;
+    private CustomUserDetailsService customUserDetailsService;
 
     @Value("${cors.allowed.origins}")
     private String[] allowedOrigins;
@@ -39,7 +39,7 @@ public class SecurityConfiguration {
     @Bean
     public DaoAuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userService);
+        authProvider.setUserDetailsService(customUserDetailsService);
         authProvider.setPasswordEncoder(this.passwordEncoder());
         return authProvider;
     }

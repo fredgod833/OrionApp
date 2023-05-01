@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { LoginRequest } from 'src/app/core/models/auth/requests/login-request.interface';
 import { AuthService } from 'src/app/core/services/auth.service';
 
@@ -20,7 +21,8 @@ export class LoginComponent {
 
     constructor(
         private fb: FormBuilder,
-        private auth: AuthService
+        private auth: AuthService,
+        private router: Router
     ) { }
     
     public handleSubmit(){
@@ -29,9 +31,9 @@ export class LoginComponent {
             password: this.loginForm.value.password!
         }
 
-        this.auth.login(loginReq).then(() => {
-            if(!this.auth.isLoggedIn){ return; }
-            alert(JSON.stringify(this.auth.userData));
+        this.auth.login(loginReq).then(logged => {
+            if(!logged){ return; }
+            this.router.navigateByUrl('/home');
         });
     }
 }
