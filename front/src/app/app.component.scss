@@ -1,0 +1,110 @@
+li, a {
+  color: black;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  list-style: none;
+
+  a {
+    display: block;
+    padding: 7px 15px;
+    font-size: 17px;
+    font-weight: 500;
+    transition: 0.2s all ease-in-out;
+    color: black;
+  }
+
+  .user-account{
+    border: solid 1px;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    padding: 9px 0 0 10px !important;
+    background: #f3f3f3;
+  }
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  border-bottom: solid 1px cadetblue;
+  z-index: 1;
+  color: black;
+  background: #fff;
+
+  .logo img {
+    width: 140px;
+  }
+
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+  }
+}
+
+.menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.menu .active {
+  color: #3a3afb;
+}
+
+.menu:hover a {
+  opacity: 0.4;
+}
+
+.menu a:hover {
+  opacity: 1;
+}
+
+.menu-icon {
+  display: none;
+}
+
+#menu-toggle {
+  display: none;
+}
+
+#menu-toggle:checked ~ .menu {
+  transform: scale(1, 1);
+}
+
+@media only screen and (max-width: 950px) {
+  .menu {
+    flex-direction: column;
+    background-color: white;
+    align-items: center;
+    position: absolute;
+    top: 70px;
+    right: 0;
+    width: 35%;
+    z-index: 1;
+    padding: 32px 16px;
+    transform: scale(1, 0);
+    transform-origin: top;
+    transition: transform 0.3s ease-in-out;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  }
+
+  .menu a {
+    margin-left: 12px;
+  }
+
+  .menu li {
+    margin-bottom: 10px;
+  }
+
+  .menu-icon {
+    display: block;
+    color: black;
+    font-size: 28px;
+    cursor: pointer;
+  }
+}

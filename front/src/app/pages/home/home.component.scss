@@ -5,3 +5,48 @@
   align-items: center;
   flex-direction: column;
 }
+
+.button-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  div {
+    margin: 0 40px 0 0;
+
+    button {
+      border: solid 1px #787a7a;
+      width: 130px;
+    }
+  }
+}
+
+@media only screen and (max-width: 950px) {
+  .center {
+    img {
+      width: 400px;
+    }
+  }
+
+  .button-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    div {
+      margin: 0 0 0 0;
+
+      button {
+        margin-bottom: 30px;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 580px) {
+  .center {
+    img {
+      width: 250px;
+    }
+  }
+}

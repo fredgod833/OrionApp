@@ -1,16 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import { Router } from "@angular/router";
+import {AuthService} from "../../auth/services/auth.service";
+import {SessionService} from "../../service/session.service";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
-  constructor() {}
+export class HomeComponent implements OnInit{
+  constructor(
+    public router: Router,
+    private sessionService: SessionService
+  ){}
 
-  ngOnInit(): void {}
+  ngOnInit() {
+    if (this.sessionService.isLogged) {
+      this.router.navigateByUrl('topics');
+    }
+  }
+  loginUrl() {
+    this.router.navigateByUrl('login');
+  }
 
-  start() {
-    alert('Commencez par lire le README et à vous de jouer !');
+  registerUrl() {
+    this.router.navigateByUrl('register');
   }
 }

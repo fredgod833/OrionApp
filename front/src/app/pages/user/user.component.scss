@@ -1,0 +1,80 @@
+::ng-deep .mat-card-header .mat-card-header-text{
+  margin: 0;
+}
+
+.mat-card-actions {
+  text-align: center;
+}
+
+.mat-card-subscription {
+  max-width: 525px;
+  min-width: 525px;
+  background: aliceblue;
+  margin: 25px;
+}
+
+hr {
+  width: 80%;
+}
+
+.profil, .subscription {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5em;
+
+  .title {
+    text-align: center;
+    margin: 0 10px 45px 0;
+    font-size: 26px;
+  }
+
+  .submit-button {
+    text-align: center;
+    margin: 20px 0 0 0;
+
+    button {
+      width: 120px;
+    }
+  }
+}
+
+.form-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+input {
+  padding: 10px;
+  border-radius: 5px;
+  border: solid 1px;
+  margin: 3px 0 20px 0;
+  width: 220px;
+}
+
+.save-btn {
+  margin: 20px;
+  text-align: center;
+
+  button {
+    box-shadow: inherit;
+    font-size: 16px;
+    color: red;
+  }
+}
+
+.wrapper{
+  border: 1px dotted rgb(231 231 231);
+  width: 1600px;
+}
+
+.cards-subscriptions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: space-around;
+}
+.cards-subscriptions>* {
+  flex: 1 1 160px;
+}

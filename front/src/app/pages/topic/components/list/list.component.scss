@@ -1,0 +1,51 @@
+.topic {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5em;
+
+  .title {
+    text-align: center;
+    margin: 0 10px 45px 0;
+    font-size: 26px;
+  }
+
+  .submit-button {
+    text-align: center;
+    margin: 20px 0 0 0;
+
+    button {
+      width: 120px;
+    }
+  }
+}
+
+::ng-deep .mat-card-header .mat-card-header-text{
+  margin: 0;
+}
+
+.mat-card-actions {
+  text-align: center;
+}
+
+.mat-card-subscription {
+  max-width: 525px;
+  min-width: 525px;
+  background: aliceblue;
+  margin: 25px;
+}
+
+.wrapper{
+  border: 1px dotted rgb(231 231 231);
+  width: 1600px;
+}
+
+.cards-subscriptions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: space-around;
+}
+.cards-subscriptions>* {
+  flex: 1 1 160px;
+}

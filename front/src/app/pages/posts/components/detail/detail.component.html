@@ -1,0 +1,20 @@
+<div class="posts">
+  <div class="wrapper">
+    <div class="cards-posts">
+      <mat-card class="mat-card-post" >
+        <mat-card-header>
+          <mat-card-title><span>{{ post.title }}</span></mat-card-title>
+        </mat-card-header>
+        <div class="mat-cards-subtitles">
+          <mat-card-subtitle>{{ post.user_name }}</mat-card-subtitle>
+          <mat-card-subtitle>{{ post.createdAt  | date:'yyyy-MM-dd' }}</mat-card-subtitle>
+        </div>
+        <mat-card-content>
+          <p>
+            {{ post.description }}
+          </p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,54 @@
+.posts {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5em;
+
+  .title {
+    text-align: center;
+    margin: 0 10px 45px 0;
+    font-size: 26px;
+  }
+}
+
+::ng-deep .mat-card-header .mat-card-header-text{
+  margin: 0;
+}
+
+.mat-card-post {
+  max-width: 525px;
+  min-width: 525px;
+  background: aliceblue;
+  margin: 25px;
+}
+
+.wrapper{
+  border: 1px dotted rgb(231 231 231);
+  width: 1600px;
+}
+
+.cards-posts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: space-around;
+}
+.cards-posts>* {
+  flex: 1 1 160px;
+}
+
+.mat-cards-subtitles {
+  display: flex;
+  justify-content: space-between;
+}
+
+.mat-cards-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 50px;
+}
+
+.div-button {
+  width: 1600px;
+  margin: auto
+}

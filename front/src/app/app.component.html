@@ -1,1 +1,40 @@
-<router-outlet></router-outlet>
+<div *ngIf="showHeader()" class="app">
+  <router-outlet></router-outlet>
+</div>
+
+<div *ngIf="!showHeader()" class="app">
+  <header class="header">
+    <nav>
+      <div class="logo" *ngIf="$isLogged() | async; else notLogged">
+        <a [routerLink]="routerLinkPost">
+          <span>
+            <img class="logo-menu" src="/assets/logo_p6.png" alt="logo" />
+          </span>
+        </a>
+      </div>
+      <ng-template #notLogged>
+        <div class="logo">
+          <a [routerLink]="routerLinkHome">
+            <span>
+              <img class="logo-menu" src="/assets/logo_p6.png" alt="logo" />
+            </span>
+          </a>
+        </div>
+      </ng-template>
+      <input type="checkbox" id="menu-toggle">
+      <label *ngIf="$isLogged() | async"  for="menu-toggle" class="menu-icon">&#9776;</label>
+      <ul class="menu" *ngIf="$isLogged() | async" >
+        <li><a [routerLink]="routerLinkPost" [ngClass]="{'active' :  router.url == routerLinkPost}">Articles</a></li>
+        <li><a [routerLink]="routerLinkTopic" [ngClass]="{'active' :  router.url == routerLinkTopic}">Thèmes</a></li>
+        <li>
+          <a [routerLink]="routerLinkAccount" class="user-account" [ngClass]="{'active' :  router.url == routerLinkAccount}">
+            <mat-icon>person_outline</mat-icon>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

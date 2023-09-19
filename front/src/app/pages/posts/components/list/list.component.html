@@ -1,0 +1,31 @@
+<div class="div-button">
+  <div class="mat-cards-actions">
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="createPost()" type="button">Créer un article</button>
+    </mat-card-actions>
+    <mat-card-actions>
+      <button mat-raised-button color="default" (click)="sortPosts()" type="button">Trier par <mat-icon>arrow_downward</mat-icon></button>
+    </mat-card-actions>
+  </div>
+</div>
+
+<div class="posts">
+  <div class="wrapper">
+    <div class="cards-posts">
+      <mat-card class="mat-card-post" *ngFor="let post of listPosts;let indexOfPosts=index;">
+        <mat-card-header>
+          <mat-card-title><span (click)="viewPost(post.id)">{{ post.title }}</span></mat-card-title>
+        </mat-card-header>
+        <div class="mat-cards-subtitles">
+          <mat-card-subtitle>{{ post.user_name }}</mat-card-subtitle>
+          <mat-card-subtitle>{{ post.createdAt  | date:'yyyy-MM-dd' }}</mat-card-subtitle>
+        </div>
+        <mat-card-content>
+          <p>
+            {{ post.description }}
+          </p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
