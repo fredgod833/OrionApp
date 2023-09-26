@@ -1,2 +1,11 @@
-package com.openclassrooms.mddapi.repository;public class FeedRepository {
+package com.openclassrooms.mddapi.repository;
+
+import com.openclassrooms.mddapi.model.Feed;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.stereotype.Repository;
+
+@Repository
+@EnableJpaRepositories
+public interface FeedRepository extends JpaRepository<Feed, Integer> {
 }
