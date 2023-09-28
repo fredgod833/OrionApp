@@ -1,0 +1,23 @@
+<section>
+    <mat-card-actions id="post-card-btn">
+        <button mat-button>Créer un article</button>
+    </mat-card-actions>
+
+    <!-- <button (click)="sort('nom')" class="btn-sort">
+        Trier par Nom
+        <i class="fa" [ngClass]="{'fa-sort-asc': sortBy === 'nom-asc', 'fa-sort-desc': sortBy === 'nom-desc'}"></i>
+      </button> -->
+
+    <mat-card class="post-card" *ngFor="let post of post_list">
+        <mat-card-header>
+            <mat-card-title>{{ post.title }}</mat-card-title>
+            <!-- <p>{{post.date}} </p> -->
+            <mat-card-subtitle>Date: {{ post.date }}</mat-card-subtitle>
+            <mat-card-subtitle>Author: {{ post.author }}</mat-card-subtitle>
+
+        </mat-card-header>
+        <mat-card-content>
+            <p>{{ post.content }}</p>
+        </mat-card-content>
+    </mat-card>
+</section>

@@ -1,0 +1,35 @@
+section{
+    #post-card-btn{
+        position: absolute;
+        display: flex;
+        width: 153px;
+        left: 254px;
+        margin-top: 124px;
+        button{
+            border: 2px solid #7763C5;
+            width: 100%;
+            height: 100%; 
+            background-color: #7763C5;
+            color: #FFFFFF;
+            justify-content: center;  
+            font-size: 16px; 
+            font-weight: 700; 
+            font-family: 'Inter', sans-serif;
+        }
+    }
+    .post-card{
+    float: left;
+    max-width: 400px;
+    background-color: #F5F5F5;
+    width: 359px;
+    height: 180px;
+    border-radius: 8px;
+    margin-top: 21px;
+    top: 95px;;
+    margin-left: 34px;
+    left: 235px;
+    align-content: space-between;
+    border: 2px solid #F5F5F5;
+    align-items: center;
+    }
+}
