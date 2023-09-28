@@ -1,7 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA, Component, OnInit } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
-import PostInterface from "../model/post.component";
+import PostInterface from "../model/post";
 import postService from "../services/post.service";
 import { NgFor } from "@angular/common";
 
