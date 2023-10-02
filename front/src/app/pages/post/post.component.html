@@ -3,19 +3,20 @@
         <button mat-button>Créer un article</button>
     </mat-card-actions>
 
-    <!-- <button (click)="sort('nom')" class="btn-sort">
-        Trier par Nom
-        <i class="fa" [ngClass]="{'fa-sort-asc': sortBy === 'nom-asc', 'fa-sort-desc': sortBy === 'nom-desc'}"></i>
-      </button> -->
+    <div class="sort-table">
+        <mat-card-title>Trier par</mat-card-title>
+        <img src="./assets/Arrow 14.png" alt="Arrow">
+    </div>
+  
 
     <mat-card class="post-card" *ngFor="let post of post_list">
-        <mat-card-header>
-            <mat-card-title>{{ post.title }}</mat-card-title>
-            <!-- <p>{{post.date}} </p> -->
-            <mat-card-subtitle>Date: {{ post.date }}</mat-card-subtitle>
-            <mat-card-subtitle>Author: {{ post.author }}</mat-card-subtitle>
+            <mat-card-title id="post-card-title">{{ post.title }}</mat-card-title>
+            <mat-card-subtitle>
+                Date: {{ formatPostDate(post.date) }}&nbsp;&nbsp;
+                Author: {{ post.author }}
+            </mat-card-subtitle>
+            <!-- <mat-card-subtitle>Author: {{ post.author }}</mat-card-subtitle> -->
 
-        </mat-card-header>
         <mat-card-content>
             <p>{{ post.content }}</p>
         </mat-card-content>
