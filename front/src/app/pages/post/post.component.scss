@@ -1,6 +1,5 @@
 section{
     font-family: 'Inter', sans-serif;
-
     #post-card-btn{
         position: absolute;
         display: flex;
@@ -23,20 +22,13 @@ section{
         display: flex;
         width: 120px;
         height: 29px;
-        // border: 2px solid;
         margin-left: 987px;
         top: 129px;
-        // top: 129px;
-        // line-height: 19.36px;
         mat-card-title{
             font-size: 16px;
             font-weight: 700;
             width: 80px;
             height: 100%;
-        }
-        img{
-            // width: 16px;
-            // left: 80px;
         }
     }
     .post-card{
@@ -53,9 +45,14 @@ section{
     align-content: space-between;
     border: 2px solid #F5F5F5;
     }
-
     #post-card-title{
         font-size: 16px;
         font-weight: 700;
+    }
+    #post-card-subtitle{
+        color: black;
+        font-size: 14px;
+        font-weight: 400;
+        word-wrap: break-word
     }
 }
