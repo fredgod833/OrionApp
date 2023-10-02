@@ -11,4 +11,17 @@ import { RouterModule } from "@angular/router";
     imports: [MatButtonModule, MatMenuModule, RouterModule],
   })
 
-export default class menuBar{}
+export default class menuBar{
+
+  isPostLinkActive = false;
+  isSubjectLinkActive = false;
+
+  activePostLink(){
+    this.isPostLinkActive = true;
+    this.isSubjectLinkActive = false;
+  }
+  activeSubjectLink(){
+    this.isSubjectLinkActive = true;
+    this.isPostLinkActive = false;
+  }
+}
