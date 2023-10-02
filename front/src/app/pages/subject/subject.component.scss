@@ -1,4 +1,5 @@
 section{
+ 
   .card {
     float: left;
     max-width: 400px;
@@ -8,19 +9,16 @@ section{
     border-radius: 8px;
     margin-top: 23px;
     margin-left: 6px;
-    left: 144.21px;
-    align-content: space-between;
+    left: 200px;
     border: 2px solid #F5F5F5;
     align-items: center;
   #title{
-     font-family: 'Inter', sans-serif;
      font-weight: 700;
      width: 221.54px;
      font-size: 16px;
    }
   #description{
      text-align: justify;
-     font-family: 'Inter', sans-serif;
    }
 
   mat-card-actions{
@@ -31,7 +29,6 @@ section{
          background-color: #7763C5;
          color: #FFFFFF;
          width: 166.97px;
-         float: left;
        }
      }
   }
