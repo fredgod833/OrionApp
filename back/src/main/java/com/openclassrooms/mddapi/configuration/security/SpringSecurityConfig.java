@@ -1,4 +1,4 @@
-package com.openclassrooms.mddapi.security;
+package com.openclassrooms.mddapi.configuration.security;
 
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
@@ -34,7 +34,7 @@ public class SpringSecurityConfig {
         this.userDetailsService = userDetailsService;
         this.rsaKeys = rsaKeysProperties;
     }
-    // Permet de dire à Spring le canal d'authentication des utilisateurs
+   // Permet de dire à Spring le canal d'authentication des utilisateurs
     @Bean
     public AuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
@@ -47,28 +47,19 @@ public class SpringSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.cors(cors -> cors.disable())
                 .csrf(csrf -> csrf.disable())
-                .authorizeRequests(auth ->
-                        // Public rotes
-                        auth.antMatchers("/api/user/login", "/api/user/register",
-                                "/v2/api-docs", "/swagger-ui/**", "/swagger-resources/**", "/swagger-ui.html",
-                                "/webjars/springfox-swagger-ui/**")
-                                .permitAll()
-                        // Private rotes
-                        .mvcMatchers("/api/post/**", "/api/subject/**", "/api/feed/**", "/api/subscription/**", "/api/user/user_information")
-                                .permitAll().anyRequest().authenticated())
-
-                        // Session du client
+                .authorizeHttpRequests(auth -> auth
+                        //public routes
+                        .antMatchers("/v2/api-docs", "/swagger-ui/**", "/swagger-resources/**", "/swagger-ui.html",
+                                "/webjars/springfox-swagger-ui/**", "/api/auth/login", "/api/auth/register").permitAll()
+                        //private routes
+                        .antMatchers("/api/subject/**", "/api/post/**", "/api/feed/**", "/api/subscription/**", "/api/user/**")
+                        .authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                //Bearer token demandé pour les requettes configuré
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
-                .exceptionHandling(ex ->
-                        ex.authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint()))
-                // Credentials utilisateur demandé
+                .exceptionHandling(ex -> ex.authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint()))
                 .authenticationProvider(authenticationProvider());
-
         return http.build();
-
-    }
+}
 
     // Encodage et decodage du token avec les rsakeys
 
