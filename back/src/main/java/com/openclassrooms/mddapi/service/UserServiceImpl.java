@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
-    public UserServiceImpl(UserRepository userRepository){
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -27,6 +27,17 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    // TODO: 22/09/2023 Login user
-    // TODO: 22/09/2023 Create user endPoint
+    public User getByEmail(String email) {
+
+        try {
+            User userEmail = userRepository.getByEmail(email).orElse(null);
+
+            if (userEmail == null) {
+                return null;
+            }
+            return userEmail;
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
 }
