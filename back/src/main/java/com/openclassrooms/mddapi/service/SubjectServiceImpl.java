@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
+// TODO: 29/09/2023 Documenter les methodes
 @Service
 public class SubjectServiceImpl implements SubjectService {
 
@@ -23,7 +24,7 @@ public class SubjectServiceImpl implements SubjectService {
             subjectList = getSubjectList();
 
             for (Subject subject: subjectList) {
-                if (subject.getIsSubscribed().equals(true)){
+                if (subject.getIsSubscribed()){
                     SubjectDto subjectDto = toDto.apply(subject);
 
                     subjectDtoList.add(subjectDto);
@@ -36,6 +37,32 @@ public class SubjectServiceImpl implements SubjectService {
         }
         return subjectDtoList;
     }
+
+    @Override
+    public String createSubject(Subject subject) {
+
+        if (subject == null){
+            return null;
+        }
+
+        try {
+           Subject buildSubject = Subject.builder()
+                    .idSubject(subject.getIdSubject())
+                    .title(subject.getTitle())
+                    .description(subject.getDescription())
+                    .isSubscribed(subject.getIsSubscribed())
+                    .subscription(subject.getSubscription())
+                    .postList(subject.getPostList())
+                    .build();
+
+            subjectRepository.save(buildSubject);
+        }catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
+        // TODO: 29/09/2023 return subject
+        return "Subject created !!!";
+    }
+
     public List<SubjectDto> findSubjectDtoList(){
         List<Subject> subjectList = new ArrayList<>();
         List<SubjectDto> subjectDtoList = new ArrayList<>();
