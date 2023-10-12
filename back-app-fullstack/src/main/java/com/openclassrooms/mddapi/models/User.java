@@ -2,7 +2,6 @@ package com.openclassrooms.mddapi.models;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -50,8 +49,8 @@ public class User {
 	  @Size(min = 8)
 	  private String password;
 	  
-	  @OneToMany(mappedBy = "user")
-	  private List<Comment> comments;
+//	  @OneToMany(mappedBy = "user")
+//	  private List<Comment> comments;
 	  
 	  @CreatedDate
 	  @Column(name = "created_at", updatable = false)

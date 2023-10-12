@@ -43,6 +43,7 @@ public class Topic {
 	private String title;
 	
 	@NotNull
+	@Size(max = 300)
 	@Column(name = "description")
 	private String description;
 	
