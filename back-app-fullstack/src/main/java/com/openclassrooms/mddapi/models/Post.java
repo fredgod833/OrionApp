@@ -3,10 +3,11 @@ package com.openclassrooms.mddapi.models;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
-
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,7 +16,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
@@ -33,39 +33,43 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Post {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@NotBlank
 	@Size(max = 50)
 	@Column(name = "title")
 	private String title;
-	
-	@NotNull
-	@Column(name = "author")
-	private String author;
-	
-	@NotNull
+
+	@NotBlank
+	@ManyToOne
+	@JoinColumn(name = "author", referencedColumnName = "id")
+	private UserEntity User;
+
+	@NotBlank
 	@Column(name = "date")
 	private Date date;
-	
-	@NotNull
+
+	@NotBlank
 	@Column(name = "content")
 	private String content;
-	
+
+	@NotBlank
 	@ManyToOne
 	@JoinColumn(name = "topic_id", referencedColumnName = "id")
 	private Topic topic;
-	
-	@OneToMany(mappedBy = "post")
-    private List<Comment> comments;
- 
-	@CreatedDate
-    @Column(name = "created_at", updatable = false)
-    private LocalDateTime createdAt;
 
-    @UpdateTimestamp
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	@JoinColumn(name = "post_id")
+	private List<Comment> comments;
+
+	@CreatedDate
+	@Column(name = "created_at", updatable = false)
+	private LocalDateTime createdAt;
+
+	@UpdateTimestamp
+	@Column(name = "updated_at")
+	private LocalDateTime updatedAt;
 }
