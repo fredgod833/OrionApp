@@ -3,9 +3,9 @@ package com.openclassrooms.mddapi.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import com.openclassrooms.mddapi.models.Post;
-import com.openclassrooms.mddapi.models.User;
+import com.openclassrooms.mddapi.models.UserEntity;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -13,20 +13,20 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommentDto {
+
 	private Long id;
-	
+
 	@NotNull
 	private Date date;
-	
-	@NotNull
+
+	@NotBlank
 	private String content;
-	
-	private Post post;
-	
-	private User user;
-	
+
+	@NotBlank
+	private UserEntity user;
+
 	private LocalDateTime created_at;
-	
+
 	private LocalDateTime updated_at;
 
 }
