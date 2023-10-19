@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import {NgIf} from '@angular/common';
 import { MatFormFieldControl, MatFormFieldModule} from '@angular/material/form-field';
-import AuthService from '../services/login.component';
+import AuthService from '../services/auth.component';
 import { MatButtonModule } from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import LoginRequest from 'src/app/interfaces/login.component';
@@ -16,8 +16,6 @@ import { Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatInputModule } from '@angular/material/input';
-import { error } from 'cypress/types/jquery';
-import { SessionInformation } from 'src/app/interfaces/sessionInformation.interface';
 import { SessionService } from 'src/app/services/session.service';
 import User from 'src/app/interfaces/user.interface';
 
