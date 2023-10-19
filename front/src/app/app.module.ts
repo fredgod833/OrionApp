@@ -7,8 +7,14 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatMenuModule } from '@angular/material/menu';
-import menuBar from './components/menu.component';
 import Subject from './pages/subject/subject.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import {MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { RouterModule } from '@angular/router';
+import { LoginComponent } from './pages/login/login.component';
+import menuBar from './components/menu.component';
+import PostSelected from './pages/post/comments/selected.component';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent],
@@ -20,10 +26,16 @@ import Subject from './pages/subject/subject.component';
     MatButtonModule,
     HttpClientModule,
     MatMenuModule,
+    RouterModule,
+    Subject,
+    PostSelected,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatFormFieldModule,
     menuBar,
-    Subject
-  ],
-  providers: [],
-  bootstrap: [AppComponent],
+    LoginComponent
+      ],
+
+  bootstrap: [AppComponent]
 })
 export class AppModule {}
