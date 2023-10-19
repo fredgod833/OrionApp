@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Token } from "../../security/model/token.component";
+import { Token } from "../../security/interfaces/token.component";
 import { Observable } from "rxjs";
 import { Injectable } from "@angular/core";
-import LoginRequest from "src/app/interfaces/login.component";
+import LoginRequest from "src/app/security/interfaces/login.component";
 import User from "src/app/interfaces/user.interface";
 
 @Injectable({
