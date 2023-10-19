@@ -5,12 +5,18 @@
         </div>
 
         <div class="menu-text">
-                <li> <a [routerLink]="['post']" [class.active]="isPostLinkActive" (click)="activePostLink()">Articles</a></li>
-                <li><a [routerLink]="['subject']" [class.active]="isSubjectLinkActive" (click)="activeSubjectLink()">Thèmes</a></li>        
+           
+                    <li> <a [class.active]="isPostLinkActive" (click)="activePostLink()">Articles</a></li>
+                    <li><a [class.active]="isSubjectLinkActive" (click)="activeSubjectLink()">Thèmes</a></li>        
+             
         </div>
 
         <div id="menu-user-img">
             <img src="/assets/user.png" alt="user">
         </div>
     </div>
+    <router-outlet>
+        <app-post *ngIf="isPostLinkActive"></app-post>
+        <app-subject *ngIf="isSubjectLinkActive"></app-subject>
+    </router-outlet>
 </header>
