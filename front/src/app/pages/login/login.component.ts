@@ -7,10 +7,10 @@ import {
 } from '@angular/forms';
 import {NgIf} from '@angular/common';
 import { MatFormFieldControl, MatFormFieldModule} from '@angular/material/form-field';
-import LoginService from '../services/login.component';
+import AuthService from '../services/login.component';
 import { MatButtonModule } from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
-import LoginRequest from 'src/app/security/login.component';
+import LoginRequest from 'src/app/interfaces/login.component';
 import { Token } from 'src/app/security/model/token.component';
 import { Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
@@ -47,7 +47,7 @@ export class LoginComponent {
   });
 
   constructor(public formBuilder: FormBuilder, private router:Router, 
-    private authService: LoginService,
+    private authService: AuthService,
     private sessionService: SessionService){}
 
 public login():void{
