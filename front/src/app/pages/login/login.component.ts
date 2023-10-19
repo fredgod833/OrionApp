@@ -10,8 +10,8 @@ import { MatFormFieldControl, MatFormFieldModule} from '@angular/material/form-f
 import AuthService from '../services/auth.component';
 import { MatButtonModule } from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
-import LoginRequest from 'src/app/interfaces/login.component';
-import { Token } from 'src/app/security/model/token.component';
+import LoginRequest from 'src/app/security/interfaces/login.component';
+import { Token } from 'src/app/security/interfaces/token.component';
 import { Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
