@@ -26,7 +26,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public CommentDto createCommentDto(Date date, String content, UserEntity user) {
-        UserEntity currentUser = userService.getCurrentUser(user.getId());
+        UserEntity currentUser = userService.findById(user.getId());
 
         Comment comment = new Comment();
         comment.setDate(date);

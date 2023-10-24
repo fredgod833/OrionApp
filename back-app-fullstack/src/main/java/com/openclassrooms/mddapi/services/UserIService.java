@@ -9,17 +9,17 @@ public interface UserIService {
 
     // public boolean existsByEmail(String email);
 
-    public UserEntityDto registerUser(String name, String email, String password, List<Topic> topics);
+    public UserEntityDto createUser(String name, String email, String password, List<Topic> topics);
 
     public UserEntityDto login(String email, String password);
 
-    public UserEntity getCurrentUser(Long id);
+    public UserEntity findById(Long id);
 
     public UserEntityDto updateUser(Long id, String name, String email, String password, List<Topic> topics);
 
-    public void subscribe(UserEntity user, Topic topic);
+    // public void subscribe(UserEntity user, Topic topic);
 
-    public void unsubscribe(UserEntity user, Topic topic);
+    // public void unsubscribe(UserEntity user, Topic topic);
 
     // logout
 }

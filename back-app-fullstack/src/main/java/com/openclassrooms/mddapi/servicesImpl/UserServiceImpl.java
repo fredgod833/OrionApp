@@ -25,12 +25,12 @@ public class UserServiceImpl implements UserIService {
     // }
 
     @Override
-    public UserEntityDto registerUser(String name, String email, String password, List<Topic> topics) {
+    public UserEntityDto createUser(String name, String email, String password, List<Topic> topics) {
         UserEntity user = new UserEntity();
         user.setName(name);
         user.setEmail(email);
         user.setPassword(password);
-        user.setTopics(topics);
+        // user.setTopics(topics);
         user.setCreatedAt(LocalDateTime.now());
         user.setUpdatedAt(LocalDateTime.now());
 
@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserIService {
     }
 
     @Override
-    public UserEntity getCurrentUser(Long id) {
+    public UserEntity findById(Long id) {
         return userRepository.findById(id).get();
     }
 
@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserIService {
         user.setName(name);
         user.setEmail(email);
         user.setPassword(password);
-        user.setTopics(topics);
+        // user.setTopics(topics);
         user.setCreatedAt(LocalDateTime.now());
         user.setUpdatedAt(LocalDateTime.now());
 
@@ -68,30 +68,32 @@ public class UserServiceImpl implements UserIService {
         return userDto;
     }
 
-    @Override
-    public void subscribe(UserEntity user, Topic topic) {
-        UserEntity currentUser = getCurrentUser(user.getId());
+    // @Override
+    // public void subscribe(UserEntity user, Topic topic) {
+    // UserEntity currentUser = findById(user.getId());
 
-        boolean alreadyParticipate = currentUser.getTopics().stream().anyMatch(t -> t.getId().equals(currentUser));
-        if (alreadyParticipate) {
-            throw new RuntimeException("You are already subscribed to this topic");
-        }
+    // boolean alreadyParticipate = currentUser.getTopics().stream().anyMatch(t ->
+    // t.getId().equals(currentUser));
+    // if (alreadyParticipate) {
+    // throw new RuntimeException("You are already subscribed to this topic");
+    // }
 
-        currentUser.getTopics().add(topic);
-        userRepository.save(currentUser);
-    }
+    // currentUser.getTopics().add(topic);
+    // userRepository.save(currentUser);
+    // }
 
-    @Override
-    public void unsubscribe(UserEntity user, Topic topic) {
-        UserEntity currentUser = getCurrentUser(user.getId());
+    // @Override
+    // public void unsubscribe(UserEntity user, Topic topic) {
+    // UserEntity currentUser = findById(user.getId());
 
-        boolean alreadyParticipate = currentUser.getTopics().stream().anyMatch(t -> t.getId().equals(currentUser));
-        if (!alreadyParticipate) {
-            throw new RuntimeException("You are not subscribed to this topic");
-        }
+    // boolean alreadyParticipate = currentUser.getTopics().stream().anyMatch(t ->
+    // t.getId().equals(currentUser));
+    // if (!alreadyParticipate) {
+    // throw new RuntimeException("You are not subscribed to this topic");
+    // }
 
-        currentUser.getTopics().remove(topic);
-        userRepository.save(currentUser);
-    }
+    // currentUser.getTopics().remove(topic);
+    // userRepository.save(currentUser);
+    // }
 
 }
