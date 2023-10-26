@@ -1,0 +1,7 @@
+<div *ngIf="post; else loading">
+  <h1>{{ post.title }}</h1>
+  <p>{{ post.content }}</p>
+</div>
+<ng-template #loading>
+  <p>Loading post...</p>
+</ng-template>
