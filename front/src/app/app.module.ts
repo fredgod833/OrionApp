@@ -8,10 +8,11 @@ import { HomeComponent } from './pages/home/home.component';
 import { TopicsComponent } from './components/topics/topics.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PostsComponent } from './components/posts/posts.component';
+import { PostDetailsComponent } from './components/post-details/post-details.component';
 
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, TopicsComponent, PostsComponent],
+  declarations: [AppComponent, HomeComponent, TopicsComponent, PostsComponent, PostDetailsComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
