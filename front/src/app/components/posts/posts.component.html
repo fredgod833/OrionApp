@@ -1,0 +1,9 @@
+<div *ngIf="posts.length > 0; else noPosts">
+  <div *ngFor="let post of posts">
+    <h2>{{ post.title }}</h2>
+    <p>{{ post.content }}</p>
+  </div>
+</div>
+<ng-template #noPosts>
+  <p>Aucun post à afficher.</p>
+</ng-template>
