@@ -4,6 +4,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { TopicsComponent } from './components/topics/topics.component';
 import { PostsComponent } from './components/posts/posts.component';
 import { PostDetailsComponent } from './components/post-details/post-details.component';
+import { MeComponent } from './components/me/me.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -11,6 +12,7 @@ const routes: Routes = [
   { path: 'topics', component: TopicsComponent },
   { path: 'posts', component: PostsComponent },
   { path: 'posts/:id', component: PostDetailsComponent },
+  { path: 'me', component: MeComponent },
 ];
 
 @NgModule({

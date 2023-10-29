@@ -52,7 +52,7 @@ public class PostController {
     public ResponseEntity<Void> deletePost(@PathVariable Long id) {
         try {
             postService.deletePost(id);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null); // Retourne un statut 204 sans contenu
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }

@@ -1,0 +1,15 @@
+<mat-toolbar color="white" class="custom-toolbar">
+  <mat-toolbar-row>
+    <img src="/assets/logo_p6.png" alt="logo" style="width: 130px;" />
+    <span class="example-fill-remaining-space"></span>
+
+    <button mat-button routerLink="/home" class="custom-links" routerLinkActive="mat-accent">Accueil</button>
+    <button mat-button routerLink="/topics" class="custom-links" routerLinkActive="mat-accent">Thèmes</button>
+    <button mat-button routerLink="/posts" class="custom-links" routerLinkActive="mat-accent">Articles</button>
+
+    <!-- Ici, nous ajoutons l'icône d'utilisateur -->
+    <a routerLink="/me" class="custom-user-icon">
+      <img src="/assets/user_icon.png" alt="User" style="width: 30px; height: 30px; border-radius: 50%;" /> <!-- Assurez-vous d'avoir une image 'user_icon.png' dans vos assets -->
+    </a>
+  </mat-toolbar-row>
+</mat-toolbar>

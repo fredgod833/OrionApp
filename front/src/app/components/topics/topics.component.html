@@ -1,5 +1,23 @@
-<ul>
-  <li *ngFor="let topic of topics">
-    {{ topic.name }} - {{ topic.description }}
-  </li>
-</ul>
+<!-- Vérification si des thèmes existent -->
+<div *ngIf="topics.length > 0; else noTopics" style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+
+  <!-- Boucle à travers les thèmes existants, chaque thème prenant 50% de la largeur de la ligne -->
+  <div *ngFor="let topic of topics" style="flex: 0 0 calc(50% - 10px); margin-bottom: 20px; padding: 5px; box-sizing: border-box;">
+
+    <!-- Conteneur individuel pour le thème -->
+    <div style="background-color: #f8f9fa; padding: 15px; border-radius: 5px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+
+      <!-- Nom du thème en gras -->
+      <h2 style="margin-bottom: 10px; font-weight: bold;">{{topic.name}}</h2>
+
+      <!-- Description du thème -->
+      <p>{{topic.description}}</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- Template à utiliser s'il n'y a pas de thèmes à afficher -->
+<ng-template #noTopics>
+  <p style="text-align: center;">Aucun thème à afficher.</p>
+</ng-template>

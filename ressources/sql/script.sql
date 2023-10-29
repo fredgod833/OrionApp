@@ -62,27 +62,58 @@ ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 -- Insertion de données de test
 
--- Utilisateurs
+-- Utilisateurs supplémentaires
 INSERT INTO `users` (`username`, `email`, `password`) VALUES
-('johndoe', 'john@example.com', 'johnpasswordhash'),
-('janedoe', 'jane@example.com', 'janepasswordhash');
+('emily', 'emily@example.com', 'emilypasswordhash'),
+('michael', 'michael@example.com', 'michaelpasswordhash'),
+('sophia', 'sophia@example.com', 'sophiapasswordhash'),
+('ethan', 'ethan@example.com', 'ethanpasswordhash'),
+('olivia', 'olivia@example.com', 'oliviapasswordhash'),
+('david', 'david@example.com', 'davidpasswordhash'),
+('isabella', 'isabella@example.com', 'isabellapasswordhash'),
+('james', 'james@example.com', 'jamespasswordhash');
 
--- Sujets/Thèmes
+-- Sujets/Thèmes supplémentaires
 INSERT INTO `topics` (`name`, `description`) VALUES
-('Programmation', 'Tout sur la programmation'),
-('Base de données', 'Discussions sur les systèmes de gestion de bases de données');
+('Intelligence Artificielle', 'Développements et discussions sur l\'IA'),
+('Développement Web', 'Tout sur le développement de sites et d\'applications web'),
+('Cybersécurité', 'Protégez-vous contre les menaces en ligne'),
+('Jeux vidéos', 'Discussions sur les derniers jeux et le développement de jeux'),
+('Hardware', 'Discussions sur les composants et les nouveautés hardware'),
+('Logiciels', 'Critiques et conseils sur les logiciels'),
+('Technologie mobile', 'Nouveautés et discussions sur la technologie mobile');
 
--- Articles/Posts
+-- Articles/Posts supplémentaires
 INSERT INTO `posts` (`user_id`, `topic_id`, `title`, `content`) VALUES
-(1, 1, 'Apprendre Python', 'Contenu sur comment apprendre Python...'),
-(2, 2, 'SQL pour les débutants', 'Guide détaillé sur le démarrage avec SQL...');
+(3, 3, 'Fondamentaux de l\'IA', 'Introduction à l\'intelligence artificielle...'),
+(4, 4, 'Construire un site web', 'Étapes pour construire un site web attrayant...'),
+(5, 5, 'Importance de la cybersécurité', 'Pourquoi vous devriez vous soucier de la cybersécurité...'),
+(6, 1, 'Nouvelle console de jeu', 'Analyse de la nouvelle console...'),
+(7, 6, 'Meilleurs logiciels de montage vidéo', 'Logiciels recommandés pour le montage vidéo...'),
+(8, 7, 'Tendances actuelles en matière de smartphones', 'Ce qui est nouveau dans le monde des smartphones...'),
+(2, 3, 'Comprendre le Machine Learning', 'Fondamentaux du Machine Learning...'),
+(1, 4, 'Sécurité dans le développement web', 'Meilleures pratiques pour un web sûr...');
 
--- Abonnements
+-- Abonnements supplémentaires
 INSERT INTO `subscriptions` (`user_id`, `topic_id`) VALUES
-(1, 1),
-(2, 2);
+(3, 3),
+(4, 4),
+(5, 1),
+(6, 2),
+(7, 5),
+(8, 6),
+(2, 7),
+(1, 5),
+(4, 1),
+(3, 6);
 
--- Commentaires
+-- Commentaires supplémentaires
 INSERT INTO `comments` (`post_id`, `user_id`, `content`) VALUES
-(1, 2, 'Super article sur Python !'),
-(2, 1, 'J\'ai trouvé ce guide SQL très utile.');
+(3, 4, 'Article très informatif sur l\'IA.'),
+(4, 3, 'Merci pour les conseils sur le développement web!'),
+(5, 7, 'La cybersécurité est en effet cruciale.'),
+(6, 5, 'Impatient d\'essayer cette nouvelle console.'),
+(7, 8, 'J\'aime ces logiciels de montage vidéo.'),
+(8, 6, 'Super article sur les tendances mobiles!'),
+(3, 1, 'L\'IA et le Machine Learning sont fascinants.'),
+(4, 2, 'La sécurité web est si importante!');
