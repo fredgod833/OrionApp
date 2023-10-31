@@ -2,8 +2,8 @@ package com.openclassrooms.mddapi.service;
 
 import com.openclassrooms.mddapi.model.Post;
 import com.openclassrooms.mddapi.model.Subject;
-import com.openclassrooms.mddapi.model.dto.SubjectDto;
 import com.openclassrooms.mddapi.repository.PostRepository;
+import com.openclassrooms.mddapi.repository.SubjectRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +15,11 @@ public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
     private final SubjectService subjectService;
 
-    public PostServiceImpl(PostRepository postRepository, SubjectService subjectService) {
+    private final SubjectRepository subjectRepository;
+    public PostServiceImpl(PostRepository postRepository, SubjectService subjectService, SubjectRepository subjectRepository) {
         this.postRepository = postRepository;
         this.subjectService = subjectService;
+        this.subjectRepository = subjectRepository;
     }
 
     public List<Post> postList() {
@@ -52,34 +54,52 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public String createPost(Post post) {
+    public Post createPost(Post post, int id_subject) {
 
         try {
-            //choose a subject in the subject list
-            List<SubjectDto> subjectDtoList = new ArrayList<>();
-            subjectDtoList = subjectService.findSubjectDtoList();
 
-            //verify subject is present in the subject list
-            if (subjectDtoList.isEmpty()) {
-                throw new RuntimeException("SubjectDto list may be empty");
+            // identify the subject
+            Subject subject = subjectService.getSubjectById(id_subject);
+
+            //verify if subject is null
+            if (subject == null) {
+                return null;
             }
 
+            // build the post
+            Post postBuilt = Post.builder()
+                    .title(post.getTitle())
+                    .content(post.getContent())
+                    .author(post.getAuthor())
+                    .date(post.getDate())
+                    .comments(post.getComments())
+                    .build();
+
+            // verify if post is null
+            if (postBuilt == null){
+                return null;
+            }
+
+            // if not add post to list
+            subject.getPostList().add(postBuilt);
+
+            //save subject
+            subjectRepository.save(subject);
             //verify if post is not null
-            if (post == null) {
+            /*if (post == null) {
                 return null;
             }
 
             //identify the subject of choice
-            for (SubjectDto subject : subjectDtoList) {
+            //for (SubjectDto subject : subjectDtoList) {
 
                 //build post
-                if (post.getSubject().getIdSubject() == subject.getIdSubject()) {
+                if (post.getSubject().getId_subject() == subject.getIdSubject()) {
 
                     Subject sub = Subject.builder()
-                            .idSubject(subject.getIdSubject())
+                            .id_subject(subject.getIdSubject())
                             .title(subject.getTitle())
                             .description(subject.getDescription())
-                            .isSubscribed(subject.getIsSubscribed())
                             .build();
                     Post buildPost = Post.builder()
                             .id_post(post.getId_post())
@@ -93,12 +113,12 @@ public class PostServiceImpl implements PostService {
 
                     //create post
                     postRepository.save(buildPost);
-                }
-            }
+
+            }*/
+            return postBuilt;
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
         //return message if post was created
-        return "Post created !!!";
     }
 }
