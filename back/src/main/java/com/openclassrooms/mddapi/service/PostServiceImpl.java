@@ -85,40 +85,10 @@ public class PostServiceImpl implements PostService {
 
             //save subject
             subjectRepository.save(subject);
-            //verify if post is not null
-            /*if (post == null) {
-                return null;
-            }
 
-            //identify the subject of choice
-            //for (SubjectDto subject : subjectDtoList) {
-
-                //build post
-                if (post.getSubject().getId_subject() == subject.getIdSubject()) {
-
-                    Subject sub = Subject.builder()
-                            .id_subject(subject.getIdSubject())
-                            .title(subject.getTitle())
-                            .description(subject.getDescription())
-                            .build();
-                    Post buildPost = Post.builder()
-                            .id_post(post.getId_post())
-                            .title(post.getTitle())
-                            .content(post.getContent())
-                            .author(post.getAuthor())
-                            .date(post.getDate())
-                            .comments(post.getComments())
-                            .subject(sub)
-                            .build();
-
-                    //create post
-                    postRepository.save(buildPost);
-
-            }*/
             return postBuilt;
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
-        //return message if post was created
     }
 }
