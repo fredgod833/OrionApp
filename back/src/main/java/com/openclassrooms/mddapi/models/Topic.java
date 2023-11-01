@@ -2,12 +2,17 @@ package com.openclassrooms.mddapi.models;
 
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -38,4 +43,9 @@ public class Topic {
   @UpdateTimestamp
   @Column(name = "updated_at")
   private Date updatedAt;
+
+  @OneToMany(fetch = FetchType.EAGER, mappedBy = "topic", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
+  private Set<Subscription> subscribers = new HashSet<>();
+
+
 }

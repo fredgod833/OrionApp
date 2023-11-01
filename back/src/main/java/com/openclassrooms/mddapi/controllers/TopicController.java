@@ -46,4 +46,25 @@ public class TopicController {
         topicService.deleteTopic(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping("/subscribed/{userId}")
+    public ResponseEntity<List<TopicDto>> getSubscribedTopicsByUserId(@PathVariable Long userId) {
+        List<TopicDto> topics = topicService.findSubscribedTopicsByUserId(userId);
+        return new ResponseEntity<>(topics, HttpStatus.OK);
+    }
+
+    @PostMapping("/{topicId}/subscribe/{userId}")
+    public ResponseEntity<Void> subscribeToTopic(@PathVariable Long topicId, @PathVariable Long userId) {
+        topicService.subscribeToTopic(userId, topicId);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{topicId}/unsubscribe/{userId}")
+    public ResponseEntity<Void> unsubscribeUserFromTopic(@PathVariable Long topicId, @PathVariable Long userId) {
+        topicService.unsubscribeFromTopic(userId, topicId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+
+
 }

@@ -3,6 +3,9 @@ export interface Post {
   title: string;
   content: string;
   userId?: number;
+  topicId?: number;
+  topicName?: string;
+  username?: string;
   createdAt: string;
   updatedAt: string;
 }

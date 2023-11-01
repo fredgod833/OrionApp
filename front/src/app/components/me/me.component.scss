@@ -1,0 +1,30 @@
+.profile-container, .loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5%;
+}
+
+.profile-field {
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 16px;
+
+}
+
+.separator {
+  width: 80%;
+  height: 2px;
+  background-color: #e0e0e0;
+  margin-top: 24px;
+}
+
+.mat-form-field-underline {
+  display: none;
+}
+
+.profile-field .mat-form-field-flex {
+  border: 1px solid var(--primary-color);
+  border-radius: 4px;
+  background-color: white;
+}

@@ -1,0 +1,29 @@
+.centered-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.centered-card {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.form-element {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.custom-border .mat-form-field-outline .mat-form-field-outline-start,
+.custom-border .mat-form-field-outline .mat-form-field-outline-end {
+  border: 2px solid #3f51b5;
+}
+
+.custom-border .mat-form-field-outline-thick {
+  width: 2px !important;
+}
+
+.button-container {
+  text-align: center;
+  margin-top: 20px;
+}

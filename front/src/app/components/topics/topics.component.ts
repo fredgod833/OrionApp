@@ -25,4 +25,16 @@ export class TopicsComponent implements OnInit {
       }
     );
   }
+
+  subscribe(topicId: number): void {
+    const userId = 1;
+    this.topicService.subscribeToTopic(topicId, userId).subscribe(
+      () => {
+        alert('Abonné avec succès!');
+      },
+      error => {
+        alert('Erreur lors de l\'abonnement');
+      }
+    );
+  }
 }

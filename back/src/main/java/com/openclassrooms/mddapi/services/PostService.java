@@ -2,7 +2,12 @@ package com.openclassrooms.mddapi.services;
 
 import com.openclassrooms.mddapi.dto.PostDto;
 import com.openclassrooms.mddapi.models.Post;
+import com.openclassrooms.mddapi.models.Topic;
+import com.openclassrooms.mddapi.models.User;
 import com.openclassrooms.mddapi.repository.PostRepository;
+import com.openclassrooms.mddapi.repository.TopicRepository;
+import com.openclassrooms.mddapi.repository.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +19,12 @@ public class PostService {
 
     @Autowired
     private PostRepository postRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private TopicRepository topicRepository;
 
     private PostDto convertToDto(Post post) {
         PostDto postDto = new PostDto();
@@ -31,13 +42,21 @@ public class PostService {
     }
 
     private Post convertToEntity(PostDto postDto) {
-        Post post = new Post();
+      Post post = new Post();
+      post.setTitle(postDto.getTitle());
+      post.setContent(postDto.getContent());
 
-        post.setTitle(postDto.getTitle());
-        post.setContent(postDto.getContent());
+      User user = userRepository.findById(postDto.getUserId())
+          .orElseThrow(() -> new RuntimeException("User not found for ID: " + postDto.getUserId()));
+      post.setUser(user);
 
-        return post;
-    }
+      Topic topic = topicRepository.findById(postDto.getTopicId())
+          .orElseThrow(() -> new RuntimeException("Topic not found for ID: " + postDto.getTopicId()));
+      post.setTopic(topic);
+
+      return post;
+  }
+
 
     public List<PostDto> findAllPosts() {
         return postRepository.findAll().stream().map(this::convertToDto).collect(Collectors.toList());

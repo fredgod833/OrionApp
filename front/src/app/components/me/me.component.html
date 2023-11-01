@@ -1,16 +1,51 @@
-<div *ngIf="currentUser; else loading">
-  <h1>Profil de l'utilisateur</h1>
-  <p><strong>Nom :</strong> {{ currentUser.name }}</p>
-  <p><strong>Email :</strong> {{ currentUser.email }}</p>
-  <!-- Ajoutez d'autres propriétés que vous souhaitez afficher à propos de l'utilisateur -->
+<div class="profile-container" *ngIf="currentUser; else loading">
+  <h1>Profil Utilisateur</h1>
+
+  <mat-form-field appearance="fill" class="profile-field">
+    <mat-label>Nom</mat-label>
+    <input matInput [(ngModel)]="currentUser.username">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="profile-field">
+    <mat-label>Email</mat-label>
+    <input matInput [(ngModel)]="currentUser.email" type="email">
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" (click)="saveChanges()">Sauvegarder</button>
+
+  <div class="separator"></div>
+
+  <div *ngIf="subscribedTopics.length > 0">
+    <h1 style="text-align: center; margin-top: 5px;">Abonnements</h1>
+
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+
+      <div *ngFor="let topic of subscribedTopics" style="flex: 0 0 calc(50% - 10px); margin-bottom: 20px; padding: 5px; box-sizing: border-box;">
+
+        <div style="background-color: #f8f9fa; padding: 15px; border-radius: 5px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+
+          <h2 style="margin-bottom: 10px; font-weight: bold;">{{topic.name}}</h2>
+
+          <p>{{topic.description}}</p>
+
+          <button mat-raised-button color="primary" (click)="unsubscribe(topic.id)">Se désabonner</button>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+
 </div>
 
-<!-- Ce template s'affiche pendant le chargement des données -->
 <ng-template #loading>
-  <p>Chargement des informations de l'utilisateur...</p>
+  <div class="loading-container">
+    <p>Chargement des informations de l'utilisateur...</p>
+  </div>
 </ng-template>
 
-<!-- Vous pouvez également ajouter un message pour gérer le cas où il n'y a pas d'utilisateur connecté -->
-<div *ngIf="!currentUser">
+<div *ngIf="!currentUser" class="loading-container">
   <p>Aucun utilisateur n'est connecté actuellement.</p>
 </div>

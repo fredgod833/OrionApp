@@ -15,4 +15,17 @@ export class TopicService {
   getTopics(): Observable<Topic[]> {
     return this.http.get<Topic[]>(this.apiUrl);
   }
+
+  subscribeToTopic(topicId: number, userId: number): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/${topicId}/subscribe/${userId}`, {});
+  }
+
+  unsubscribeFromTopic(topicId: number, userId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${topicId}/unsubscribe/${userId}`);
+  }
+
+  getSubscribedTopicsByUserId(userId: number): Observable<Topic[]> {
+    return this.http.get<Topic[]>(`${this.apiUrl}/subscribed/${userId}`);
+  }
+
 }

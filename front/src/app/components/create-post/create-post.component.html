@@ -1,0 +1,31 @@
+<a mat-button routerLink="/posts">
+  <mat-icon>arrow_back</mat-icon>
+</a>
+
+<h2 class="centered-title">Créer un nouvel article</h2>
+
+<mat-card class="centered-card">
+  <form (ngSubmit)="createPost()">
+
+    <mat-form-field appearance="outline" class="custom-border form-element">
+      <mat-label>Sélectionner un thème</mat-label>
+      <mat-select id="topic" [(ngModel)]="newPost.topicId" name="topic">
+        <mat-option *ngFor="let topic of topics" [value]="topic.id">{{topic.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="custom-border form-element">
+      <mat-label>Titre de l'article</mat-label>
+      <input matInput type="text" id="title" [(ngModel)]="newPost.title" name="title" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="custom-border form-element">
+      <mat-label>Contenu de l'article</mat-label>
+      <textarea matInput id="content" [(ngModel)]="newPost.content" name="content" rows="8" required></textarea>
+    </mat-form-field>
+
+    <div class="button-container">
+      <button mat-raised-button color="primary" type="submit">Créer</button>
+    </div>
+  </form>
+</mat-card>

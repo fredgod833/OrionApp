@@ -1,49 +1,23 @@
 
-<button (click)="triggerCreatePostForm()">Créer un post</button>
-
-<!-- Formulaire de création de post -->
-<div *ngIf="showCreatePostForm">
-  <h2>Créer un nouveau post</h2>
-  <form (ngSubmit)="createPost()">
-    <div>
-      <label for="topic">Sujet:</label>
-      <select id="topic" [(ngModel)]="newPost.topic" name="topic">
-        <option *ngFor="let topic of topics" [value]="topic.id">{{topic.name}}</option>
-      </select>
-    </div>
-    <div>
-      <label for="title">Titre:</label>
-      <input type="text" id="title" [(ngModel)]="newPost.title" name="title" required>
-    </div>
-    <div>
-      <label for="content">Contenu:</label>
-      <textarea id="content" [(ngModel)]="newPost.content" name="content" rows="5" required></textarea>
-    </div>
-    <button type="submit">Publier le post</button>
-  </form>
-</div>
-
-<!-- La vérification des posts est toujours là, mais l'événement (click) doit être déplacé à l'intérieur de la boucle *ngFor -->
+<a mat-raised-button color="primary" routerLink="/create-post" style="margin-left: 20px;">Créer un article</a>
 <div *ngIf="posts.length > 0; else noPosts" style="display: flex; flex-wrap: wrap; justify-content: space-between;">
 
-  <!-- Ici, chaque 'post' est dans son propre contexte dû à *ngFor, donc (click) peut correctement appeler la méthode avec l'id du 'post' actuel -->
   <div *ngFor="let post of posts" style="flex: 0 0 calc(50% - 10px); margin-bottom: 20px; padding: 5px; box-sizing: border-box; cursor:pointer"
-       (click)="goToPostDetail(post.id)"> <!-- L'événement (click) est maintenant à l'intérieur du contexte de chaque 'post' -->
+  (click)="goToPostDetail(post.id)">
 
-    <!-- Le conteneur individuel pour le post -->
     <div style="background-color: #f8f9fa; padding: 15px; border-radius: 5px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
 
-      <!-- Titre du post en gras -->
       <h2 style="margin-bottom: 10px; font-weight: bold;">{{post.title}}</h2>
-
-      <!-- Contenu/Description du post -->
-      <p>{{post.content}}</p>
+      <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px;">
+        <span><strong>Date: </strong> {{ post.createdAt | date:'yyyy-MM-dd' }}</span>
+        <span><strong>Auteur: </strong> <span style="text-transform: capitalize;">{{ post.userId ? getUsername(post.userId) : 'Inconnu' }}</span></span>
+      </div>
+      <p style="margin-top: 12px;">{{post.content}}</p>
     </div>
   </div>
 
 </div>
 
-<!-- Template à utiliser s'il n'y a pas de posts à afficher -->
 <ng-template #noPosts>
   <p style="text-align: center;">Aucun post à afficher.</p>
 </ng-template>

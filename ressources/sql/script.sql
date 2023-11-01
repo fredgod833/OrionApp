@@ -34,7 +34,8 @@ CREATE TABLE `posts` (
 CREATE TABLE `subscriptions` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `user_id` INT NOT NULL,
-  `topic_id` INT NOT NULL
+  `topic_id` INT NOT NULL,
+  `subscribed_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Table des commentaires
