@@ -1,25 +1,19 @@
 <div class="login" fxLayout="row" fxLayoutAlign="center center">
-  <mat-card>
-      <mat-card-header fxLayoutAlign="center center">
-          <mat-card-title>Login</mat-card-title>
-      </mat-card-header>
-      <form class="login-form" [formGroup]="form" (ngSubmit)="login()" method="post">
-          <mat-card-content fxLayout="column">
-            <mat-card-subtitle>E-mail ou nom d'utilisateur</mat-card-subtitle>
-              <mat-form-field fxFlex>
-                  <input matInput formControlName="email">
-              </mat-form-field>
-              <mat-card-subtitle>Password</mat-card-subtitle>
-              <mat-form-field>
-                  <input matInput [type]="hide ? 'password' : 'text'"
-                      formControlName="password">
-                  <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-                      [attr.aria-pressed]="hide">
-                      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                  </button>
-              </mat-form-field>
+  <mat-card class="card">
+    <a routerLink="/menu"><img src="/assets/Arrow-left.png" alt="Arrow-left" id="arrow-left"></a>
+    <mat-card-title id="title">Se connecter</mat-card-title>
+      <form class="login-form" [formGroup]="form" (ngSubmit)="login()" method="post">  
+        <mat-card-content fxLayout="column">
+   
+            <div class="input-wrapper">
+                <label for="email">E-mail ou nom d'utilisateur</label>
+                  <input matInput formControlName="email" id="email" name="email">
+                <label for="password"> Password</label> 
+                  <input matInput type="text"
+                      formControlName="password" id="password" name="password">
+            </div>
           </mat-card-content>
-          <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Submit</button>
+          <button mat-raised-button color="primary" type="submit" id="button-submit">Submit</button>
           <p *ngIf="onError" class="error">An error occurred</p>
       </form>
   </mat-card>
