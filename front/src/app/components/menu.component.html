@@ -5,10 +5,8 @@
         </div>
 
         <div class="menu-text">
-           
                     <li> <a [class.active]="isPostLinkActive" (click)="activePostLink()">Articles</a></li>
-                    <li><a [class.active]="isSubjectLinkActive" (click)="activeSubjectLink()">Thèmes</a></li>        
-             
+                    <li><a [class.active]="isSubjectLinkActive" (click)="activeSubjectLink()">Thèmes</a></li>            
         </div>
 
         <div id="menu-user-img">
@@ -17,6 +15,9 @@
     </div>
     <router-outlet>
         <app-post *ngIf="isPostLinkActive"></app-post>
+        <button-create-post *ngIf="isPostLinkActive" [class.active]="isPostCreationActive" (click)="activePostCreation()"></button-create-post>
+        <create-post *ngIf="isPostCreationActive"></create-post>
         <app-subject *ngIf="isSubjectLinkActive"></app-subject>
     </router-outlet>
+    
 </header>
