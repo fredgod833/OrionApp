@@ -1,28 +1,18 @@
 <section>
-    <mat-card-actions id="post-card-btn">
-        <button mat-button>Créer un article</button>
-    </mat-card-actions>
-
     <div class="sort-table">
         <mat-card-title>Trier par</mat-card-title>
         <img src="./assets/Arrow 14.png" alt="Arrow">
     </div>
-  
 
     <mat-card class="post-card" *ngFor="let post of post_list">
-            <mat-card-title id="post-card-title">{{ post.title }}</mat-card-title>
+            <mat-card-title id="post-card-title" ><a [routerLink]="'/comments'" >{{ post.title }}</a></mat-card-title>
             <mat-card-subtitle id="post-card-subtitle">
                 Date: {{ formatPostDate(post.date) }}&nbsp;&nbsp;
                 Author: {{ post.author }}
             </mat-card-subtitle>
-            <!-- <mat-card-subtitle>Author: {{ post.author }}</mat-card-subtitle> -->
 
         <mat-card-content>
             <p>{{ post.content }}</p>
         </mat-card-content>
     </mat-card>
-    <!-- <router-outlet>
-        <app-post-selected *ngIf="isClicked()">
-        </app-post-selected>
-    </router-outlet> -->
 </section>
