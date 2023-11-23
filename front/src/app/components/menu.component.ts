@@ -1,24 +1,30 @@
 import { Component } from "@angular/core";
-import { Router, RouterModule } from "@angular/router";
+import { RouterModule } from "@angular/router";
 import { SessionService } from "../services/session.service";
 import Subject from "../pages/subject/subject.component";
 import Post from "../pages/post/post.component";
-import { NgIf } from "@angular/common";
+import { NgClass, NgIf } from "@angular/common";
+import CreatePost from "../pages/post/create/post.create";
+import ButtonCreation from "../pages/post/button/button.post.create";
+
 
 @Component({
     selector: 'app-menu',
     templateUrl: './menu.component.html',
     styleUrls:['./menu.component.scss'],
     standalone:true,
-    imports: [RouterModule, Subject, Post, NgIf],
+    imports: [RouterModule, Subject, Post, NgIf, CreatePost, ButtonCreation, NgClass],
   })
 
 export default class menuBar{
 
   isPostLinkActive = false;
   isSubjectLinkActive = false;
+  isPostCreationActive = false;
+  isButtonCreationActive = false;
 
-  constructor(private sessionService: SessionService, private router: Router){
+
+  constructor(private sessionService: SessionService){
 
   }
 
@@ -32,4 +38,14 @@ export default class menuBar{
     this.isSubjectLinkActive = true;
     this.isPostLinkActive = false;
   }
+
+  activePostCreation(){
+    this.isPostCreationActive = true;
+    this.isPostLinkActive = false;
+  }
+
+  hiddenButton(){
+      this.isButtonCreationActive = true;
+  }
+
 }
