@@ -1,0 +1,7 @@
+<mat-card-actions id="post-card-btn">
+    <button mat-button>Créer un article</button>
+
+    <router-outlet>
+        <button-create-post *ngIf="isPostCreationActive" (click)="activePostCreation()"></button-create-post>
+    </router-outlet>
+</mat-card-actions>
