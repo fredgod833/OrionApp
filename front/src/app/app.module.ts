@@ -15,6 +15,7 @@ import { RouterModule } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
 import menuBar from './components/menu.component';
 import PostSelected from './pages/post/comments/selected.component';
+import Post from './pages/post/post.component';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent],
@@ -33,8 +34,9 @@ import PostSelected from './pages/post/comments/selected.component';
     MatInputModule,
     MatFormFieldModule,
     menuBar,
-    LoginComponent
-      ],
+    LoginComponent,
+    Post
+        ],
 
   bootstrap: [AppComponent]
 })
