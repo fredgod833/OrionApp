@@ -1,23 +1,24 @@
-// import { HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
-// import { Injectable } from "@angular/core";
+import { HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
+import { Injectable } from "@angular/core";
 
-// @Injectable({
-//     providedIn: 'root'
-// })
-// export class JwtInterceptor implements HttpInterceptor{
+@Injectable({
+    providedIn: 'root'
+})
+export class JwtInterceptor implements HttpInterceptor{
     
-//     constructor(){}
+    constructor(){}
 
-//     public intercept(request: HttpRequest<any>, next: HttpHandler) {
-//         const token = localStorage.getItem('token');
-//         if(token){
-//             request = request.clone({
-//                 // setHeaders: {
-//                 //     Authorization: `Bearer ${token}`,
-//                 // }
-//             })
-//         }
-//         return next.handle(request);
-//     }
+    public intercept(request: HttpRequest<any>, next: HttpHandler) {
+        const token = localStorage.getItem('token');
+        if(token){
+            request = request.clone({
+                setHeaders: {
+                    Authorization: `Bearer ${token}`,
+                }
+            })
+        }
+        console.log(request);
+        return next.handle(request);
+    }
     
-// }
+}
