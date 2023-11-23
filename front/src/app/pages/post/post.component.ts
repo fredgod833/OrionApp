@@ -40,8 +40,4 @@ export default class Post implements OnInit{
      return formattedDate;
     }
 
-    isPostSelected(){
-      this.isActive = true;
-    }
-
   }
