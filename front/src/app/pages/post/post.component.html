@@ -5,7 +5,7 @@
     </div>
 
     <mat-card class="post-card" *ngFor="let post of post_list">
-            <mat-card-title id="post-card-title" ><a [routerLink]="'/comments'" >{{ post.title }}</a></mat-card-title>
+            <mat-card-title id="post-card-title" (click)="selectPost(post)">{{ post.title }}</mat-card-title>
             <mat-card-subtitle id="post-card-subtitle">
                 Date: {{ formatPostDate(post.date) }}&nbsp;&nbsp;
                 Author: {{ post.author }}
