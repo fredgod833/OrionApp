@@ -3,13 +3,15 @@ import AuthService from "./auth.component";
 import User from "src/app/interfaces/user.interface";
 import { HttpClient } from "@angular/common/http";
 import { SubjectService } from "./subject.service";
+import PostInterface from "../model/post";
+import { Observable } from "rxjs";
 
 @Injectable({
 providedIn: 'root'
 })
 export class UserService{
 
-    public path = "api/user/subscribe";
+    public path = "api/user";
     public user!:User;
 
     constructor(private authService: AuthService, public subjectService: SubjectService, private httpClient: HttpClient){}
@@ -22,7 +24,7 @@ export class UserService{
       
       },complete:()=> {
     
-        this.httpClient.post<User>(`${this.path}/${this.user.id_user}/${idSubject}`, {}).subscribe({
+        this.httpClient.post<User>(`${this.path}/subscribe/${this.user.id_user}/${idSubject}`, {}).subscribe({
           next() {
             return "Vous êtes inscrit";
           },
@@ -32,5 +34,9 @@ export class UserService{
       },})
 
     }
-    
+    commentPost(post:PostInterface):Observable<PostInterface>{
+
+      return this.httpClient.put<PostInterface>(`${this.path}/comments`, post);
+
+    }
 }
