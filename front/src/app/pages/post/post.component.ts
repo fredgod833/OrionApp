@@ -3,7 +3,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
 import PostInterface from "../model/post";
 import { DatePipe, NgFor, NgIf} from "@angular/common";
-import { RouterModule, RouterOutlet } from "@angular/router";
+import { Router, RouterModule, RouterOutlet } from "@angular/router";
 import PostSelected from "./comments/selected.component";
 import CreatePost from "./create/post.create";
 import { PostService } from "../services/post.service";
@@ -23,7 +23,7 @@ export default class Post implements OnInit{
 
     public postList = this.postService.getPostList();
 
-    constructor(private postService: PostService){
+    constructor(private postService: PostService, private router: Router){
     }
 
   ngOnInit(): void {
@@ -40,4 +40,7 @@ export default class Post implements OnInit{
      return formattedDate;
     }
 
+    selectPost(post:PostInterface){
+      return this.router.navigate(['/comments', post]);
+    }
   }
