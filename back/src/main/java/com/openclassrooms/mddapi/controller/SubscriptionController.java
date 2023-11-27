@@ -1,14 +1,13 @@
 package com.openclassrooms.mddapi.controller;
 
+import com.openclassrooms.mddapi.model.Subject;
 import com.openclassrooms.mddapi.model.Subscription;
 import com.openclassrooms.mddapi.model.dto.SubjectDto;
 import com.openclassrooms.mddapi.service.SubscriptionService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -28,5 +27,20 @@ public class SubscriptionController {
     @GetMapping("/{subscription_id}")
     public ResponseEntity<?> getSubscriptionById(@PathVariable("subscription_id") int subscription_id){
         return subscriptionService.getSubscriptionById(subscription_id);
+    }
+
+    @PostMapping("/subscribe/{id}")
+    public Subscription subscribeSubject(HttpServletRequest request, @PathVariable(name = "id") int id){
+        return subscriptionService.subscribe(request, id);
+    }
+
+    @PostMapping("/unsubscribe/{id}")
+    public Subscription unsubscribeSubject(HttpServletRequest request, @PathVariable(name = "id") int id){
+        return subscriptionService.subscribe(request, id);
+    }
+
+    @GetMapping("/subscriptions")
+    public List<Subscription> subscriptions(){
+        return subscriptionService.subscriptions();
     }
 }
