@@ -27,15 +27,19 @@ export default class PostSelected implements OnInit{
         this.post = params;
         
         })
+
     }
 
+    // post is frozen
     comment(post: PostInterface){
-        
-    //    return this.userService.commentPost(post).subscribe({
-    //         next(value) {
-    //             console.log(value);
-    //             return "Post commentered !!!";
-    //         },
-    //     })
+        // copy object to set value
+       const postCopied = {...post};
+       postCopied.comments = this.comment_text;
+       console.log("Post copied: ",postCopied);
+       this.userService.commentPost(postCopied).subscribe({
+            next() {
+                return "Post commentered !!!";
+            },
+        })
     }
 }
