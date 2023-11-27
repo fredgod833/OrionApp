@@ -16,10 +16,7 @@ import org.springframework.security.config.annotation.web.configurers.oauth2.ser
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.jwt.JwtEncoder;
-import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
-import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
+import org.springframework.security.oauth2.jwt.*;
 import org.springframework.security.oauth2.server.resource.web.BearerTokenAuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -30,10 +27,15 @@ public class SpringSecurityConfig {
     private final UserDetailsService userDetailsService;
     private final RsaKeyProperties rsaKeys;
 
-    public SpringSecurityConfig(UserDetailsService userDetailsService, RsaKeyProperties rsaKeysProperties){
+    public SpringSecurityConfig(UserDetailsService userDetailsService, RsaKeyProperties rsaKeys ){
         this.userDetailsService = userDetailsService;
-        this.rsaKeys = rsaKeysProperties;
+        this.rsaKeys = rsaKeys;
     }
+ /*   @Bean
+    public JwtTokenFilter authenticationJwtTokenFilter(){
+       return new JwtTokenFilter();
+    }*/
+
    // Permet de dire à Spring le canal d'authentication des utilisateurs
     @Bean
     public AuthenticationProvider authenticationProvider(){
@@ -45,29 +47,30 @@ public class SpringSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.cors(cors -> cors.disable())
-                .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth
-                        //public routes
+        http.cors(cors -> cors.disable()).csrf(csrf -> csrf.disable())
+
+                .authorizeRequests( auth -> auth
                         .antMatchers("/v2/api-docs", "/swagger-ui/**", "/swagger-resources/**", "/swagger-ui.html",
-                                "/webjars/springfox-swagger-ui/**", "/api/auth/login", "/api/auth/register").permitAll()
-                        //private routes
-                        .antMatchers("/api/subject/**", "/api/post/**", "/api/feed/**", "/api/subscription/**", "/api/user/**")
-                        .authenticated())
+                                "/webjars/springfox-swagger-ui/**", "/api/auth/register", "/api/auth/login", "/api/user/delete/account/{id_user}").permitAll()
+                        .mvcMatchers("/api/auth/me","/api/subject/**", "/api/post/**", "/api/subscription/**",  "/api/user/**", "/api/session/all", "/api/subject/create_subject", "/api/user/comments").permitAll()
+                        .anyRequest().authenticated())
+
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
-                .exceptionHandling(ex -> ex.authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint()))
+                .exceptionHandling( ex -> ex.authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint()))
                 .authenticationProvider(authenticationProvider());
+
         return http.build();
-}
+    }
 
     // Encodage et decodage du token avec les rsakeys
+    @Bean
+    public JwtDecoder jwtDecoder() {
+        return NimbusJwtDecoder.withPublicKey(rsaKeys.getPublicKey()).build();
+    }
 
     @Bean
-    public JwtDecoder jwtDecoder(){ return NimbusJwtDecoder.withPublicKey(rsaKeys.getPublicKey()).build();}
-
-    @Bean
-    public JwtEncoder jwtEncoder(){
+    JwtEncoder jwtEncoder() {
         JWK jwk = new RSAKey.Builder(rsaKeys.getPublicKey()).privateKey(rsaKeys.getPrivateKey()).build();
         JWKSource<SecurityContext> jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
         return new NimbusJwtEncoder(jwks);
@@ -78,4 +81,17 @@ public class SpringSecurityConfig {
     public BCryptPasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
+
+    //External requests permission
+   /* @Bean
+    public CorsConfigurationSource corsConfigurationSource(){
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(List.of("http://localhost:4200"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "DELETE", "PUT"));
+        configuration.setAllowedHeaders(List.of("Content-Type"));
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**",configuration);
+        return source;
+    }*/
 }
