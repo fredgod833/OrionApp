@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.controller;
 
+import com.openclassrooms.mddapi.model.Post;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.service.UserService;
 import org.springframework.http.ResponseEntity;
@@ -31,5 +32,10 @@ public class UserController {
     @DeleteMapping("/delete/account/{id_user}")
     public User deleteUserAccount(@PathVariable(name = "id_user") int id_user){
         return userService.deleteUserAccount(id_user);
+    }
+
+    @PutMapping("/comments")
+    public Post comments(@RequestBody Post post){
+        return userService.commentPost(post);
     }
 }
