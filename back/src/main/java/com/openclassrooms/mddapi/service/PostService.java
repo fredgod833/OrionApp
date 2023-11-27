@@ -9,6 +9,6 @@ import java.util.List;
 @Service
 public interface PostService {
     List<Post> postList();
-    String createPost(Post post);
+    Post createPost(Post post, int id_subject);
     ResponseEntity<?> findPostById(int post_id);
 }
