@@ -1,3 +1,26 @@
 <section>
-    <h1>Profil utilisateur</h1>
+    <form class="user-profil-form" action="s" method="post">
+        <h1>Profil utilisateur</h1>
+        <div class="user-inputs">
+            <div><input type="text" placeholder="Username"/></div>
+            <div><input type="email" placeholder="email@email.fr"/></div>
+            <div><button type="submit">Sauvegarder</button></div>
+            <button type="submit">Se déconnecter</button>
+
+        </div>
+        ___________________________________________________________________________________________
+        <h1>Abonnements</h1>
+
+        <mat-card class="post-card" >
+            <mat-card-title id="post-card-title" >{{ "Title" }}</mat-card-title>
+
+        <mat-card-content>
+            <p>{{ "Content" }}</p>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-button>Se désabonner</button>
+          </mat-card-actions>
+    </mat-card>
+
+</form>
 </section>
