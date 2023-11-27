@@ -1,19 +1,8 @@
 package com.openclassrooms.mddapi.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import javax.persistence.Id;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.OneToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,14 +12,11 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @RequiredArgsConstructor
+@Builder
 public class Subscription {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_subscription;
-    @ManyToOne
-    @JsonBackReference
-    private Feed feed;
-    @OneToMany(mappedBy = "subscription")
-    @JsonManagedReference
+    @OneToMany
     private List<Subject> subjectList = new ArrayList<>();
 }
