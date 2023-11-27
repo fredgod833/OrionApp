@@ -24,9 +24,9 @@ public class PostController {
         return postService.findPostById(post_id);
     }
 
-    @PostMapping("/create_post")
-    public String createPost(@RequestBody Post post){
-        return postService.createPost(post);
+    @PostMapping("/create_post/{id_subject}")
+    public Post createPost(@RequestBody Post post, @PathVariable(name = "id_subject")int id_subject){
+        return postService.createPost(post, id_subject);
     }
 
 }
