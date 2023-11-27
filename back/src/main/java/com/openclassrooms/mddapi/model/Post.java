@@ -1,6 +1,5 @@
 package com.openclassrooms.mddapi.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Setter;
 import lombok.Getter;
 import lombok.AllArgsConstructor;
@@ -11,7 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
 
 @Entity
@@ -30,7 +28,4 @@ public class Post {
     private String author;
     private String content;
     private String comments;
-    @ManyToOne
-    @JsonBackReference
-    private Subject subject;
 }
