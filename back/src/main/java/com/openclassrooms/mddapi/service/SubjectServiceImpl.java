@@ -2,6 +2,7 @@ package com.openclassrooms.mddapi.service;
 import com.openclassrooms.mddapi.model.Subject;
 import com.openclassrooms.mddapi.model.dto.SubjectDto;
 import com.openclassrooms.mddapi.repository.SubjectRepository;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,13 +25,12 @@ public class SubjectServiceImpl implements SubjectService {
             subjectList = getSubjectList();
 
             for (Subject subject: subjectList) {
-                if (subject.getIsSubscribed()){
                     SubjectDto subjectDto = toDto.apply(subject);
 
                     subjectDtoList.add(subjectDto);
 
                     return subjectDtoList;
-                }
+
             }
         }catch (Exception e){
             throw new RuntimeException(e.getMessage());
@@ -39,28 +39,17 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public String createSubject(Subject subject) {
+    public Subject createSubject(Subject subject) {
 
         if (subject == null){
             return null;
         }
 
         try {
-           Subject buildSubject = Subject.builder()
-                    .idSubject(subject.getIdSubject())
-                    .title(subject.getTitle())
-                    .description(subject.getDescription())
-                    .isSubscribed(subject.getIsSubscribed())
-                    .subscription(subject.getSubscription())
-                    .postList(subject.getPostList())
-                    .build();
-
-            subjectRepository.save(buildSubject);
-        }catch (Exception e){
-            throw new RuntimeException(e.getMessage());
+           return subjectRepository.save(subject);
+        }catch (DataAccessException e){
+            throw new RuntimeException("Error while creating subject", e.getCause());
         }
-        // TODO: 29/09/2023 return subject
-        return "Subject created !!!";
     }
 
     public List<SubjectDto> findSubjectDtoList(){
@@ -76,10 +65,9 @@ public class SubjectServiceImpl implements SubjectService {
 
             for (Subject subject: subjectList) {
                 SubjectDto subjectDto = SubjectDto.builder()
-                        .idSubject(subject.getIdSubject())
+                        .idSubject(subject.getId_subject())
                         .title(subject.getTitle())
                         .description(subject.getDescription())
-                        .isSubscribed(subject.getIsSubscribed())
                         .build();
 
                 subjectDtoList.add(subjectDto);
@@ -123,10 +111,9 @@ public class SubjectServiceImpl implements SubjectService {
     }
     private final Function<Subject, SubjectDto> toDto = (subject) ->
             SubjectDto.builder()
-                    .idSubject(subject.getIdSubject())
+                    .idSubject(subject.getId_subject())
                     .title(subject.getTitle())
                     .description(subject.getDescription())
-                    .isSubscribed(subject.getIsSubscribed())
                     .build();
 
 }
