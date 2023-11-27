@@ -1,9 +1,10 @@
 package com.openclassrooms.mddapi.service;
 
+import com.openclassrooms.mddapi.model.Post;
 import com.openclassrooms.mddapi.model.Subject;
 import com.openclassrooms.mddapi.model.Subscription;
 import com.openclassrooms.mddapi.model.User;
-import com.openclassrooms.mddapi.repository.SubjectRepository;
+import com.openclassrooms.mddapi.repository.PostRepository;
 import com.openclassrooms.mddapi.repository.SubscriptionRepository;
 import com.openclassrooms.mddapi.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -12,15 +13,24 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
-    private final SubjectRepository subjectRepository;
+    private final PostRepository postRepository;
     private final SubscriptionRepository subscriptionRepository;
     private final SubjectService subjectService;
 
-    public UserServiceImpl(UserRepository userRepository, SubjectRepository subjectRepository, SubscriptionRepository subscriptionRepository, SubjectService subjectService) {
+    public UserServiceImpl(UserRepository userRepository, PostRepository postRepository, SubscriptionRepository subscriptionRepository, SubjectService subjectService) {
         this.userRepository = userRepository;
-        this.subjectRepository = subjectRepository;
+        this.postRepository = postRepository;
         this.subscriptionRepository = subscriptionRepository;
         this.subjectService = subjectService;
+    }
+    @Override
+    public Post commentPost(Post post) {
+        if (post == null){
+            return null;
+        }
+
+        return postRepository.save(post);
+
     }
 
     public User subscribe(int id_user, int id_subject){
@@ -53,6 +63,7 @@ public class UserServiceImpl implements UserService {
       return user;
     }
 
+    //Javadoc: les entrées, les parametres et les sorties
     public User unsubscribe(int id_user, int id_subject){
         User user = getUserById(id_user);
         Subject subject = subjectService.getSubjectById(id_subject);
@@ -90,6 +101,7 @@ public class UserServiceImpl implements UserService {
 
         return user;
     }
+
     @Override
     public User getUserById(int id_user) {
 
