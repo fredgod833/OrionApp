@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.service;
 
+import com.openclassrooms.mddapi.model.Post;
 import com.openclassrooms.mddapi.model.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -13,4 +14,5 @@ public interface UserService {
     User getByEmail(String email);
     User unsubscribe(int id_user, int id_subject);
     User deleteUserAccount(int id_user);
+    Post commentPost(Post post);
 }
