@@ -12,5 +12,5 @@ public interface SubjectService {
     Subject getSubjectById(int id_subject);
     List<SubjectDto> findSubjectDtoList();
     List<SubjectDto> subscribedList();
-    String createSubject(Subject subject);
+    Subject createSubject(Subject subject);
 }
