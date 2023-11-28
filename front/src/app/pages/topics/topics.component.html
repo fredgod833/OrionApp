@@ -1,0 +1,6 @@
+<app-navbar></app-navbar>
+<div class="topics">
+  <div class="topics-container">
+    <app-topic-card *ngFor="let topic of (topics$ | async)" [topic]="topic"></app-topic-card>
+  </div>
+</div>

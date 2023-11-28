@@ -1,0 +1,47 @@
+@use 'src/styles/variables' as *;
+
+.login {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    padding: 0 14px;
+
+    @media (min-width: $desktop-breakpoint) {
+        padding: 0 34px;
+    }
+}
+
+.login-img {
+    display: flex;
+    justify-content: center;
+    img {
+        width: 225px;
+        object-fit: cover;
+    }
+    @media (min-width: $desktop-breakpoint) {
+        display: none;
+    }
+}
+
+.login-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+}
+
+.login-title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 29.05px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 40px;
+    width: 250px;
+}

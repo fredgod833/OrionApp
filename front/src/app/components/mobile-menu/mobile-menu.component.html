@@ -1,0 +1,20 @@
+<ng-container class="mobile-menu">
+  <div class="mobile-menu-content">
+      <div class="mobile-menu-header">
+          <div class="mobile-menu-close">
+              <button mat-icon-button (click)="closeMenu()">
+                  <mat-icon>close</mat-icon>
+              </button>
+          </div>
+      </div>
+      <div class="mobile-menu-nav">
+          <ul>
+              <li *ngFor="let link of Links" [class.active]="link.current">
+                  <a [routerLink]="link.link" routerLinkActive="active">{{ link.name }}</a>
+              </li>
+          </ul>
+      </div>
+      <div class="mobile-menu-avatar">
+          <a routerLink="/me" routerLinkActive="active" class="mobile-menu-avatar-link"><img src="https://picsum.photos/64/64" alt="avatar"></a>
+      </div>
+  </div>

@@ -1,0 +1,10 @@
+<ng-container>
+  <a [routerLink]="'/posts/'+ post?.id" routerLinkActive="active" class="post-card">
+      <h3 class="post-card-title">{{ post?.title }}</h3>
+      <div class="post-card-header">
+          <span class="post-card-date">{{ post?.createdAt | date: 'dd-MM-yyyy' }}</span>
+          <span class="post-card-author">{{ post?.user?.name }}</span>
+      </div>
+      <p class="post-card-content">{{ post?.content }}</p>
+  </a>
+</ng-container>

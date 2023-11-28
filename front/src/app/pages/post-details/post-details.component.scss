@@ -1,0 +1,81 @@
+@use 'src/styles/variables' as *;
+
+.post {
+    padding: 22px 14px;
+}
+.post-header {
+    display: flex;
+    gap: 23px;
+    align-items: center;
+    h1 {
+        margin: 0;
+    }
+}
+.post-content {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+    padding: 12px 0px;
+
+    border-bottom: 1px solid black;
+
+    @media (min-width: $desktop-breakpoint) {
+        gap: 16px;
+    }
+}
+
+.post-card-title {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    margin: 0;
+}
+
+.post-content-header {
+    display: flex;
+    justify-content: left;
+    gap: 16px;
+
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+}
+
+.post-date {}
+
+.post-author {}
+
+.post-theme {}
+
+.post-content-text {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+}
+
+.post-comments {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 30px;
+}
+.post-comment-title {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    margin: 0;
+}
+.post-form {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.post-form button {
+    margin-left: 31px;
+}
+.post-form .act {
+    width: 75%;
+}

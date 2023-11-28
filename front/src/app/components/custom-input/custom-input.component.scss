@@ -1,0 +1,22 @@
+.custom-input-container {
+  display: flex;
+  flex-direction: column;
+}
+.custom-input-label {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 19.36px;
+}
+.custom-input {
+  border: 1px solid #000;
+  border-radius: 8px;
+  height: 48px;
+  font-size: 1rem;
+  font-weight: 400;
+  color: #333;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+  &:focus {
+      border-color: #333;
+  }
+}

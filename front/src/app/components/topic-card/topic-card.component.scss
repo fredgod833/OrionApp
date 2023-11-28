@@ -1,0 +1,38 @@
+@use 'src/styles/variables' as *;
+
+.topic-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 6px;
+    border-radius: 8px;
+    padding: 12px 16px;
+    background: #F5F5F5;
+
+    @media (min-width: $desktop-breakpoint) {
+        gap: 9px;
+    }
+}
+
+.topic-card-title {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    margin: 0;
+}
+
+.topic-card-content {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+}
+
+.topic-card-button {
+    padding: 0px 20px;
+    margin-left: auto;
+    margin-right: auto;
+
+    @media (min-width: $desktop-breakpoint) {
+        width: 166.97px;
+    }
+}

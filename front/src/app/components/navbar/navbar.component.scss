@@ -1,0 +1,19 @@
+.example-fill-remaining-space {
+  flex: 1 1 auto;
+}
+.custom-toolbar {
+  border-bottom: 1px solid black;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+.custom-links {
+  font-size: 18px;
+}
+.custom-user-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 15px;
+  cursor: pointer;
+}

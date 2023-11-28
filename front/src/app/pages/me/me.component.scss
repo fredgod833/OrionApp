@@ -1,0 +1,61 @@
+@use 'src/styles/variables' as *;
+
+.me {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    margin-top: 20px;
+    padding: 0 14px;
+
+    @media (min-width: $desktop-breakpoint) {
+        margin-top: 30px;
+        padding: 0 34px;
+    }
+}
+
+.me-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    border-bottom: 1px solid #000000;
+}
+
+.me-title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 29.05px;
+}
+
+.me-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 28px;
+    width: 250px;
+}
+
+.me-btn-grp {
+    display: flex;
+    flex-direction: column;
+    width: 150px;
+    margin: auto;
+}
+
+.me-topics-container {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    column-gap: 6px;
+    row-gap: 14px;
+
+    margin-top: 18px;
+
+    @media (min-width: $desktop-breakpoint) {
+        grid-template-columns: repeat(2, 1fr);
+        row-gap: 10px;
+
+        margin-top: 30px;
+    }
+}

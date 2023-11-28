@@ -1,7 +1,40 @@
-.center {
-  height: 100vh;
+@use 'src/styles/variables' as *;
+
+.home {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 54px;
+  height: 100%;
+}
+
+.home-logo {
+  display: flex;
+  justify-content: center;
+  img{
+    width: 225px;
+    object-fit: cover;
+
+    @media (min-width: $desktop-breakpoint) {
+      width: 412px;
+    }
+  }
+}
+
+.home-btn-grp {
+  display: flex;
   flex-direction: column;
+  justify-content: center;
+  gap: 40px;
+  margin-left: auto;
+  margin-right: auto;
+
+  button {
+    width: 156px;
+  }
+
+  @media (min-width: $desktop-breakpoint) {
+    flex-direction: row;
+  }
 }

@@ -1,0 +1,19 @@
+.app-layout {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.mobile-sidenav-container {
+  height: 100vh;
+}
+
+.mobile-sidenav {
+  min-width: 62%;
+  max-width: 62%;
+}
+
+.mat-sidenav-content-over {
+  background-color: #FFF;
+}

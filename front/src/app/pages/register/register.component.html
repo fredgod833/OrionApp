@@ -1,0 +1,14 @@
+<app-navbar-login></app-navbar-login>
+<div class="register">
+    <div class="register-header"><button mat-icon-button aria-label="Back" (click)="back()"><img src="assets/arrow_20.png" style="width: 25px" alt="Back"/></button></div>
+    <div class="register-img"><img src="assets/logo.png" alt="logo"></div>
+    <div class="register-content">
+        <h1 class="register-title">Inscription</h1>
+        <form class="register-form" [formGroup]="form" (ngSubmit)="submit()">
+            <app-custom-input label="Nom d’utilisateur" type="text" [control]="form.controls['name']"></app-custom-input>
+            <app-custom-input label="E-mail ou nom d’utilisateur" type="email" [control]="form.controls['email']"></app-custom-input>
+            <app-custom-input label="Mot de passe" type="password" [control]="form.controls['password']"></app-custom-input>
+            <button mat-flat-button color="primary" type="submit">S’inscrire</button>
+        </form>
+    </div>
+</div>

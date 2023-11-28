@@ -1,0 +1,19 @@
+<app-navbar></app-navbar>
+<div class="post-new">
+  <div class="posts-new-header">
+      <div><button mat-icon-button aria-label="Back" (click)="back()"><img src="assets/arrow_20.png" style="width:25px" alt="Back"/></button></div>
+      <h1 class="post-new-title">Créer un nouvel article</h1>
+      <div></div>
+  </div>
+  <div class="post-new-content">
+      <form class="post-new-form" [formGroup]="form" (ngSubmit)="submit()">
+        <app-custom-input placeholder="Titre de l’article" type="text" [control]="form.controls['title']">
+        </app-custom-input>
+        <app-custom-select placeholder="Themes" [options]="topics$ | async" [control]="form.controls['topic']">
+        </app-custom-select>
+        <app-custom-input placeholder="Contenu de l’article" type="text" [control]="form.controls['content']">
+        </app-custom-input>
+          <button mat-flat-button color="primary" type="submit">Créer</button>
+      </form>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+<app-navbar></app-navbar>
+<div class="posts">
+  <div class="posts-header">
+      <button mat-flat-button color="primary" (click)="goToPostNew()">Créer un article</button>
+      <button mat-flat-button (click)="sort()">Trier par <mat-icon aria-hidden="true" aria-label="Down" fontIcon="arrow_downward" iconPositionEnd></mat-icon></button>
+  </div>
+  <div class="posts-container">
+      <app-post-card *ngFor="let post of (posts$ | async)" [post]="post"></app-post-card>
+  </div>
+</div>

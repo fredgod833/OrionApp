@@ -1,0 +1,29 @@
+@use 'src/styles/variables' as *;
+
+.comment-container {
+    display: flex;
+    flex-direction: column-reverse;
+    margin-bottom: 30px;
+    gap: 16px;
+
+    @media (min-width: $desktop-breakpoint) {
+        flex-direction: row;
+    }
+}
+
+.comment-card {
+    @media (min-width: $desktop-breakpoint) {
+        width: 400px;
+        background: #EEEEEE;
+        border-radius: 16px;
+        padding: 20px;
+    }
+}
+
+.comment-card-user {
+    text-align: right;
+
+    @media (min-width: $desktop-breakpoint) {
+        text-align: left;
+    }
+}

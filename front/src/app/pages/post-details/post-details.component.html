@@ -1,0 +1,27 @@
+<app-navbar></app-navbar>
+<div class="post">
+  <div class="post-header">
+      <div><button mat-icon-button aria-label="Back" (click)="back()"><img src="assets/arrow_20.png" style="width: 25px" alt="Back"/></button></div>
+      <h1 class="post-title">{{ post?.title }}</h1>
+  </div>
+  <div class="post-content">
+      <div class="post-content-header">
+          <span class="post-date">{{ post?.createdAt | date: 'dd-MM-yyyy' }}</span>
+          <span class="post-author">{{ post?.user?.name }}</span>
+          <span class="post-theme">{{ post?.topic?.title }}</span>
+      </div>
+      <p class="post-content-text">{{ post?.content }}</p>
+  </div>
+  <div class="post-comments">
+      <h2 class="post-comment-title">Commentaires</h2>
+      <div class="post-comments-container">
+        <app-comment-card *ngFor="let comment of comments" [comment]="comment">
+        </app-comment-card>
+      </div>
+      <form class="post-form" [formGroup]="form" (ngSubmit)="submit()">
+        <app-custom-textarea class="act" placeholder="Écrivez ici votre commentaire" style="font-size: 17px; font-family: Helvetica;" [control]="form.controls['content']">
+        </app-custom-textarea>
+        <button mat-icon-button><img src="assets/icon-send.svg" style="width: 25px;" alt="Send"/></button>
+      </form>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+<app-navbar></app-navbar>
+
+<div class="me">
+    <div class="me-content">
+        <h1 class="me-title">Profil utilisateur</h1>
+        <form class="me-form" [formGroup]="form" (ngSubmit)="submit()">
+          <app-custom-input type="text" [control]="form.controls['name']">
+          </app-custom-input>
+          <app-custom-input type="email" [control]="form.controls['email']">
+          </app-custom-input>
+            <div class="me-btn-grp">
+                <button mat-flat-button color="primary" type="submit">Sauvegarder</button>
+                <button mat-flat-button type="button" (click)="logout()">Se déconnecter</button>
+            </div>
+        </form>
+    </div>
+    <div class="me-topics-container">
+        <app-topic-card *ngFor="let topic of user?.topics" [topic]="topic" [unsubscribe]="true"></app-topic-card>
+    </div>
+</div>

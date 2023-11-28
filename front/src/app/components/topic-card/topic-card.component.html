@@ -1,0 +1,7 @@
+<ng-container>
+  <div class="topic-card">
+      <h3 class="topic-card-title">{{ topic?.title }}</h3>
+      <p class="topic-card-content">{{ topic?.content }}</p>
+      <button class="topic-card-button" mat-flat-button color="primary" (click)="unsubscribe ? unsubscribeTopic() : subscribeTopic();">{{unsubscribe ? "Se désabonner" : "S’abonner"}}</button>
+  </div>
+</ng-container>

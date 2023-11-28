@@ -1,0 +1,44 @@
+@use 'src/styles/variables' as *;
+
+.post-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 6px;
+    border-radius: 8px;
+    padding: 12px 16px;
+    background: #F5F5F5;
+
+    text-decoration: none;
+    color: #000000;
+
+    @media (min-width: $desktop-breakpoint) {
+        gap: 9px;
+    }
+}
+
+.post-card-title {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    margin: 0;
+}
+
+.post-card-header {
+    display: flex;
+    justify-content: space-between;
+
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+}
+
+.post-card-date {}
+
+.post-card-author {}
+
+.post-card-content {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+}
