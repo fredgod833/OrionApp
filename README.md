@@ -1,25 +1,46 @@
-# P6-Full-Stack-reseau-dev
+# MDD APP
 
-## Front
+### Prerequisites
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.3.
+> Git
+> Node.js
+> npm
+> Java
+> Maven
+> MySQL
 
-Don't forget to install your node_modules before starting (`npm install`).
+> First you need to create a mysql databased named 'mddbdd'
+> Launch the script 'ressources/script.sql' to create the schema and add some data
 
-### Development server
+## Front ( VS CODE )
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Navigate to the front directory.
 
-### Build
+Install dependencies:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+> npm install
 
-### Where to start
+Launch a dev server:
 
-As you may have seen if you already started the app, a simple home page containing a logo, a title and a button is available. If you take a look at its code (in the `home.component.html`) you will see that an external UI library is already configured in the project.
+> ng serve
 
-This library is `@angular/material`, it's one of the most famous in the angular ecosystem. As you can see on their docs (https://material.angular.io/), it contains a lot of highly customizable components that will help you design your interfaces quickly.
+The app should run on 'http://localhost:4200/'
 
-Note: I recommend to use material however it's not mandatory, if you prefer you can get ride of it.
+### Back ( VS CODE )
 
-Good luck!
+Navigate to the back directory.
+
+Launch the server:
+
+> mvn spring-boot:run
+
+Launch the db ( MYSQL )
+
+> sudo service mysql start
+
+### Other
+
+> App: http://localhost:4200/
+> Back: http://localhost:8080/
+> SwaggerDoc: http://localhost:8080/swagger/swagger-ui/index.html
+> ApiDoc: http://localhost:8080/v3/api-docs/
