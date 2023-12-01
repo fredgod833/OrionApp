@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { Injectable } from "@angular/core";
 import LoginRequest from "src/app/security/interfaces/login.component";
 import User from "src/app/interfaces/user.interface";
+import RegisterRequest from "src/app/security/interfaces/register.component";
 
 @Injectable({
     providedIn: 'root'
@@ -17,6 +18,14 @@ export default class AuthService{
     public login(loginRequest: LoginRequest):Observable<Token>{
        return this.httpClient.post<Token>(`${this.path}/login`, loginRequest);
       
+    }
+
+    public logout(){
+        return this.httpClient.post<String>(`${this.path}/logout`, {});
+    }
+    
+    public register(register: RegisterRequest): Observable<User>{
+        return this.httpClient.post<User>(`${this.path}/register`, register);
     }
 
     public me():Observable<User>{
