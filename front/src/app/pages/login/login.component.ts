@@ -6,7 +6,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import {NgIf} from '@angular/common';
-import { MatFormFieldControl, MatFormFieldModule} from '@angular/material/form-field';
+import { MatFormFieldModule} from '@angular/material/form-field';
 import AuthService from '../services/auth.component';
 import { MatButtonModule } from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
@@ -27,7 +27,6 @@ import User from 'src/app/interfaces/user.interface';
   imports: [ MatButtonModule,
     MatCardModule,
     MatIconModule,
-    MatCardModule,
     MatToolbarModule,
     MatInputModule, 
     NgIf,  
