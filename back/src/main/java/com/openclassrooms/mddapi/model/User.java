@@ -21,7 +21,6 @@ public class User {
     @Column(name = "id_user")
     private int id_user;
     private String username;
-    private String lastname;
     private String email;
     private String password;
     @OneToOne
