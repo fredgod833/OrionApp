@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.model.dto;
 
+import com.openclassrooms.mddapi.model.Subscription;
 import lombok.*;
 
 @AllArgsConstructor
@@ -10,6 +11,6 @@ import lombok.*;
 public class UserDto {
     private int id_user;
     private String username;
-    private String lastname;
     private String email;
+    Subscription subscription;
 }
