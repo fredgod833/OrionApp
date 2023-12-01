@@ -15,7 +15,7 @@
                 <li>
                     <mat-form-field class="mat-form-field">
                         <mat-select placeholder="Sélectionner un thème" class="mat-select" formControlName="idSubject">
-                          <mat-option *ngFor="let item of (subjectList$ | async)" [value]="item.idSubject" class="mat-option" >{{ item.title }}</mat-option>
+                          <mat-option *ngFor="let item of (subjectList$ | async)" [value]="item.id_subject" class="mat-option" >{{ item.title }}</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </li>
