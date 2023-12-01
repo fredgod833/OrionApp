@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { RouterModule } from "@angular/router";
+import { Router, RouterModule } from "@angular/router";
 import { SessionService } from "../services/session.service";
 import Subject from "../pages/subject/subject.component";
 import Post from "../pages/post/post.component";
@@ -7,6 +7,7 @@ import { NgClass, NgIf } from "@angular/common";
 import CreatePost from "../pages/post/create/post.create";
 import ButtonCreation from "../pages/post/button/button.post.create";
 import UserInformation from "../pages/user/user.information";
+import AuthService from "../pages/services/auth.component";
 
 
 @Component({
@@ -25,9 +26,7 @@ export default class menuBar{
   isButtonCreationActive = false;
   isUserInformationActive = false;
 
-  constructor(private sessionService: SessionService){
-
-  }
+  constructor(private sessionService: SessionService, private authService: AuthService, private router: Router){}
 
   activePostLink(){
     this.sessionService.isLogged;
@@ -52,5 +51,4 @@ export default class menuBar{
   hiddenButton(){
       this.isButtonCreationActive = true;
   }
-
 }
