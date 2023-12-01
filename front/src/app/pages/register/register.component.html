@@ -1,0 +1,24 @@
+<div class="register" fxLayout="row" fxLayoutAlign="center center">
+    <mat-card class="card">
+      <a routerLink="/menu"><img src="/assets/Arrow-left.png" alt="Arrow-left" id="arrow-left"></a>
+      <mat-card-title id="title">Inscription</mat-card-title>
+        <form class="register-form" [formGroup]="form" (ngSubmit)="register()" method="post">  
+          <mat-card-content fxLayout="column">
+     
+              <div class="input-wrapper">
+                  <label for="username">Nom d'utilisateur</label>
+                    <input matInput formControlName="username" id="username" name="username">
+
+                    <label for="email">Email</label>
+                    <input matInput formControlName="email" id="email" name="email">
+
+                  <label for="password"> Password</label> 
+                    <input matInput type="text"
+                        formControlName="password" id="password" name="password">
+              </div>
+            </mat-card-content>
+            <button mat-raised-button color="primary" type="submit" id="button-submit">S'inscrire</button>
+            <p *ngIf="onError" class="error">An error occurred</p>
+        </form>
+    </mat-card>
+  </div>
