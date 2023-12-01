@@ -1,7 +1,15 @@
+
+
 export default interface User{
     id_user: number,
     username: string,
-    lastname: string,
     email: string,
-    password: string,
+    subscription: {
+        id_subscription: number,
+        subjectList: {
+            id_subject: number,
+            title: string,
+            description: string,
+        }[]
+    }
 }
