@@ -4,6 +4,7 @@
 .card{
   margin: auto;
   text-align: center;
+  box-shadow: none;
 
   a{
 
@@ -51,8 +52,6 @@
       text-align:left;
     
     }
-  
-   
   }
   #button-submit{
     width: 139px;
@@ -61,4 +60,5 @@
   }
   
 }
+
 }
