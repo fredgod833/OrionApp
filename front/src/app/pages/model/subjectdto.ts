@@ -1,7 +1,6 @@
 
 export interface SubjectDto{
-     idSubject:number;
+     id_subject:number;
      title:String;
      description:String;
-     isSubscribed: Boolean;
 }
