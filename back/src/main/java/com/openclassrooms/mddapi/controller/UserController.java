@@ -2,6 +2,7 @@ package com.openclassrooms.mddapi.controller;
 
 import com.openclassrooms.mddapi.model.Post;
 import com.openclassrooms.mddapi.model.User;
+import com.openclassrooms.mddapi.model.dto.UserDto;
 import com.openclassrooms.mddapi.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,5 +38,10 @@ public class UserController {
     @PutMapping("/comments")
     public Post comments(@RequestBody Post post){
         return userService.commentPost(post);
+    }
+
+    @PutMapping("/change-user/username-email")
+    public User changeUsernameAndEmail(@RequestBody UserDto userDto){
+        return userService.changeUserUsernameAndEmail(userDto);
     }
 }
