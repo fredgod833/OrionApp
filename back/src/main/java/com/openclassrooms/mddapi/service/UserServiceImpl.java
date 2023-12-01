@@ -4,6 +4,7 @@ import com.openclassrooms.mddapi.model.Post;
 import com.openclassrooms.mddapi.model.Subject;
 import com.openclassrooms.mddapi.model.Subscription;
 import com.openclassrooms.mddapi.model.User;
+import com.openclassrooms.mddapi.model.dto.UserDto;
 import com.openclassrooms.mddapi.repository.PostRepository;
 import com.openclassrooms.mddapi.repository.SubscriptionRepository;
 import com.openclassrooms.mddapi.repository.UserRepository;
@@ -25,12 +26,24 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     public Post commentPost(Post post) {
-        if (post == null){
+        if (post == null
+        ){
             return null;
         }
 
         return postRepository.save(post);
 
+    }
+
+    @Override
+    public User changeUserUsernameAndEmail(UserDto userDto) {
+        if (userDto == null){
+            return null;
+        }
+        User user = userRepository.findById(userDto.getId_user()).orElse(null);
+        user.setUsername(userDto.getUsername());
+        user.setEmail(userDto.getEmail());
+        return userRepository.save(user);
     }
 
     public User subscribe(int id_user, int id_subject){
