@@ -39,4 +39,8 @@ export class UserService{
       return this.httpClient.put<PostInterface>(`${this.path}/comments`, post);
 
     }
+
+    changeUserUsernameAndEmail(user: User){
+      return this.httpClient.put<User>(`${this.path}/change-user/username-email`, user);
+    }
 }
