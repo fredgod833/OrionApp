@@ -3,8 +3,6 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import PostInterface from "../model/post";
 import PostCreate from "../model/post.create";
-import { FormControl } from "@angular/forms";
-// import { Token } from "@angular/compiler";
 
 @Injectable({
     providedIn: 'root'
@@ -12,19 +10,19 @@ import { FormControl } from "@angular/forms";
 export class PostService{
 
     private pathService = 'api/post';
+    //Stock subject identity
     id_subject!:number;
-    // private token!: Token;
-
 
     constructor(private httClient: HttpClient){};
 
+    //Return a list of post
     public getPostList():Observable<PostInterface[]>{
 
          return this.httClient.get<PostInterface[]>(`${this.pathService}/post_list`);
         }
-
+    
+    //Create a post
     public createPost(postCreate: PostCreate, id_subject: number):Observable<PostCreate>{
-
         return this.httClient.post<PostCreate>(`${this.pathService}/create_post/${id_subject}`, postCreate);
     }
 }

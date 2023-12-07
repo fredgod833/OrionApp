@@ -3,7 +3,7 @@
         <div id="menu-logo-img">
             <img src="/assets/logo_p6.png" alt="logo"/>
         </div>
-
+    
         <div class="menu-text">
                     <li> <a [class.active]="isPostLinkActive" (click)="activePostLink()">Articles</a></li>
                     <li><a [class.active]="isSubjectLinkActive" (click)="activeSubjectLink()">Thèmes</a></li>            
@@ -13,6 +13,7 @@
             <a [class.active]="isUserInformationActive" (click)="activeUserInformation()"><img src="/assets/user.png" alt="user"></a>
         </div>
     </div>
+    <!-- Pages controlled -->
     <router-outlet>
         <app-post *ngIf="isPostLinkActive"></app-post>
         <button-create-post *ngIf="isPostLinkActive" [class.active]="isPostCreationActive" (click)="activePostCreation()"></button-create-post>
@@ -20,5 +21,4 @@
         <app-subject *ngIf="isSubjectLinkActive"></app-subject>
         <user-info *ngIf="isUserInformationActive"></user-info>
     </router-outlet>
-    
 </header>

@@ -14,8 +14,6 @@ const routes: Routes = [
   {path: 'menu', component: menuBar},
   {path: 'comments', component: PostSelected},
   {path: 'inscription', component: Register},
-
-
   ];
 
 @NgModule({

@@ -6,14 +6,16 @@ import { Router } from '@angular/router';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
-  constructor(private route: Router){}
-  ngOnInit(): void {}
+export class HomeComponent {
 
+  constructor(private route: Router){}
+
+  //User connection
   login(){
     return this.route.navigate(['/login']);
   }
 
+  //User inscription 
   register(){
     return this.route.navigate(['register']);
   }

@@ -8,7 +8,6 @@ import { NgFor } from "@angular/common";
 import { UserService } from "../services/user.service";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import { forIn } from "cypress/types/lodash";
 
 @Component({
     selector: 'user-info',
@@ -24,26 +23,26 @@ export default class UserInformation implements OnInit{
     constructor(private formBuilder:FormBuilder, private authService: AuthService, private userService: UserService, 
     private router: Router){}
     
+    //Initialization
     ngOnInit(): void {
         this.initFormProfil();
         this.userProfil();
     }
 
+    //Unsubscribe
     unsubscribe(idSubject:number){
-        console.log("SUBJECT ID", idSubject)
         return this.userService.unsubscribe(idSubject);
     }
 
+    //Return subjects subscribed from user
     public userProfil(){
 
         this.authService.me().subscribe({
             next:(value)=> {
-                console.log("USER PROFIL: ",value.subscription.subjectList);
                 if(value.subscription != null && value.subscription.subjectList.length > 0){
                     value.subscription.subjectList.map(subscribed => {
                         this.subjectList.push(subscribed);
                     });
-                   
                 }
             },
         })
@@ -73,7 +72,7 @@ export default class UserInformation implements OnInit{
             },
         });
     }
-
+    //Form required fields
     public initFormProfil(){
         this.form_profil = this.formBuilder.group({
             username: ["", [Validators.required]],

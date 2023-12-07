@@ -7,8 +7,6 @@ import CreatePost from "../pages/post/create/post.create";
 import ButtonCreation from "../pages/post/button/button.post.create";
 import UserInformation from "../pages/user/user.information";
 
-
-
 @Component({
     selector: 'app-menu',
     templateUrl: './menu.component.html',
@@ -19,6 +17,7 @@ import UserInformation from "../pages/user/user.information";
 
 export default class menuBar{
 
+  // Conditions for template control
   isPostLinkActive = false;
   isSubjectLinkActive = false;
   isPostCreationActive = false;
@@ -43,21 +42,21 @@ export default class menuBar{
     this.isUserInformationActive = false;
     this.isPostCreationActive = false;
   }
-  //Enable post creation page and Unable other
+  //Enable post creation page and Unable others
   activePostCreation(){
     this.isPostCreationActive = true;
     this.isPostLinkActive = false;
     this.isUserInformationActive = false;
     this.isSubjectLinkActive = false;
   }
-
+  //Enable user information page and Unable others
   activeUserInformation(){
     this.isSubjectLinkActive = false;
     this.isPostLinkActive = false;
     this.isPostCreationActive = false;
     this.isUserInformationActive = true;
   }
-
+  // Hidde button when its actived
   hiddenButton(){
       this.isButtonCreationActive = true;
   }

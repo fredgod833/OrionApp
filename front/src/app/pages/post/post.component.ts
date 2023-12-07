@@ -19,19 +19,19 @@ import { PostService } from "../services/post.service";
 export default class Post implements OnInit{
     post_list:PostInterface[] = [];
 
-    public isActive =  false;
-
+    //Stock list of post
     public postList = this.postService.getPostList();
 
-    constructor(private postService: PostService, private router: Router){
-    }
+    constructor(private postService: PostService, private router: Router){}
 
+  //Initialization
   ngOnInit(): void {
     this.postList.subscribe((list: PostInterface[])=> list.map((posts: PostInterface)=>{ 
       this.post_list.push(posts);
     }))
   }
 
+    //Change date format
     formatPostDate(date: Date){
      const dateFromPost = new Date(date);
  
@@ -40,6 +40,7 @@ export default class Post implements OnInit{
      return formattedDate;
     }
 
+    //Get the right post
     selectPost(post:PostInterface){
       return this.router.navigate(['/comments', post]);
     }

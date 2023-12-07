@@ -8,6 +8,7 @@ export class JwtInterceptor implements HttpInterceptor{
     
     constructor(){}
 
+    // Get token from storage and insert into requests
     public intercept(request: HttpRequest<any>, next: HttpHandler) {
         const token = localStorage.getItem('token');
         if(token){

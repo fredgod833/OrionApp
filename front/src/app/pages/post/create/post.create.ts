@@ -16,13 +16,12 @@ import PostCreate from "../../model/post.create";
 })
 export default class CreatePost implements OnInit{
 
-    public selectOptional = false;
     public postGroup!: FormGroup;
-    // public postCreate!: PostCreate;
+
+    //Stock list of subject
     public subjectList$ = this.subjectService.getSubjectList();
 
-    public selectedIdSubject!: string;
-
+    //Form initialization
     ngOnInit(): void {
         this.initForm();
     }
@@ -30,6 +29,7 @@ export default class CreatePost implements OnInit{
     constructor(private subjectService: SubjectService, private postService: PostService, private fb: FormBuilder){
     }
 
+    //Create a post
     createPost(){
         //Loading values
         const postCreate: PostCreate = {
@@ -56,7 +56,9 @@ export default class CreatePost implements OnInit{
         )
         }
     
+      //Form required fields for post creation
       initForm(){
+        // Stock a group of fields
         this.postGroup = this.fb.group({
             idSubject: [
                 [Validators.required]

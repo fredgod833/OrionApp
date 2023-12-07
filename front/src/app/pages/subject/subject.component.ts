@@ -5,7 +5,6 @@ import { SubjectService } from "../services/subject.service";
 import { SubjectDto } from "../model/subjectdto";
 import { NgFor, NgIf } from "@angular/common";
 import { UserService } from "../services/user.service";
-import AuthService from "../services/auth.component";
 
 @Component({
     selector: 'app-subject',
@@ -17,25 +16,27 @@ import AuthService from "../services/auth.component";
 export default class Subject implements OnInit{
 
     subject_list: SubjectDto[] = [];
+
+    //Control of subscription button
     isSubscribed =  false;
 
-    constructor(private pathService: SubjectService, private userService: UserService, private authService:AuthService){}
+    constructor(private pathService: SubjectService, private userService: UserService){}
     
     ngOnInit(){
       this.getSubjectList()
     };
 
+    //Set values to new list of subjects
     getSubjectList(){
       this.pathService.getSubjectList().subscribe(response => {
         for(let i=0; i < response.length; i++){
-
+          //Add subject values to list
           this.subject_list.push(response[i]);
-          console.log("Subject list: ",this.subject_list);
         }
       })
-
     }
 
+    //User subscription 
     subscribe(idSubject: number){
 
       if(idSubject != 0){
@@ -48,10 +49,8 @@ export default class Subject implements OnInit{
         //Set subscribed to true to the right subject
         if(idSubject == val.idSubject){
          val.isSubscribed = true;
-        
         }
-      
       })
-        }
+      }
     }
 }

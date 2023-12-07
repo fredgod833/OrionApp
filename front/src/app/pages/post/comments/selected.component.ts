@@ -18,25 +18,28 @@ import menuBar from "src/app/components/menu.component";
 export default class PostSelected implements OnInit{
 
     public post!:any;
+    
+    //Collect comments from template
     public comment_text = "";
 
     constructor(private router:ActivatedRoute, private userService: UserService, private navigate: Router){}
 
+    //Initialization
     ngOnInit(): void {
         this.router.params.subscribe(params => {
-         
-        this.post = params;
-        
-        })
+            //Stock data from params post
+          this.post = params;
+        })}
 
-    }
-
-    // post is frozen
+    //Comment a post
     comment(post: PostInterface){
-        // copy object to set value
+
+       //copy object
        const postCopied = {...post};
+
+       //set a value
        postCopied.comments = this.comment_text;
-       console.log("Post copied: ",postCopied);
+
        this.userService.commentPost(postCopied).subscribe({
             next() {
                 return "Post commentered !!!";
@@ -44,6 +47,7 @@ export default class PostSelected implements OnInit{
         })
     }
 
+    //Redirect menu for navigation
     navigateMenu(){
         return this.navigate.navigate(['menu'])
     }

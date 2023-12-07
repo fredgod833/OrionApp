@@ -15,19 +15,23 @@ export default class AuthService{
 
     constructor(private httpClient: HttpClient){}
     
+    //User authentification and return a token
     public login(loginRequest: LoginRequest):Observable<Token>{
        return this.httpClient.post<Token>(`${this.path}/login`, loginRequest);
       
     }
 
+    //User deconnection
     public logout(){
         return this.httpClient.post<String>(`${this.path}/logout`, {});
     }
     
+    //User inscription
     public register(register: RegisterRequest): Observable<User>{
         return this.httpClient.post<User>(`${this.path}/register`, register);
     }
 
+    //Authenticated user information
     public me():Observable<User>{
         const token = localStorage.getItem('token');
         return this.httpClient.get<User>(`${this.path}/me`, {headers:{Authorization: `Bearer ${token}`}});

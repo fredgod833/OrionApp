@@ -11,9 +11,10 @@ export class SubjectService{
     private pathService = 'api/subject';
 
     constructor(private httpClient: HttpClient){};
-        public getSubjectList():Observable<SubjectDto[]>{
 
-       return this.httpClient.get<SubjectDto[]>(`${this.pathService}/subjectDto_list`);
-       
+    //Return list of subject
+    public getSubjectList():Observable<SubjectDto[]>{
+
+       return this.httpClient.get<SubjectDto[]>(`${this.pathService}/subjectDto_list`);   
     }
 }

@@ -6,6 +6,7 @@
       <p id="description">Description: {{item.description}}</p>
     </mat-card-content>
     <mat-card-actions>
+      <!-- Control subscribed button -->
       <button type="submit"(click)="subscribe(item.idSubject)" id="btn_action" >{{ item.isSubscribed ? "Abonné" : "S'abonner"}}</button>
     </mat-card-actions>
   </mat-card>

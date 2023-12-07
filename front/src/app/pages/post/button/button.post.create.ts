@@ -13,8 +13,11 @@ import { RouterModule } from "@angular/router";
     imports: [NgIf, MatCardModule, MatButtonModule, CreatePost, RouterModule]
 })
 export default class ButtonCreation{
+
+    //Property for activation control
     isPostCreationActive = false;
 
+    //Active post page creation
     activePostCreation(){
         this.isPostCreationActive = true;
       }

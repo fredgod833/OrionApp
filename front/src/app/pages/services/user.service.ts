@@ -12,47 +12,47 @@ providedIn: 'root'
 export class UserService{
 
     public path = "api/user";
-    public user!:User;
 
     constructor(private authService: AuthService, public subjectService: SubjectService, private httpClient: HttpClient){}
 
-
+    //Persist user subscription
     subscribe(idSubject: number){
       
+      //User authenticated
       this.authService.me().subscribe({next:(val)=> {
          
+        //Add new subject to subscription list
          this.httpClient.post<User>(`${this.path}/subscribe/${val.id_user}/${idSubject}`, {}).subscribe({
-          next(value) {
+          next() {
             console.log("Inscrit !!!");
           },
          })
-      }
+        }
       ,})
 
     }
 
+    //Persist user unsubscription
     unsubscribe(idSubject: number){
-        console.log("Unsubscribe", idSubject);
+
+      //User authenticated
       this.authService.me().subscribe({
         next:(value)=> {
-
+          //Update subscription 
           this.httpClient.put<User>(`${this.path}/unsubscribe/${value.id_user}/${idSubject}`, {}).subscribe(
-            {next(value) {
+            {next() {
             console.log("Desinscrit !!!");
           },});
         },
       })
-     
-    
-    
     }
 
+    //Persist a post comment
     commentPost(post:PostInterface):Observable<PostInterface>{
-
       return this.httpClient.put<PostInterface>(`${this.path}/comments`, post);
-
     }
 
+    //Persist new user username and email
     changeUserUsernameAndEmail(user: User){
       return this.httpClient.put<User>(`${this.path}/change-user/username-email`, user);
     }
