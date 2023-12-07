@@ -7,9 +7,10 @@ export default interface User{
     subscription: {
         id_subscription: number,
         subjectList: {
-            id_subject: number,
+            idSubject: number,
             title: string,
             description: string,
+            isSubscribed: boolean
         }[]
     }
 }
