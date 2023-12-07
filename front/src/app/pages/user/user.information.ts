@@ -8,6 +8,7 @@ import { NgFor } from "@angular/common";
 import { UserService } from "../services/user.service";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
+import { forIn } from "cypress/types/lodash";
 
 @Component({
     selector: 'user-info',
@@ -28,12 +29,16 @@ export default class UserInformation implements OnInit{
         this.userProfil();
     }
 
-    
+    unsubscribe(idSubject:number){
+        console.log("SUBJECT ID", idSubject)
+        return this.userService.unsubscribe(idSubject);
+    }
+
     public userProfil(){
 
         this.authService.me().subscribe({
             next:(value)=> {
-                console.log(value.subscription.subjectList);
+                console.log("USER PROFIL: ",value.subscription.subjectList);
                 if(value.subscription != null && value.subscription.subjectList.length > 0){
                     value.subscription.subjectList.map(subscribed => {
                         this.subjectList.push(subscribed);
