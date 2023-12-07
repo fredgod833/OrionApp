@@ -12,7 +12,7 @@ import PostCreate from "../../model/post.create";
     templateUrl: './post.create.html',
     styleUrls: ['./post.create.scss'],
     standalone: true,
-    imports: [NgIf, MatFormFieldModule, MatSelectModule, NgFor, AsyncPipe, ReactiveFormsModule, FormsModule],
+    imports: [NgIf, MatFormFieldModule, MatSelectModule, NgFor, AsyncPipe, ReactiveFormsModule, FormsModule]
 })
 export default class CreatePost implements OnInit{
 

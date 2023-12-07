@@ -1,15 +1,55 @@
-body{
-    margin: 0%;
-    padding: 0%;
+header{
+    border: 2px solid transparent;
+}
+section{
+            margin-top: 120px;    
+    form{
 
-    .post-creation-containeur{
-        .post-creation-form{
-         ul{
+        ul{
+            text-decoration: none;
+            text-align: center;
+
             li{
                 list-style-type: none;
-                text-align: center;
-                align-content: space-between;
-                
+                h1{
+                    color: #000;
+                    text-align: center;
+                    font-family: 'Inter';
+                    font-size: 24px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: normal;
+                    width: 322px;
+                    height: 41px;
+                    margin-left: 36%;
+                }
+                img{
+                    float: left;
+                }
+                img:hover{
+                    cursor: pointer;
+                }
+                input{
+                    border-radius: 8px;
+                    border: 2px solid #7763C5;
+                    background: #FFF;
+                    width: 281px;
+                    height: 48px;
+                    flex-shrink: 0;
+                    font-family: 'Inter';
+                    font-size: 20px;
+                    padding-left: 13px;
+                }
+
+                #input-content{
+                    margin-top: 18px;
+                    width: 284px;
+                    // height: 212px;
+                    padding-bottom:212px ;
+                    flex-shrink: 0;
+                    
+                }           
+               
                 .mat-form-field{
                     border-bottom: none;
                     border: 2px solid #7763C5;
@@ -19,50 +59,39 @@ body{
                     margin-bottom: 18px;
                     font-family: 'Inter';
                     font-size: 20px;
-            
-                    //Disable icon from select on the left
-                    .mat-select ::ng-deep .mat-select-arrow{
-                        display: none;
-                    }
-
-                    .mat-select ::ng-deep .mat-select-trigger{
-                        padding: 0;
-                        border-bottom: none;
-                    }
-                  
-                    .mat-select {
-                        width: 100%;
-                    }
             }
-                input{
-                    width: 281px;
-                    height: 48px;
-                    border-radius: 8px;
-                    border: 2px solid #7763C5;
-                    font-family: 'Inter';
-                    font-size: 20px;
-                    color: #939393;
-                    margin-bottom: 18px;
-                }
-                #content{
-                    width: 281px;
-                    height: 212px;
-                    vertical-align: top;
+            // Modify global placeholder
+            ::placeholder{
+                // padding-left: 13px;
+                color: #939393;
+            }
+            // Modify content placeholder
+            ::ng-deep .ng-star-inserted {
+                color: #939393;
+                font-size: 20px;
+                padding-left: 4px;
+            }
+             //Disable icon from select on the left
+             ::ng-deep .mat-select-arrow{
+                  display: none;
+             }
+             //Disable underline property
+             ::ng-deep .mat-form-field-underline{
+                display: none;
+             }
 
-                }
-                #content::placeholder{
-                  vertical-align: top;
-                
-                }
-                button{
-                    text-align: center;
-                    width: 139px;
-                    height: 40px;
-                    border: 2px solid #7763C5;
-                    border-radius: 8px;
-                    background-color: #7763C5;
-                    color: #FFF;
-                }
+             button{
+                text-align: center;
+                width: 139px;
+                height: 40px;
+                border: 2px solid #7763C5;
+                border-radius: 8px;
+                background-color: #7763C5;
+                color: #FFF;
+                margin-top: 43px;
+                 }
+            button:hover{
+                cursor: pointer;
             }
         }
         }
