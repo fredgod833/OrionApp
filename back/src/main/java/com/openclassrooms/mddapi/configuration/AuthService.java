@@ -11,11 +11,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.jwt.*;
-import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -79,6 +78,15 @@ public class AuthService {
         }
     }
 
+    public void logout(HttpServletResponse response){
+        Cookie cookie = new Cookie("token", null);
+        cookie.setMaxAge(0);
+        cookie.setPath("/" +
+                "");
+        response.addCookie(cookie);
+        System.out.println(response);
+    }
+
     // TODO: 22/09/2023 Create user endPoint
 
     public User register(User user){
@@ -89,7 +97,6 @@ public class AuthService {
 
         User buildUser = User.builder()
                 .username(user.getUsername())
-                .lastname(user.getLastname())
                 .email(user.getEmail())
                 .password(passwordEncoder.encode(user.getPassword()))
                 .build();
@@ -119,7 +126,7 @@ public class AuthService {
                         .id_user(user.getId_user())
                         .email(user.getEmail())
                         .username(user.getUsername())
-                        .lastname(user.getLastname())
+                        .subscription(user.getSubscription())
                         .build();
             }
             return null;
