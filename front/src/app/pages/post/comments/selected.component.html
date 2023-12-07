@@ -1,4 +1,9 @@
+<header>
+  <app-menu (click)="navigateMenu()"></app-menu>
+</header>
+
 <section>
+  <div class="border-section-container">
   <div class="post-header-bloc">
     <a [routerLink]="'..'"><img src="./assets/Arrow-left.png" alt="Arrow"></a>
     <h1>{{ post['title'] }}</h1>
@@ -9,49 +14,20 @@
     <p>Thème: </p>
   </div>
 
-  <p>{{ post['content'] }} </p>
-  <hr>
+  <div id="content">
+    <p>{{ post['content'] }} </p>
+  </div>
 
   <div class="post-section-two">
     <p>commentaire</p>
-    <p id="post-section-two-username">username</p>
-    <p id="post-section-two-content">contenu du commentaire</p>
+    <label>
+      <p> Username</p>
+      <input id="post-section-two-content" type="text" placeholder="contenu du commentaire" disabled />
+    </label>
+
     <textarea placeholder="Ecrivez votre commentaire" rows="5" cols="33" [(ngModel)]="comment_text"></textarea>
-    <a (click)="comment(post)"><img src="../../../../assets/🦆 icon _send_.png"></a>
+    <a (click)="comment(post)"><img src="../../../../assets/icon_send_.png"></a>
   </div>
+
+</div>
 </section>
-
-<!-- <form class="post-form">
-  <mat-form-field class="post-form-field">
-    <div class="align-icon-title">
-      <a [routerLink]="'..'"><img src="./assets/Arrow-left.png" alt="Arrow"></a>
-      <h1>Titre de l'article sélectionné</h1>
-    </div>   
-    <div class="post-informations">
-        <div class="short-post-informations">
-          <p>Date:</p>
-          <p>Auteur:</p>
-          <p>Thème:</p>
-        </div>
-      <div id="content">
-        <p>Content: lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
-        <hr>
-      </div>  
-
-      <mat-label>Commentaires</mat-label>
-
-        <div>
-          <mat-label>username</mat-label>
-          <div id="content-comment">
-            contenu du commentaire
-          </div>
-        </div>
-
-        <div>
-          <textarea placeholder="Ecrivez votre commentaire"  rows="5" cols="33"></textarea>
-        </div>
-    </div>
-   </mat-form-field>
-     
-  </form>
-   -->
