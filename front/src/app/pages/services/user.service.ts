@@ -20,20 +20,33 @@ export class UserService{
     subscribe(idSubject: number){
       
       this.authService.me().subscribe({next:(val)=> {
-        this.user = val;
-      
-      },complete:()=> {
-    
-        this.httpClient.post<User>(`${this.path}/subscribe/${this.user.id_user}/${idSubject}`, {}).subscribe({
-          next() {
-            return "Vous êtes inscrit";
+         
+         this.httpClient.post<User>(`${this.path}/subscribe/${val.id_user}/${idSubject}`, {}).subscribe({
+          next(value) {
+            console.log("Inscrit !!!");
           },
-        })
-       
-    
-      },})
+         })
+      }
+      ,})
 
     }
+
+    unsubscribe(idSubject: number){
+        console.log("Unsubscribe", idSubject);
+      this.authService.me().subscribe({
+        next:(value)=> {
+
+          this.httpClient.put<User>(`${this.path}/unsubscribe/${value.id_user}/${idSubject}`, {}).subscribe(
+            {next(value) {
+            console.log("Desinscrit !!!");
+          },});
+        },
+      })
+     
+    
+    
+    }
+
     commentPost(post:PostInterface):Observable<PostInterface>{
 
       return this.httpClient.put<PostInterface>(`${this.path}/comments`, post);
