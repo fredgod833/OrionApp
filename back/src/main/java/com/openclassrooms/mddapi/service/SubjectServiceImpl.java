@@ -65,7 +65,7 @@ public class SubjectServiceImpl implements SubjectService {
 
             for (Subject subject: subjectList) {
                 SubjectDto subjectDto = SubjectDto.builder()
-                        .idSubject(subject.getId_subject())
+                        .idSubject(subject.getIdSubject())
                         .title(subject.getTitle())
                         .description(subject.getDescription())
                         .build();
@@ -111,7 +111,7 @@ public class SubjectServiceImpl implements SubjectService {
     }
     private final Function<Subject, SubjectDto> toDto = (subject) ->
             SubjectDto.builder()
-                    .idSubject(subject.getId_subject())
+                    .idSubject(subject.getIdSubject())
                     .title(subject.getTitle())
                     .description(subject.getDescription())
                     .build();
