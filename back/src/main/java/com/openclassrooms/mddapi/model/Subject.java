@@ -28,7 +28,7 @@ public class Subject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_subject")
-    private int id_subject;
+    private int idSubject;
     @Column(name = "title")
     private String title;
     @Column(name = "description")
