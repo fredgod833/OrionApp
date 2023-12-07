@@ -84,7 +84,7 @@ public class UserServiceImpl implements UserService {
         for (Subject subjects: user.getSubscription().getSubjectList()) {
 
             // verify if subject is in subscription list
-            if (subjects.getId_subject() == subject.getId_subject()){
+            if (subjects.getIdSubject() == subject.getIdSubject()){
 
                 // subscription knows user subscription
                 Subscription subscription = user.getSubscription();
