@@ -6,8 +6,6 @@ import { SubjectDto } from "../model/subjectdto";
 import { NgFor, NgIf } from "@angular/common";
 import { UserService } from "../services/user.service";
 import AuthService from "../services/auth.component";
-import { forEach } from "cypress/types/lodash";
-import Item from "./item.interface";
 
 @Component({
     selector: 'app-subject',
@@ -20,8 +18,6 @@ export default class Subject implements OnInit{
 
     subject_list: SubjectDto[] = [];
     isSubscribed =  false;
-
-    buttonControl:Item[]=[];
 
     constructor(private pathService: SubjectService, private userService: UserService, private authService:AuthService){}
     
