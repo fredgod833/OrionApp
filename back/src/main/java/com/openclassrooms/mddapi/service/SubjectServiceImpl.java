@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 
 //Layer interface implementation
 @Service
@@ -16,29 +15,6 @@ public class SubjectServiceImpl implements SubjectService {
     private final SubjectRepository subjectRepository;
     public SubjectServiceImpl(SubjectRepository subjectRepository){
         this.subjectRepository = subjectRepository;
-    }
-
-    //TODO: Unused method
-    //Load list of subscribed subjects
-    public List<SubjectDto> subscribedList(){
-        //Initialise lists
-        List<Subject> subjectList = new ArrayList<>();
-        List<SubjectDto> subjectDtoList = new ArrayList<>();
-        try {
-            subjectList = getSubjectList();
-
-            for (Subject subject: subjectList) {
-                    SubjectDto subjectDto = toDto.apply(subject);
-
-                    subjectDtoList.add(subjectDto);
-
-                    return subjectDtoList;
-
-            }
-        }catch (Exception e){
-            throw new RuntimeException(e.getMessage());
-        }
-        return subjectDtoList;
     }
 
     //Persist a new subject
@@ -120,12 +96,4 @@ public class SubjectServiceImpl implements SubjectService {
         }
         return subject;
     }
-    //TODO: Delete unused method
-   private final Function<Subject, SubjectDto> toDto = (subject) ->
-            SubjectDto.builder()
-                    .idSubject(subject.getIdSubject())
-                    .title(subject.getTitle())
-                    .description(subject.getDescription())
-                    .build();
-
 }

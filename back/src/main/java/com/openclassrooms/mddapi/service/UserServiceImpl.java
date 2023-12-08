@@ -140,12 +140,12 @@ public class UserServiceImpl implements UserService {
 
         try {
             //Load user
-            User userEmail = userRepository.findByEmail(email);
+            User user = userRepository.findByEmail(email);
 
-            if (userEmail == null) {
+            if (user == null) {
                 return null;
             }
-            return userEmail;
+            return user;
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
