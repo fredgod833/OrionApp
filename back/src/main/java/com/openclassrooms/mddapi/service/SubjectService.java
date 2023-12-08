@@ -6,11 +6,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+//Interface to implement
 @Service
 public interface SubjectService {
     List<Subject> getSubjectList();
     Subject getSubjectById(int id_subject);
     List<SubjectDto> findSubjectDtoList();
+
+    //TODO: Unused method
     List<SubjectDto> subscribedList();
     Subject createSubject(Subject subject);
 }

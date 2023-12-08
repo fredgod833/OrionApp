@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-// TODO: 29/09/2023 Documenter les methodes
+//Layer interface implementation
 @Service
 public class SubjectServiceImpl implements SubjectService {
 
@@ -18,7 +18,10 @@ public class SubjectServiceImpl implements SubjectService {
         this.subjectRepository = subjectRepository;
     }
 
+    //TODO: Unused method
+    //Load list of subscribed subjects
     public List<SubjectDto> subscribedList(){
+        //Initialise lists
         List<Subject> subjectList = new ArrayList<>();
         List<SubjectDto> subjectDtoList = new ArrayList<>();
         try {
@@ -38,6 +41,7 @@ public class SubjectServiceImpl implements SubjectService {
         return subjectDtoList;
     }
 
+    //Persist a new subject
     @Override
     public Subject createSubject(Subject subject) {
 
@@ -52,17 +56,21 @@ public class SubjectServiceImpl implements SubjectService {
         }
     }
 
+    //Load list of subjectsDto
     public List<SubjectDto> findSubjectDtoList(){
+        //List initialization
         List<Subject> subjectList = new ArrayList<>();
         List<SubjectDto> subjectDtoList = new ArrayList<>();
 
         try {
+            //Stock list of subject
             subjectList = subjectRepository.findAll();
 
             if (subjectList.isEmpty()){
                 throw new RuntimeException("Subject list may be empty");
             }
 
+            //Set subject to dto
             for (Subject subject: subjectList) {
                 SubjectDto subjectDto = SubjectDto.builder()
                         .idSubject(subject.getIdSubject())
@@ -77,12 +85,13 @@ public class SubjectServiceImpl implements SubjectService {
         }
         return subjectDtoList;
     }
-
+    //Load list of subject
     public List<Subject> getSubjectList(){
-
+        //Initialise list of subjects
         List<Subject> subjectList  = new ArrayList<>();
 
         try {
+            //Stock list of subject
             subjectList = subjectRepository.findAll();
 
             if (subjectList.isEmpty()){
@@ -95,10 +104,12 @@ public class SubjectServiceImpl implements SubjectService {
 
         return subjectList;
     }
-
+    //Load subject by its id
     public Subject getSubjectById(int id_subject){
+        //Initialise subject
         Subject subject = new Subject();
         try {
+            //Stock subject
             subject = subjectRepository.findById(id_subject).orElse(null);
 
             if (subject== null){
@@ -109,7 +120,8 @@ public class SubjectServiceImpl implements SubjectService {
         }
         return subject;
     }
-    private final Function<Subject, SubjectDto> toDto = (subject) ->
+    //TODO: Delete unused method
+   private final Function<Subject, SubjectDto> toDto = (subject) ->
             SubjectDto.builder()
                     .idSubject(subject.getIdSubject())
                     .title(subject.getTitle())

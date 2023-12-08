@@ -40,7 +40,7 @@ public class AuthService {
         this.rsaKeys = rsaKeys;
     }
 
-    // TODO: 22/09/2023 Login user
+    //Authenticated user connection
     public Token login(User user)  {
 
         try {
@@ -87,8 +87,7 @@ public class AuthService {
         System.out.println(response);
     }
 
-    // TODO: 22/09/2023 Create user endPoint
-
+    //Create an authenticated user
     public User register(User user){
 
         if (user == null){
@@ -114,6 +113,8 @@ public class AuthService {
             throw new RuntimeException(e.getMessage());
         }
     }
+
+    //Return authenticated user information
     public UserDto getMe() {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -133,6 +134,7 @@ public class AuthService {
 
     }
 
+    //Generate token
     public String generateToken(User user) {
 
         Instant now = Instant.now();

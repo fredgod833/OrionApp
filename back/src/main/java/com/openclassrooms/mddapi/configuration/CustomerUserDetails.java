@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Collection;
 
+//Implementation os layer service from spring
 public class CustomerUserDetails implements UserDetails {
 
     private final User user;
@@ -19,11 +20,13 @@ public class CustomerUserDetails implements UserDetails {
         return null;
     }
 
+    //Return user password encoded
     @Override
     public String getPassword() {
         return new BCryptPasswordEncoder().encode(user.getPassword());
     }
 
+    //Return user email
     @Override
     public String getUsername() {
         return user.getEmail();

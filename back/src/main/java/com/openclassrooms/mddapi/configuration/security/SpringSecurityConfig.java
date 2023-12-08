@@ -20,10 +20,12 @@ import org.springframework.security.oauth2.jwt.*;
 import org.springframework.security.oauth2.server.resource.web.BearerTokenAuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 
+//Security configuration
 @Configuration
 @EnableWebSecurity
 public class SpringSecurityConfig {
 
+    //Layer service from spring
     private final UserDetailsService userDetailsService;
     private final RsaKeyProperties rsaKeys;
 
@@ -31,20 +33,19 @@ public class SpringSecurityConfig {
         this.userDetailsService = userDetailsService;
         this.rsaKeys = rsaKeys;
     }
- /*   @Bean
-    public JwtTokenFilter authenticationJwtTokenFilter(){
-       return new JwtTokenFilter();
-    }*/
 
-   // Permet de dire à Spring le canal d'authentication des utilisateurs
+    //Allow spring to know a channel of authenticated users
     @Bean
     public AuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        //Set layer service
         provider.setUserDetailsService(userDetailsService);
+        //Password should be encoded
         provider.setPasswordEncoder(passwordEncoder());
         return provider;
     }
 
+    //Set public and privates endpoints
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.cors(cors -> cors.disable()).csrf(csrf -> csrf.disable())
@@ -56,6 +57,7 @@ public class SpringSecurityConfig {
                         .anyRequest().authenticated())
 
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                //Ask for token authentication
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
                 .exceptionHandling( ex -> ex.authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint()))
                 .authenticationProvider(authenticationProvider());
@@ -63,12 +65,13 @@ public class SpringSecurityConfig {
         return http.build();
     }
 
-    // Encodage et decodage du token avec les rsakeys
+    //Encode token with rsa key
     @Bean
     public JwtDecoder jwtDecoder() {
         return NimbusJwtDecoder.withPublicKey(rsaKeys.getPublicKey()).build();
     }
 
+    //Decode token with rsa key
     @Bean
     JwtEncoder jwtEncoder() {
         JWK jwk = new RSAKey.Builder(rsaKeys.getPublicKey()).privateKey(rsaKeys.getPrivateKey()).build();
@@ -82,16 +85,4 @@ public class SpringSecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    //External requests permission
-   /* @Bean
-    public CorsConfigurationSource corsConfigurationSource(){
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:4200"));
-        configuration.setAllowedMethods(List.of("GET", "POST", "DELETE", "PUT"));
-        configuration.setAllowedHeaders(List.of("Content-Type"));
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**",configuration);
-        return source;
-    }*/
 }

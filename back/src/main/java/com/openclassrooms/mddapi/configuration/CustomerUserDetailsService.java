@@ -15,8 +15,10 @@ public class CustomerUserDetailsService implements UserDetailsService {
         this.userService = userService;
     }
 
+    //Return user
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        //Load user by email
         User user = userService.getByEmail(email);
         if (user == null){
             throw new UsernameNotFoundException("USER NOT FOUND");
