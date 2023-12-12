@@ -17,27 +17,4 @@ Install the dependencies:
 Launch frontend:
 > npm run start
 
-### Lancer les tests :
-Jest
-> npm run test / npm run test:watch (Follow changes)
-
-Cypress
-
-> npm run e2e
-
-### Generating coverage reports
-
-Jest
-> npm run test --coverage
-
-Cypress
-> npm run e2e:coverage
-> npm run cypress:run (Run all cypress test)
-
-### Reports are generated here :
-
-Jest
->coverage>jest>lcov-report>index.html
-
-Cypress
->coverage>lcov-report>index.html
+The application should be available here http://localhost:4200
