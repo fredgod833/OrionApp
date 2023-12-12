@@ -10,6 +10,9 @@ import lombok.Builder;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Builder
+/**
+ * Object that Stock token
+ */
 public class Token {
     private String token;
 }

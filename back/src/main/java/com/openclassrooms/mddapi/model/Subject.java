@@ -24,6 +24,9 @@ import java.util.List;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Builder
+/**
+ * Stock subject
+ */
 public class Subject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

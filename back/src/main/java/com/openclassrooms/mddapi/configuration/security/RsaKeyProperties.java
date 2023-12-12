@@ -9,7 +9,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 
-//Secret key encode token
+/**
+ * Secret key encode token
+ */
 @ConfigurationProperties("rsa")
 @Getter
 @Setter

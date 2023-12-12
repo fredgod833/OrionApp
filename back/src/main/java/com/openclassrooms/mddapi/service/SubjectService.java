@@ -6,7 +6,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-//Interface to implement
+/**
+ * Interface to implement
+ */
 @Service
 public interface SubjectService {
     List<Subject> getSubjectList();

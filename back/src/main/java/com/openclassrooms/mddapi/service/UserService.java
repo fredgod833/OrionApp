@@ -5,7 +5,9 @@ import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.model.dto.UserDto;
 import org.springframework.stereotype.Service;
 
-//Interface to implement
+/**
+ * Interface to implement
+ */
 @Service
 public interface UserService {
     User getUserById(int id_user);

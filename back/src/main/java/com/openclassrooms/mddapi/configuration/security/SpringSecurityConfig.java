@@ -20,12 +20,16 @@ import org.springframework.security.oauth2.jwt.*;
 import org.springframework.security.oauth2.server.resource.web.BearerTokenAuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 
-//Security configuration
+/**
+ * Security configuration
+ */
 @Configuration
 @EnableWebSecurity
 public class SpringSecurityConfig {
 
-    //Layer service from spring
+    /**
+     * Layer service from spring
+     */
     private final UserDetailsService userDetailsService;
     private final RsaKeyProperties rsaKeys;
 
@@ -34,30 +38,45 @@ public class SpringSecurityConfig {
         this.rsaKeys = rsaKeys;
     }
 
-    //Allow spring to know a channel of authenticated users
+    /**
+     * Allow spring to know a channel of authenticated users
+     * @return provider
+     */
     @Bean
     public AuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        //Set layer service
+
+        /**
+         * Set layer service
+         */
         provider.setUserDetailsService(userDetailsService);
-        //Password should be encoded
+        /**
+         * Password should be encoded
+         */
         provider.setPasswordEncoder(passwordEncoder());
         return provider;
     }
 
-    //Set public and privates endpoints
+    /**
+     * Set public and privates endpoints
+     * @param http configuration
+     * @return new configuration
+     * @throws Exception to get errors
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.cors(cors -> cors.disable()).csrf(csrf -> csrf.disable())
 
                 .authorizeRequests( auth -> auth
                         .antMatchers("/v2/api-docs", "/swagger-ui/**", "/swagger-resources/**", "/swagger-ui.html",
-                                "/webjars/springfox-swagger-ui/**", "/api/auth/register", "/api/auth/login", "/api/user/delete/account/{id_user}").permitAll()
-                        .mvcMatchers("/api/auth/me","/api/subject/**", "/api/post/**", "/api/subscription/**",  "/api/user/**", "/api/session/all", "/api/subject/create_subject", "/api/user/comments", "/api/auth/logout").permitAll()
+                                "/webjars/springfox-swagger-ui/**", "/api/auth/register", "/api/auth/login").permitAll()
+                        .mvcMatchers("/api/auth/me","/api/subject/**", "/api/post/**",  "/api/user/**", "/api/subject/create_subject", "/api/user/comments", "/api/auth/logout", "/api/user/delete/account/{id_user}").permitAll()
                         .anyRequest().authenticated())
 
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                //Ask for token authentication
+                /**
+                 * Ask for token authentication
+                 */
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
                 .exceptionHandling( ex -> ex.authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint()))
                 .authenticationProvider(authenticationProvider());
@@ -65,13 +84,19 @@ public class SpringSecurityConfig {
         return http.build();
     }
 
-    //Encode token with rsa key
+    /**
+     * Decode token with rsa key
+     * @return decoder
+     */
     @Bean
     public JwtDecoder jwtDecoder() {
         return NimbusJwtDecoder.withPublicKey(rsaKeys.getPublicKey()).build();
     }
 
-    //Decode token with rsa key
+    /**
+     * Encode token with rsa key
+     * @return encoder
+     */
     @Bean
     JwtEncoder jwtEncoder() {
         JWK jwk = new RSAKey.Builder(rsaKeys.getPublicKey()).privateKey(rsaKeys.getPrivateKey()).build();
@@ -79,7 +104,10 @@ public class SpringSecurityConfig {
         return new NimbusJwtEncoder(jwks);
     }
 
-    // Encode password
+    /**
+     * Encode password
+     * @return password encoded
+     */
     @Bean
     public BCryptPasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();

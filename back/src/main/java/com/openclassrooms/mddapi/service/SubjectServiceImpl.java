@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-//Layer interface implementation
+/**
+ * Layer interface implementation
+ */
 @Service
 public class SubjectServiceImpl implements SubjectService {
 
@@ -17,7 +19,11 @@ public class SubjectServiceImpl implements SubjectService {
         this.subjectRepository = subjectRepository;
     }
 
-    //Persist a new subject
+    /**
+     * Persist a new subject
+     * @param subject entry
+     * @return subject
+     */
     @Override
     public Subject createSubject(Subject subject) {
 
@@ -32,9 +38,13 @@ public class SubjectServiceImpl implements SubjectService {
         }
     }
 
-    //Load list of subjectsDto
+    /**
+     * Load list of subjectsDto
+     * @return list
+     */
     public List<SubjectDto> findSubjectDtoList(){
         //List initialization
+
         List<Subject> subjectList = new ArrayList<>();
         List<SubjectDto> subjectDtoList = new ArrayList<>();
 
@@ -61,7 +71,11 @@ public class SubjectServiceImpl implements SubjectService {
         }
         return subjectDtoList;
     }
-    //Load list of subject
+
+    /**
+     * Load list of subject
+     * @return list
+     */
     public List<Subject> getSubjectList(){
         //Initialise list of subjects
         List<Subject> subjectList  = new ArrayList<>();
@@ -80,7 +94,12 @@ public class SubjectServiceImpl implements SubjectService {
 
         return subjectList;
     }
-    //Load subject by its id
+
+    /**
+     * Load subject by its id
+     * @param id_subject entry
+     * @return subject
+     */
     public Subject getSubjectById(int id_subject){
         //Initialise subject
         Subject subject = new Subject();

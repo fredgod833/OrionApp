@@ -8,6 +8,9 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
+/**
+ * Class dto set by user
+ */
 public class UserDto {
     private int id_user;
     private String username;

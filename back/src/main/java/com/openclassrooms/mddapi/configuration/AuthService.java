@@ -19,7 +19,9 @@ import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
-
+/**
+ * Logic layer service to open user access to the application
+ */
 @Service
 public class AuthService {
    private final JwtEncoder encoder;
@@ -40,7 +42,11 @@ public class AuthService {
         this.rsaKeys = rsaKeys;
     }
 
-    //Authenticated user connection
+    /**
+     * Authenticate user connection
+     * @param user certify the right information
+     * @return a token of access
+     */
     public Token login(User user)  {
 
         try {
@@ -87,7 +93,11 @@ public class AuthService {
         System.out.println(response);
     }
 
-    //Create an authenticated user
+    /**
+     * Create an authenticated user
+     * @param user required fields
+     * @return user
+     */
     public User register(User user){
 
         if (user == null){
@@ -114,7 +124,10 @@ public class AuthService {
         }
     }
 
-    //Return authenticated user information
+    /**
+     * Return authenticated user information
+     * @return user information
+     */
     public UserDto getMe() {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -134,7 +147,11 @@ public class AuthService {
 
     }
 
-    //Generate token
+    /**
+     * Generate token
+     * @param user get email from user
+     * @return token generated
+     */
     public String generateToken(User user) {
 
         Instant now = Instant.now();
@@ -147,7 +164,9 @@ public class AuthService {
                 .claim("scope", "")
                 .build();
 
-        // Signature
+        /**
+         * Signature
+         */
         return encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
     }
 

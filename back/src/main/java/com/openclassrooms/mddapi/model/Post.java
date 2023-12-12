@@ -19,6 +19,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Builder
+/**
+ * Stock post
+ */
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

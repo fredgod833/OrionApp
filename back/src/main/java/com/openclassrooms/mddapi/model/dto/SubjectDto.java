@@ -7,6 +7,9 @@ import lombok.*;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Builder
+/**
+ * Class dto set by subject class
+ */
 public class SubjectDto {
     private int idSubject;
     private String title;

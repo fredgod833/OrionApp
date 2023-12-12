@@ -13,6 +13,9 @@ import java.util.List;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Builder
+/**
+ * Stock subscription
+ */
 public class Subscription {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

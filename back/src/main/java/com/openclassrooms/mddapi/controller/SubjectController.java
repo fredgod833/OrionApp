@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
-//Subject api controller
+/**
+ * Subject api controller
+ */
 @RestController
 @RequestMapping(path = "api/subject")
 public class SubjectController {
@@ -22,25 +24,39 @@ public class SubjectController {
         this.subjectService = subjectService;
     }
 
-    //Return list of subject
+    /**
+     * List of subject
+     * @return list
+     */
     @GetMapping(path = "/subject_list")
     public List<Subject> subjectList(){
       return subjectService.getSubjectList();
     }
 
-    //Return subject by its id
+    /**
+     * Get subject by its id
+     * @param id_subject entry
+     * @return subject
+     */
     @GetMapping("/{id_subject}")
     public Subject getSubjectById(@PathVariable(name = "id_subject") int id_subject){
         return subjectService.getSubjectById(id_subject);
     }
 
-    //Return list of subjectDto
+    /**
+     * Get list of subjectDto
+     * @return list
+     */
     @GetMapping("/subjectDto_list")
     public List<SubjectDto> getSubjectDtoList(){
         return subjectService.findSubjectDtoList();
     }
 
-    //Create a subject
+    /**
+     * Create a subject
+     * @param subject body entry
+     * @return new subject
+     */
     @PostMapping("/create_subject")
     public Subject createSubject(@RequestBody Subject subject){
         return subjectService.createSubject(subject);

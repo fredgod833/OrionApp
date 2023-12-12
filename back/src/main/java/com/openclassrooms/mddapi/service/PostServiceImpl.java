@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-//Layer Interface implementation
+/**
+ * Layer Interface implementation
+ */
 @Service
 public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
@@ -23,7 +25,10 @@ public class PostServiceImpl implements PostService {
         this.subjectRepository = subjectRepository;
     }
 
-    //Load list of posts
+    /**
+     * Load list of posts
+     * @return list
+     */
     public List<Post> postList() {
         List<Post> postArray = new ArrayList<>();
 
@@ -39,7 +44,11 @@ public class PostServiceImpl implements PostService {
         return postArray;
     }
 
-    //Load post through its id
+    /**
+     * Load post through its id
+     * @param post_id entry
+     * @return post
+     */
     public ResponseEntity<?> findPostById(int post_id) {
         Post post = new Post();
 
@@ -56,13 +65,19 @@ public class PostServiceImpl implements PostService {
         return ResponseEntity.ok(post);
     }
 
-    //Persist new post
+    /**
+     * Persist new post
+     * @param post entry
+     * @param id_subject entry
+     * @return new post
+     */
     @Override
     public Post createPost(Post post, int id_subject) {
 
         try {
 
             // identify the subject
+
             Subject subject = subjectService.getSubjectById(id_subject);
 
             //verify if subject is null

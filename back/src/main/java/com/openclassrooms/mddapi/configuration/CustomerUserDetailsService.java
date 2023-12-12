@@ -16,6 +16,13 @@ public class CustomerUserDetailsService implements UserDetailsService {
     }
 
     //Return user
+
+    /**
+     * Get user though its email
+     * @param email entry
+     * @return user
+     * @throws UsernameNotFoundException to get errors
+     */
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         //Load user by email

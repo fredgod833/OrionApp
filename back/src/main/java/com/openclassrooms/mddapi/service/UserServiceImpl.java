@@ -10,7 +10,9 @@ import com.openclassrooms.mddapi.repository.SubscriptionRepository;
 import com.openclassrooms.mddapi.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
-//Layer interface implementation
+/**
+ * Layer interface implementation
+ */
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
@@ -25,7 +27,12 @@ public class UserServiceImpl implements UserService {
         this.subscriptionRepository = subscriptionRepository;
         this.subjectService = subjectService;
     }
-    //Persist a comment to post
+
+    /**
+     * Persist a comment to post
+     * @param post entry validation
+     * @return post
+     */
     @Override
     public Post commentPost(Post post) {
         if (post == null
@@ -37,7 +44,11 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    //Persist new user username and email
+    /**
+     * Persist new user username and email
+     * @param userDto entry validation
+     * @return user
+     */
     @Override
     public User changeUserUsernameAndEmail(UserDto userDto) {
         if (userDto == null){
@@ -52,7 +63,12 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
-    //Persist user subscription
+    /**
+     * Persist user subscription
+     * @param id_user entry validation
+     * @param id_subject entry validation
+     * @return user
+     */
     public User subscribe(int id_user, int id_subject){
         //Load user and subject
         User user = userRepository.findById(id_user).orElse(null);
@@ -84,6 +100,13 @@ public class UserServiceImpl implements UserService {
     }
 
     // Persist unsubscribe
+
+    /**
+     * Persist unsubscribe
+     * @param id_user entry validation
+     * @param id_subject entry validation
+     * @return user
+     */
     public User unsubscribe(int id_user, int id_subject){
         //Load user and subject
         User user = getUserById(id_user);
@@ -109,7 +132,11 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    //Persist deleted user account
+    /**
+     * Persist deleted user account
+     * @param id_user entry validation
+     * @return user
+     */
     @Override
     public User deleteUserAccount(int id_user) {
         //Load user
@@ -123,7 +150,12 @@ public class UserServiceImpl implements UserService {
 
         return user;
     }
-    //Load user by its id
+
+    /**
+     * Load user by its id
+     * @param id_user entry validation
+     * @return user
+     */
     @Override
     public User getUserById(int id_user) {
 
@@ -134,8 +166,12 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException(e.getMessage());
         }
     }
-    //Load user by its email
-    //TODO: Change userEmail to user
+
+    /**
+     * Load user by its email
+     * @param email entry validation
+     * @return user
+     */
     public User getByEmail(String email) {
 
         try {

@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
-
+/**
+ * User api router
+ */
 @RestController
 @RequestMapping("api/user")
 public class UserController {
@@ -24,37 +25,64 @@ public class UserController {
         this.userService = userService;
     }
 
-    //Return user by its id
+    /**
+     * Get user by its id
+     * @param id_user entry
+     * @return user
+     */
     @GetMapping("/{id_user}")
     public User getUserById(@PathVariable(name = "id_user")int id_user) {
         User user = userService.getUserById(id_user);
         return user;
     }
 
-    //Subscribe a subject
+    /**
+     * Subscribe a subject
+     * @param id_user entry
+     * @param id_subject entry
+     * @return user with its subscription
+     */
     @PostMapping("/subscribe/{idUser}/{idSubject}")
     public ResponseEntity<User> subscribe(@PathVariable(name = "idUser") int id_user, @PathVariable(name = "idSubject") int id_subject){
             return ResponseEntity.ok(userService.subscribe(id_user, id_subject));
     }
 
-    //Unsubscribe a subject
+    /**
+     * Unsubscribe a subject
+     * @param id_user entry
+     * @param id_subject entry
+     * @return user with its subscription updated
+     */
     @PutMapping("/unsubscribe/{id_user}/{id_subject}")
     public ResponseEntity<User> unsubscribe(@PathVariable(name = "id_user")int id_user, @PathVariable(name = "id_subject")int id_subject){
         return ResponseEntity.ok(userService.unsubscribe(id_user, id_subject));
     }
-    //Delete user account
+
+    /**
+     * Delete user account
+     * @param id_user entry
+     * @return Deleted account
+     */
     @DeleteMapping("/delete/account/{id_user}")
     public User deleteUserAccount(@PathVariable(name = "id_user") int id_user){
         return userService.deleteUserAccount(id_user);
     }
 
-    //Comment a post
+    /**
+     * Comment a post
+     * @param post entry
+     * @return post
+     */
     @PutMapping("/comments")
     public Post comments(@RequestBody Post post){
         return userService.commentPost(post);
     }
 
-    //Change its user username and email
+    /**
+     * Change its user username and email
+     * @param userDto entry
+     * @return user updated
+     */
     @PutMapping("/change-user/username-email")
     public User changeUsernameAndEmail(@RequestBody UserDto userDto){
         return userService.changeUserUsernameAndEmail(userDto);

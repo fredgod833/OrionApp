@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
-//Post api controller
+/**
+ * Post api controller
+ */
 @RestController
 @RequestMapping(path = "api/post")
 public class PostController {
@@ -21,18 +23,31 @@ public class PostController {
         this.postService = postService;
     }
 
-    //Return list of post
+    /**
+     * Get a list of post
+     * @return list
+     */
     @GetMapping("/post_list")
     public List<Post>getPostList(){
         return postService.postList();
     }
 
-    //Return post by its id
+    /**
+     * Get post by its id
+     * @param post_id entry
+     * @return post
+     */
     @GetMapping("/{post_id}")
     public ResponseEntity<?> findPostById(@PathVariable(name = "post_id") int post_id){
         return postService.findPostById(post_id);
     }
-    //Create a post
+
+    /**
+     * Create a post
+     * @param post information to create
+     * @param id_subject for post concerns
+     * @return new post
+     */
     @PostMapping("/create_post/{id_subject}")
     public Post createPost(@RequestBody Post post, @PathVariable(name = "id_subject")int id_subject){
         return postService.createPost(post, id_subject);
