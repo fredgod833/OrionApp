@@ -19,30 +19,6 @@ Install the dependencies:
 Launch frontend:
 > npm run start
 
-### Lancer les tests :
-Jest
-> npm run test / npm run test:watch (Follow changes)
-
-Cypress
-
-> npm run e2e
-
-### Generating coverage reports
-
-Jest
-> npm run test --coverage
-
-Cypress
-> npm run e2e:coverage
-> npm run cypress:run (Run all cypress test)
-
-### Reports are generated here :
-
-Jest
->coverage>jest>lcov-report>index.html
-
-Cypress
->coverage>lcov-report>index.html
 
 ### Development server
 
@@ -62,20 +38,18 @@ Build and Launch backend:
 > /
 > by IDE
 
-### Lancer les tests :
-Junit 5
-> mvn test
-> /
-> by IDE
+### Resources
+MySQL:
+resources>sql> launch the script in order to create 
+database and fill it 
 
-### Generating coverage reports
+Use the users credentials created to log in the application
 
-Rapport jacoco
-> mvn jacoco:report
+SWAGGER: 
+    Do not forget to launch backend first, swagger is 
+accessible here: http://localhost:8080/swagger-ui/#/
 
-### Reports are generated here :
-
-Jacoco
->target>site>jacoco>index.html
+POSTMAN: resources>postman> Import json file into postman
+to test endpoints, entries, outs and authorisations
 
 Good luck!
