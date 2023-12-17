@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders, HttpInterceptor } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { Token } from "../../security/interfaces/token.component";
 import { Observable } from "rxjs";
 import { Injectable } from "@angular/core";
