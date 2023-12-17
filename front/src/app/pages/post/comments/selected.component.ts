@@ -31,7 +31,7 @@ export default class PostSelected implements OnInit{
           this.post = params;
         })}
 
-    //Comment a post
+    //Comment a post and return a message
     comment(post: PostInterface){
 
        //copy object

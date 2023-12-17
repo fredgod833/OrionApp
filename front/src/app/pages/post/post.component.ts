@@ -17,6 +17,8 @@ import { PostService } from "../services/post.service";
     imports: [MatCardModule, MatButtonModule, NgFor, NgIf, RouterOutlet, PostSelected, RouterModule, CreatePost]
 })
 export default class Post implements OnInit{
+
+    //Initialize a list of posts
     post_list:PostInterface[] = [];
 
     //Stock list of post
@@ -31,7 +33,7 @@ export default class Post implements OnInit{
     }))
   }
 
-    //Change date format
+    //Change date format and return it
     formatPostDate(date: Date){
      const dateFromPost = new Date(date);
  
@@ -40,7 +42,7 @@ export default class Post implements OnInit{
      return formattedDate;
     }
 
-    //Get the right post
+    //Get the right post and redirect to comments
     selectPost(post:PostInterface){
       return this.router.navigate(['/comments', post]);
     }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,12 +10,12 @@ export class HomeComponent {
 
   constructor(private route: Router){}
 
-  //User connection
+  //Log user in
   login(){
     return this.route.navigate(['/login']);
   }
 
-  //User inscription 
+  //Register user
   register(){
     return this.route.navigate(['register']);
   }
