@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatInputModule } from '@angular/material/input';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -35,8 +36,11 @@ import { MatInputModule } from '@angular/material/input';
 export class LoginComponent {
 
   public onError = false;
+  
+  //Property to stock subscription
+  public subscription!: Subscription;
 
-  // Login form fields required
+  //Login form fields required
   public form =  this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required]]
@@ -45,11 +49,11 @@ export class LoginComponent {
   constructor(public formBuilder: FormBuilder, private router:Router, 
     private authService: AuthService){}
 
-// Users authentication 
+//Authenticate user 
 public login():void{
     const loginRequest = this.form.value as LoginRequest;
 
-    this.authService.login(loginRequest).subscribe({
+    this.subscription = this.authService.login(loginRequest).subscribe({
        next:(response: Token) => {
     
           localStorage.setItem('token', response.token );
@@ -64,5 +68,11 @@ public login():void{
        error: () => {this.onError = true; }
 });
        
+  }
+  //Unsubscribe subscription
+  ngOnDestroy():void{
+    if(this.subscription){
+      this.subscription.unsubscribe()
+    }
   }
 }

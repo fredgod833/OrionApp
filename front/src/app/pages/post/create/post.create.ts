@@ -6,6 +6,7 @@ import { SubjectService } from "../../services/subject.service";
 import { PostService } from "../../services/post.service";
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import PostCreate from "../../model/post.create";
+import { Subscription } from "rxjs";
 
 @Component({
     selector: 'create-post',
@@ -18,6 +19,9 @@ export default class CreatePost implements OnInit{
 
     public postGroup!: FormGroup;
 
+    //Property to stock subscription
+    public subscription!: Subscription;
+
     //Stock list of subject
     public subjectList$ = this.subjectService.getSubjectList();
 
@@ -29,7 +33,7 @@ export default class CreatePost implements OnInit{
     constructor(private subjectService: SubjectService, private postService: PostService, private fb: FormBuilder){
     }
 
-    //Create a post
+    //Create a post and return a message
     createPost(){
         //Loading values
         const postCreate: PostCreate = {
@@ -47,18 +51,27 @@ export default class CreatePost implements OnInit{
         if(postCreate == null){
             return "Body is not correct";
         }
-        return this.postService.createPost(postCreate, id_subject).subscribe(
+        this.subscription = this.postService.createPost(postCreate, id_subject).subscribe(
             {
                 next() {
                     return "Post created !!!";
                 },
             }
         )
+
+        return this.subscription;
+        }
+
+        //Unsubscribe a subscription
+        ngOnDestroy():void{
+            if(this.subscription){
+                this.subscription.unsubscribe();
+            }
         }
     
-      //Form required fields for post creation
-      initForm(){
-        // Stock a group of fields
+      //Request form required field for post creation validation
+      initForm():void{
+        //Stock a group of fields
         this.postGroup = this.fb.group({
             idSubject: [
                 [Validators.required]

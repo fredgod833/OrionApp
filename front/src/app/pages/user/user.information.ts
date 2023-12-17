@@ -8,6 +8,7 @@ import { NgFor } from "@angular/common";
 import { UserService } from "../services/user.service";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
+import { Subscription } from "rxjs";
 
 @Component({
     selector: 'user-info',
@@ -19,6 +20,12 @@ import { Router } from "@angular/router";
 export default class UserInformation implements OnInit{
     public subjectList: SubjectDto[] = [];
     public form_profil!: FormGroup;
+    
+    //Properties to stock subscriptions
+    public subscriptionOfMeForProfil!:Subscription;
+    public subscriptionOfMeForUser!:Subscription;
+    public subscriptionOfUser!:Subscription;
+    public subscriptionOfLogOut!:Subscription;
     
     constructor(private formBuilder:FormBuilder, private authService: AuthService, private userService: UserService, 
     private router: Router){}
@@ -34,8 +41,8 @@ export default class UserInformation implements OnInit{
         return this.userService.unsubscribe(idSubject);
     }
 
-    //Return subjects subscribed from user
-    public userProfil(){
+    //Push subscribed subjects for list of subjects
+    public userProfil():void{
 
         this.authService.me().subscribe({
             next:(value)=> {
@@ -48,7 +55,8 @@ export default class UserInformation implements OnInit{
         })
     }
 
-    public changeUserUsernameAndEmail(){
+    //Change username, email and return a message
+    public changeUserUsernameAndEmail():void{
         console.log(this.form_profil.value)
         this.authService.me().subscribe({next:(value)=> {
 
@@ -59,12 +67,14 @@ export default class UserInformation implements OnInit{
             this.userService.changeUserUsernameAndEmail(value).subscribe({
                 next(){
                     console.log("Username and Email changed: ", value);
+                    return "Username and Email changed: ";
                 }
             })
         },});
     }
 
-    public logOut(){
+    //Log user out
+    public logOut():void{
         this.authService.logout().subscribe({
             next:()=> {
                 console.log("Logout sucessfull");
@@ -72,8 +82,25 @@ export default class UserInformation implements OnInit{
             },
         });
     }
+
+    //Unsubscribe subscriptions
+    ngOnDestroy():void{
+        if(this.subscriptionOfLogOut){
+            this.subscriptionOfLogOut.unsubscribe();
+        }
+        if(this.subscriptionOfMeForProfil){
+            this.subscriptionOfMeForProfil.unsubscribe();
+        }
+        if(this.subscriptionOfMeForUser){
+            this.subscriptionOfMeForUser.unsubscribe();
+        }
+        if(this.subscriptionOfUser){
+            this.subscriptionOfUser.unsubscribe();
+        }
+    }
+
     //Form required fields
-    public initFormProfil(){
+    public initFormProfil():void{
         this.form_profil = this.formBuilder.group({
             username: ["", [Validators.required]],
             email: ["", [Validators.required]]

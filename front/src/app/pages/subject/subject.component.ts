@@ -5,6 +5,7 @@ import { SubjectService } from "../services/subject.service";
 import { SubjectDto } from "../model/subjectdto";
 import { NgFor, NgIf } from "@angular/common";
 import { UserService } from "../services/user.service";
+import { Subscription } from "rxjs";
 
 @Component({
     selector: 'app-subject',
@@ -15,19 +16,24 @@ import { UserService } from "../services/user.service";
 })
 export default class Subject implements OnInit{
 
+    //Initalise list of subjects
     subject_list: SubjectDto[] = [];
+
+    //Property to stock subscription
+    subscriptionOfSubjectList!: Subscription;
+    subscriptionOfUserService!:Subscription;
 
     //Control of subscription button
     isSubscribed =  false;
 
     constructor(private pathService: SubjectService, private userService: UserService){}
     
-    ngOnInit(){
+    ngOnInit():void{
       this.getSubjectList()
     };
 
     //Set values to new list of subjects
-    getSubjectList(){
+    getSubjectList():void{
       this.pathService.getSubjectList().subscribe(response => {
         for(let i=0; i < response.length; i++){
           //Add subject values to list
@@ -37,7 +43,7 @@ export default class Subject implements OnInit{
     }
 
     //User subscription 
-    subscribe(idSubject: number){
+    subscribe(idSubject: number):void{
 
       if(idSubject != 0){
        // Subscribe subject
@@ -51,6 +57,16 @@ export default class Subject implements OnInit{
          val.isSubscribed = true;
         }
       })
+      }
+    }
+    //Unsubscribe subscriptions
+    ngOnDestroy():void{
+      if(this.subscriptionOfSubjectList){
+        this.subscriptionOfSubjectList.unsubscribe();
+      }
+
+      if(this.subscriptionOfUserService){
+        this.subscriptionOfUserService.unsubscribe();
       }
     }
 }

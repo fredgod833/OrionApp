@@ -5,6 +5,7 @@ import { MatCardModule } from "@angular/material/card";
 import AuthService from "../services/auth.component";
 import RegisterRequest from "src/app/security/interfaces/register.component";
 import { MatFormFieldModule } from "@angular/material/form-field";
+import { Subscription } from "rxjs";
 
 @Component({
     selector: 'register-page',
@@ -17,27 +18,40 @@ export default class Register implements OnInit{
     public onError = false;
     public form!: FormGroup;
 
+    public subscription!: Subscription;
+
     constructor(private formBuilder: FormBuilder, private authService: AuthService){}
 
     //Initialization
-    ngOnInit(){
+    ngOnInit():void{
         this.initForm();
     }
 
-    //Register a user as authentified
+    //Register a user as authentified and return a message
     public register(){
         const register = this.form.value as RegisterRequest;
-        return this.authService.register(register).subscribe!({
+        this.subscription = this.authService.register(register).subscribe!({
             next(value) {
                 console.log("User Registered!!!", value);
+                return "User Registered!!!";
+               
             },
             //Error set true for template
             error:()=> this.onError = true
         });
+
+        return this.subscription;
+    }
+    
+    //Unsubscribe subscription
+    ngOnDestroy():void{
+        if(this.subscription){
+            this.subscription.unsubscribe();
+        }
     }
 
-    // Form required fields
-    public initForm(){
+    //Request required field for register validation
+    public initForm():void{
         //Stock form fields
         this.form = this.formBuilder.group({
             username: ["", [Validators.required]],
