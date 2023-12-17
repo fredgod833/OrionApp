@@ -18,7 +18,7 @@ export default class ButtonCreation{
     isPostCreationActive = false;
 
     //Active post page creation
-    activePostCreation(){
+    activePostCreation():void{
         this.isPostCreationActive = true;
       }
 }
