@@ -5,7 +5,7 @@
   <section>
 <div class="login" fxLayout="row" fxLayoutAlign="center center">
   <mat-card class="card">
-    <a routerLink="/menu"><img src="/assets/Arrow-left.png" alt="Arrow-left" id="arrow-left"></a>
+    <a (click)="arrowLeftDirection()"><img src="/assets/Arrow-left.png" alt="Arrow-left" id="arrow-left"></a>
     <mat-card-title id="title">Se connecter</mat-card-title>
       <form class="login-form" [formGroup]="form" (ngSubmit)="login()" method="post">  
         <mat-card-content fxLayout="column">
