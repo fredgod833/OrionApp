@@ -18,7 +18,7 @@ import { Router } from "@angular/router";
 export default class Register implements OnInit{
     public onError = false;
     public form!: FormGroup;
-
+    public message!:string;
     public subscription!: Subscription;
 
     constructor(private formBuilder: FormBuilder, private authService: AuthService, private router:Router){}
@@ -32,10 +32,15 @@ export default class Register implements OnInit{
     public register():Subscription{
         const register = this.form.value as RegisterRequest;
         this.subscription = this.authService.register(register).subscribe!({
-            next:(value)=> {
-                console.log("User Registered!!!", value);
-                this.router.navigate(['/login']);  
+            next:()=> {
+                this.message='User Registered !!!';
+
+               setTimeout(()=>{
+                this.router.navigate(['/login']); 
+               }, 2000)
+                // this.router.navigate(['/login']);  
             },
+        
             //Error set true for template
             error:()=> this.onError = true
         });
