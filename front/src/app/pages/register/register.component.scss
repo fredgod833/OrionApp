@@ -23,7 +23,6 @@ header{
         float: left;
         margin-left: 51px;
         margin-top: 44px;
-
       }
     }
     #title{
@@ -37,7 +36,6 @@ header{
       max-width: 500px;
       margin: auto;
       text-align: center;
-      
   
     .input-wrapper{
       display: flex;
@@ -55,20 +53,16 @@ header{
         width: 250px;
         height: 50px;
         border-radius: 0.8em;
-        margin-bottom: 40px;
+        margin-bottom: 30px;
         padding-left: 10px;
         font-size: 16px;
       }
-      
-     
       label{
         margin-bottom: 5px;
         width: 250px;
         margin: auto;
         text-align:left;
-      
       }
-    
     }
     #button-submit{
       width: 139px;
@@ -88,6 +82,19 @@ header{
     }
     }
     
+    #registered_user{
+      border: 2px solid #bbb3b3;
+      width: 200px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      color: #970303;
+      font-weight: 600;
+      background-color: #bbb3b3;
+      margin-left: 41%;
+      margin-top: 1%;
+    }
   }
   
   }
