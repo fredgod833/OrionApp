@@ -6,6 +6,7 @@ import AuthService from "../services/auth.component";
 import RegisterRequest from "src/app/security/interfaces/register.component";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { Subscription } from "rxjs";
+import { Router } from "@angular/router";
 
 @Component({
     selector: 'register-page',
@@ -20,7 +21,7 @@ export default class Register implements OnInit{
 
     public subscription!: Subscription;
 
-    constructor(private formBuilder: FormBuilder, private authService: AuthService){}
+    constructor(private formBuilder: FormBuilder, private authService: AuthService, private router:Router){}
 
     //Initialization
     ngOnInit():void{
@@ -31,10 +32,9 @@ export default class Register implements OnInit{
     public register():Subscription{
         const register = this.form.value as RegisterRequest;
         this.subscription = this.authService.register(register).subscribe!({
-            next(value) {
+            next:(value)=> {
                 console.log("User Registered!!!", value);
-                return "User Registered!!!";
-               
+                this.router.navigate(['/login']);  
             },
             //Error set true for template
             error:()=> this.onError = true
@@ -58,5 +58,10 @@ export default class Register implements OnInit{
             email: ["", [Validators.required]],
             password: ["" ,[Validators.required]]
         })
+    }
+
+    //Redirect arrow left
+    arrowLeftDirection():void{
+        this.router.navigate(['/']);
     }
 }
