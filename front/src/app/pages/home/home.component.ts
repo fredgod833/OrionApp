@@ -11,12 +11,12 @@ export class HomeComponent {
   constructor(private route: Router){}
 
   //Log user in
-  login(){
+  login():Promise<boolean>{
     return this.route.navigate(['/login']);
   }
 
   //Register user
-  register(){
+  register():Promise<boolean>{
     return this.route.navigate(['register']);
   }
 }

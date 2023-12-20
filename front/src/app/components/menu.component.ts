@@ -28,7 +28,7 @@ export default class menuBar{
   
 
   //Enable post page and Unable others
-  activePostLink(){
+  activePostLink():void{
     this.isPostLinkActive = true;
     this.isSubjectLinkActive = false;
     this.isUserInformationActive = false;
@@ -36,28 +36,28 @@ export default class menuBar{
   }
 
   //Enable subject page and Unable others
-  activeSubjectLink(){
+  activeSubjectLink():void{
     this.isSubjectLinkActive = true;
     this.isPostLinkActive = false;
     this.isUserInformationActive = false;
     this.isPostCreationActive = false;
   }
   //Enable post creation page and Unable others
-  activePostCreation(){
+  activePostCreation():void{
     this.isPostCreationActive = true;
     this.isPostLinkActive = false;
     this.isUserInformationActive = false;
     this.isSubjectLinkActive = false;
   }
   //Enable user information page and Unable others
-  activeUserInformation(){
+  activeUserInformation():void{
     this.isSubjectLinkActive = false;
     this.isPostLinkActive = false;
     this.isPostCreationActive = false;
     this.isUserInformationActive = true;
   }
   // Hidde button when its actived
-  hiddenButton(){
+  hiddenButton():void{
       this.isButtonCreationActive = true;
   }
 }

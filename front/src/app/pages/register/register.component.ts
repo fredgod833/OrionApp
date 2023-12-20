@@ -28,7 +28,7 @@ export default class Register implements OnInit{
     }
 
     //Register a user as authentified and return a message
-    public register(){
+    public register():Subscription{
         const register = this.form.value as RegisterRequest;
         this.subscription = this.authService.register(register).subscribe!({
             next(value) {

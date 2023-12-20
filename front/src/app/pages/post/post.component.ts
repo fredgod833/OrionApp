@@ -34,7 +34,7 @@ export default class Post implements OnInit{
   }
 
     //Change date format and return it
-    formatPostDate(date: Date){
+    formatPostDate(date: Date):string{
      const dateFromPost = new Date(date);
  
      const formattedDate = dateFromPost.toLocaleString(undefined, {day: '2-digit', month:'2-digit', year:'numeric'})
@@ -43,7 +43,7 @@ export default class Post implements OnInit{
     }
 
     //Get the right post and redirect to comments
-    selectPost(post:PostInterface){
+    selectPost(post:PostInterface):Promise<boolean>{
       return this.router.navigate(['/comments', post]);
     }
   }

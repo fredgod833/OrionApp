@@ -16,7 +16,7 @@ export class UserService{
     constructor(private authService: AuthService, public subjectService: SubjectService, private httpClient: HttpClient){}
 
     //Persist user subscription
-    subscribe(idSubject: number){
+    subscribe(idSubject: number):void{
       
       //User authenticated
       this.authService.me().subscribe({next:(val)=> {
@@ -33,7 +33,7 @@ export class UserService{
     }
 
     //Persist user unsubscription
-    unsubscribe(idSubject: number){
+    unsubscribe(idSubject: number):void{
 
       //User authenticated
       this.authService.me().subscribe({

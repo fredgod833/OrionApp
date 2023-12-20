@@ -22,7 +22,7 @@ export default class AuthService{
     }
 
     //User deconnection
-    public logout(){
+    public logout():Observable<String>{
         return this.httpClient.post<String>(`${this.path}/logout`, {});
     }
     
