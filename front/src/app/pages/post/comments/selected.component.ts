@@ -8,6 +8,7 @@ import PostInterface from "../../model/post";
 import { UserService } from "../../services/user.service";
 import menuBar from "src/app/components/menu.component";
 import { Subscription } from "rxjs";
+import { Location } from "@angular/common";
 
 @Component({
     selector: 'app-post-selected',
@@ -26,7 +27,7 @@ export default class PostSelected implements OnInit{
     //Collect comments from template
     public comment_text = "";
 
-    constructor(private router:ActivatedRoute, private userService: UserService, private navigate: Router){}
+    constructor(private router:ActivatedRoute, private userService: UserService, private navigate: Router, private location: Location){}
 
     //Initialization
     ngOnInit(): void {
@@ -62,5 +63,10 @@ export default class PostSelected implements OnInit{
     //Redirect menu for navigation
     navigateMenu(){
         return this.navigate.navigate(['menu'])
+    }
+
+    //Redirect route though arrow left
+    arrowLeftDirection():void{
+        this.location.back();
     }
 }
