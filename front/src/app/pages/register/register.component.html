@@ -26,6 +26,7 @@
             <!-- Control error -->
             <p *ngIf="onError" class="error">An error occurred</p>
         </form>
+        <div id="registered_user" *ngIf="message">{{ message }}</div>
     </mat-card>
   </div>
 </section>
