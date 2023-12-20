@@ -24,7 +24,6 @@ export default class UserInformation implements OnInit{
     //Properties to stock subscriptions
     public subscriptionOfMeForProfil!:Subscription;
     public subscriptionOfMeForUser!:Subscription;
-    public subscriptionOfUser!:Subscription;
     public subscriptionOfLogOut!:Subscription;
     
     constructor(private formBuilder:FormBuilder, private authService: AuthService, private userService: UserService, 
@@ -37,14 +36,14 @@ export default class UserInformation implements OnInit{
     }
 
     //Unsubscribe
-    unsubscribe(idSubject:number){
-        return this.userService.unsubscribe(idSubject);
+    unsubscribe(idSubject:number):void{
+         this.userService.unsubscribe(idSubject);
     }
 
     //Push subscribed subjects for list of subjects
-    public userProfil():void{
+    public userProfil():Subscription{
 
-        this.authService.me().subscribe({
+        this.subscriptionOfMeForProfil = this.authService.me().subscribe({
             next:(value)=> {
                 if(value.subscription != null && value.subscription.subjectList.length > 0){
                     value.subscription.subjectList.map(subscribed => {
@@ -53,10 +52,11 @@ export default class UserInformation implements OnInit{
                 }
             },
         })
+        return this.subscriptionOfMeForProfil;
     }
 
     //Change username, email and return a message
-    public changeUserUsernameAndEmail():void{
+    public changeUserUsernameAndEmail():Subscription{
         console.log(this.form_profil.value)
         this.authService.me().subscribe({next:(value)=> {
 
@@ -64,13 +64,14 @@ export default class UserInformation implements OnInit{
             value.username = usernameAndEmail.username;
             value.email = usernameAndEmail.email;
 
-            this.userService.changeUserUsernameAndEmail(value).subscribe({
+            this.subscriptionOfMeForUser = this.userService.changeUserUsernameAndEmail(value).subscribe({
                 next(){
                     console.log("Username and Email changed: ", value);
                     return "Username and Email changed: ";
                 }
             })
         },});
+        return this.subscriptionOfMeForUser;
     }
 
     //Log user out
@@ -93,9 +94,6 @@ export default class UserInformation implements OnInit{
         }
         if(this.subscriptionOfMeForUser){
             this.subscriptionOfMeForUser.unsubscribe();
-        }
-        if(this.subscriptionOfUser){
-            this.subscriptionOfUser.unsubscribe();
         }
     }
 

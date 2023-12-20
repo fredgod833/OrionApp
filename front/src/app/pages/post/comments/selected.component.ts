@@ -7,6 +7,7 @@ import { ActivatedRoute, Router, RouterModule } from "@angular/router";
 import PostInterface from "../../model/post";
 import { UserService } from "../../services/user.service";
 import menuBar from "src/app/components/menu.component";
+import { Subscription } from "rxjs";
 
 @Component({
     selector: 'app-post-selected',
@@ -18,6 +19,9 @@ import menuBar from "src/app/components/menu.component";
 export default class PostSelected implements OnInit{
 
     public post!:any;
+
+    //Property stocks subscription
+    public subscription!: Subscription;
     
     //Collect comments from template
     public comment_text = "";
@@ -32,7 +36,7 @@ export default class PostSelected implements OnInit{
         })}
 
     //Comment a post and return a message
-    comment(post: PostInterface){
+    comment(post: PostInterface):Subscription{
 
        //copy object
        const postCopied = {...post};
@@ -40,11 +44,19 @@ export default class PostSelected implements OnInit{
        //set a value
        postCopied.comments = this.comment_text;
 
-       this.userService.commentPost(postCopied).subscribe({
+       this.subscription = this.userService.commentPost(postCopied).subscribe({
             next() {
                 return "Post commentered !!!";
             },
         })
+        return this.subscription;
+    }
+
+    //Unsubscribe subscriptions
+    ngOnDestroy(){
+        if(this.subscription){
+            this.subscription.unsubscribe();
+        }
     }
 
     //Redirect menu for navigation
