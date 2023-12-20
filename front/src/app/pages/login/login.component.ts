@@ -75,4 +75,8 @@ public login():void{
       this.subscription.unsubscribe()
     }
   }
+  //Redirect route though arrow left
+  arrowLeftDirection():void{
+    this.router.navigate(['/']);
+  }
 }
