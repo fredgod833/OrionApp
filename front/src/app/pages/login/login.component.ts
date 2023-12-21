@@ -55,16 +55,17 @@ public login():void{
 
     this.subscription = this.authService.login(loginRequest).subscribe({
        next:(response: Token) => {
-    
+        if(response != null){
           localStorage.setItem('token', response.token );
 
-          this.authService.me().subscribe(
-            ()=>{
+        }
+      
+          this.authService.me().subscribe({
+            next:()=>{
               this.router.navigate(['/post'])
-            })
-          this.router.navigate(['/post']);
-
-       },
+            }, error: ()=>{this.onError = true}
+          })
+      },
        error: () => {this.onError = true; }
 });
        
