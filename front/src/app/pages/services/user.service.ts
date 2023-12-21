@@ -53,7 +53,7 @@ export class UserService{
     }
 
     //Persist new user username and email
-    changeUserUsernameAndEmail(user: User){
+    changeUserUsernameAndEmail(user: User):Observable<User>{
       return this.httpClient.put<User>(`${this.path}/change-user/username-email`, user);
     }
 }
