@@ -99,10 +99,13 @@ public class AuthService {
      * @return user
      */
     public User register(User user) {
+        if (user == null){
+            return null;
+        }
 
         User userExist = userRepository.findByEmail(user.getEmail());
 
-        if (userExist.getEmail().matches(user.getEmail()) && passwordEncoder.matches(userExist.getPassword(), user.getPassword())){
+        if (userExist !=null ){
             throw new RuntimeException("User already exist");
         }
 
