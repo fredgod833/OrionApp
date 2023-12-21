@@ -54,15 +54,15 @@ export default class PostSelected implements OnInit{
     }
 
     //Unsubscribe subscriptions
-    ngOnDestroy(){
+    ngOnDestroy():void{
         if(this.subscription){
             this.subscription.unsubscribe();
         }
     }
 
     //Redirect menu for navigation
-    navigateMenu(){
-        return this.navigate.navigate(['menu'])
+    navigateMenu():void{
+        this.navigate.navigate(['menu'])
     }
 
     //Redirect route though arrow left
