@@ -60,9 +60,9 @@ public login():void{
 
           this.authService.me().subscribe(
             ()=>{
-              this.router.navigate(['/menu'])
+              this.router.navigate(['/post'])
             })
-          this.router.navigate(['/menu']);
+          this.router.navigate(['/post']);
 
        },
        error: () => {this.onError = true; }
