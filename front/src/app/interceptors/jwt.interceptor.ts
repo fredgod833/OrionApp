@@ -1,5 +1,6 @@
-import { HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
 
 @Injectable({
     providedIn: 'root'
@@ -9,7 +10,7 @@ export class JwtInterceptor implements HttpInterceptor{
     constructor(){}
 
     // Get token from storage and insert into requests
-    public intercept(request: HttpRequest<any>, next: HttpHandler) {
+    public intercept(request: HttpRequest<any>, next: HttpHandler):Observable<HttpEvent<any>> {
         const token = localStorage.getItem('token');
         if(token){
             request = request.clone({
@@ -18,7 +19,7 @@ export class JwtInterceptor implements HttpInterceptor{
                 }
             })
         }
-        console.log(request);
+        
         return next.handle(request);
     }
     
