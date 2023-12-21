@@ -9,13 +9,14 @@ import { UserService } from "../services/user.service";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
+import menuBar from "src/app/components/menu.component";
 
 @Component({
     selector: 'user-info',
     templateUrl: './user.information.html',
     styleUrls: ['./user.information.scss'],
     standalone: true,
-    imports: [MatFormFieldModule, MatCardModule, NgFor, ReactiveFormsModule]
+    imports: [MatFormFieldModule, MatCardModule, NgFor, ReactiveFormsModule, menuBar]
 })
 export default class UserInformation implements OnInit{
     public subjectList: SubjectDto[] = [];
@@ -95,6 +96,10 @@ export default class UserInformation implements OnInit{
         if(this.subscriptionOfMeForUser){
             this.subscriptionOfMeForUser.unsubscribe();
         }
+    }
+    //Redirect menu for navigation
+    navigateMenu():void{
+        this.router.navigate(['menu'])
     }
 
     //Form required fields
