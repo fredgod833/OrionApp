@@ -88,12 +88,29 @@ section{
                 border-radius: 8px;
                 background-color: #7763C5;
                 color: #FFF;
-                margin-top: 43px;
+                margin-top: 30px;
                  }
             button:hover{
                 cursor: pointer;
             }
         }
         }
+    }
+    #subjectCreated{
+        position: absolute;
+        top: 600px; /* Position verticale par rapport au haut */
+        left: 250px; /* Position horizontale par rapport à la gauche */
+        border: 2px solid #bbb3b3;
+        width: 200px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        font-size: 16px;
+        border-radius: 5px;
+        color: #970303;
+        font-weight: 600;
+        background-color: #bbb3b3;
+        margin-left: 41%;
+        margin-top: 1%;
+        text-align: center;
     }
 }
