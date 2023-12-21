@@ -12,6 +12,9 @@ section{
     margin-top: 38px;
   .post-header-bloc{
     display: flex;
+    a:hover{
+      cursor: pointer;
+    }
     h1{
       width: 728px;
       height: 48px;
