@@ -1,3 +1,6 @@
+  <header>
+    <app-menu (click)="navigateMenu()"></app-menu>
+  </header>
   <section >
     <mat-card class="card" *ngFor="let item of subject_list" >
     <mat-card-title id="title">{{ item.title }}</mat-card-title>
