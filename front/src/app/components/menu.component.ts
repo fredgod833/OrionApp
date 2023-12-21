@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { RouterModule } from "@angular/router";
+import { Router, RouterModule } from "@angular/router";
 import Subject from "../pages/subject/subject.component";
 import Post from "../pages/post/post.component";
 import { NgClass, NgIf } from "@angular/common";
@@ -17,44 +17,23 @@ import UserInformation from "../pages/user/user.information";
 
 export default class menuBar{
 
-  // Conditions for template control
-  isPostLinkActive = false;
-  isSubjectLinkActive = false;
-  isPostCreationActive = false;
   isButtonCreationActive = false;
-  isUserInformationActive = false;
 
-  constructor(){}
-  
+  constructor(private router: Router){}
 
-  //Enable post page and Unable others
+  //Redirect router to post
   activePostLink():void{
-    this.isPostLinkActive = true;
-    this.isSubjectLinkActive = false;
-    this.isUserInformationActive = false;
-    this.isPostCreationActive = false;
+    this.router.navigate(['post']);
   }
 
-  //Enable subject page and Unable others
+  //Redirect router to subject
   activeSubjectLink():void{
-    this.isSubjectLinkActive = true;
-    this.isPostLinkActive = false;
-    this.isUserInformationActive = false;
-    this.isPostCreationActive = false;
+    this.router.navigate(['subject']);
   }
-  //Enable post creation page and Unable others
-  activePostCreation():void{
-    this.isPostCreationActive = true;
-    this.isPostLinkActive = false;
-    this.isUserInformationActive = false;
-    this.isSubjectLinkActive = false;
-  }
-  //Enable user information page and Unable others
+
+   //Redirect router to user information=
   activeUserInformation():void{
-    this.isSubjectLinkActive = false;
-    this.isPostLinkActive = false;
-    this.isPostCreationActive = false;
-    this.isUserInformationActive = true;
+    this.router.navigate(['user-information']);
   }
   // Hidde button when its actived
   hiddenButton():void{
