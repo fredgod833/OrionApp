@@ -98,10 +98,12 @@ public class AuthService {
      * @param user required fields
      * @return user
      */
-    public User register(User user){
+    public User register(User user) throws UserPrincipalNotFoundException {
 
-        if (user == null){
-            return null;
+        User userExist = userRepository.findByEmail(user.getEmail());
+
+        if (userExist.getEmail().matches(user.getEmail()) && passwordEncoder.matches(userExist.getPassword(), user.getPassword())){
+            throw new UserPrincipalNotFoundException("User already exists");
         }
 
         User buildUser = User.builder()
