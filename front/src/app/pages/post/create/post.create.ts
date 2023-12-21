@@ -1,4 +1,4 @@
-import { AsyncPipe, NgFor, NgIf } from "@angular/common";
+import { AsyncPipe, Location, NgFor, NgIf } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import {MatSelectModule} from '@angular/material/select';
@@ -7,18 +7,21 @@ import { PostService } from "../../services/post.service";
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import PostCreate from "../../model/post.create";
 import { Subscription } from "rxjs";
+import { Router } from "@angular/router";
+import menuBar from "src/app/components/menu.component";
 
 @Component({
     selector: 'create-post',
     templateUrl: './post.create.html',
     styleUrls: ['./post.create.scss'],
     standalone: true,
-    imports: [NgIf, MatFormFieldModule, MatSelectModule, NgFor, AsyncPipe, ReactiveFormsModule, FormsModule]
+    imports: [NgIf, MatFormFieldModule, MatSelectModule, NgFor, AsyncPipe, ReactiveFormsModule, FormsModule, menuBar]
 })
 export default class CreatePost implements OnInit{
 
     public postGroup!: FormGroup;
 
+    public message!:string;
     //Property to stock subscription
     public subscription!: Subscription;
 
@@ -30,7 +33,7 @@ export default class CreatePost implements OnInit{
         this.initForm();
     }
   
-    constructor(private subjectService: SubjectService, private postService: PostService, private fb: FormBuilder){
+    constructor(private subjectService: SubjectService, private postService: PostService, private fb: FormBuilder, private location: Location, private router:Router){
     }
 
     //Create a post and return a message
@@ -53,8 +56,12 @@ export default class CreatePost implements OnInit{
         }
         this.subscription = this.postService.createPost(postCreate, id_subject).subscribe(
             {
-                next() {
-                    return "Post created !!!";
+                next:()=> {
+                    this.message = "Post created !!!";
+
+                    setTimeout(()=>{
+                        this.location.back();
+                    }, 2000)
                 },
             }
         )
@@ -69,6 +76,16 @@ export default class CreatePost implements OnInit{
             }
         }
     
+         //Redirect menu for navigation
+    navigateMenu():void{
+        this.router.navigate(['menu'])
+    }
+
+    //Redirect route though arrow left
+    arrowLeftDirection():void{
+        this.location.back();
+    }
+
       //Request form required field for post creation validation
       initForm():void{
         //Stock a group of fields
