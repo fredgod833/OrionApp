@@ -31,6 +31,7 @@ export default class Register implements OnInit{
     //Register a user as authentified and return a message
     public register():Subscription{
         const register = this.form.value as RegisterRequest;
+       
         this.subscription = this.authService.register(register).subscribe!({
             next:()=> {
                 this.message='User Registered !!!';
@@ -38,11 +39,10 @@ export default class Register implements OnInit{
                setTimeout(()=>{
                 this.router.navigate(['/login']); 
                }, 2000)
-                // this.router.navigate(['/login']);  
             },
         
             //Error set true for template
-            error:()=> this.onError = true
+            error:()=> {this.onError = true}
         });
 
         return this.subscription;
@@ -55,18 +55,22 @@ export default class Register implements OnInit{
         }
     }
 
+     //Redirect arrow left
+     arrowLeftDirection():void{
+        this.router.navigate(['/']);
+    }
+
+    isValid(): Boolean{
+     return this.form.valid;
+    }
+
     //Request required field for register validation
     public initForm():void{
         //Stock form fields
         this.form = this.formBuilder.group({
-            username: ["", [Validators.required]],
-            email: ["", [Validators.required]],
-            password: ["" ,[Validators.required]]
+            username: ["", [Validators.required, Validators.pattern(/^[a-zA-Z0-9_-]{3,16}$/)]],
+            email: ["", [Validators.required, Validators.email]],
+            password: ["" ,[Validators.required, Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{4,}$/)]]
         })
-    }
-
-    //Redirect arrow left
-    arrowLeftDirection():void{
-        this.router.navigate(['/']);
     }
 }
