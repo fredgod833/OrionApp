@@ -11,6 +11,14 @@ Clone project from here: https://github.com/Marvin-Silva/Developpez-une-applicat
 Go inside folder:
 > cd back
 
+Connect database
+>Go to application.properties
+
+Insert
+>spring.datasource.username=root
+
+>spring.datasource.password=Soleil.123
+
 Build and Launch backend:
 > mvn spring-boot:run
 > /
