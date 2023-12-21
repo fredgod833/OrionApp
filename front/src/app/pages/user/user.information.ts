@@ -80,6 +80,7 @@ export default class UserInformation implements OnInit{
         this.authService.logout().subscribe({
             next:()=> {
                 console.log("Logout sucessfull");
+                localStorage.clear();
                 this.router.navigate(['/']);
             },
         });
