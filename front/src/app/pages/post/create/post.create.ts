@@ -37,7 +37,7 @@ export default class CreatePost implements OnInit{
     }
 
     //Create a post and return a message
-    createPost(){
+    createPost():Subscription{
         //Loading values
         const postCreate: PostCreate = {
             title: this.postGroup.get('title')?.value,
@@ -52,7 +52,7 @@ export default class CreatePost implements OnInit{
         console.log("POSTCREATE: ", postCreate)
         
         if(postCreate == null){
-            return "Body is not correct";
+            this.message = "Body is null";
         }
         this.subscription = this.postService.createPost(postCreate, id_subject).subscribe(
             {
