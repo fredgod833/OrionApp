@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
-import java.nio.file.attribute.UserPrincipalNotFoundException;
 
 /**
  * This class authenticate users in order to allow access to the application
@@ -50,7 +49,7 @@ public class AuthController {
      * @return new user authenticated
      */
     @PostMapping(path = "/register")
-    public User register(@RequestBody User user) throws UserPrincipalNotFoundException {
+    public User register(@RequestBody User user){
         return authService.register(user);
     }
 
