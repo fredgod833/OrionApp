@@ -6,13 +6,15 @@ import { SubjectDto } from "../model/subjectdto";
 import { NgFor, NgIf } from "@angular/common";
 import { UserService } from "../services/user.service";
 import { Subscription } from "rxjs";
+import { Router } from "@angular/router";
+import menuBar from "src/app/components/menu.component";
 
 @Component({
     selector: 'app-subject',
     templateUrl: './subject.component.html',
     styleUrls: ['./subject.component.scss'],
     standalone: true,
-    imports: [MatCardModule, MatButtonModule, NgFor, NgIf],
+    imports: [MatCardModule, MatButtonModule, NgFor, NgIf, menuBar],
 })
 export default class Subject implements OnInit{
 
@@ -26,7 +28,7 @@ export default class Subject implements OnInit{
     //Control of subscription button
     isSubscribed =  false;
 
-    constructor(private pathService: SubjectService, private userService: UserService){}
+    constructor(private pathService: SubjectService, private userService: UserService, private router: Router){}
     
     ngOnInit():void{
       this.getSubjectList()
@@ -68,5 +70,9 @@ export default class Subject implements OnInit{
       if(this.subscriptionOfUserService){
         this.subscriptionOfUserService.unsubscribe();
       }
+    }
+      //Redirect menu for navigation
+      navigateMenu():void{
+        this.router.navigate(['menu'])
     }
 }
