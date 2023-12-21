@@ -5,20 +5,12 @@
         </div>
     
         <div class="menu-text">
-                    <li> <a [class.active]="isPostLinkActive" (click)="activePostLink()">Articles</a></li>
-                    <li><a [class.active]="isSubjectLinkActive" (click)="activeSubjectLink()">Thèmes</a></li>            
+                    <li> <a (click)="activePostLink()">Articles</a></li>
+                    <li><a (click)="activeSubjectLink()">Thèmes</a></li>            
         </div>
 
         <div id="menu-user-img">
-            <a [class.active]="isUserInformationActive" (click)="activeUserInformation()"><img src="/assets/user.png" alt="user"></a>
+            <a (click)="activeUserInformation()"><img src="/assets/user.png" alt="user"></a>
         </div>
     </div>
-    <!-- Pages controlled -->
-    <router-outlet>
-        <app-post *ngIf="isPostLinkActive"></app-post>
-        <button-create-post *ngIf="isPostLinkActive" [class.active]="isPostCreationActive" (click)="activePostCreation()"></button-create-post>
-        <create-post *ngIf="isPostCreationActive"></create-post>
-        <app-subject *ngIf="isSubjectLinkActive"></app-subject>
-        <user-info *ngIf="isUserInformationActive"></user-info>
-    </router-outlet>
 </header>
