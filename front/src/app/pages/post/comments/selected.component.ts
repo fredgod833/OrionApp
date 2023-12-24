@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
@@ -17,7 +17,7 @@ import { Location } from "@angular/common";
     standalone: true,
     imports: [FormsModule, MatFormFieldModule, MatInputModule, RouterModule, MatSelectModule, menuBar],
 })
-export default class PostSelected implements OnInit{
+export default class PostSelected implements OnInit, OnDestroy{
 
     public post!:any;
 

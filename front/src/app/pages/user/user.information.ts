@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { MatCardModule } from "@angular/material/card";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import AuthService from "../services/auth.component";
@@ -18,7 +18,7 @@ import menuBar from "src/app/components/menu.component";
     standalone: true,
     imports: [MatFormFieldModule, MatCardModule, NgFor, ReactiveFormsModule, menuBar]
 })
-export default class UserInformation implements OnInit{
+export default class UserInformation implements OnInit, OnDestroy{
     public subjectList: SubjectDto[] = [];
     public form_profil!: FormGroup;
     

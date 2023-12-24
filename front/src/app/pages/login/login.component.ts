@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {
   Validators,
   FormBuilder,
@@ -33,7 +33,7 @@ import { Subscription } from 'rxjs';
     MatInputModule,
     MatFormFieldModule]
 })
-export class LoginComponent {
+export class LoginComponent implements OnDestroy {
 
   public onError = false;
   

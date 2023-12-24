@@ -1,5 +1,5 @@
 import { NgIf } from "@angular/common";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { MatCardModule } from "@angular/material/card";
 import AuthService from "../services/auth.component";
@@ -15,7 +15,7 @@ import { Router } from "@angular/router";
     standalone: true,
     imports:[ReactiveFormsModule, MatCardModule, NgIf,  MatFormFieldModule]
 })
-export default class Register implements OnInit{
+export default class Register implements OnInit, OnDestroy{
     public onError = false;
     public form!: FormGroup;
     public message!:string;
@@ -34,15 +34,17 @@ export default class Register implements OnInit{
        
         this.subscription = this.authService.register(register).subscribe!({
             next:()=> {
+                console.log("Apres next")
                 this.message='User Registered !!!';
 
                setTimeout(()=>{
+                console.log("Dans setTimeout")
                 this.router.navigate(['/login']); 
                }, 2000)
             },
         
             //Error set true for template
-            error:()=> {this.onError = true}
+            error:()=> {console.log("Dans error");this.onError = true}
         });
 
         return this.subscription;

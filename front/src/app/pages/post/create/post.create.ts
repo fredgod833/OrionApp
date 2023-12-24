@@ -1,5 +1,5 @@
 import { AsyncPipe, Location, NgFor, NgIf } from "@angular/common";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import {MatSelectModule} from '@angular/material/select';
 import { SubjectService } from "../../services/subject.service";
@@ -17,7 +17,7 @@ import menuBar from "src/app/components/menu.component";
     standalone: true,
     imports: [NgIf, MatFormFieldModule, MatSelectModule, NgFor, AsyncPipe, ReactiveFormsModule, FormsModule, menuBar]
 })
-export default class CreatePost implements OnInit{
+export default class CreatePost implements OnInit, OnDestroy{
 
     public postGroup!: FormGroup;
 

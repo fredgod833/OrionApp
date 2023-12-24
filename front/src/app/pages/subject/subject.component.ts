@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import { SubjectService } from "../services/subject.service";
@@ -16,7 +16,7 @@ import menuBar from "src/app/components/menu.component";
     standalone: true,
     imports: [MatCardModule, MatButtonModule, NgFor, NgIf, menuBar],
 })
-export default class Subject implements OnInit{
+export default class Subject implements OnInit, OnDestroy{
 
     //Initalise list of subjects
     subject_list: SubjectDto[] = [];
