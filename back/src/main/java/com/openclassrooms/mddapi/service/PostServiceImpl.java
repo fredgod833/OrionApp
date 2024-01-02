@@ -36,7 +36,7 @@ public class PostServiceImpl implements PostService {
             postArray = postRepository.findAll();
 
             if (postArray.isEmpty()) {
-                throw new RuntimeException("List of post could be empty!!!");
+                return postArray;
             }
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
