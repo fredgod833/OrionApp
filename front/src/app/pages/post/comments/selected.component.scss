@@ -28,7 +28,6 @@ section{
   }
   .post-section-one{
     display: flex;
-    // border: 2px solid;
     text-align: center;
     align-items: center;
     align-content: center;
@@ -54,27 +53,18 @@ section{
     margin-top: 21px;
     flex-shrink: 0;    
   }
- 
-.post-section-two{
-  margin-top: 30px;
-  position: relative;
-  p{
-    width: 25%;
-  }
   
-  #post-section-two-username{
-    text-align: right;
-  }
-  
-  label{
+  .post-section-two{
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    p{
-      margin-bottom: 0;
-      position: absolute;
 
+    #comment_title{
+    }
+    #author{
+      position: relative;
+      margin-bottom: 0%;
     }
 
     #post-section-two-content{
@@ -85,35 +75,81 @@ section{
       height: 100px;
       border-radius: 16px;
       background: #EEE;
+      .comment_list{
+        width: 100%;
+
+        #scroll-list{
+          max-height: 90px;
+          height: 90%;
+          overflow-y: auto;
+          width: 90%;
+          li{
+            width: 400px;
+            height: 20px;
+            list-style-type: none;
+            text-align: left;
+            margin-bottom: 10px;
+            text-align: justify;
+            font-style: italic;
+            span{
+              float: left;
+              margin-top: 10px;
+              font-weight: 700;
+              margin-left: 10px;
+            }
+           
+          }
+        }
+        
+      }
+    
+    }
+    textarea{
+      border: 2px solid;
+      border-radius: 1em;
+      width: 570px;
+      height: 120px;
+      flex-shrink: 0;
+      margin-top: 40px;
+      text-align: left;
+       
+    }
+    a{        
+      width: 0px;
+      height: 0px;        
+      position: absolute;
+      margin-left: 590px;
+      margin-top: 230px;
+      img{
+        width: 43px;
+        height: 43px;
+        flex-shrink: 0;
+      }
+      img:hover{
+        cursor: pointer;
+      }
     }
   }
-textarea{
-  border: 2px solid;
-  border-radius: 1em;
-  width: 570px;
-  height: 120px;
-  flex-shrink: 0;
-  margin-top: 43px;
-  text-align: left;
-   
-}
+
 textarea::placeholder{
   padding-top: 3%;
   padding-left: 14px;
+ 
+}
+}
+#commentted_post-msg{
+  border: 2px solid #bbb3b3;
+  width: 200px;
+  height: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  color: #970303;
+  font-weight: 600;
+  background-color: #bbb3b3;
+  margin-top: 40%;
+  margin-right: 5%;
+}
+}
 
-}
-a{
-  img{
-    width: 43px;
-    height: 43px;
-    flex-shrink: 0;
-    margin-left: 31px;
-    margin-bottom: 40px;
-  }
-  img:hover{
-    cursor: pointer;
-  }
-}
-}
-}
-}
