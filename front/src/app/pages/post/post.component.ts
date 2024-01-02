@@ -46,7 +46,7 @@ export default class Post implements OnInit{
 
     //Get the right post and redirect to comments
     selectPost(post:PostInterface):Promise<boolean>{
-      return this.router.navigate(['/comments', post]);
+      return this.router.navigate(['comments', post]);
     }
 
           //Redirect menu for navigation

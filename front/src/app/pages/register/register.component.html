@@ -25,7 +25,7 @@
 
                   <label for="password"> Password</label> 
                     <input matInput type="text"
-                        formControlName="password" id="password" name="password" required="password">
+                        formControlName="password" id="password" name="password" required="password" type="password">
                     <mat-error *ngIf="form.get('password')?.hasError('pattern')">
                       Password is not correct
                     </mat-error>
@@ -36,7 +36,7 @@
 
             </mat-error>
             <!-- Control error -->
-            <p *ngIf="onError" class="error">Un erreur s'est produit</p>
+            <!-- <p *ngIf="onError" class="error">Un erreur s'est produit</p> -->
         </form>
         <div id="registered_user" *ngIf="message">{{ message }}</div>
     </mat-card>
