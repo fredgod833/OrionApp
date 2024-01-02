@@ -5,12 +5,11 @@ import lombok.Getter;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Builder;
-import javax.persistence.Id;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "post")
@@ -30,5 +29,7 @@ public class Post {
     private LocalDateTime date;
     private String author;
     private String content;
-    private String comments;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
+    private List<Comments> comments = new ArrayList<>();
+
 }
