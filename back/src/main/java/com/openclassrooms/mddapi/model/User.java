@@ -8,16 +8,17 @@ import lombok.Builder;
 
 import javax.persistence.*;
 
+/**
+ * Stock user
+ */
 @Entity
-@Table(name = "user")
 @Getter
 @Setter
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Builder
-/**
- * Stock user
- */
+@Table(name = "user",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"username", "email"}))
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
