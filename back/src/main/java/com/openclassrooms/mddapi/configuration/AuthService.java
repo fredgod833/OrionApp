@@ -98,15 +98,19 @@ public class AuthService {
      * @param user required fields
      * @return user
      */
-    public User register(User user) {
+    public User register(User user) throws RuntimeException {
         if (user == null){
             return null;
         }
 
-        User userExist = userRepository.findByEmail(user.getEmail());
+        boolean existEmail = userRepository.existsByEmail(user.getEmail());
+        boolean existUsername = userRepository.existsByUsername(user.getUsername());
 
-        if (userExist !=null ){
-            throw new RuntimeException("User already exist");
+        if (existEmail | existUsername){
+            if (existEmail){
+                throw new RuntimeException("This email is already used !!!");
+            }
+            throw new RuntimeException("This username is already used !!!");
         }
 
         User buildUser = User.builder()
