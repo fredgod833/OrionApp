@@ -1,14 +1,14 @@
 package com.openclassrooms.mddapi.service;
 
-import com.openclassrooms.mddapi.model.Post;
-import com.openclassrooms.mddapi.model.Subject;
-import com.openclassrooms.mddapi.model.Subscription;
-import com.openclassrooms.mddapi.model.User;
+import com.openclassrooms.mddapi.model.*;
 import com.openclassrooms.mddapi.model.dto.UserDto;
+import com.openclassrooms.mddapi.repository.CommentsRepository;
 import com.openclassrooms.mddapi.repository.PostRepository;
 import com.openclassrooms.mddapi.repository.SubscriptionRepository;
 import com.openclassrooms.mddapi.repository.UserRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Layer interface implementation
@@ -16,16 +16,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
-
     private final PostRepository postRepository;
     private final SubscriptionRepository subscriptionRepository;
     private final SubjectService subjectService;
 
-    public UserServiceImpl(UserRepository userRepository, PostRepository postRepository, SubscriptionRepository subscriptionRepository, SubjectService subjectService) {
+    //TODO: This is a test
+    private final CommentsRepository commentsRepository;
+
+    public UserServiceImpl(UserRepository userRepository, PostRepository postRepository, SubscriptionRepository subscriptionRepository, SubjectService subjectService, CommentsRepository commentsRepository) {
         this.userRepository = userRepository;
         this.postRepository = postRepository;
         this.subscriptionRepository = subscriptionRepository;
         this.subjectService = subjectService;
+        this.commentsRepository = commentsRepository;
     }
 
     /**
@@ -34,13 +37,14 @@ public class UserServiceImpl implements UserService {
      * @return post
      */
     @Override
-    public Post commentPost(Post post) {
-        if (post == null
-        ){
-            return null;
-        }
+    public Post commentPost(Post post, Comments comment) {
 
-        return postRepository.save(post);
+        Comments comments = new Comments();
+        comments.setComment(comment.getComment());
+
+        post.getComments().add(comments);
+
+        return post;
 
     }
 
@@ -185,5 +189,19 @@ public class UserServiceImpl implements UserService {
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
+    }
+
+    //TODO: This is a test
+    public Comments newComments(Comments comments, int id_post){
+
+        Comments comment = new Comments();
+        comment.setId_comments(comments.getId_comments());
+        comment.setComment(comments.getComment());
+        comment.setPost(id_post);
+        comment.setAuthor(comments.getAuthor());
+        return commentsRepository.save(comment);
+    }
+    public List<Comments> getCommentsList(){
+        return commentsRepository.findAll();
     }
 }
