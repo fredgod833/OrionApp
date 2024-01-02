@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.controller;
 
+import com.openclassrooms.mddapi.model.Comments;
 import com.openclassrooms.mddapi.model.Post;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.model.dto.UserDto;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.List;
 
 /**
  * User api router
@@ -74,8 +77,8 @@ public class UserController {
      * @return post
      */
     @PutMapping("/comments")
-    public Post comments(@RequestBody Post post){
-        return userService.commentPost(post);
+    public Post comments(@RequestBody Post post, @RequestBody Comments comment){
+        return userService.commentPost(post, comment);
     }
 
     /**
@@ -87,4 +90,15 @@ public class UserController {
     public User changeUsernameAndEmail(@RequestBody UserDto userDto){
         return userService.changeUserUsernameAndEmail(userDto);
     }
+
+    //TODO: This is a test
+    @PostMapping("/comment/{post_id}")
+    public ResponseEntity<Comments> newComment(@RequestBody Comments comments, @PathVariable(name = "post_id") int id_post){
+        return ResponseEntity.ok(userService.newComments(comments, id_post));
+    }
+    @GetMapping("/comment")
+    public List<Comments> newComment(){
+        return userService.getCommentsList();
+    }
+
 }
