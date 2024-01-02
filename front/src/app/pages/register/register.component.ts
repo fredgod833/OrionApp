@@ -7,6 +7,8 @@ import RegisterRequest from "src/app/security/interfaces/register.component";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { Subscription } from "rxjs";
 import { Router } from "@angular/router";
+import LoginRequest from "src/app/security/interfaces/login.component";
+import { HttpErrorResponse } from "@angular/common/http";
 
 @Component({
     selector: 'register-page',
@@ -31,7 +33,7 @@ export default class Register implements OnInit, OnDestroy{
     //Register a user as authentified and return a message
     public register():Subscription{
         const register = this.form.value as RegisterRequest;
-       
+
         this.subscription = this.authService.register(register).subscribe!({
             next:()=> {
                 console.log("Apres next")
@@ -44,7 +46,9 @@ export default class Register implements OnInit, OnDestroy{
             },
         
             //Error set true for template
-            error:()=> {console.log("Dans error");this.onError = true}
+            error:(err: HttpErrorResponse)=> {
+                console.log("Dans error", err);
+                }
         });
 
         return this.subscription;
