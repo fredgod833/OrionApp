@@ -10,7 +10,7 @@
   </div>
   <div class="post-section-one">
     <p>Date: {{post['date']}}</p>
-    <p>Auteur: {{post['author']}}</p>
+    <p>Auteur: {{post.author}}</p>
     <p>Thème: </p>
   </div>
 
@@ -19,16 +19,26 @@
   </div>
 
   <div class="post-section-two">
-    <p>commentaire</p>
-    <label>
-      <p> Username</p>
-      <input id="post-section-two-content" type="text" placeholder="contenu du commentaire" disabled />
-    </label>
+    <p id="comment_title">commentaire</p>
+    
+      <p id="author">{{post.author}}</p>
+      <div id="post-section-two-content" type="text">
+        <div class="comment_list">
+          <div id="scroll-list">
+            <li *ngFor="let item of commentList">
+              <span>{{item.author}}</span>
+              <br>&nbsp;&nbsp;&nbsp;&nbsp;
+              {{item.comment}}
+            </li>
+          </div>
+        </div>
+      
+      </div>
 
     <!-- Collect comments from users entries -->
-    <textarea placeholder="Ecrivez votre commentaire" rows="5" cols="33" [(ngModel)]="comment_text"></textarea>
+    <textarea placeholder="Ecrivez votre commentaire" rows="5" cols="33" [(ngModel)]="entryComments"></textarea>
     <a (click)="comment(post)"><img src="../../../../assets/icon_send_.png"></a>
   </div>
-
 </div>
+<p *ngIf="isComment" id="commentted_post-msg">Post commentted !!!</p>
 </section>
