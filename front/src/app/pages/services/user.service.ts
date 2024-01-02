@@ -5,6 +5,7 @@ import { HttpClient } from "@angular/common/http";
 import { SubjectService } from "./subject.service";
 import PostInterface from "../model/post";
 import { Observable } from "rxjs";
+import Comments from "../model/comments";
 
 @Injectable({
 providedIn: 'root'
@@ -55,5 +56,10 @@ export class UserService{
     //Persist new user username and email
     changeUserUsernameAndEmail(user: User):Observable<User>{
       return this.httpClient.put<User>(`${this.path}/change-user/username-email`, user);
+    }
+
+    // THIS IS A TEST
+    newComment(comments: Comments, post_id:number):Observable<Comments>{
+      return this.httpClient.post<Comments>(`${this.path}/comment/${post_id}`, {comment: comments.comment, author: comments.author});
     }
 }
