@@ -70,7 +70,7 @@ public class SpringSecurityConfig {
                 .authorizeRequests( auth -> auth
                         .antMatchers("/v2/api-docs", "/swagger-ui/**", "/swagger-resources/**", "/swagger-ui.html",
                                 "/webjars/springfox-swagger-ui/**", "/api/auth/register", "/api/auth/login").permitAll()
-                        .mvcMatchers("/api/auth/me","/api/subject/**", "/api/post/**",  "/api/user/**", "/api/subject/create_subject", "/api/user/comments", "/api/auth/logout", "/api/user/delete/account/{id_user}").permitAll()
+                        .mvcMatchers("/api/auth/me","/api/subject/**", "/api/post/**",  "/api/user/**", "/api/subject/create_subject", "/api/user/comments","/api/user/comment", "/api/user/comment/{post_id}", "/api/auth/logout", "/api/user/delete/account/{id_user}").permitAll()
                         .anyRequest().authenticated())
 
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
