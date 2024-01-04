@@ -47,10 +47,15 @@ export default class Register implements OnInit, OnDestroy{
             //Error set true for template
             error:(err: HttpErrorResponse)=> {
                 this.message = "User already exists";
+                
+                setTimeout(()=>{
+                    this.message = ""
+                }, 2000)
                 console.log("Dans error", err);
                 }
+                
         });
-
+        
         return this.subscription;
     }
     
@@ -76,7 +81,7 @@ export default class Register implements OnInit, OnDestroy{
         this.form = this.formBuilder.group({
             username: ["", [Validators.required, Validators.pattern(/^[a-zA-Z0-9_-]{3,16}$/)]],
             email: ["", [Validators.required, Validators.email]],
-            password: ["" ,[Validators.required, Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{4,}$/)]]
+            password: ["" ,[Validators.required, Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@!%$]{4,}$/)]]
         })
     }
 }
