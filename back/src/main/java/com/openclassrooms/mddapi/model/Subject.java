@@ -36,6 +36,8 @@ public class Subject {
     private String title;
     @Column(name = "description")
     private String description;
+    @Column(name = "is_subscribed")
+    private Boolean isSubscribed;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Post> postList = new ArrayList<>();
 }
