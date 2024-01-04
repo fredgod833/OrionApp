@@ -62,6 +62,7 @@ public class SubjectServiceImpl implements SubjectService {
                         .idSubject(subject.getIdSubject())
                         .title(subject.getTitle())
                         .description(subject.getDescription())
+                        .isSubscribed(subject.getIsSubscribed())
                         .build();
 
                 subjectDtoList.add(subjectDto);
