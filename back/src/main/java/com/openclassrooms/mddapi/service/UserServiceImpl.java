@@ -2,10 +2,7 @@ package com.openclassrooms.mddapi.service;
 
 import com.openclassrooms.mddapi.model.*;
 import com.openclassrooms.mddapi.model.dto.UserDto;
-import com.openclassrooms.mddapi.repository.CommentsRepository;
-import com.openclassrooms.mddapi.repository.PostRepository;
-import com.openclassrooms.mddapi.repository.SubscriptionRepository;
-import com.openclassrooms.mddapi.repository.UserRepository;
+import com.openclassrooms.mddapi.repository.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,14 +17,17 @@ public class UserServiceImpl implements UserService {
     private final SubscriptionRepository subscriptionRepository;
     private final SubjectService subjectService;
 
+    private final SubjectRepository subjectRepository;
+
     //TODO: This is a test
     private final CommentsRepository commentsRepository;
 
-    public UserServiceImpl(UserRepository userRepository, PostRepository postRepository, SubscriptionRepository subscriptionRepository, SubjectService subjectService, CommentsRepository commentsRepository) {
+    public UserServiceImpl(UserRepository userRepository, PostRepository postRepository, SubscriptionRepository subscriptionRepository, SubjectService subjectService, SubjectRepository subjectRepository, CommentsRepository commentsRepository) {
         this.userRepository = userRepository;
         this.postRepository = postRepository;
         this.subscriptionRepository = subscriptionRepository;
         this.subjectService = subjectService;
+        this.subjectRepository = subjectRepository;
         this.commentsRepository = commentsRepository;
     }
 
@@ -70,13 +70,12 @@ public class UserServiceImpl implements UserService {
     /**
      * Persist user subscription
      * @param id_user entry validation
-     * @param id_subject entry validation
+     * @param subject entry validation
      * @return user
      */
-    public User subscribe(int id_user, int id_subject){
-        //Load user and subject
+    public User subscribe(int id_user, Subject subject){
+        //Load user
         User user = userRepository.findById(id_user).orElse(null);
-        Subject subject = subjectService.getSubjectById(id_subject);
 
         //Verify both is not null
         if (user == null || subject == null){
@@ -88,9 +87,12 @@ public class UserServiceImpl implements UserService {
             Subscription subscription = new Subscription();
 
             subscription.getSubjectList().add(subject);
+
             user.setSubscription(subscription);
 
-            subscriptionRepository.save(subscription);
+            userRepository.save(user);
+            subjectRepository.save(subject);
+            //subscriptionRepository.save(subscription);
         }
         // when user subscription is not null, do not create a new
         Subscription subscription = user.getSubscription();
@@ -98,8 +100,10 @@ public class UserServiceImpl implements UserService {
         subscription.getSubjectList().add(subject);
         user.setSubscription(subscription);
         // save subscription on database
-        subscriptionRepository.save(subscription);
-
+        //subscriptionRepository.save(subscription);
+        userRepository.save(user);
+        subjectRepository.save(subject);
+        //subscriptionRepository.save(subscription);
       return user;
     }
 
@@ -108,28 +112,25 @@ public class UserServiceImpl implements UserService {
     /**
      * Persist unsubscribe
      * @param id_user entry validation
-     * @param id_subject entry validation
+     * @param subject entry validation
      * @return user
      */
-    public User unsubscribe(int id_user, int id_subject){
+    public User unsubscribe(int id_user, Subject subject){
         //Load user and subject
-        User user = getUserById(id_user);
-        Subject subject = subjectService.getSubjectById(id_subject);
+        User user = userRepository.findById(id_user).orElseThrow();
 
         for (Subject subjects: user.getSubscription().getSubjectList()) {
 
             // verify if subject is in subscription list
             if (subjects.getIdSubject() == subject.getIdSubject()){
 
-                // subscription knows user subscription
-                Subscription subscription = user.getSubscription();
+                // Remove subject from user subscriptions
+                user.getSubscription().getSubjectList().remove(subjects); 
 
-                // delete subject subscription on subjectList
-                subscription.getSubjectList().remove(subject);
-
-                // save subscription on database
-                subscriptionRepository.save(subscription);
-
+                // save user
+                userRepository.save(user);
+                // save unsubscribed subject
+                subjectRepository.save(subject);
                 return user;
             }
         }
