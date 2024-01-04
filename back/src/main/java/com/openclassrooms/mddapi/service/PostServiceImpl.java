@@ -73,39 +73,30 @@ public class PostServiceImpl implements PostService {
      */
     @Override
     public Post createPost(Post post, int id_subject) {
-
+        Post postBuilt = new Post();
+        Subject subject = subjectRepository.findById(id_subject).orElseThrow();
         try {
+                    // build the post
+                    postBuilt = Post.builder()
+                            .title(post.getTitle())
+                            .content(post.getContent())
+                            .author(post.getAuthor())
+                            .date(post.getDate())
+                            .comments(post.getComments())
+                            .build();
 
-            // identify the subject
+                // verify if post is null
+                if (postBuilt == null){
+                    return null;
+                }
+                // Add post to subject post list
+                subject.getPostList().add(postBuilt);
+                //Persist post
+                postRepository.save(postBuilt);
+                //Persist subject
+                subjectRepository.save(subject);
+           return postBuilt;
 
-            Subject subject = subjectService.getSubjectById(id_subject);
-
-            //verify if subject is null
-            if (subject == null) {
-                return null;
-            }
-
-            // build the post
-            Post postBuilt = Post.builder()
-                    .title(post.getTitle())
-                    .content(post.getContent())
-                    .author(post.getAuthor())
-                    .date(post.getDate())
-                    .comments(post.getComments())
-                    .build();
-
-            // verify if post is null
-            if (postBuilt == null){
-                return null;
-            }
-
-            // if not add post to list
-            subject.getPostList().add(postBuilt);
-
-            //save subject
-            subjectRepository.save(subject);
-
-            return postBuilt;
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
