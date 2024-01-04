@@ -6,6 +6,7 @@ import { SubjectService } from "./subject.service";
 import PostInterface from "../model/post";
 import { Observable } from "rxjs";
 import Comments from "../model/comments";
+import { SubjectDto } from "../model/subjectdto";
 
 @Injectable({
 providedIn: 'root'
@@ -13,36 +14,31 @@ providedIn: 'root'
 export class UserService{
 
     public path = "api/user";
-
     constructor(private authService: AuthService, public subjectService: SubjectService, private httpClient: HttpClient){}
 
     //Persist user subscription
-    subscribe(idSubject: number):void{
+    subscribe(subject: SubjectDto, id_user:number | undefined):Observable<User>{
       
       //User authenticated
-      this.authService.me().subscribe({next:(val)=> {
-         
+         console.log("service subscribe? ", subject)
         //Add new subject to subscription list
-         this.httpClient.post<User>(`${this.path}/subscribe/${val.id_user}/${idSubject}`, {}).subscribe({
-          next() {
-            console.log("Inscrit !!!");
-          },
-         })
-        }
-      ,})
-
+        return this.httpClient.post<User>(`${this.path}/subscribe/${id_user}/id_subject`, subject)
+        
+      
     }
 
     //Persist user unsubscription
-    unsubscribe(idSubject: number):void{
+    unsubscribe(subject: SubjectDto):void{
 
       //User authenticated
       this.authService.me().subscribe({
         next:(value)=> {
+          subject.isSubscribed = false;
+
           //Update subscription 
-          this.httpClient.put<User>(`${this.path}/unsubscribe/${value.id_user}/${idSubject}`, {}).subscribe(
+          this.httpClient.put<User>(`${this.path}/unsubscribe/${value.id_user}/id_subject`, subject).subscribe(
             {next() {
-            console.log("Desinscrit !!!");
+            location.reload();
           },});
         },
       })
