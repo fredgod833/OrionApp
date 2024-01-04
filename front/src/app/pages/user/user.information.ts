@@ -37,7 +37,7 @@ export default class UserInformation implements OnInit, OnDestroy{
     }
 
     //Unsubscribe
-    unsubscribe(idSubject:number):void{
+    unsubscribe(idSubject:SubjectDto):void{
          this.userService.unsubscribe(idSubject);
     }
 
@@ -46,7 +46,10 @@ export default class UserInformation implements OnInit, OnDestroy{
 
         this.subscriptionOfMeForProfil = this.authService.me().subscribe({
             next:(value)=> {
+
                 if(value.subscription != null && value.subscription.subjectList.length > 0){
+                    console.log("List",this.subjectList)
+
                     value.subscription.subjectList.map(subscribed => {
                         this.subjectList.push(subscribed);
                     });
