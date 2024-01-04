@@ -8,6 +8,8 @@ import { UserService } from "../services/user.service";
 import { Subscription } from "rxjs";
 import { Router } from "@angular/router";
 import menuBar from "src/app/components/menu.component";
+import User from "src/app/interfaces/user.interface";
+import AuthService from "../services/auth.component";
 
 @Component({
     selector: 'app-subject',
@@ -27,37 +29,54 @@ export default class Subject implements OnInit, OnDestroy{
 
     //Control of subscription button
     isSubscribed =  false;
+    //Identify user identity
+    user!: User;
 
-    constructor(private pathService: SubjectService, private userService: UserService, private router: Router){}
+    constructor(private pathService: SubjectService, private userService: UserService, private router: Router, private authService: AuthService){}
     
     ngOnInit():void{
+      this.authService.me().subscribe({
+        next:(value)=> {
+          this.user = value
+        },
+      })
       this.getSubjectList()
     };
 
     //Set values to new list of subjects
-    getSubjectList():void{
-      this.pathService.getSubjectList().subscribe(response => {
+    getSubjectList():SubjectDto[]{
+      this.pathService.getSubjectDtoList().subscribe(response => {
         for(let i=0; i < response.length; i++){
           //Add subject values to list
           this.subject_list.push(response[i]);
         }
       })
+      console.log(this.subject_list)
+      return this.subject_list;
     }
 
     //User subscription 
-    subscribe(idSubject: number):void{
+    subscribe(subject: SubjectDto, id_user?: number):void{
 
-      if(idSubject != 0){
-       // Subscribe subject
-       this.userService.subscribe(idSubject);
+      id_user = this.user.id_user;
+
+      if(subject.idSubject != 0){
         
        //Loop to find the right subject
        this.subject_list.map(val => {
-
-        //Set subscribed to true to the right subject
-        if(idSubject == val.idSubject){
-         val.isSubscribed = true;
-        }
+        if(val.idSubject == subject.idSubject){
+          //Set subscribed to true to the right subject
+          subject.isSubscribed = true;
+          console.log(subject)
+          // Subscribe subject
+          this.userService.subscribe(subject, id_user).subscribe({
+            next:(value)=> {
+              console.log("Inscrit", value)
+            },
+          }); 
+          
+        }        
+                
       })
       }
     }
