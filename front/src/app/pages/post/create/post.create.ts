@@ -9,6 +9,8 @@ import PostCreate from "../../model/post.create";
 import { Subscription } from "rxjs";
 import { Router } from "@angular/router";
 import menuBar from "src/app/components/menu.component";
+import AuthService from "../../services/auth.component";
+import User from "src/app/interfaces/user.interface";
 
 @Component({
     selector: 'create-post',
@@ -20,21 +22,28 @@ import menuBar from "src/app/components/menu.component";
 export default class CreatePost implements OnInit, OnDestroy{
 
     public postGroup!: FormGroup;
-
+    public user!:User;
     public message!:string;
     //Property to stock subscription
     public subscription!: Subscription;
 
     //Stock list of subject
-    public subjectList$ = this.subjectService.getSubjectList();
+    public subjectList$ = this.subjectService.getSubjectDtoList();
 
+    constructor(private subjectService: SubjectService, private postService: PostService, private fb: FormBuilder, private location: Location, private router:Router, private authService:AuthService){
+    }
+
+     
     //Form initialization
-    ngOnInit(): void {
+    ngOnInit(): void { 
+        this.authService.me().subscribe({
+            next:(value)=> {
+                this.user = value;
+            },
+        })
         this.initForm();
     }
   
-    constructor(private subjectService: SubjectService, private postService: PostService, private fb: FormBuilder, private location: Location, private router:Router){
-    }
 
     //Create a post and return a message
     createPost():Subscription{
@@ -42,7 +51,7 @@ export default class CreatePost implements OnInit, OnDestroy{
         const postCreate: PostCreate = {
             title: this.postGroup.get('title')?.value,
             date: this.postGroup.get('date')?.value,
-            author: this.postGroup.get('author')?.value,
+            author: this.user.username,
             content: this.postGroup.get('content')?.value,
             comments: this.postGroup.get('comment')?.value
         }
@@ -87,7 +96,8 @@ export default class CreatePost implements OnInit, OnDestroy{
     }
 
       //Request form required field for post creation validation
-      initForm():void{
+      initForm():void{    
+
         //Stock a group of fields
         this.postGroup = this.fb.group({
             idSubject: [
@@ -103,7 +113,7 @@ export default class CreatePost implements OnInit, OnDestroy{
             ],
         
             author:[
-                 ''
+                ''
             ],
             content: [
                 '',
@@ -113,6 +123,5 @@ export default class CreatePost implements OnInit, OnDestroy{
                 '',
             ]
         });
-
       }
-}
+    }
