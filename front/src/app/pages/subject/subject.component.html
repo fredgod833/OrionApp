@@ -2,15 +2,15 @@
     <app-menu (click)="navigateMenu()"></app-menu>
   </header>
   <section >
-    <mat-card class="card" *ngFor="let item of subject_list" >
-    <mat-card-title id="title">{{ item.title }}</mat-card-title>
+    <mat-card class="card" *ngFor="let subject of subject_list" >
+    <mat-card-title id="title">{{ subject.title }}</mat-card-title>
 
     <mat-card-content>
-      <p id="description">Description: {{item.description}}</p>
+      <p id="description">Description: {{subject.description}}</p>
     </mat-card-content>
     <mat-card-actions>
       <!-- Control subscribed button -->
-      <button type="submit"(click)="subscribe(item.idSubject)" id="btn_action" >{{ item.isSubscribed ? "Abonné" : "S'abonner"}}</button>
+      <button type="submit"(click)="subscribe(subject)" id="btn_action" >{{ subject.isSubscribed ? "Abonné" : "S'abonner"}}</button>
     </mat-card-actions>
   </mat-card>
 </section>
