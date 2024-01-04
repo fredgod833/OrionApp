@@ -2,6 +2,7 @@ package com.openclassrooms.mddapi.controller;
 
 import com.openclassrooms.mddapi.model.Comments;
 import com.openclassrooms.mddapi.model.Post;
+import com.openclassrooms.mddapi.model.Subject;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.model.dto.UserDto;
 import com.openclassrooms.mddapi.service.UserService;
@@ -42,23 +43,23 @@ public class UserController {
     /**
      * Subscribe a subject
      * @param id_user entry
-     * @param id_subject entry
+     * @param subject entry
      * @return user with its subscription
      */
-    @PostMapping("/subscribe/{idUser}/{idSubject}")
-    public ResponseEntity<User> subscribe(@PathVariable(name = "idUser") int id_user, @PathVariable(name = "idSubject") int id_subject){
-            return ResponseEntity.ok(userService.subscribe(id_user, id_subject));
+    @PostMapping("/subscribe/{idUser}/id_subject")
+    public ResponseEntity<User> subscribe(@PathVariable(name = "idUser") int id_user, @RequestBody Subject subject){
+            return ResponseEntity.ok(userService.subscribe(id_user, subject));
     }
 
     /**
      * Unsubscribe a subject
      * @param id_user entry
-     * @param id_subject entry
+     * @param subject entry
      * @return user with its subscription updated
      */
-    @PutMapping("/unsubscribe/{id_user}/{id_subject}")
-    public ResponseEntity<User> unsubscribe(@PathVariable(name = "id_user")int id_user, @PathVariable(name = "id_subject")int id_subject){
-        return ResponseEntity.ok(userService.unsubscribe(id_user, id_subject));
+    @PutMapping("/unsubscribe/{id_user}/id_subject")
+    public ResponseEntity<User> unsubscribe(@PathVariable(name = "id_user")int id_user, @RequestBody Subject subject){
+        return ResponseEntity.ok(userService.unsubscribe(id_user, subject));
     }
 
     /**
