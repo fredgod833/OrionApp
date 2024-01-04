@@ -7,7 +7,6 @@ import RegisterRequest from "src/app/security/interfaces/register.component";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { Subscription } from "rxjs";
 import { Router } from "@angular/router";
-import LoginRequest from "src/app/security/interfaces/login.component";
 import { HttpErrorResponse } from "@angular/common/http";
 
 @Component({
@@ -47,6 +46,7 @@ export default class Register implements OnInit, OnDestroy{
         
             //Error set true for template
             error:(err: HttpErrorResponse)=> {
+                this.message = "User already exists";
                 console.log("Dans error", err);
                 }
         });
