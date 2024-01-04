@@ -12,6 +12,7 @@ import { Location, NgFor, NgIf } from "@angular/common";
 import Comments from "../../model/comments";
 import AuthService from "../../services/auth.component";
 import { PostService } from "../../services/post.service";
+import { SubjectService } from "../../services/subject.service";
 
 @Component({
     selector: 'app-post-selected',
@@ -27,7 +28,7 @@ export default class PostSelected implements OnInit, OnDestroy{
     //Get data to comments
     entryComments!:string;
     author!: string;
-
+    subject!: string;
     //Control comments action
     public isComment:boolean = false;
     //Property stocks subscription
@@ -44,7 +45,8 @@ export default class PostSelected implements OnInit, OnDestroy{
          private navigate: Router,
          private location: Location, 
          private authService: AuthService,
-         private postService: PostService){}
+         private postService: PostService,
+         private subjectService: SubjectService){}
 
     //Initialization
     ngOnInit(): void {
@@ -53,7 +55,20 @@ export default class PostSelected implements OnInit, OnDestroy{
           this.post = params;
             
         },)
-       this.authService.me().subscribe({
+
+        this.subjectService.getSubjectList().subscribe({
+            next:(value)=> {
+                value.map(values=>{
+                   values.postList.map(post => {
+                    if(post.id_post == this.post['id_post']){
+                        this.subject = values.title
+                    }
+                   })
+                })
+            },
+        });
+
+        this.authService.me().subscribe({
             next:(value)=> {
                 this.author = value.username
                 return this.author;
