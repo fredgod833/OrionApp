@@ -1,10 +1,24 @@
 # P6-Full-Stack-reseau-dev
 
+## Where to start 
+
+Clone project from here: https://github.com/Marvin-Silva/Developpez-une-application-full-stack-complete/tree/dev
+
 ## Front
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.3.
 
 Don't forget to install your node_modules before starting (`npm install`).
+
+### Go inside folder:
+> cd front
+
+Install the dependencies:
+> npm install
+
+Launch frontend:
+> npm run start
+
 
 ### Development server
 
@@ -14,12 +28,28 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-### Where to start
+### Back
 
-As you may have seen if you already started the app, a simple home page containing a logo, a title and a button is available. If you take a look at its code (in the `home.component.html`) you will see that an external UI library is already configured in the project.
+Go inside folder:
+> cd back
 
-This library is `@angular/material`, it's one of the most famous in the angular ecosystem. As you can see on their docs (https://material.angular.io/), it contains a lot of highly customizable components that will help you design your interfaces quickly.
+Build and Launch backend:
+> mvn spring-boot:run
+> /
+> by IDE
 
-Note: I recommend to use material however it's not mandatory, if you prefer you can get ride of it.
+### Resources
+MySQL:
+resources>sql> launch the script in order to create 
+database and fill it 
+
+Use the users credentials created to log in the application
+
+SWAGGER: 
+    Do not forget to launch backend first, swagger is 
+accessible here: http://localhost:8080/swagger-ui/#/
+
+POSTMAN: resources>postman> Import json file into postman
+to test endpoints, entries, outs and authorisations
 
 Good luck!

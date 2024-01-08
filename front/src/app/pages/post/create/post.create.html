@@ -1,0 +1,23 @@
+    <header>
+        <app-menu (click)="navigateMenu()"></app-menu>
+    </header>
+    <section>    
+        <form method="post" [formGroup]="postGroup" (ngSubmit)="createPost()">
+            <ul>
+                <li><a (click)="arrowLeftDirection()"><img src="../../../../assets/Arrow-left.png" alt="Arrow-left"></a></li>
+                <li><h1>Créer un nouvel article</h1></li>
+                <li>
+                    <mat-form-field class="mat-form-field">
+                        <mat-select placeholder="Sélectionner un thème" class="mat-select" formControlName="idSubject">
+                          <mat-option *ngFor="let item of (subjectList$ | async)" [value]="item.idSubject" class="mat-option" >{{ item.title }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </li>
+                
+                <li><input type="text" placeholder="Titre de l'article" formControlName="title"></li>
+                <li><input id="input-content" type="text" placeholder="Contenu de l'article" formControlName="content"></li>
+                <li><button type="submit">Créer</button></li>
+            </ul>
+        </form>
+        <div id="subjectCreated" *ngIf="message">{{message}}</div>
+    </section>

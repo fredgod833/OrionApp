@@ -1,0 +1,28 @@
+<body>
+  <header>
+    <img src="../../../assets/logo_p6 1.png" alt="">
+  </header>
+  <section>
+<div class="login" fxLayout="row" fxLayoutAlign="center center">
+  <mat-card class="card">
+    <a (click)="arrowLeftDirection()"><img src="/assets/Arrow-left.png" alt="Arrow-left" id="arrow-left"></a>
+    <mat-card-title id="title">Se connecter</mat-card-title>
+      <form class="login-form" [formGroup]="form" (ngSubmit)="login()" method="post">  
+        <mat-card-content fxLayout="column">
+   
+            <div class="input-wrapper">
+                <label for="email">E-mail ou nom d'utilisateur</label>
+                  <input matInput formControlName="email" id="email" name="email">
+                <label for="password"> Mot de passe</label> 
+                  <input matInput type="text"
+                      formControlName="password" id="password" name="password" type="password">
+            </div>
+          </mat-card-content>
+          <button mat-raised-button color="primary" type="submit" id="button-submit">Submit</button>
+      </form>
+      <p *ngIf="onError" class="error" style="color: brown;">L'email ou mot de passe ne sont pas correct</p>
+
+  </mat-card>
+</div>
+</section>
+</body>

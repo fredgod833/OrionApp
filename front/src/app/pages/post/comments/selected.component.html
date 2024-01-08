@@ -1,0 +1,44 @@
+<header>
+  <app-menu (click)="navigateMenu()"></app-menu>
+</header>
+
+<section>
+  <div class="border-section-container">
+  <div class="post-header-bloc">
+    <a (click)="arrowLeftDirection()"><img src="./assets/Arrow-left.png" alt="Arrow"></a>
+    <h1>{{ post['title'] }}</h1>
+  </div>
+  <div class="post-section-one">
+    <p>Date: {{post['date']}}</p>
+    <p>Auteur: {{post.author}}</p>
+    <p>Thème: {{subject}}</p>
+  </div>
+
+  <div id="content">
+    <p>{{ post['content'] }} </p>
+  </div>
+
+  <div class="post-section-two">
+    <p id="comment_title">commentaire</p>
+    
+      <p id="author">{{post.author}}</p>
+      <div id="post-section-two-content" type="text">
+        <div class="comment_list">
+          <div id="scroll-list">
+            <li *ngFor="let item of commentList">
+              <span>{{item.author}}</span>
+              <br>&nbsp;&nbsp;&nbsp;&nbsp;
+              {{item.comment}}
+            </li>
+          </div>
+        </div>
+      
+      </div>
+
+    <!-- Collect comments from users entries -->
+    <textarea placeholder="Ecrivez votre commentaire" rows="5" cols="33" [(ngModel)]="entryComments"></textarea>
+    <a (click)="comment(post)"><img src="../../../../assets/icon_send_.png"></a>
+  </div>
+</div>
+<p *ngIf="isComment" id="commentted_post-msg">Post commentted !!!</p>
+</section>

@@ -1,0 +1,23 @@
+<header>
+    <app-menu (click)="navigateMenu()"></app-menu>
+</header>
+<section>
+    <button-create-post (click)="activePostCreation()"></button-create-post>
+
+    <div class="sort-table">
+        <mat-card-title>Trier par</mat-card-title>
+        <img src="./assets/Arrow 14.png" alt="Arrow">
+    </div>
+
+    <mat-card class="post-card" *ngFor="let post of post_list">
+            <mat-card-title id="post-card-title"  (click)="selectPost(post)">{{ post.title }}</mat-card-title>
+            <mat-card-subtitle id="post-card-subtitle">
+                Date: {{ formatPostDate(post.date) }}&nbsp;&nbsp;
+                Auteur: {{ post.author }}
+            </mat-card-subtitle>
+
+        <mat-card-content>
+            <p>{{ post.content }}</p>
+        </mat-card-content>
+    </mat-card>
+</section>

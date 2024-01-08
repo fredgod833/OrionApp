@@ -1,0 +1,10 @@
+com.openclassrooms.mddapi
+com.openclassrooms.mddapi.configuration
+com.openclassrooms.mddapi.configuration.controller
+com.openclassrooms.mddapi.configuration.model
+com.openclassrooms.mddapi.configuration.security
+com.openclassrooms.mddapi.controller
+com.openclassrooms.mddapi.model
+com.openclassrooms.mddapi.model.dto
+com.openclassrooms.mddapi.repository
+com.openclassrooms.mddapi.service

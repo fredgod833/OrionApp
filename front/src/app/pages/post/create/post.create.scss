@@ -1,0 +1,116 @@
+header{
+    border: 2px solid transparent;
+}
+section{
+            margin-top: 120px;    
+    form{
+
+        ul{
+            text-decoration: none;
+            text-align: center;
+
+            li{
+                list-style-type: none;
+                h1{
+                    color: #000;
+                    text-align: center;
+                    font-family: 'Inter';
+                    font-size: 24px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: normal;
+                    width: 322px;
+                    height: 41px;
+                    margin-left: 36%;
+                }
+                img{
+                    float: left;
+                }
+                img:hover{
+                    cursor: pointer;
+                }
+                input{
+                    border-radius: 8px;
+                    border: 2px solid #7763C5;
+                    background: #FFF;
+                    width: 281px;
+                    height: 48px;
+                    flex-shrink: 0;
+                    font-family: 'Inter';
+                    font-size: 20px;
+                    padding-left: 13px;
+                }
+
+                #input-content{
+                    margin-top: 18px;
+                    width: 284px;
+                    // height: 212px;
+                    padding-bottom:212px ;
+                    flex-shrink: 0;
+                    
+                }           
+               
+                .mat-form-field{
+                    border-bottom: none;
+                    border: 2px solid #7763C5;
+                    width: 281px;
+                    height: 48px;
+                    border-radius: 8px;
+                    margin-bottom: 18px;
+                    font-family: 'Inter';
+                    font-size: 20px;
+            }
+            // Modify global placeholder
+            ::placeholder{
+                // padding-left: 13px;
+                color: #939393;
+            }
+            // Modify content placeholder
+            ::ng-deep .ng-star-inserted {
+                color: #939393;
+                font-size: 20px;
+                padding-left: 4px;
+            }
+             //Disable icon from select on the left
+             ::ng-deep .mat-select-arrow{
+                  display: none;
+             }
+             //Disable underline property
+             ::ng-deep .mat-form-field-underline{
+                display: none;
+             }
+
+             button{
+                text-align: center;
+                width: 139px;
+                height: 40px;
+                border: 2px solid #7763C5;
+                border-radius: 8px;
+                background-color: #7763C5;
+                color: #FFF;
+                margin-top: 30px;
+                 }
+            button:hover{
+                cursor: pointer;
+            }
+        }
+        }
+    }
+    #subjectCreated{
+        position: absolute;
+        top: 600px; /* Position verticale par rapport au haut */
+        left: 250px; /* Position horizontale par rapport à la gauche */
+        border: 2px solid #bbb3b3;
+        width: 200px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        font-size: 16px;
+        border-radius: 5px;
+        color: #970303;
+        font-weight: 600;
+        background-color: #bbb3b3;
+        margin-left: 41%;
+        margin-top: 1%;
+        text-align: center;
+    }
+}

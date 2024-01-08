@@ -1,0 +1,104 @@
+package com.openclassrooms.mddapi.service;
+
+import com.openclassrooms.mddapi.model.Post;
+import com.openclassrooms.mddapi.model.Subject;
+import com.openclassrooms.mddapi.repository.PostRepository;
+import com.openclassrooms.mddapi.repository.SubjectRepository;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Layer Interface implementation
+ */
+@Service
+public class PostServiceImpl implements PostService {
+    private final PostRepository postRepository;
+    private final SubjectService subjectService;
+
+    private final SubjectRepository subjectRepository;
+    public PostServiceImpl(PostRepository postRepository, SubjectService subjectService, SubjectRepository subjectRepository) {
+        this.postRepository = postRepository;
+        this.subjectService = subjectService;
+        this.subjectRepository = subjectRepository;
+    }
+
+    /**
+     * Load list of posts
+     * @return list
+     */
+    public List<Post> postList() {
+        List<Post> postArray = new ArrayList<>();
+
+        try {
+            postArray = postRepository.findAll();
+
+            if (postArray.isEmpty()) {
+                return postArray;
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        return postArray;
+    }
+
+    /**
+     * Load post through its id
+     * @param post_id entry
+     * @return post
+     */
+    public ResponseEntity<?> findPostById(int post_id) {
+        Post post = new Post();
+
+        try {
+            post = postRepository.findById(post_id).orElse(null);
+
+            if (post == null) {
+                throw new RuntimeException("Post may be null");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+
+        return ResponseEntity.ok(post);
+    }
+
+    /**
+     * Persist new post
+     * @param post entry
+     * @param id_subject entry
+     * @return new post
+     */
+    @Override
+    public Post createPost(Post post, int id_subject) {
+        Post postBuilt = new Post();
+        Subject subject = subjectRepository.findById(id_subject).orElseThrow();
+        try {
+                    // build the post
+                    postBuilt = Post.builder()
+                            .title(post.getTitle())
+                            .content(post.getContent())
+                            .author(post.getAuthor())
+                            .date(post.getDate())
+                            .comments(post.getComments())
+                            .build();
+
+                // verify if post is null
+                if (postBuilt == null){
+                    return null;
+                }
+                // Add post to subject post list
+                subject.getPostList().add(postBuilt);
+                //Persist post
+                postRepository.save(postBuilt);
+                //Persist subject
+                subjectRepository.save(subject);
+           return postBuilt;
+
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+}

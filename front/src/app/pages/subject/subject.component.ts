@@ -1,0 +1,97 @@
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import {MatButtonModule} from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
+import { SubjectService } from "../services/subject.service";
+import { SubjectDto } from "../model/subjectdto";
+import { NgFor, NgIf } from "@angular/common";
+import { UserService } from "../services/user.service";
+import { Subscription } from "rxjs";
+import { Router } from "@angular/router";
+import menuBar from "src/app/components/menu.component";
+import User from "src/app/interfaces/user.interface";
+import AuthService from "../services/auth.component";
+
+@Component({
+    selector: 'app-subject',
+    templateUrl: './subject.component.html',
+    styleUrls: ['./subject.component.scss'],
+    standalone: true,
+    imports: [MatCardModule, MatButtonModule, NgFor, NgIf, menuBar],
+})
+export default class Subject implements OnInit, OnDestroy{
+
+    //Initalise list of subjects
+    subject_list: SubjectDto[] = [];
+
+    //Property to stock subscription
+    subscriptionOfSubjectList!: Subscription;
+    subscriptionOfUserService!:Subscription;
+
+    //Control of subscription button
+    isSubscribed =  false;
+    //Identify user identity
+    user!: User;
+
+    constructor(private pathService: SubjectService, private userService: UserService, private router: Router, private authService: AuthService){}
+    
+    ngOnInit():void{
+      this.authService.me().subscribe({
+        next:(value)=> {
+          this.user = value
+        },
+      })
+      this.getSubjectList()
+    };
+
+    //Set values to new list of subjects
+    getSubjectList():SubjectDto[]{
+      this.pathService.getSubjectDtoList().subscribe(response => {
+        for(let i=0; i < response.length; i++){
+          //Add subject values to list
+          this.subject_list.push(response[i]);
+        }
+      })
+      console.log(this.subject_list)
+      return this.subject_list;
+    }
+
+    //User subscription 
+    subscribe(subject: SubjectDto, id_user?: number):void{
+
+      id_user = this.user.id_user;
+
+      if(subject.idSubject != 0){
+        
+       //Loop to find the right subject
+       this.subject_list.map(val => {
+        if(val.idSubject == subject.idSubject){
+          //Set subscribed to true to the right subject
+          subject.isSubscribed = true;
+          console.log(subject)
+          // Subscribe subject
+          this.userService.subscribe(subject, id_user).subscribe({
+            next:(value)=> {
+              console.log("Inscrit", value)
+            },
+          }); 
+          
+        }        
+                
+      })
+      }
+    }
+    //Unsubscribe subscriptions
+    ngOnDestroy():void{
+      if(this.subscriptionOfSubjectList){
+        this.subscriptionOfSubjectList.unsubscribe();
+      }
+
+      if(this.subscriptionOfUserService){
+        this.subscriptionOfUserService.unsubscribe();
+      }
+    }
+      //Redirect menu for navigation
+      navigateMenu():void{
+        this.router.navigate(['menu'])
+    }
+}
