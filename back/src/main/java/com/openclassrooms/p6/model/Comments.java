@@ -13,15 +13,23 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-
 import lombok.Data;
 
+/**
+ * Represents a comment on an article.
+ * 
+ * This class is an entity mapped to the "comments" table in the database.
+ * It contains information about the comment, such as the author, the article it
+ * belongs to,
+ * the comment text, and timestamps indicating when the comment was created and
+ * last updated.
+ */
 @Entity
 @Data
-@Table(name = "articles")
-public class Articles {
+@Table(name = "comments")
+public class Comments {
     /**
-     * Primary key and unique identifier for the article.
+     * Primary key and unique identifier for the comment.
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,36 +49,34 @@ public class Articles {
     private Long userId;
 
     /**
-     * Theme of the article. This field won't be added to the database.
+     * Article the user's writing the comment to. This field won't be added to the
+     * database.
      */
     @ManyToOne
-    @JoinColumn(name = "theme_id", nullable = false, insertable = false, updatable = false)
-    private Themes theme;
+    @JoinColumn(name = "article_id", nullable = false, insertable = false, updatable = false)
+    private Articles article;
 
     /**
-     * Theme ID of the article.
+     * ID of the article
      */
-    @Column(name = "theme_id")
-    private Long themeId;
-
-    @Column(name = "title", nullable = false, length = 255)
-    private String title;
+    @Column(name = "article_id")
+    private Long articleId;
 
     /**
-     * Description of the article
+     * Comment of the article
      */
-    @Column(name = "description", nullable = false, columnDefinition = "TEXT")
-    private String description;
+    @Column(name = "comment", columnDefinition = "TEXT")
+    private String comment;
 
     /**
-     * Timestamp indicating when the article was created.
+     * Timestamp indicating when the comment was created.
      */
     @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", nullable = false)
     @CreationTimestamp
     private LocalDateTime createdAt;
 
     /**
-     * Timestamp indicating the last update time of the article.
+     * Timestamp indicating the last update time of the comment.
      */
     @Column(name = "updated_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", nullable = false)
     @UpdateTimestamp

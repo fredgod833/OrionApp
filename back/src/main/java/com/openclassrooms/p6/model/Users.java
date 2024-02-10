@@ -27,7 +27,7 @@ public class Users {
      * 
      * This field is unique and serves as a means of identification for the user.
      */
-    @Column(name = "username", unique = true, nullable = false, length = 255)
+    @Column(name = "username", unique = true, nullable = false, length = 50)
     private String username;
 
     /**
@@ -42,7 +42,7 @@ public class Users {
     /**
      * Password associated with the user's account.
      */
-    @Column(name = "password", nullable = false, length = 255)
+    @Column(name = "password", nullable = false, columnDefinition = "TEXT")
     private String password;
 
     /**

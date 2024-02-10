@@ -13,15 +13,17 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-
 import lombok.Data;
 
+/**
+ * The 'Subscriptions' class represents a subscription entity in the system.
+ */
 @Entity
 @Data
-@Table(name = "articles")
-public class Articles {
+@Table(name = "subscriptions")
+public class Subscriptions {
     /**
-     * Primary key and unique identifier for the article.
+     * Primary key and unique identifier for the comment.
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,24 +55,21 @@ public class Articles {
     @Column(name = "theme_id")
     private Long themeId;
 
-    @Column(name = "title", nullable = false, length = 255)
-    private String title;
-
     /**
-     * Description of the article
+     * Boolean to indicate whether the user is subscribed to the theme or not.
      */
-    @Column(name = "description", nullable = false, columnDefinition = "TEXT")
-    private String description;
+    @Column(name = "isSubscribed")
+    private Boolean isSubscribed;
 
     /**
-     * Timestamp indicating when the article was created.
+     * Timestamp indicating when the subscription was created.
      */
     @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", nullable = false)
     @CreationTimestamp
     private LocalDateTime createdAt;
 
     /**
-     * Timestamp indicating the last update time of the article.
+     * Timestamp indicating the last update time of the subscription.
      */
     @Column(name = "updated_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", nullable = false)
     @UpdateTimestamp
