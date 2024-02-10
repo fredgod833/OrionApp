@@ -218,9 +218,7 @@ logging.level.org.springframework.boot.web.embedded.tomcat=INFO
 
 ### Front-End
 
-
 ### Back-End
-
 
 ## API documentation
 
@@ -240,8 +238,7 @@ You can view the diffrent API endpoints from this table:
 | GET       | /            | x                                             | x                                     | {  id: number,  userId: number,  articleId: number,  title: string,  description: string }[]                                                                | Array of articles                                                            |
 | POST      | /            | x                                             | {  theme: string, title: string, description: string } | {  message: string }                                                                                                                                                              | A message saying if the article has been succesfully published or not                               |
 | GET       | /:articleId  | Id of the article the dev wants to read | x   | {  id: number,  authorName: string,  creationDate: string, // ISO string  theme: string,  title: string,  description: string,  comments: {userName: string, comment: string}[] }                                         | An object containing info about the article and an array of comments |
-| POST      | /comment     | x                                             | {  article: number  comment: string } | {  message: string }                                                                                                                                                              | A message saying if the comment was sent with success or not                               |
-
+| POST      | /comment     | x                                             | {  articleId: number  comment: string } | {  message: string }                                                                                                                                                              | A message saying if the comment was sent with success or not                               |
 
 - `api/themes`:
 
