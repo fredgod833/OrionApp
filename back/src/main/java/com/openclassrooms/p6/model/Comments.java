@@ -39,13 +39,13 @@ public class Comments {
      * Author who created the article. This field won't be added to the database.
      */
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "userid", nullable = false, insertable = false, updatable = false)
     private Users user;
 
     /**
      * User ID of the author of the article
      */
-    @Column(name = "user_id")
+    @Column(name = "userid")
     private Long userId;
 
     /**
@@ -53,13 +53,13 @@ public class Comments {
      * database.
      */
     @ManyToOne
-    @JoinColumn(name = "article_id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "articleid", nullable = false, insertable = false, updatable = false)
     private Articles article;
 
     /**
      * ID of the article
      */
-    @Column(name = "article_id")
+    @Column(name = "articleid")
     private Long articleId;
 
     /**
@@ -71,14 +71,14 @@ public class Comments {
     /**
      * Timestamp indicating when the comment was created.
      */
-    @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", nullable = false)
+    @Column(name = "createdat", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", nullable = false)
     @CreationTimestamp
     private LocalDateTime createdAt;
 
     /**
      * Timestamp indicating the last update time of the comment.
      */
-    @Column(name = "updated_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", nullable = false)
+    @Column(name = "updatedat", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", nullable = false)
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 }

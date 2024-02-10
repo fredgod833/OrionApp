@@ -31,26 +31,26 @@ public class Articles {
      * Author who created the article. This field won't be added to the database.
      */
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "userid", nullable = false, insertable = false, updatable = false)
     private Users user;
 
     /**
      * User ID of the author of the article
      */
-    @Column(name = "user_id")
+    @Column(name = "userid")
     private Long userId;
 
     /**
      * Theme of the article. This field won't be added to the database.
      */
     @ManyToOne
-    @JoinColumn(name = "theme_id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "themeid", nullable = false, insertable = false, updatable = false)
     private Themes theme;
 
     /**
      * Theme ID of the article.
      */
-    @Column(name = "theme_id")
+    @Column(name = "themeid")
     private Long themeId;
 
     @Column(name = "title", nullable = false, length = 255)
@@ -65,14 +65,14 @@ public class Articles {
     /**
      * Timestamp indicating when the article was created.
      */
-    @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", nullable = false)
+    @Column(name = "createdat", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", nullable = false)
     @CreationTimestamp
     private LocalDateTime createdAt;
 
     /**
      * Timestamp indicating the last update time of the article.
      */
-    @Column(name = "updated_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", nullable = false)
+    @Column(name = "updatedat", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", nullable = false)
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 }
