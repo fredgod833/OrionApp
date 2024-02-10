@@ -112,52 +112,6 @@ public class AuthController {
     }
 
     /**
-     * Retrieves the user ID from the authorization header.
-     *
-     * @param authorizationHeader The authorization header containing the JWT token.
-     * @return The user ID extracted from the JWT token.
-     */
-    private Long getUserIdFromAuthorizationHeader(String authorizationHeader) {
-        String jwtToken = JwtUtil.extractJwtFromHeader(authorizationHeader);
-
-        // Extract user ID from JWT
-        Optional<Long> optionalUserIdFromToken = JwtUtil.extractUserId(jwtToken);
-
-        Boolean hasJwtExtractionError = optionalUserIdFromToken.isEmpty();
-        if (hasJwtExtractionError) {
-            GlobalExceptionHandler.handleLogicError("Unauthorized", HttpStatus.UNAUTHORIZED);
-        }
-
-        return optionalUserIdFromToken.get();
-    }
-
-    /**
-     * Retrieves the user information as a DTO entity based on the user ID extracted
-     * from the JWT
-     * token.
-     * 
-     * @param userIdFromToken The user ID extracted from the JWT token.
-     * @return The user information as a UserInfoResponse object.
-     * @throws ApiException If the user with the given ID does not exist or if there
-     *                      is a mismatch between the user ID and the token.
-     */
-    private UserInfoResponse verifyAndGetUserByTokenId(Long userIdFromToken) {
-        // Fetch user information based on the user ID
-        Optional<Users> optionalSpecificUser = userService.getUserById(userIdFromToken);
-        Boolean userWithIdDoesNotExist = optionalSpecificUser.isEmpty();
-        if (userWithIdDoesNotExist) {
-            GlobalExceptionHandler.handleLogicError("Not found",
-                    HttpStatus.NOT_FOUND);
-        }
-
-        Users user = optionalSpecificUser.get();
-        // Convert user information to DTO
-        UserInfoResponse userEntity = userMapper.toDtoUser(user);
-
-        return userEntity;
-    }
-
-    /**
      * Checks if an username is already registered in the system.
      *
      * @param username The username to check if it is already registered.
