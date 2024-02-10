@@ -9,7 +9,11 @@
         "**node_modules": true,
         ".husky": true,
         ".vscode": true,
-        ".next": true
+        ".next": true,
+        "[!b]*/**": true,
+        "b[!a]*/**": true,
+        "ba[!c]*/**": true,
+        "bac[!k]*/**": true
     },
     "java.configuration.updateBuildConfiguration": "automatic"
 }
