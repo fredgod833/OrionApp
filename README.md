@@ -2,7 +2,7 @@
 
 ![MDD](./front/public/mdd-logo.svg)
 
-This Fullstack project is dedicated to
+This Fullstack project is dedicated to... it uses Angular 17 for the Front and Java-Spring for the Back
 
 ## Table of contents
 
@@ -139,7 +139,7 @@ CREATE TABLE Subscriptions (
 );
 
 INSERT INTO Users (ID, username, email, password)
-VALUES (1, 'user', 'user@user.com', 'test!1234');
+VALUES (1, 'user', 'user@user.com', '$2a$10$Cugtb5QEITQsbHMuuBWKqecku/5hup5afBWrVqJdU6nN9Ov/wNYy2');
 ```
 
 ## Installation procedure
@@ -244,9 +244,16 @@ You can view the diffrent API endpoints from this table:
 
 | HTTP VERB | Endpoint     | Parameters                                    | Request payload                       | Response payload                                                                                                                                                                  | Description of the reponse                                                        |
 |-----------|--------------|-----------------------------------------------|---------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------|
-| GET       | /            | x                                             | x                                     | {  id: number,  userId: number,  themeId: number,  title: string,  description: string,  isSubscribed: boolean }[]                                                                | Array of subscriptions                                                            |
+| GET       | /            | x                                             | x                                     | {  id: number,  userId: number,  themeId: number,  title: string,  description: string,  isSubscribed: boolean }[]                                                                | Array of all the themes                                                           |
+| GET       | /subscribed  | x                                             | x                                     | {  id: number,  userId: number,  themeId: number,  title: string,  description: string,  isSubscribed: boolean }[]                                                                | Array of all the themes the user is subscribed to                                 |
 | POST      | /subscribe   | x                                             | {  themeId: number }                  | {  message: string }                                                                                                                                                              | A message saying if the subscription request worked or not                        |
 | POST      | /unsubscribe | x                                             | {  themeId: number }                  | {  message: string }                                                                                                                                                              | A message saying if the unsubscription request worked or not                      |
+
+- `api/user`
+
+| HTTP VERB | Endpoint | Parameters | Request payload                        | Response payload     | Description of the reponse                                             |
+|-----------|----------|------------|----------------------------------------|----------------------|------------------------------------------------------------------------|
+| PUT       | /        | x          | {  username: string,  email: string, } | {  message: string } | A message saying if the user info has been successfully updated or not |
 
 ## Miscellaneous
 

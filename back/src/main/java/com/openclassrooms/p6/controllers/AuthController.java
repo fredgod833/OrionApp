@@ -16,6 +16,7 @@ import com.openclassrooms.p6.exception.ApiException;
 import com.openclassrooms.p6.exception.GlobalExceptionHandler;
 import com.openclassrooms.p6.mapper.UserMapper;
 import com.openclassrooms.p6.model.Users;
+import com.openclassrooms.p6.payload.request.LoginRequest;
 import com.openclassrooms.p6.payload.request.RegisterRequest;
 import com.openclassrooms.p6.payload.response.AuthResponse;
 import com.openclassrooms.p6.payload.response.UserInfoResponse;
@@ -59,12 +60,41 @@ public class AuthController {
 
             String jwtToken = JwtUtil.generateJwtToken(userEntity.id());
 
-            AuthResponse authResponse = new AuthResponse(jwtToken);
+            AuthResponse authResponse = new AuthResponse(jwtToken, userEntity.id(), userEntity.username(),
+                    userEntity.email());
 
             return ResponseEntity.status(HttpStatus.CREATED).body(authResponse);
 
         } catch (ApiException e) {
             return GlobalExceptionHandler.handleApiException(e);
+        }
+    }
+
+    /**
+     * Logs in an existing user.
+     *
+     * @param request The login request containing user credentials.
+     * @return ResponseEntity<AuthResponse> A JWT if login is successful.
+     */
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request, BindingResult bindingResult) {
+        try {
+            checkBodyPayloadErrors(bindingResult);
+
+            Users user = getUserFromIdentifier(request.identifier());
+
+            checkUserPassword(request.password(), user);
+
+            UserInfoResponse userEntity = userMapper.toDtoUser(user);
+
+            String jwtToken = JwtUtil.generateJwtToken(userEntity.id());
+
+            AuthResponse authResponse = new AuthResponse(jwtToken, userEntity.id(), userEntity.username(),
+                    userEntity.email());
+
+            return ResponseEntity.status(HttpStatus.OK).body(authResponse);
+        } catch (ApiException ex) {
+            return GlobalExceptionHandler.handleApiException(ex);
         }
     }
 
@@ -135,7 +165,7 @@ public class AuthController {
     private void checkIfUsernameIsInUse(String username) {
         Boolean hasAlreadyRegistered = userService.isUsernameInUse(username);
         if (hasAlreadyRegistered) {
-            GlobalExceptionHandler.handleLogicError("Conflict", HttpStatus.CONFLICT);
+            GlobalExceptionHandler.handleLogicError("Username is already in use", HttpStatus.CONFLICT);
         }
     }
 
@@ -147,26 +177,8 @@ public class AuthController {
     private void checkIfEmailIsInUse(String email) {
         Boolean hasAlreadyRegistered = userService.isEmailInUse(email);
         if (hasAlreadyRegistered) {
-            GlobalExceptionHandler.handleLogicError("Conflict", HttpStatus.CONFLICT);
+            GlobalExceptionHandler.handleLogicError("Email is already in use", HttpStatus.CONFLICT);
         }
-    }
-
-    /**
-     * Retrieves a user by their email.
-     *
-     * @param email The email of the user to retrieve.
-     * @return The user with the specified email.
-     * @throws ApiException If the user with the given email does not exist.
-     */
-    private Users getUserByEmail(String email) {
-        Optional<Users> optionalUser = userService.getUserByEmail(email);
-
-        Boolean userNotFound = optionalUser.isEmpty();
-        if (userNotFound) {
-            GlobalExceptionHandler.handleLogicError("Not found", HttpStatus.NOT_FOUND);
-        }
-
-        return optionalUser.get();
     }
 
     /**
@@ -178,7 +190,26 @@ public class AuthController {
     private void checkUserPassword(String requestPassword, Users user) {
         Boolean passwordIsIncorrect = !userService.isPasswordValid(requestPassword, user);
         if (passwordIsIncorrect) {
-            GlobalExceptionHandler.handleLogicError("Unauthorized", HttpStatus.UNAUTHORIZED);
+            GlobalExceptionHandler.handleLogicError("Password is incorrect", HttpStatus.UNAUTHORIZED);
         }
+    }
+
+    /**
+     * Checks if the provided username or email in the login request is valid and
+     * returns the user
+     *
+     * @param usernameOrEmail The username or email to check.
+     * @throws ApiException If the username or email is invalid.
+     */
+    private Users getUserFromIdentifier(String usernameOrEmail) {
+        Optional<Users> userFromEmail = userService.getUserByEmail(usernameOrEmail);
+        Optional<Users> userFromUsername = userService.getUserByUsername(usernameOrEmail);
+
+        Boolean identifierIsInvalid = userFromEmail.isEmpty() && userFromUsername.isEmpty();
+        if (identifierIsInvalid) {
+            GlobalExceptionHandler.handleLogicError("Invalid username/email", HttpStatus.UNAUTHORIZED);
+        }
+
+        return userFromEmail.isPresent() ? userFromEmail.get() : userFromUsername.get();
     }
 }
