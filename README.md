@@ -14,6 +14,8 @@ This Fullstack project is dedicated to
     - [Front-End](#front-end)
     - [Back-End](#back-end)
   - [Dependencies](#dependencies)
+    - [Front-End](#front-end-1)
+    - [Back-End](#back-end-1)
   - [API documentation](#api-documentation)
   - [Miscellaneous](#miscellaneous)
 
@@ -85,33 +87,25 @@ Connect to your PostgreSQL Server instance.
 Create a new database for your application and add all the tables to your database:
 
 ```sql
--- Create the database
-DROP DATABASE IF EXISTS `p6-mdd`;
-
-CREATE DATABASE `p6-mdd`;
-
--- Switch to the new database
-USE `p6-mdd`;
-
-CREATE TABLE User (
+CREATE TABLE Users (
     ID INT PRIMARY KEY,
     username VARCHAR(50),
     email VARCHAR(255),
     password TEXT,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL ON UPDATE NOW()
 );
 
-CREATE TABLE Article (
+CREATE TABLE Articles (
     ID INT PRIMARY KEY,
     userID INT,
     themeID INT,
     title VARCHAR(255),
     description TEXT,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (userID) REFERENCES User(ID) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (themeID) REFERENCES Theme(ID) ON DELETE CASCADE ON UPDATE CASCADE
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL ON UPDATE NOW(),
+    FOREIGN KEY (userID) REFERENCES Users(ID) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (themeID) REFERENCES Themes(ID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE Comments (
@@ -120,29 +114,32 @@ CREATE TABLE Comments (
     articleID INT,
     comment TEXT,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (userID) REFERENCES User(ID) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (articleID) REFERENCES Article(ID) ON DELETE CASCADE ON UPDATE CASCADE
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL ON UPDATE NOW(),
+    FOREIGN KEY (userID) REFERENCES Users(ID) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (articleID) REFERENCES Articles(ID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE Theme (
+CREATE TABLE Themes (
     ID INT PRIMARY KEY,
     title VARCHAR(255),
     description TEXT,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL ON UPDATE NOW()
 );
 
-CREATE TABLE Subscription (
+CREATE TABLE Subscriptions (
     ID INT PRIMARY KEY,
     userID INT,
     themeID INT,
     isSubscribed BOOLEAN,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (userID) REFERENCES User(ID) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (themeID) REFERENCES Theme(ID) ON DELETE CASCADE ON UPDATE CASCADE
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL ON UPDATE NOW(),
+    FOREIGN KEY (userID) REFERENCES Users(ID) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (themeID) REFERENCES Themes(ID) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+INSERT INTO Users (ID, username, email, password)
+VALUES (1, 'user', 'user@user.com', 'test!1234');
 ```
 
 ## Installation procedure
@@ -218,6 +215,12 @@ logging.level.org.springframework.boot.web.embedded.tomcat=INFO
 3. Run the application using your IDE or by running `mvn spring-boot:run` in the project directory.
 
 ## Dependencies
+
+### Front-End
+
+
+### Back-End
+
 
 ## API documentation
 
