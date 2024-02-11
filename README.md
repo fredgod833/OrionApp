@@ -17,6 +17,8 @@ This Fullstack project is dedicated to... it uses Angular 17 for the Front and J
     - [Front-End](#front-end-1)
     - [Back-End](#back-end-1)
   - [API documentation](#api-documentation)
+    - [Open endpoints](#open-endpoints)
+    - [JWT required endpoints](#jwt-required-endpoints)
   - [Miscellaneous](#miscellaneous)
 
 ## Pre-requisites
@@ -222,7 +224,9 @@ logging.level.org.springframework.boot.web.embedded.tomcat=INFO
 
 ## API documentation
 
-You can view the diffrent API endpoints from this table:
+You can view the different API endpoints from this table:
+
+### Open endpoints
 
 - `api/auth`:
 
@@ -230,6 +234,8 @@ You can view the diffrent API endpoints from this table:
 |-----------|-----------|------------|----------------------------------------------------------|--------------------------------------|--------------------------------------|
 | POST      | /register | x          | {  userName: string,  email: string,  password: string } | {  message: string,  token: string } | An object with a token and a message |
 | POST      | /login    | x          | {  identifier: string,  password: string }               | {  message: string,  token: string } | An object with a token and a message |
+
+### JWT required endpoints
 
 - `api/articles`:
   
@@ -256,6 +262,13 @@ You can view the diffrent API endpoints from this table:
 | PUT       | /        | x          | {  username: string,  email: string, } | {  message: string } | A message saying if the user info has been successfully updated or not |
 
 ## Miscellaneous
+
+<details>
+  <summary>🚀 Explore the API</summary>
+  <a href="./front/resources/p6.postman_collection.json">
+    You can import the Postman environment to test the different API endpoints
+  </a>
+</details>
 
 <details>
   <summary>🔗 Link to the original GitHub Repository</summary>
