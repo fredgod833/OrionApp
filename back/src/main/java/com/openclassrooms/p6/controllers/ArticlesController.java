@@ -50,8 +50,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RestController
 @RequestMapping("/api/articles")
 public class ArticlesController {
-    // TODO: Fully implement the postArticle method
-    // TODO: Fully implement the postCommentToArticle method
 
     @Autowired
     private UserService userService;
