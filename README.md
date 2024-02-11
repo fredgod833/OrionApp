@@ -303,7 +303,7 @@ You can view the different API endpoints from this table:
 ## Miscellaneous
 
 <details>
-  <summary>🚀 Explore the API</summary>
+  <summary>🚀 Explore the API on Postman</summary>
   <a href="./front/resources/p6.postman_collection.json">
     You can import the Postman environment to test the different API endpoints
   </a>
