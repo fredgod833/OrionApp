@@ -20,5 +20,5 @@ public interface ArticleMapper {
     })
     ArticleSummary toDtoArticle(Articles article);
 
-    Iterable<ArticleSummary> toDtoArticles(Iterable<ArticleSummary> articlesDto);
+    Iterable<ArticleSummary> toDtoArticles(List<Articles> articles);
 }

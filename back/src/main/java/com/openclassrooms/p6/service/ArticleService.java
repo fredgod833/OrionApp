@@ -1,5 +1,6 @@
 package com.openclassrooms.p6.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.p6.model.Articles;
+import com.openclassrooms.p6.payload.request.ArticleRequest;
 import com.openclassrooms.p6.repository.ArticleRepository;
 
 import lombok.Data;
@@ -42,6 +44,23 @@ public class ArticleService {
     }
 
     /**
+     * Creates a new article
+     *
+     * @param rentalUpdateRequest The article request containing details.
+     * @return The article created.
+     */
+    // TODO: Correctly implement this method to create new articles, needs to accept
+    // userId & themeId
+    public Articles createArticle(ArticleRequest articleCreationRequest) {
+        Articles article = new Articles();
+
+        article.setTitle(articleCreationRequest.title());
+        article.setDescription(articleCreationRequest.description());
+
+        return articleRepository.save(article);
+    }
+
+    /**
      * Deleted an article by its unique identifier.
      *
      * @param id The identifier of the article to be deleted.
@@ -49,4 +68,5 @@ public class ArticleService {
     public void deleteArticleById(final Long id) {
         articleRepository.deleteById(id);
     }
+
 }
