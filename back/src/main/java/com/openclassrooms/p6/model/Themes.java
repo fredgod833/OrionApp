@@ -28,7 +28,7 @@ public class Themes {
      * Primary key and unique identifier for the theme.
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "title", nullable = false, length = 255)

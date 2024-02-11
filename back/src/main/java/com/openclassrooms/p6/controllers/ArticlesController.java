@@ -21,6 +21,7 @@ import com.openclassrooms.p6.mapper.CommentMapper;
 import com.openclassrooms.p6.mapper.UserMapper;
 import com.openclassrooms.p6.model.Articles;
 import com.openclassrooms.p6.model.Comments;
+import com.openclassrooms.p6.model.Themes;
 import com.openclassrooms.p6.model.Users;
 import com.openclassrooms.p6.payload.request.ArticleRequest;
 import com.openclassrooms.p6.payload.request.CommentRequest;
@@ -33,6 +34,7 @@ import com.openclassrooms.p6.payload.response.MultipleArticlesResponse;
 import com.openclassrooms.p6.payload.response.SingleArticleResponse;
 import com.openclassrooms.p6.service.ArticleService;
 import com.openclassrooms.p6.service.CommentsService;
+import com.openclassrooms.p6.service.ThemeService;
 import com.openclassrooms.p6.service.UserService;
 import com.openclassrooms.p6.utils.JwtUtil;
 
@@ -65,6 +67,9 @@ public class ArticlesController {
 
     @Autowired
     private CommentMapper commentsMapper;
+
+    @Autowired
+    private ThemeService themeService;
 
     /**
      * Registers a new user.
@@ -127,14 +132,19 @@ public class ArticlesController {
     public ResponseEntity<?> postArticle(@Valid @RequestBody ArticleRequest request, BindingResult bindingResult,
             @RequestHeader("Authorization") String authorizationHeader) {
         try {
-            verifyUserValidityFromToken(authorizationHeader);
+            Long userId = verifyUserValidityFromToken(authorizationHeader);
 
             checkBodyPayloadErrors(bindingResult);
 
-            // TODO: Save the article to the DB with the article service
-            // TODO: Return message response
+            Long themeId = request.themeId();
 
-            // return ResponseEntity.status(HttpStatus.CREATED).body(response);
+            verifyAndGetThemeById(themeId);
+
+            articleService.createArticle(request, userId, themeId);
+
+            MessageResponse response = new MessageResponse("Article has been successfully published !");
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (ApiException e) {
             return GlobalExceptionHandler.handleApiException(e);
         }
@@ -153,7 +163,7 @@ public class ArticlesController {
 
             commentsService.createComment(request, userId);
 
-            MessageResponse response = new MessageResponse("Comment has been successfully been created !");
+            MessageResponse response = new MessageResponse("Comment has been successfully published !");
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (ApiException e) {
             return GlobalExceptionHandler.handleApiException(e);
@@ -220,6 +230,18 @@ public class ArticlesController {
                     HttpStatus.NOT_FOUND);
         }
         return optionalArticle.get();
+    }
+
+    private Themes verifyAndGetThemeById(Long themeId) {
+        Optional<Themes> optionalTheme = themeService.getThemeById(themeId);
+
+        Boolean themeDoesNotExist = optionalTheme.isEmpty();
+        if (themeDoesNotExist) {
+            GlobalExceptionHandler.handleLogicError("Not found",
+                    HttpStatus.NOT_FOUND);
+        }
+
+        return optionalTheme.get();
     }
 
     /**
