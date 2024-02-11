@@ -49,11 +49,11 @@ public class ArticleService {
      * @param rentalUpdateRequest The article request containing details.
      * @return The article created.
      */
-    // TODO: Correctly implement this method to create new articles, needs to accept
-    // userId & themeId
-    public Articles createArticle(ArticleRequest articleCreationRequest) {
+    public Articles createArticle(ArticleRequest articleCreationRequest, Long userId, Long themeId) {
         Articles article = new Articles();
 
+        article.setUserId(userId);
+        article.setThemeId(themeId);
         article.setTitle(articleCreationRequest.title());
         article.setDescription(articleCreationRequest.description());
 

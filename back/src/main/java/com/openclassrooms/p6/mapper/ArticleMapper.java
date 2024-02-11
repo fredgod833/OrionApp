@@ -7,7 +7,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
 import com.openclassrooms.p6.model.Articles;
-import com.openclassrooms.p6.payload.response.ArticleSummary;
+import com.openclassrooms.p6.payload.response.ArticleSummaryResponse;
 
 @Mapper(componentModel = "spring")
 public interface ArticleMapper {
@@ -18,7 +18,7 @@ public interface ArticleMapper {
             @Mapping(target = "userId", source = "userId"),
             @Mapping(target = "articleId", source = "id")
     })
-    ArticleSummary toDtoArticle(Articles article);
+    ArticleSummaryResponse toDtoArticle(Articles article);
 
-    Iterable<ArticleSummary> toDtoArticles(List<Articles> articles);
+    Iterable<ArticleSummaryResponse> toDtoArticles(List<Articles> articles);
 }

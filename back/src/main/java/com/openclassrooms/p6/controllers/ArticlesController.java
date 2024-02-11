@@ -22,9 +22,13 @@ import com.openclassrooms.p6.mapper.UserMapper;
 import com.openclassrooms.p6.model.Articles;
 import com.openclassrooms.p6.model.Comments;
 import com.openclassrooms.p6.model.Users;
+import com.openclassrooms.p6.payload.request.ArticleRequest;
+import com.openclassrooms.p6.payload.request.CommentRequest;
+import com.openclassrooms.p6.payload.request.LoginRequest;
 import com.openclassrooms.p6.payload.request.RegisterRequest;
-import com.openclassrooms.p6.payload.response.ArticleSummary;
+import com.openclassrooms.p6.payload.response.ArticleSummaryResponse;
 import com.openclassrooms.p6.payload.response.CommentResponse;
+import com.openclassrooms.p6.payload.response.MessageResponse;
 import com.openclassrooms.p6.payload.response.MultipleArticlesResponse;
 import com.openclassrooms.p6.payload.response.SingleArticleResponse;
 import com.openclassrooms.p6.service.ArticleService;
@@ -38,12 +42,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/articles")
 public class ArticlesController {
+    // TODO: Fully implement the postArticle method
+    // TODO: Fully implement the postCommentToArticle method
 
     @Autowired
     private UserService userService;
@@ -73,11 +79,11 @@ public class ArticlesController {
 
             List<Articles> articlesEntity = articleService.getArticles();
 
-            Iterable<ArticleSummary> articlesDto = (articleMapper.toDtoArticles(articlesEntity));
+            Iterable<ArticleSummaryResponse> articlesDto = (articleMapper.toDtoArticles(articlesEntity));
 
-            List<ArticleSummary> normalizedArticles = new ArrayList<>();
+            List<ArticleSummaryResponse> normalizedArticles = new ArrayList<>();
 
-            normalizedArticles.addAll((List<? extends ArticleSummary>) articlesDto);
+            normalizedArticles.addAll((List<? extends ArticleSummaryResponse>) articlesDto);
 
             MultipleArticlesResponse response = new MultipleArticlesResponse(normalizedArticles);
 
@@ -94,7 +100,7 @@ public class ArticlesController {
             verifyUserValidityFromToken(authorizationHeader);
 
             Articles articleEntity = verifyAndGetArticlesById(articleId);
-            ArticleSummary articleDto = articleMapper.toDtoArticle(articleEntity);
+            ArticleSummaryResponse articleDto = articleMapper.toDtoArticle(articleEntity);
 
             String articleAuthor = getVerifiedUserById(articleDto.userId()).getUsername();
 
@@ -112,6 +118,43 @@ public class ArticlesController {
                     normalizedComments);
 
             return ResponseEntity.status(HttpStatus.OK).body(response);
+        } catch (ApiException e) {
+            return GlobalExceptionHandler.handleApiException(e);
+        }
+    }
+
+    @PostMapping("")
+    public ResponseEntity<?> postArticle(@Valid @RequestBody ArticleRequest request, BindingResult bindingResult,
+            @RequestHeader("Authorization") String authorizationHeader) {
+        try {
+            verifyUserValidityFromToken(authorizationHeader);
+
+            checkBodyPayloadErrors(bindingResult);
+
+            // TODO: Save the article to the DB with the article service
+            // TODO: Return message response
+
+            // return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        } catch (ApiException e) {
+            return GlobalExceptionHandler.handleApiException(e);
+        }
+    }
+
+    @PostMapping("/comment")
+    public ResponseEntity<?> postCommentToArticle(@Valid @RequestBody CommentRequest request,
+            BindingResult bindingResult, @RequestHeader("Authorization") String authorizationHeader) {
+        try {
+            Long userId = verifyUserValidityFromToken(authorizationHeader);
+
+            Long articleId = request.articleId();
+            verifyAndGetArticlesById(articleId);
+
+            checkBodyPayloadErrors(bindingResult);
+
+            commentsService.createComment(request, userId);
+
+            MessageResponse response = new MessageResponse("Comment has been successfully been created !");
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (ApiException e) {
             return GlobalExceptionHandler.handleApiException(e);
         }
@@ -177,6 +220,19 @@ public class ArticlesController {
                     HttpStatus.NOT_FOUND);
         }
         return optionalArticle.get();
+    }
+
+    /**
+     * Checks if there are any payload errors in the request body.
+     *
+     * @param bindingResult The BindingResult object that holds the validation
+     *                      errors.
+     */
+    private void checkBodyPayloadErrors(BindingResult bindingResult) {
+        Boolean payloadIsInvalid = bindingResult.hasErrors();
+        if (payloadIsInvalid) {
+            GlobalExceptionHandler.handlePayloadError("Bad request", bindingResult, HttpStatus.BAD_REQUEST);
+        }
     }
 
 }
