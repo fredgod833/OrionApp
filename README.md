@@ -89,11 +89,26 @@ Connect to your PostgreSQL Server instance.
 Create a new database for your application and add all the tables to your database:
 
 ```sql
+-- Reset PostgreSQL schema
+DROP SCHEMA public CASCADE;
+
+-- Create a new schema 
+CREATE SCHEMA public;
+
+-- Tables
 CREATE TABLE Users (
     ID INT PRIMARY KEY,
     username VARCHAR(50),
     email VARCHAR(255),
     password TEXT,
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Themes (
+    ID INT PRIMARY KEY,
+    title VARCHAR(255),
+    description TEXT,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -121,14 +136,6 @@ CREATE TABLE Comments (
     FOREIGN KEY (articleID) REFERENCES Articles(ID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE Themes (
-    ID INT PRIMARY KEY,
-    title VARCHAR(255),
-    description TEXT,
-    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
 CREATE TABLE Subscriptions (
     ID INT PRIMARY KEY,
     userID INT,
@@ -140,8 +147,40 @@ CREATE TABLE Subscriptions (
     FOREIGN KEY (themeID) REFERENCES Themes(ID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+-- Mock data
+
 INSERT INTO Users (ID, username, email, password)
-VALUES (1, 'user', 'user@user.com', '$2a$10$Cugtb5QEITQsbHMuuBWKqecku/5hup5afBWrVqJdU6nN9Ov/wNYy2');
+VALUES 
+    (1, 'user', 'user@user.com', '$2a$10$Cugtb5QEITQsbHMuuBWKqecku/5hup5afBWrVqJdU6nN9Ov/wNYy2'),
+    (2, 'test', 'test@test.com', '$2a$10$Cugtb5QEITQsbHMuuBWKqecku/5hup5afBWrVqJdU6nN9Ov/wNYy2');
+
+INSERT INTO Themes (ID, title, description)
+VALUES 
+    (1, 'Python', 'Articles related to Python programming language'),
+    (2, 'TypeScript', 'Articles related to TypeScript programming language'),
+    (3, 'Java', 'Articles related to Java programming language'),
+    (4, 'SEO', 'Articles related to Search Engine Optimization'),
+    (5, 'SASS', 'Articles related to SASS (Syntactically Awesome Style Sheets)'),
+    (6, 'C++', 'Articles related to C++ programming language');
+
+INSERT INTO Articles (ID, userID, themeID, title, description)
+VALUES
+    (1, 1, 1, 'Introduction to Python Programming', 'Learn the basics of Python programming language, including variables, loops, and functions.'),
+    (2, 1, 2, 'Getting Started with TypeScript', 'Discover how to start using TypeScript for building scalable and maintainable web applications.'),
+    (3, 1, 3, 'Java Fundamentals for Beginners', 'Explore the fundamentals of Java programming language, including object-oriented concepts and syntax.'),
+    (4, 1, 4, 'Mastering SEO Techniques', 'Learn advanced SEO techniques to improve website ranking and visibility on search engines.'),
+    (5, 1, 5, 'SASS: Enhancing CSS Development', 'Explore the features of SASS and how it can streamline CSS development and maintainability.'),
+    (6, 1, 6, 'Advanced C++ Programming Concepts', 'Dive into advanced C++ programming concepts, including templates, polymorphism, and memory management.');
+
+INSERT INTO Comments (ID, userID, articleID, comment)
+VALUES
+    (1, 2, 1, 'Great introduction to Python!'),
+    (2, 2, 1, 'I found this article very helpful.'),
+    (3, 2, 2, 'Awesome guide to TypeScript!'),
+    (4, 2, 5, 'I learned a lot about SASS from this article.'),
+    (5, 2, 6, 'C++ programming concepts explained well.'),
+    (6, 2, 6, 'Looking forward to more articles on C++.'),
+    (7, 2, 6, 'Great article, thank you!');
 ```
 
 ## Installation procedure
