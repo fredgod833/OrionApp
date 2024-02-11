@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,13 +17,18 @@ import org.springframework.web.bind.annotation.RestController;
 import com.openclassrooms.p6.exception.ApiException;
 import com.openclassrooms.p6.exception.GlobalExceptionHandler;
 import com.openclassrooms.p6.mapper.ArticleMapper;
+import com.openclassrooms.p6.mapper.CommentMapper;
 import com.openclassrooms.p6.mapper.UserMapper;
 import com.openclassrooms.p6.model.Articles;
+import com.openclassrooms.p6.model.Comments;
 import com.openclassrooms.p6.model.Users;
 import com.openclassrooms.p6.payload.request.RegisterRequest;
 import com.openclassrooms.p6.payload.response.ArticleSummary;
+import com.openclassrooms.p6.payload.response.CommentResponse;
 import com.openclassrooms.p6.payload.response.MultipleArticlesResponse;
+import com.openclassrooms.p6.payload.response.SingleArticleResponse;
 import com.openclassrooms.p6.service.ArticleService;
+import com.openclassrooms.p6.service.CommentsService;
 import com.openclassrooms.p6.service.UserService;
 import com.openclassrooms.p6.utils.JwtUtil;
 
@@ -48,6 +54,12 @@ public class ArticlesController {
     @Autowired
     private ArticleMapper articleMapper;
 
+    @Autowired
+    private CommentsService commentsService;
+
+    @Autowired
+    private CommentMapper commentsMapper;
+
     /**
      * Registers a new user.
      *
@@ -57,7 +69,7 @@ public class ArticlesController {
     @GetMapping("")
     public ResponseEntity<?> getAllArticles(@RequestHeader("Authorization") String authorizationHeader) {
         try {
-            getUserIdFromTokenAndVerify(authorizationHeader);
+            verifyUserValidityFromToken(authorizationHeader);
 
             List<Articles> articlesEntity = articleService.getArticles();
 
@@ -75,32 +87,44 @@ public class ArticlesController {
         }
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{articleId}")
     public ResponseEntity<?> getArticlesById(@PathVariable final Long articleId,
-            @RequestHeader("Authorization") String authorizationHeader) {
+            @Valid @RequestHeader("Authorization") String authorizationHeader) {
         try {
-            getUserIdFromTokenAndVerify(authorizationHeader);
+            verifyUserValidityFromToken(authorizationHeader);
 
             Articles articleEntity = verifyAndGetArticlesById(articleId);
-
             ArticleSummary articleDto = articleMapper.toDtoArticle(articleEntity);
 
-            // TODO: Get all the comments from the article ID
-            // TODO: Create Comments JPA Repo, service & DTO mapper
-            // TODO: Return the article info including all the comments
+            String articleAuthor = getVerifiedUserById(articleDto.userId()).getUsername();
 
+            String theme = articleEntity.getTheme().getTitle();
+
+            List<Comments> commentsEntityList = commentsService.getAllCommentsByArticleId(articleId);
+            Iterable<CommentResponse> commentsDtoList = commentsMapper.toDtoComments(commentsEntityList);
+
+            List<CommentResponse> normalizedComments = new ArrayList<>();
+
+            normalizedComments.addAll((List<? extends CommentResponse>) commentsDtoList);
+
+            SingleArticleResponse response = new SingleArticleResponse(articleId,
+                    articleAuthor, articleDto.publicationDate(), theme, articleDto.title(), articleDto.description(),
+                    normalizedComments);
+
+            return ResponseEntity.status(HttpStatus.OK).body(response);
         } catch (ApiException e) {
             return GlobalExceptionHandler.handleApiException(e);
         }
     }
 
     /**
-     * Retrieves the user ID from the authorization header.
+     * Retrieves the user ID from the authorization header and checks that the user
+     * exists
      *
      * @param authorizationHeader The authorization header containing the JWT token.
      * @return The user ID extracted from the JWT token.
      */
-    private Long getUserIdFromTokenAndVerify(String authorizationHeader) {
+    private Long verifyUserValidityFromToken(String authorizationHeader) {
         String jwtToken = JwtUtil.extractJwtFromHeader(authorizationHeader);
 
         // Extract user ID from JWT
@@ -113,6 +137,19 @@ public class ArticlesController {
 
         Long userId = optionalUserIdFromToken.get();
 
+        getVerifiedUserById(userId);
+
+        return userId;
+    }
+
+    /**
+     * Retrieves a user by their ID and verifies their existence.
+     *
+     * @param userId The ID of the user to retrieve.
+     * @return The user with the given ID.
+     * @throws ApiException if the user with the given ID does not exist.
+     */
+    private Users getVerifiedUserById(Long userId) {
         Optional<Users> optionalSpecificUser = userService.getUserById(userId);
 
         Boolean userWithIdDoesNotExist = optionalSpecificUser.isEmpty();
@@ -121,7 +158,7 @@ public class ArticlesController {
                     HttpStatus.NOT_FOUND);
         }
 
-        return userId;
+        return optionalSpecificUser.get();
     }
 
     /**

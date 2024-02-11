@@ -37,7 +37,7 @@ public class CommentsService {
      * @param id The identifier of the article.
      * @return An Optional containing the article if found, or empty if not.
      */
-    public Optional<Comments> getAllCommentsByArticleId(final Long id) {
-        return commentRepository.findById(id);
+    public List<Comments> getAllCommentsByArticleId(final Long id) {
+        return commentRepository.findAllByArticleId(id);
     }
 }
