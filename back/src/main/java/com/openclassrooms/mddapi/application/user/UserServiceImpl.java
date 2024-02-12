@@ -1,20 +1,25 @@
 package com.openclassrooms.mddapi.application.user;
 
+import com.openclassrooms.mddapi.application.user.auth.IUserDetails;
 import com.openclassrooms.mddapi.application.user.dto.UserDto;
-import com.openclassrooms.mddapi.domain.common.exceptions.InternalServerException;
 import com.openclassrooms.mddapi.domain.common.exceptions.ResourceNotFoundException;
+import com.openclassrooms.mddapi.domain.common.exceptions.UnauthorizedException;
 import com.openclassrooms.mddapi.domain.user.IUserRepository;
 import com.openclassrooms.mddapi.domain.user.User;
-import org.springframework.dao.DataAccessException;
-import org.springframework.dao.EmptyResultDataAccessException;
+
+
+import java.util.Objects;
+import java.util.Optional;
 
 public class UserServiceImpl implements IUserService {
     private final IUserRepository userRepository;
     private final UserMapper userMapper;
+    private final IUserDetails userDetails;
 
-    public UserServiceImpl(IUserRepository userRepository, UserMapper userMapper) {
+    public UserServiceImpl(IUserRepository userRepository, UserMapper userMapper, IUserDetails userDetails) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
+        this.userDetails = userDetails;
     }
 
     @Override
@@ -27,19 +32,17 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public Boolean existById(Long id) {
-        return userRepository.exist(id);
-    }
-
-    @Override
     public void delete(Long id) {
-        try {
-            userRepository.delete(id);
-        } catch (EmptyResultDataAccessException e) {
-            throw new ResourceNotFoundException("User not found with id: " + id);
-        } catch (DataAccessException e) {
-            throw new InternalServerException("Error while trying to access DB to delete user");
+        Optional<User> user = userRepository.findById(id);
+
+        if(user.isEmpty()) {
+            throw new ResourceNotFoundException("User not found, cant delete it");
         }
+
+        if(!Objects.equals(userDetails.getUsername(), user.get().getUsername())) {
+            throw new UnauthorizedException("You cant delete other user except you");
+        }
+        userRepository.delete(id);
     }
 
     @Override

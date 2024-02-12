@@ -1,8 +1,8 @@
 package com.openclassrooms.mddapi.details.mapper;
 
-import com.tonight.back.details.models.UserEntity;
-import com.tonight.back.domain.user.User;
-import com.tonight.back.useCases.commom.EntityMapper;
+import com.openclassrooms.mddapi.application.EntityMapper;
+import com.openclassrooms.mddapi.details.models.UserEntity;
+import com.openclassrooms.mddapi.domain.user.User;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

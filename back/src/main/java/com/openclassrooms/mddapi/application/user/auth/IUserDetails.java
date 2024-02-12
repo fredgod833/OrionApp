@@ -1,4 +1,4 @@
-package com.openclassrooms.mddapi.domain.user.auth;
+package com.openclassrooms.mddapi.application.user.auth;
 
 import java.util.Collection;
 

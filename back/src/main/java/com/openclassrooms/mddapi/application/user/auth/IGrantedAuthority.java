@@ -1,4 +1,4 @@
-package com.openclassrooms.mddapi.domain.user.auth;
+package com.openclassrooms.mddapi.application.user.auth;
 
 public interface IGrantedAuthority {
     String getAuthority();

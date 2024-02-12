@@ -4,6 +4,7 @@ import com.openclassrooms.mddapi.domain.subscription.Subscription;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -12,6 +13,8 @@ import java.util.List;
 @Getter
 @Setter
 public class UserDto {
+    @Id
+    private Long id;
     @NotNull
     @Email
     private String email;

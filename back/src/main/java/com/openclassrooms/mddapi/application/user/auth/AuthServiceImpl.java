@@ -1,13 +1,12 @@
 package com.openclassrooms.mddapi.application.user.auth;
 
 import com.openclassrooms.mddapi.application.user.UserMapper;
+import com.openclassrooms.mddapi.application.user.auth.request.LoginRequest;
 import com.openclassrooms.mddapi.application.user.dto.UserDto;
+import com.openclassrooms.mddapi.domain.common.exceptions.BadRequestException;
 import com.openclassrooms.mddapi.domain.common.exceptions.UnauthorizedException;
 import com.openclassrooms.mddapi.domain.user.IUserRepository;
 import com.openclassrooms.mddapi.domain.user.User;
-import com.openclassrooms.mddapi.domain.user.auth.ITokenProvider;
-import com.openclassrooms.mddapi.domain.user.auth.IUserDetails;
-import com.openclassrooms.mddapi.domain.user.auth.IUserDetailsService;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -26,7 +25,7 @@ public class AuthServiceImpl implements IAuthService{
     }
 
     @Override
-    public String login(HttpServletRequest request) {
+    public String login(LoginRequest request) {
         try {
             String token = tokenProvider.extractToken(request);
             if(token != null && tokenProvider.validateToken(token)) {
@@ -44,8 +43,19 @@ public class AuthServiceImpl implements IAuthService{
 
     @Override
     public String register(UserDto userDto) {
+        if(userRepository.existByEmail(userDto.getEmail())) {
+            throw new BadRequestException("User email already exist");
+        };
+        if(!validPassword(userDto.getPassword())) {
+            throw  new BadRequestException("Password security check failed");
+        };
         User user = userMapper.toEntity(userDto);
         userRepository.save(user);
         return tokenProvider.createToken(user.getUsername(), null);
+    }
+
+    private Boolean validPassword(String password) {
+        return password.length() >= 8
+                && password.matches("^(?=.*[A-Z])(?=.*[a-z])(?=.*[^a-zA-Z0-9]).*$");
     }
 }
