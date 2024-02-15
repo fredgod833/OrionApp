@@ -1,11 +1,9 @@
 package com.openclassrooms.mddapi.infrastructure.controller;
 
-import com.openclassrooms.mddapi.application.EntityMapper;
-import com.openclassrooms.mddapi.application.user.IUserService;
-import com.openclassrooms.mddapi.application.user.UserMapper;
-import com.openclassrooms.mddapi.application.user.dto.UserDto;
+import com.openclassrooms.mddapi.core.usecases.user.IUserService;
+import com.openclassrooms.mddapi.core.usecases.user.dto.UserDto;
 import com.openclassrooms.mddapi.infrastructure.request.UserUpdateDto;
-import com.openclassrooms.mddapi.infrastructure.request.UserUpdateMapper;
+import com.openclassrooms.mddapi.infrastructure.mapper.UserUpdateMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

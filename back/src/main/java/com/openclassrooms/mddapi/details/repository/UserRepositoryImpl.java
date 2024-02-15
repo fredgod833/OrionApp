@@ -2,8 +2,8 @@ package com.openclassrooms.mddapi.details.repository;
 
 import com.openclassrooms.mddapi.details.mapper.UserMapperDetails;
 import com.openclassrooms.mddapi.details.models.UserEntity;
-import com.openclassrooms.mddapi.domain.user.IUserRepository;
-import com.openclassrooms.mddapi.domain.user.User;
+import com.openclassrooms.mddapi.core.domain.repository.IUserRepository;
+import com.openclassrooms.mddapi.core.domain.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
