@@ -9,7 +9,13 @@ This Fullstack project is dedicated to... it uses Angular 17 for the Front and J
 - [Monde De Dév Fullstack project](#monde-de-dév-fullstack-project)
   - [Table of contents](#table-of-contents)
   - [Pre-requisites](#pre-requisites)
+    - [Java Development Kit (JDK)](#java-development-kit-jdk)
+    - [Apache Maven](#apache-maven)
+    - [PostgreSQL](#postgresql)
+    - [Node.js](#nodejs)
   - [Configuration](#configuration)
+    - [1. Java Development Kit (JDK)](#1-java-development-kit-jdk)
+    - [2. PostgreSQL](#2-postgresql)
   - [Installation procedure](#installation-procedure)
     - [Front-End](#front-end)
     - [Back-End](#back-end)
@@ -25,17 +31,27 @@ This Fullstack project is dedicated to... it uses Angular 17 for the Front and J
 
 Before you begin, ensure that the following software is installed on your system:
 
-- **Java Development Kit (JDK):** You can download the latest version of the [JDK](https://adoptopenjdk.net/) for your platform
+### Java Development Kit (JDK)
 
-- **Apache Maven:** You'll need [Maven](https://maven.apache.org/) for building and managing the project's dependencies.
+ You can download the latest version of the [JDK](https://adoptopenjdk.net/) for your platform
 
-- **PostgreSQL:** Install and set up PostgreSQL as the database for the Back-End. You can install it from [here](https://www.postgresql.org/download/).
+### Apache Maven
 
-- **Node.js:** Install [Node.js LTS](https://nodejs.org/en) to install the Front-End dependencies.
+You'll need [Maven](https://maven.apache.org/) for building and managing the project's dependencies.
+
+### PostgreSQL
+
+Install and set up PostgreSQL as the database for the Back-End. You can install it from [here](https://www.postgresql.org/download/).
+
+### Node.js
+
+Install [Node.js LTS](https://nodejs.org/en) to install the Front-End dependencies.
 
 ## Configuration
 
-1. **Java Development Kit (JDK):** Install Java version 21 using [SDKMAN](https://sdkman.io/), a tool for managing software development kits. SDKMAN simplifies the installation process and version management.
+### 1. Java Development Kit (JDK)
+
+Install Java version 21 using [SDKMAN](https://sdkman.io/), a tool for managing software development kits. SDKMAN simplifies the installation process and version management.
 
 - **Install SDKMAN:**
 
@@ -78,7 +94,7 @@ Restart your computer and then run the command to verify that you have the corre
 java -version
 ```
 
-2. **PostgreSQL:**
+### 2. PostgreSQL
 
 Follow these steps to configure PostgreSQL for your Java application:
 
@@ -268,6 +284,44 @@ logging.level.org.springframework.boot.web.embedded.tomcat=INFO
 ### Front-End
 
 ### Back-End
+
+**Core Spring Framework Dependencies:**
+
+- `spring-boot-starter-actuator`
+- `spring-boot-starter-data-jpa`
+- `spring-boot-starter-security`
+- `spring-boot-starter-websocket`
+- `spring-boot-devtools`
+
+**Database Related Dependencies:**
+
+- `postgresql`
+
+**Utility Dependencies:**
+
+- `lombok`
+
+**Testing Dependencies:**
+
+- `spring-boot-starter-test`
+- `spring-restdocs-mockmvc`
+- `spring-security-test`
+
+**Validation Dependencies:**
+
+- `javax.servlet-api`
+- `hibernate-validator`
+
+**Json Web Token Dependencies:**
+
+- `io.jsonwebtoken:jjwt-api`
+- `io.jsonwebtoken:jjwt-impl`
+- `io.jsonwebtoken:jjwt-jackson`
+
+**Code Mapping Tool Dependencies (DTO):**
+
+- `org.mapstruct:mapstruct`
+- `org.mapstruct:mapstruct-processor`
 
 ## API documentation
 

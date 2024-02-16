@@ -3,6 +3,7 @@ package com.openclassrooms.p6.controllers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,8 +23,8 @@ import com.openclassrooms.p6.mapper.ThemeMapper;
 import com.openclassrooms.p6.model.Subscriptions;
 import com.openclassrooms.p6.model.Themes;
 import com.openclassrooms.p6.model.Users;
-import com.openclassrooms.p6.payload.request.ArticleRequest;
-import com.openclassrooms.p6.payload.response.MultipleArticlesResponse;
+import com.openclassrooms.p6.payload.request.SubscriptionToggleRequest;
+import com.openclassrooms.p6.payload.response.MessageResponse;
 import com.openclassrooms.p6.payload.response.MultipleThemesResponse;
 import com.openclassrooms.p6.payload.response.SingleThemeResponse;
 import com.openclassrooms.p6.service.SubscriptionsService;
@@ -133,15 +134,83 @@ public class ThemesController {
         }
     }
 
-    // @PostMapping("/subscribe")
-    // public ResponseEntity<?> postArticle(@Valid @RequestBody Subsc request,
-    // BindingResult bindingResult,
-    // @RequestHeader("Authorization") String authorizationHeader) {}
+    @PostMapping("/subscribe")
+    public ResponseEntity<?> subscribe(@Valid @RequestBody SubscriptionToggleRequest request,
+            BindingResult bindingResult,
+            @RequestHeader("Authorization") String authorizationHeader) {
+        try {
+            Long userId = verifyUserValidityFromToken(authorizationHeader);
 
-    // @PostMapping("/unsubscribe")
-    // public ResponseEntity<?> postArticle(@Valid @RequestBody Subsc request,
-    // BindingResult bindingResult,
-    // @RequestHeader("Authorization") String authorizationHeader) {}
+            Long themeId = request.themeId();
+
+            verifyAndGetThemeById(themeId);
+
+            Subscriptions subscription = getUserThemeSubscription(userId, themeId);
+
+            Boolean subscriptionDoesNotExistYet = subscription == null;
+            if (subscriptionDoesNotExistYet) {
+                subscriptionsService.createSubscription(userId, themeId);
+                MessageResponse response = new MessageResponse("Successfully subscribed to the theme!");
+
+                return ResponseEntity.status(HttpStatus.CREATED).body(response);
+            }
+
+            Boolean userIsAlreadySubscribedToTheme = subscription.getIsSubscribed();
+            if (userIsAlreadySubscribedToTheme) {
+                MessageResponse response = new MessageResponse("You are already subscribed to this theme!");
+
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            }
+
+            subscriptionsService.updateThemeSubscription(subscription, true);
+
+            MessageResponse response = new MessageResponse(
+                    "Successfully subscribed to the theme!");
+
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        } catch (ApiException e) {
+            return GlobalExceptionHandler.handleApiException(e);
+        }
+    }
+
+    @PostMapping("/unsubscribe")
+    public ResponseEntity<?> unsubscribe(@Valid @RequestBody SubscriptionToggleRequest request,
+            BindingResult bindingResult,
+            @RequestHeader("Authorization") String authorizationHeader) {
+        try {
+            Long userId = verifyUserValidityFromToken(authorizationHeader);
+
+            Long themeId = request.themeId();
+
+            verifyAndGetThemeById(themeId);
+
+            // TODO: Get the subscription of the user from the userId & themeId
+            // TODO: Set the isSubscribed to false using
+            // TODO: updateThemeSubscription() from the theme service
+
+            Subscriptions subscription = getUserThemeSubscription(userId, themeId);
+
+            Boolean subscriptionDoesNotExistYet = subscription == null;
+            if (subscriptionDoesNotExistYet) {
+                MessageResponse response = new MessageResponse("Subscription does not exist!");
+
+                return ResponseEntity.status(HttpStatus.CREATED).body(response);
+            }
+
+            Boolean userIsAlreadyUnsubscribedToTheme = !subscription.getIsSubscribed();
+            if (userIsAlreadyUnsubscribedToTheme) {
+                MessageResponse response = new MessageResponse("You are already unsubscribed to this theme!");
+
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            }
+
+            subscriptionsService.updateThemeSubscription(subscription, false);
+            MessageResponse response = new MessageResponse("Successfully unsubscribed to the theme !");
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        } catch (ApiException e) {
+            return GlobalExceptionHandler.handleApiException(e);
+        }
+    }
 
     /**
      * Retrieves a user by their ID and verifies their existence.
@@ -187,4 +256,26 @@ public class ThemesController {
         return userId;
     }
 
+    private Themes verifyAndGetThemeById(Long themeId) {
+        Optional<Themes> optionalTheme = themeService.getThemeById(themeId);
+
+        Boolean themeDoesNotExist = optionalTheme.isEmpty();
+        if (themeDoesNotExist) {
+            GlobalExceptionHandler.handleLogicError("Not found",
+                    HttpStatus.NOT_FOUND);
+        }
+        return optionalTheme.get();
+    }
+
+    private Subscriptions getUserThemeSubscription(Long userId, Long themeId) {
+
+        Iterable<Subscriptions> subscriptions = subscriptionsService.findAllUserSubscriptions(userId);
+
+        Subscriptions subscription = StreamSupport.stream(subscriptions.spliterator(), false)
+                .filter(s -> s.getThemeId().equals(themeId))
+                .findFirst()
+                .orElse(null);
+
+        return subscription;
+    }
 }

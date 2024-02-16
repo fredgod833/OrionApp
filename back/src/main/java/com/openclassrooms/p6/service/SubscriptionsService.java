@@ -28,7 +28,16 @@ public class SubscriptionsService {
         return subscriptionRepository.findById(id);
     }
 
-    public void toggleThemeSubscription(Subscriptions subscription, boolean isSubscribed) {
+    public Subscriptions createSubscription(Long userId, Long themeId) {
+        Subscriptions subscription = new Subscriptions();
+        subscription.setUserId(userId);
+        subscription.setThemeId(themeId);
+        subscription.setIsSubscribed(true);
+
+        return subscriptionRepository.save(subscription);
+    }
+
+    public void updateThemeSubscription(Subscriptions subscription, boolean isSubscribed) {
         subscription.setIsSubscribed(isSubscribed);
 
         subscriptionRepository.save(subscription);
