@@ -8,6 +8,9 @@ This Fullstack project is dedicated to... it uses Angular 17 for the Front and J
 
 - [Monde De Dév Fullstack project](#monde-de-dév-fullstack-project)
   - [Table of contents](#table-of-contents)
+  - [Project stack:](#project-stack)
+    - [Front-End](#front-end)
+    - [Back-End](#back-end)
   - [Pre-requisites](#pre-requisites)
     - [Java Development Kit (JDK)](#java-development-kit-jdk)
     - [Apache Maven](#apache-maven)
@@ -17,15 +20,38 @@ This Fullstack project is dedicated to... it uses Angular 17 for the Front and J
     - [1. Java Development Kit (JDK)](#1-java-development-kit-jdk)
     - [2. PostgreSQL](#2-postgresql)
   - [Installation procedure](#installation-procedure)
-    - [Front-End](#front-end)
-    - [Back-End](#back-end)
-  - [Dependencies](#dependencies)
     - [Front-End](#front-end-1)
     - [Back-End](#back-end-1)
+  - [Dependencies](#dependencies)
+    - [Front-End](#front-end-2)
+    - [Back-End](#back-end-2)
   - [API documentation](#api-documentation)
     - [Open endpoints](#open-endpoints)
     - [JWT required endpoints](#jwt-required-endpoints)
   - [Miscellaneous](#miscellaneous)
+
+## Project stack:
+### Front-End
+
+- HTML
+- SASS
+- TypeScript
+- Angular 17
+
+<a href="https://developer.mozilla.org/en-US/docs/Glossary/HTML5" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/html5-colored.svg" width="36" height="36" alt="HTML5" /></a>
+<a href="https://sass-lang.com/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/sass-colored.svg" width="36" height="36" alt="Sass" /></a>
+<a href="https://www.typescriptlang.org/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/typescript-colored.svg" width="36" height="36" alt="TypeScript" /></a>
+<a href="https://angular.dev/" target="_blank" rel="noreferrer"><img src="https://cdn.discordapp.com/attachments/655077317911117866/1208044756933017630/image.png?ex=65e1da5a&is=65cf655a&hm=a6a6a3e51553ad96983276c424efb44988b1a6d89160c6a3a736c89a58326710&" width="36" height="36" alt="Angular" /></a>
+
+
+### Back-End
+
+- Java 21
+- Spring Boot 3.1.2
+
+<a href="https://www.java.com/en/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/6910f0503efdd315c8f9b858234310c06e04d9c0/icons/java/java-original.svg" width="36" height="36" alt="Java" /></a>
+<a href="https://start.spring.io/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/6910f0503efdd315c8f9b858234310c06e04d9c0/icons/spring/spring-original.svg" width="36" height="36" alt="Spring" /></a>
+
 
 ## Pre-requisites
 
