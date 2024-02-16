@@ -2,7 +2,11 @@
 
 ![MDD](./front/public/mdd-logo.svg)
 
-This Fullstack project is dedicated to... it uses Angular 17 for the Front and Java-Spring for the Back
+ORION, a software development company, aims to create a social network dedicated to developers called "MDD" (Developer's World). The social network aims to assist developers in finding employment by encouraging collaboration among peers. 
+
+Before launching it publicly, ORION wants to test an internal minimal version called MVP (Minimum Viable Product). 
+
+The MVP will allow users to subscribe to programming topics, view articles chronologically in their feed, and post articles and comments. You are responsible for developing the MVP, with the assistance of your team including Orlando (your manager), Heidi (a fellow developer), and Juana (the UX designer).
 
 ## Table of contents
 
