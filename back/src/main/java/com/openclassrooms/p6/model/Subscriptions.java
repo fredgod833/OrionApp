@@ -16,7 +16,7 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 /**
- * The 'Subscriptions' class represents a subscription entity in the system.
+ * Entity representing a subscription in the system.
  */
 @Entity
 @Data

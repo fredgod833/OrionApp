@@ -16,6 +16,9 @@ import jakarta.persistence.Table;
 
 import lombok.Data;
 
+/**
+ * Entity representing an article in the system.
+ */
 @Entity
 @Data
 @Table(name = "articles")

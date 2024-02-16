@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -16,9 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.p6.exception.ApiException;
 import com.openclassrooms.p6.exception.GlobalExceptionHandler;
-import com.openclassrooms.p6.model.Subscriptions;
 import com.openclassrooms.p6.model.Users;
-import com.openclassrooms.p6.payload.request.SubscriptionToggleRequest;
 import com.openclassrooms.p6.payload.request.UserRequest;
 import com.openclassrooms.p6.payload.response.MessageResponse;
 import com.openclassrooms.p6.service.UserService;
@@ -26,11 +23,24 @@ import com.openclassrooms.p6.utils.JwtUtil;
 
 import jakarta.validation.Valid;
 
+/**
+ * This class represents the UsersController in the application. It is
+ * responsible for handling user-related operations.
+ * The UsersController class is annotated with {@code @RestController}
+ * and {@code @RequestMapping} to define the base URL for all user-related
+ * endpoints.
+ * It also has the {@code @CrossOrigin} annotation to allow cross-origin
+ * requests from
+ * any domain.
+ */
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/users")
 public class UsersController {
 
+    /**
+     * UserService to manage user-related operations.
+     */
     @Autowired
     UserService userService;
 

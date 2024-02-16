@@ -14,11 +14,7 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 /**
- * Represents a theme in the system.
- * 
- * This class provides information about a theme, including its unique
- * identifier, title, description,
- * creation timestamp, and last update timestamp.
+ * Entity representing a theme in the system.
  */
 @Entity
 @Data

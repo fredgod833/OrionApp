@@ -26,15 +26,29 @@ import com.openclassrooms.p6.utils.JwtUtil;
 import jakarta.validation.Valid;
 
 /**
- * Controller for handling authentication-related operations.
+ * This is the AuthController class that handles user authentication and
+ * registration.
+ * It is responsible for registering a new user, logging in an existing user,
+ * and performing various checks.
+ * The class is annotated with {@code @RestController} and
+ * {@code @RequestMapping} to define the
+ * API endpoints.
+ * It also uses various dependencies such as UserService, UserMapper, and
+ * JwtUtil.
  */
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
+    /**
+     * UserService to manage user-related operations.
+     */
     @Autowired
     private UserService userService;
 
+    /**
+     * UserMapper for converting between entity and DTO types.
+     */
     @Autowired
     private UserMapper userMapper;
 

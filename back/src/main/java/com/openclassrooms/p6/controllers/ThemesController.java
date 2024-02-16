@@ -34,23 +34,56 @@ import com.openclassrooms.p6.utils.JwtUtil;
 
 import jakarta.validation.Valid;
 
+/**
+ * This class is the controller for managing themes in the API.
+ * It handles requests related to themes, such as retrieving all themes,
+ * retrieving subscribed themes, subscribing to a theme, and unsubscribing from
+ * a theme.
+ * The class is annotated with {@code @RestController} and
+ * {@code @RequestMapping} to define the
+ * base URL for all theme-related endpoints.
+ * It also has the {@code @CrossOrigin} annotation to allow cross-origin
+ * requests from
+ * any domain.
+ */
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/themes")
 public class ThemesController {
 
+    /**
+     * {@link ThemeService} for theme-related operations.
+     */
     @Autowired
     private ThemeService themeService;
 
+    /**
+     * {@link SubscriptionsService} for subscription-related operations.
+     */
     @Autowired
     private SubscriptionsService subscriptionsService;
 
+    /**
+     * {@link ThemeMapper} for converting between entity and DTO types.
+     */
     @Autowired
     private ThemeMapper themeMapper;
 
+    /**
+     * {@link UserService} for user-related operations.
+     */
     @Autowired
     private UserService userService;
 
+    /**
+     * Retrieves all themes and their subscription status for a specific user.
+     *
+     * @param authorizationHeader The authorization header containing the JWT token.
+     * @return A ResponseEntity containing the response body with the list of themes
+     *         and their subscription status.
+     * @throws ApiException if there is an error while retrieving the themes or
+     *                      verifying the user.
+     */
     @GetMapping("")
     public ResponseEntity<?> getAllThemes(@RequestHeader("Authorization") String authorizationHeader) {
         try {
@@ -89,6 +122,15 @@ public class ThemesController {
         }
     }
 
+    /**
+     * Retrieves all subscribed themes for a specific user.
+     *
+     * @param authorizationHeader The authorization header containing the JWT token.
+     * @return A ResponseEntity containing the response body with the list of
+     *         subscribed themes.
+     * @throws ApiException if there is an error while retrieving the subscribed
+     *                      themes or verifying the user.
+     */
     @GetMapping("/subscribed")
     public ResponseEntity<?> getSubscribedThemes(@RequestHeader("Authorization") String authorizationHeader) {
         try {
@@ -130,6 +172,19 @@ public class ThemesController {
         }
     }
 
+    /**
+     * Subscribes a user to a theme.
+     *
+     * @param request             The SubscriptionToggleRequest object containing
+     *                            the theme ID.
+     * @param bindingResult       The BindingResult object that holds the validation
+     *                            errors.
+     * @param authorizationHeader The authorization header containing the JWT token.
+     * @return A ResponseEntity containing the response body with the subscription
+     *         status.
+     * @throws ApiException if there is an error while subscribing the user or
+     *                      verifying the user.
+     */
     @PostMapping("/subscribe")
     public ResponseEntity<?> subscribe(@Valid @RequestBody SubscriptionToggleRequest request,
             BindingResult bindingResult,
@@ -171,6 +226,19 @@ public class ThemesController {
         }
     }
 
+    /**
+     * Unsubscribes a user from a theme.
+     *
+     * @param request             The SubscriptionToggleRequest object containing
+     *                            the theme ID.
+     * @param bindingResult       The BindingResult object that holds the validation
+     *                            errors.
+     * @param authorizationHeader The authorization header containing the JWT token.
+     * @return A ResponseEntity containing the response body with the subscription
+     *         status.
+     * @throws ApiException if there is an error while unsubscribing the user or
+     *                      verifying the user.
+     */
     @PostMapping("/unsubscribe")
     public ResponseEntity<?> unsubscribe(@Valid @RequestBody SubscriptionToggleRequest request,
             BindingResult bindingResult,
@@ -265,6 +333,13 @@ public class ThemesController {
         return userId;
     }
 
+    /**
+     * Retrieves a theme by its ID and verifies its existence.
+     *
+     * @param themeId The ID of the theme to retrieve.
+     * @return The theme with the given ID.
+     * @throws ApiException if the theme with the given ID does not exist.
+     */
     private Themes verifyAndGetThemeById(Long themeId) {
         Optional<Themes> optionalTheme = themeService.getThemeById(themeId);
 
@@ -276,6 +351,13 @@ public class ThemesController {
         return optionalTheme.get();
     }
 
+    /**
+     * Retrieves the subscription of a user to a specific theme.
+     *
+     * @param userId  The ID of the user.
+     * @param themeId The ID of the theme.
+     * @return The subscription of the user to the theme.
+     */
     private Subscriptions getUserThemeSubscription(Long userId, Long themeId) {
 
         Iterable<Subscriptions> subscriptions = subscriptionsService.findAllUserSubscriptions(userId);

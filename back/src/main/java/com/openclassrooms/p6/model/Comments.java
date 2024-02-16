@@ -16,13 +16,7 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 /**
- * Represents a comment on an article.
- * 
- * This class is an entity mapped to the "comments" table in the database.
- * It contains information about the comment, such as the author, the article it
- * belongs to,
- * the comment text, and timestamps indicating when the comment was created and
- * last updated.
+ * Entity representing a comment in the system.
  */
 @Entity
 @Data

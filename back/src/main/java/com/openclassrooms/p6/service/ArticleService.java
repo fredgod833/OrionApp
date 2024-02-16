@@ -1,6 +1,5 @@
 package com.openclassrooms.p6.service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +12,9 @@ import com.openclassrooms.p6.repository.ArticleRepository;
 
 import lombok.Data;
 
+/**
+ * Service class for managing articles.
+ */
 @Data
 @Service
 public class ArticleService {

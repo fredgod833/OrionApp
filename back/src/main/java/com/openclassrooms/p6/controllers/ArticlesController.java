@@ -1,14 +1,12 @@
 package com.openclassrooms.p6.controllers;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,15 +16,12 @@ import com.openclassrooms.p6.exception.ApiException;
 import com.openclassrooms.p6.exception.GlobalExceptionHandler;
 import com.openclassrooms.p6.mapper.ArticleMapper;
 import com.openclassrooms.p6.mapper.CommentMapper;
-import com.openclassrooms.p6.mapper.UserMapper;
 import com.openclassrooms.p6.model.Articles;
 import com.openclassrooms.p6.model.Comments;
 import com.openclassrooms.p6.model.Themes;
 import com.openclassrooms.p6.model.Users;
 import com.openclassrooms.p6.payload.request.ArticleRequest;
 import com.openclassrooms.p6.payload.request.CommentRequest;
-import com.openclassrooms.p6.payload.request.LoginRequest;
-import com.openclassrooms.p6.payload.request.RegisterRequest;
 import com.openclassrooms.p6.payload.response.ArticleSummaryResponse;
 import com.openclassrooms.p6.payload.response.CommentResponse;
 import com.openclassrooms.p6.payload.response.MessageResponse;
@@ -46,26 +41,53 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.PostMapping;
 
+/**
+ * This is the ArticlesController class. It is a REST controller that handles
+ * requests related to articles.
+ * The class is annotated with {@code @CrossOrigin("*")} to allow cross-origin
+ * requests,
+ * and {@code @RestController} to indicate that it is a controller class.
+ * The base URL for all the endpoints in this controller is "/api/articles", as
+ * specified by the {@code @RequestMapping} annotation.
+ */
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/articles")
 public class ArticlesController {
 
+    /**
+     * UserService to manage user-related operations.
+     */
     @Autowired
     private UserService userService;
 
+    /**
+     * ArticleService to manage article-related operations.
+     */
     @Autowired
     private ArticleService articleService;
 
+    /**
+     * ArticleMapper for converting between entity and DTO types.
+     */
     @Autowired
     private ArticleMapper articleMapper;
 
+    /**
+     * CommentsService to manage comments-related operations.
+     */
     @Autowired
     private CommentsService commentsService;
 
+    /**
+     * CommentMapper for converting between entity and DTO types.
+     */
     @Autowired
     private CommentMapper commentsMapper;
 
+    /**
+     * ThemeService to manage theme-related operations.
+     */
     @Autowired
     private ThemeService themeService;
 
@@ -96,6 +118,15 @@ public class ArticlesController {
         }
     }
 
+    /**
+     * Retrieves an article by its ID.
+     *
+     * @param articleId           The ID of the article to retrieve.
+     * @param authorizationHeader The authorization header containing the JWT token.
+     * @return ResponseEntity<?> The response entity containing the result of the
+     *         operation.
+     * @throws ApiException if there is an error in the API.
+     */
     @GetMapping("/{articleId}")
     public ResponseEntity<?> getArticlesById(@PathVariable final Long articleId,
             @Valid @RequestHeader("Authorization") String authorizationHeader) {
@@ -126,6 +157,17 @@ public class ArticlesController {
         }
     }
 
+    /**
+     * Posts an article.
+     *
+     * @param request             The article request containing the article
+     *                            details.
+     * @param bindingResult       The BindingResult object that holds the validation
+     *                            errors.
+     * @param authorizationHeader The authorization header containing the JWT token.
+     * @return ResponseEntity<?> The response entity containing the result of the
+     *         operation.
+     */
     @PostMapping("")
     public ResponseEntity<?> postArticle(@Valid @RequestBody ArticleRequest request, BindingResult bindingResult,
             @RequestHeader("Authorization") String authorizationHeader) {
@@ -148,6 +190,17 @@ public class ArticlesController {
         }
     }
 
+    /**
+     * Posts a comment to an article.
+     *
+     * @param request             The comment request containing the comment
+     *                            details.
+     * @param bindingResult       The BindingResult object that holds the validation
+     *                            errors.
+     * @param authorizationHeader The authorization header containing the JWT token.
+     * @return ResponseEntity<?> The response entity containing the result of the
+     *         operation.
+     */
     @PostMapping("/comment")
     public ResponseEntity<?> postCommentToArticle(@Valid @RequestBody CommentRequest request,
             BindingResult bindingResult, @RequestHeader("Authorization") String authorizationHeader) {
@@ -230,6 +283,13 @@ public class ArticlesController {
         return optionalArticle.get();
     }
 
+    /**
+     * Retrieves a theme by its ID and verifies its existence.
+     *
+     * @param themeId The ID of the theme to retrieve.
+     * @return The theme with the given ID.
+     * @throws ApiException if the theme with the given ID does not exist.
+     */
     private Themes verifyAndGetThemeById(Long themeId) {
         Optional<Themes> optionalTheme = themeService.getThemeById(themeId);
 

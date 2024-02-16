@@ -6,14 +6,14 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.openclassrooms.p6.model.Articles;
-import com.openclassrooms.p6.model.Themes;
-import com.openclassrooms.p6.payload.request.ArticleRequest;
 import com.openclassrooms.p6.model.Themes;
 import com.openclassrooms.p6.repository.ThemeRepository;
 
 import lombok.Data;
 
+/**
+ * Service class for managing themes.
+ */
 @Data
 @Service
 public class ThemeService {

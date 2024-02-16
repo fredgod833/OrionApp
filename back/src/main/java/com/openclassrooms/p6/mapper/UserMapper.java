@@ -2,6 +2,7 @@ package com.openclassrooms.p6.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 
 import com.openclassrooms.p6.model.Users;
 import com.openclassrooms.p6.payload.response.UserInfoResponse;
@@ -19,9 +20,12 @@ public interface UserMapper {
      * @param request The Users object to be mapped.
      * @return The mapped UserInfoResponse object.
      */
-    @Mapping(target = "id", ignore = false)
-    @Mapping(target = "created_at", source = "createdAt")
-    @Mapping(target = "updated_at", source = "updatedAt")
+    @Mappings({
+            @Mapping(target = "id", ignore = false),
+            @Mapping(target = "created_at", source = "createdAt"),
+            @Mapping(target = "updated_at", source = "updatedAt")
+    })
+
     UserInfoResponse toDtoUser(Users request);
 
 }
