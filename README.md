@@ -41,7 +41,7 @@ This Fullstack project is dedicated to... it uses Angular 17 for the Front and J
 <a href="https://developer.mozilla.org/en-US/docs/Glossary/HTML5" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/html5-colored.svg" width="36" height="36" alt="HTML5" /></a>
 <a href="https://sass-lang.com/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/sass-colored.svg" width="36" height="36" alt="Sass" /></a>
 <a href="https://www.typescriptlang.org/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/typescript-colored.svg" width="36" height="36" alt="TypeScript" /></a>
-<a href="https://angular.dev/" target="_blank" rel="noreferrer"><img src="https://cdn.discordapp.com/attachments/655077317911117866/1208044756933017630/image.png?ex=65e1da5a&is=65cf655a&hm=a6a6a3e51553ad96983276c424efb44988b1a6d89160c6a3a736c89a58326710&" width="36" height="36" alt="Angular" /></a>
+<a href="https://angular.dev/" target="_blank" rel="noreferrer"><img src="https://cdn.discordapp.com/attachments/688142925204422899/1208048635066060860/image.png?ex=65e1ddf7&is=65cf68f7&hm=bac39733e54e8c7db598f6aab7f273f4215f993d30916bb000081cee11916bbb&" width="44" height="40" alt="Angular" /></a>
 
 
 ### Back-End
