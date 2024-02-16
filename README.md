@@ -2,9 +2,9 @@
 
 ![MDD](./front/public/mdd-logo.svg)
 
-ORION, a software development company, aims to create a social network dedicated to developers called "MDD" (Monde de Dév). The social network aims to assist developers in finding employment by encouraging collaboration among peers. 
+ORION, a software development company, aims to create a social network dedicated to developers called "MDD" (Monde de Dév). The social network aims to assist developers in finding employment by encouraging collaboration among peers.
 
-Before launching it publicly, ORION wants to test an internal minimal version called MVP (Minimum Viable Product). 
+Before launching it publicly, ORION wants to test an internal minimal version called MVP (Minimum Viable Product).
 
 The MVP will allow users to subscribe to programming topics, view articles chronologically in their feed, and post articles and comments. You are responsible for developing the MVP, with the assistance of your team including Orlando (your manager), Heidi (a fellow developer), and Juana (the UX designer).
 
@@ -12,7 +12,7 @@ The MVP will allow users to subscribe to programming topics, view articles chron
 
 - [Monde De Dév Fullstack project](#monde-de-dév-fullstack-project)
   - [Table of contents](#table-of-contents)
-  - [Project stack:](#project-stack)
+  - [Project stack](#project-stack)
     - [Front-End](#front-end)
     - [Back-End](#back-end)
   - [Pre-requisites](#pre-requisites)
@@ -34,7 +34,8 @@ The MVP will allow users to subscribe to programming topics, view articles chron
     - [JWT required endpoints](#jwt-required-endpoints)
   - [Miscellaneous](#miscellaneous)
 
-## Project stack:
+## Project stack
+
 ### Front-End
 
 - HTML
@@ -47,7 +48,6 @@ The MVP will allow users to subscribe to programming topics, view articles chron
 <a href="https://www.typescriptlang.org/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/typescript-colored.svg" width="36" height="36" alt="TypeScript" /></a>
 <a href="https://angular.dev/" target="_blank" rel="noreferrer"><img src="https://cdn.discordapp.com/attachments/688142925204422899/1208048635066060860/image.png?ex=65e1ddf7&is=65cf68f7&hm=bac39733e54e8c7db598f6aab7f273f4215f993d30916bb000081cee11916bbb&" width="44" height="40" alt="Angular" /></a>
 
-
 ### Back-End
 
 - Java 21
@@ -55,7 +55,6 @@ The MVP will allow users to subscribe to programming topics, view articles chron
 
 <a href="https://www.java.com/en/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/6910f0503efdd315c8f9b858234310c06e04d9c0/icons/java/java-original.svg" width="36" height="36" alt="Java" /></a>
 <a href="https://start.spring.io/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/6910f0503efdd315c8f9b858234310c06e04d9c0/icons/spring/spring-original.svg" width="36" height="36" alt="Spring" /></a>
-
 
 ## Pre-requisites
 
