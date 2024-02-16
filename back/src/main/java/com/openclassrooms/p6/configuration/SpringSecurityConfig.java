@@ -18,6 +18,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SpringSecurityConfig {
 
     private static final String[] AUTHENTICATION_NEEDED_ROUTES = {
+            "/api/users/**",
             "/api/themes/**",
             "/api/articles/**",
             "/api/auth/**",

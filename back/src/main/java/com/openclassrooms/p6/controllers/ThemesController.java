@@ -39,10 +39,6 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/themes")
 public class ThemesController {
 
-    // TODO create the remaining endpoint methods:
-    // TODO: create the subscription mapper
-    // TODO: create methods to subscribe/unsubscribe
-
     @Autowired
     private ThemeService themeService;
 
@@ -139,6 +135,8 @@ public class ThemesController {
             BindingResult bindingResult,
             @RequestHeader("Authorization") String authorizationHeader) {
         try {
+            checkBodyPayloadErrors(bindingResult);
+
             Long userId = verifyUserValidityFromToken(authorizationHeader);
 
             Long themeId = request.themeId();
@@ -178,15 +176,13 @@ public class ThemesController {
             BindingResult bindingResult,
             @RequestHeader("Authorization") String authorizationHeader) {
         try {
+            checkBodyPayloadErrors(bindingResult);
+
             Long userId = verifyUserValidityFromToken(authorizationHeader);
 
             Long themeId = request.themeId();
 
             verifyAndGetThemeById(themeId);
-
-            // TODO: Get the subscription of the user from the userId & themeId
-            // TODO: Set the isSubscribed to false using
-            // TODO: updateThemeSubscription() from the theme service
 
             Subscriptions subscription = getUserThemeSubscription(userId, themeId);
 
@@ -209,6 +205,19 @@ public class ThemesController {
             return ResponseEntity.status(HttpStatus.OK).body(response);
         } catch (ApiException e) {
             return GlobalExceptionHandler.handleApiException(e);
+        }
+    }
+
+    /**
+     * Checks if there are any payload errors in the request body.
+     *
+     * @param bindingResult The BindingResult object that holds the validation
+     *                      errors.
+     */
+    private void checkBodyPayloadErrors(BindingResult bindingResult) {
+        Boolean payloadIsInvalid = bindingResult.hasErrors();
+        if (payloadIsInvalid) {
+            GlobalExceptionHandler.handlePayloadError("Bad request", bindingResult, HttpStatus.BAD_REQUEST);
         }
     }
 
