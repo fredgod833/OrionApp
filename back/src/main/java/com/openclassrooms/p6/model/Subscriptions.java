@@ -58,7 +58,7 @@ public class Subscriptions {
     /**
      * Boolean to indicate whether the user is subscribed to the theme or not.
      */
-    @Column(name = "isSubscribed")
+    @Column(name = "issubscribed")
     private Boolean isSubscribed;
 
     /**

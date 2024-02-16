@@ -1,6 +1,7 @@
 package com.openclassrooms.p6.service;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,5 +32,9 @@ public class SubscriptionsService {
         subscription.setIsSubscribed(isSubscribed);
 
         subscriptionRepository.save(subscription);
+    }
+
+    public Iterable<Subscriptions> findAllUserSubscriptions(Long userId) {
+        return subscriptionRepository.findAllByUserId(userId);
     }
 }
