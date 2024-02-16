@@ -147,8 +147,8 @@ CREATE TABLE Subscriptions (
     FOREIGN KEY (themeID) REFERENCES Themes(ID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
--- Mock data
 
+-- Mock data
 INSERT INTO Users (ID, username, email, password)
 VALUES 
     (1, 'user', 'user@user.com', '$2a$10$Cugtb5QEITQsbHMuuBWKqecku/5hup5afBWrVqJdU6nN9Ov/wNYy2'),
@@ -181,6 +181,14 @@ VALUES
     (5, 2, 6, 'C++ programming concepts explained well.'),
     (6, 2, 6, 'Looking forward to more articles on C++.'),
     (7, 2, 6, 'Great article, thank you!');
+
+INSERT INTO Subscriptions (ID, userID, themeID, isSubscribed, createdAt, updatedAt)
+VALUES
+    (1, 1, 1, TRUE, NOW(), NOW()),
+    (2, 1, 3, TRUE, NOW(), NOW()),
+    (3, 1, 4, TRUE, NOW(), NOW()),
+    (4, 2, 2, TRUE, NOW(), NOW()),
+    (5, 2, 5, TRUE, NOW(), NOW());    
 ```
 
 ## Installation procedure
