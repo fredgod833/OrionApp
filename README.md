@@ -2,7 +2,7 @@
 
 ![MDD](./front/public/mdd-logo.svg)
 
-ORION, a software development company, aims to create a social network dedicated to developers called "MDD" (Developer's World). The social network aims to assist developers in finding employment by encouraging collaboration among peers. 
+ORION, a software development company, aims to create a social network dedicated to developers called "MDD" (Monde de Dév). The social network aims to assist developers in finding employment by encouraging collaboration among peers. 
 
 Before launching it publicly, ORION wants to test an internal minimal version called MVP (Minimum Viable Product). 
 
