@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{ \r\n    \"username\": \"test@test.com\", \r\n    \"email\": \"test\",\r\n    \"password\": \"test!1234\"\r\n}",
+							"raw": "{ \r\n    \"email\": \"test1@test.com\", \r\n    \"username\": \"test1\",\r\n    \"password\": \"test!1234\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -118,7 +118,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n \"theme\": \"string\",\r\n  \"title\": \"string\",\r\n  \"description\": \"string\"\r\n}",
+							"raw": "{\r\n  \"themeId\": 420,\r\n  \"title\": \"string\",\r\n  \"description\": \"string\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -176,7 +176,7 @@
 					"response": []
 				},
 				{
-					"name": "createComment",
+					"name": "postCommentToArticle",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -227,7 +227,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIn0.3fuZPSEtPiIEXrloKl0rhUcQFt_hapWW0XlmB-BJGN8dlskR0mHOWFXCeKlH0ohAh23mitCHf90_U3UQd4U5-g",
 									"type": "string"
 								}
 							]
@@ -243,6 +243,36 @@
 							"path": [
 								"api",
 								"themes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getSubscribedThemes",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIn0.3QpHtZifhnCYM5nkutb5sX0kYIYgHvLCijdMEaD5UXfQF4Md6Rep7g8sqfM0--pDgliR6RWhwNlsFnNMNFA_CA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3001/api/themes/subscribed",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"themes",
+								"subscribed"
 							]
 						}
 					},
@@ -304,7 +334,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"themeId\": 420\r\n}",
+							"raw": "{\r\n    \"themeId\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -321,36 +351,6 @@
 								"api",
 								"themes",
 								"unsubscribe"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "subscribed",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/api/themes/subscribed",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"themes",
-								"subscribed"
 							]
 						}
 					},
