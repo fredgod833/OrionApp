@@ -43,10 +43,10 @@ The MVP will allow users to subscribe to programming topics, view articles chron
 - TypeScript
 - Angular 17
 
-<a href="https://developer.mozilla.org/en-US/docs/Glossary/HTML5" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/html5-colored.svg" width="36" height="36" alt="HTML5" /></a>
-<a href="https://sass-lang.com/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/sass-colored.svg" width="36" height="36" alt="Sass" /></a>
-<a href="https://www.typescriptlang.org/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/typescript-colored.svg" width="36" height="36" alt="TypeScript" /></a>
-<a href="https://angular.dev/" target="_blank" rel="noreferrer"><img src="https://cdn.discordapp.com/attachments/688142925204422899/1208048635066060860/image.png?ex=65e1ddf7&is=65cf68f7&hm=bac39733e54e8c7db598f6aab7f273f4215f993d30916bb000081cee11916bbb&" width="44" height="40" alt="Angular" /></a>
+<a href="https://developer.mozilla.org/en-US/docs/Glossary/HTML5" target="_blank" rel="noreferrer" title="HTML5"><img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/html5-colored.svg" width="36" height="36" alt="HTML5" /></a>
+<a href="https://sass-lang.com/" target="_blank" rel="noreferrer" title="SASS"><img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/sass-colored.svg" width="36" height="36" alt="SASS" /></a>
+<a href="https://www.typescriptlang.org/" target="_blank" rel="noreferrer" title="TypeScript"><img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/typescript-colored.svg" width="36" height="36" alt="TypeScript" /></a>
+<a href="https://angular.dev/" target="_blank" rel="noreferrer" title="Angular"><img src="https://cdn.discordapp.com/attachments/688142925204422899/1208048635066060860/image.png?ex=65e1ddf7&is=65cf68f7&hm=bac39733e54e8c7db598f6aab7f273f4215f993d30916bb000081cee11916bbb&" width="44" height="40" alt="Angular" /></a>
 
 ### Back-End
 
@@ -54,9 +54,9 @@ The MVP will allow users to subscribe to programming topics, view articles chron
 - Spring Boot 3.1.2
 - PostgreSQL
 
-<a href="https://www.java.com/en/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/6910f0503efdd315c8f9b858234310c06e04d9c0/icons/java/java-original.svg" width="36" height="36" alt="Java" /></a>
-<a href="https://start.spring.io/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/6910f0503efdd315c8f9b858234310c06e04d9c0/icons/spring/spring-original.svg" width="36" height="36" alt="Spring" /></a>
-<a href="https://www.postgresql.org/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/6910f0503efdd315c8f9b858234310c06e04d9c0/icons/postgresql/postgresql-original.svg" width="36" height="36" alt="PostgreSQL" /></a>
+<a href="https://www.java.com/en/" target="_blank" rel="noreferrer" title="Java"><img src="https://raw.githubusercontent.com/devicons/devicon/6910f0503efdd315c8f9b858234310c06e04d9c0/icons/java/java-original.svg" width="36" height="36" alt="Java" /></a>
+<a href="https://start.spring.io/" target="_blank" rel="noreferrer" title="Spring"><img src="https://raw.githubusercontent.com/devicons/devicon/6910f0503efdd315c8f9b858234310c06e04d9c0/icons/spring/spring-original.svg" width="36" height="36" alt="Spring" /></a>
+<a href="https://www.postgresql.org/" target="_blank" rel="noreferrer" title="PostgreSQL"><img src="https://raw.githubusercontent.com/devicons/devicon/6910f0503efdd315c8f9b858234310c06e04d9c0/icons/postgresql/postgresql-original.svg" width="36" height="36" alt="PostgreSQL" /></a>
 
 ## Pre-requisites
 
@@ -362,34 +362,34 @@ You can view the different API endpoints from this table:
 
 - `api/auth`:
 
-| HTTP VERB | Endpoint  | Parameters | Request payload                                          | Response payload                     | Description of the reponse           |
+| HTTP VERB | Endpoint  | Parameters | Request payload                                          | Response payload                     | Description of the response          |
 | --------- | --------- | ---------- | -------------------------------------------------------- | ------------------------------------ | ------------------------------------ |
 | POST      | /register | x          | {  userName: string,  email: string,  password: string } | {  message: string,  token: string } | An object with a token and a message |
 | POST      | /login    | x          | {  identifier: string,  password: string }               | {  message: string,  token: string } | An object with a token and a message |
-
+ 
 ### JWT required endpoints
 
 - `api/articles`:
   
-| HTTP VERB | Endpoint    | Parameters                              | Request payload                                          | Response payload                                                                                                                                                                  | Description of the reponse                                            |
-| --------- | ----------- | --------------------------------------- | -------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| GET       | /           | x                                       | x                                                        | {  id: number,  userId: number,  articleId: number,  title: string,  description: string }[]                                                                                      | Array of articles                                                     |
-| POST      | /           | x                                       | {  themeId: number, title: string, description: string } | {  message: string }                                                                                                                                                              | A message saying if the article has been succesfully published or not |
-| GET       | /:articleId | Id of the article the dev wants to read | x                                                        | {  id: number,  authorName: string,  creationDate: string, // ISO string  theme: string,  title: string,  description: string,  comments: {userName: string, comment: string}[] } | An object containing info about the article and an array of comments  |
-| POST      | /comment    | x                                       | {  articleId: number  comment: string }                  | {  message: string }                                                                                                                                                              | A message saying if the comment was sent with success or not          |
+| HTTP VERB | Endpoint            | Parameters                                                                                      | Request payload                         | Response payload                                                                                                                                                                | Description of the response                                            |
+| --------- | ------------------- | ----------------------------------------------------------------------------------------------- | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| GET       | /                   | x                                                                                               | x                                       | {  id: number,  userId: number,  articleId: number,  title: string,  description: string }[]                                                                                    | Array of articles                                                      |
+| POST      | /:themeId           | Id of the theme for the article the user wants to create                                        | {  title: string, description: string } | {  message: string }                                                                                                                                                            | A message saying if the article has been successfully published or not |
+| GET       | /:articleId         | Id of the article the user wants to read                                                        | x                                       | {  id: number,  authorName: string,  creationDate: string, // ISO string  theme: string,  title: string description: string,  comments: {userName: string, comment: string}[] } | An object containing info about the article and an array of comments   |
+| POST      | /comment/:articleId | Id of the article the user wants to send the comment to {  articleId: number  comment: string } | x                                       | {  message: string }                                                                                                                                                            | A message saying if the comment was sent with success or not           |  |
 
 - `api/themes`:
 
-| HTTP VERB | Endpoint     | Parameters | Request payload      | Response payload                                                                                                   | Description of the reponse                                   |
-| --------- | ------------ | ---------- | -------------------- | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------ |
-| GET       | /            | x          | x                    | {  id: number,  userId: number,  themeId: number,  title: string,  description: string,  isSubscribed: boolean }[] | Array of all the themes                                      |
-| GET       | /subscribed  | x          | x                    | {  id: number,  userId: number,  themeId: number,  title: string,  description: string,  isSubscribed: boolean }[] | Array of all the themes the user is subscribed to            |
-| POST      | /subscribe   | x          | {  themeId: number } | {  message: string }                                                                                               | A message saying if the subscription request worked or not   |
-| POST      | /unsubscribe | x          | {  themeId: number } | {  message: string }                                                                                               | A message saying if the unsubscription request worked or not |
+| HTTP VERB | Endpoint              | Parameters                                       | Request payload | Response payload                                                                                                   | Description of the response                                  |
+| --------- | --------------------- | ------------------------------------------------ | --------------- | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------ |
+| GET       | /                     | x                                                | x               | {  id: number,  userId: number,  themeId: number,  title: string,  description: string,  isSubscribed: boolean }[] | Array of all the themes                                      |
+| GET       | /subscribed           | x                                                | x               | {  id: number,  userId: number,  themeId: number,  title: string,  description: string,  isSubscribed: boolean }[] | Array of all the themes the user is subscribed to            |
+| POST      | /subscribe/:themeId   | Id of the theme the user wants to subscribe to   | x               | {  message: string }                                                                                               | A message saying if the subscription request worked or not   |
+| POST      | /unsubscribe/:themeId | Id of the theme the user wants to unsubscribe to | x               | {  message: string }                                                                                               | A message saying if the unsubscription request worked or not |
 
 - `api/user`
 
-| HTTP VERB | Endpoint | Parameters | Request payload                        | Response payload     | Description of the reponse                                             |
+| HTTP VERB | Endpoint | Parameters | Request payload                        | Response payload     | Description of the response                                            |
 | --------- | -------- | ---------- | -------------------------------------- | -------------------- | ---------------------------------------------------------------------- |
 | PUT       | /        | x          | {  username: string,  email: string, } | {  message: string } | A message saying if the user info has been successfully updated or not |
 
