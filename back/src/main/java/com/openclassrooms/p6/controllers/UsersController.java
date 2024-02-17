@@ -65,18 +65,7 @@ public class UsersController {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
             }
 
-            Optional<Users> userFromRequestEmail = userService.getUserByEmail(request.email());
-
-            Boolean emailIsAlreadyTaken = userFromRequestEmail.isPresent()
-                    && userFromRequestEmail.get().getEmail() != user.getEmail();
-            if (emailIsAlreadyTaken) {
-                MessageResponse response = new MessageResponse(
-                        "The new email is already taken !");
-                return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
-            }
-
             user.setUsername(request.username());
-            user.setEmail(request.email());
 
             userService.saveUser(user);
 

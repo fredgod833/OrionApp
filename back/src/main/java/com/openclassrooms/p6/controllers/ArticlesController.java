@@ -168,15 +168,15 @@ public class ArticlesController {
      * @return ResponseEntity<?> The response entity containing the result of the
      *         operation.
      */
-    @PostMapping("")
-    public ResponseEntity<?> postArticle(@Valid @RequestBody ArticleRequest request, BindingResult bindingResult,
+    @PostMapping("/{themeId}")
+    public ResponseEntity<?> postArticle(
+            @PathVariable Long themeId,
+            @Valid @RequestBody ArticleRequest request, BindingResult bindingResult,
             @RequestHeader("Authorization") String authorizationHeader) {
         try {
             Long userId = verifyUserValidityFromToken(authorizationHeader);
 
             checkBodyPayloadErrors(bindingResult);
-
-            Long themeId = request.themeId();
 
             verifyAndGetThemeById(themeId);
 
@@ -190,29 +190,20 @@ public class ArticlesController {
         }
     }
 
-    /**
-     * Posts a comment to an article.
-     *
-     * @param request             The comment request containing the comment
-     *                            details.
-     * @param bindingResult       The BindingResult object that holds the validation
-     *                            errors.
-     * @param authorizationHeader The authorization header containing the JWT token.
-     * @return ResponseEntity<?> The response entity containing the result of the
-     *         operation.
-     */
-    @PostMapping("/comment")
-    public ResponseEntity<?> postCommentToArticle(@Valid @RequestBody CommentRequest request,
-            BindingResult bindingResult, @RequestHeader("Authorization") String authorizationHeader) {
+    @PostMapping("/comment/{articleId}")
+    public ResponseEntity<?> postCommentToArticle(
+            @PathVariable Long articleId,
+            @Valid @RequestBody CommentRequest request,
+            BindingResult bindingResult,
+            @RequestHeader("Authorization") String authorizationHeader) {
         try {
-            Long userId = verifyUserValidityFromToken(authorizationHeader);
-
-            Long articleId = request.articleId();
-            verifyAndGetArticlesById(articleId);
-
             checkBodyPayloadErrors(bindingResult);
 
-            commentsService.createComment(request, userId);
+            Long userId = verifyUserValidityFromToken(authorizationHeader);
+
+            verifyAndGetArticlesById(articleId);
+
+            commentsService.createComment(request, userId, articleId);
 
             MessageResponse response = new MessageResponse("Comment has been successfully published !");
             return ResponseEntity.status(HttpStatus.CREATED).body(response);

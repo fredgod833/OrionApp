@@ -11,8 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +23,6 @@ import com.openclassrooms.p6.mapper.ThemeMapper;
 import com.openclassrooms.p6.model.Subscriptions;
 import com.openclassrooms.p6.model.Themes;
 import com.openclassrooms.p6.model.Users;
-import com.openclassrooms.p6.payload.request.SubscriptionToggleRequest;
 import com.openclassrooms.p6.payload.response.MessageResponse;
 import com.openclassrooms.p6.payload.response.MultipleThemesResponse;
 import com.openclassrooms.p6.payload.response.SingleThemeResponse;
@@ -31,8 +30,6 @@ import com.openclassrooms.p6.service.SubscriptionsService;
 import com.openclassrooms.p6.service.ThemeService;
 import com.openclassrooms.p6.service.UserService;
 import com.openclassrooms.p6.utils.JwtUtil;
-
-import jakarta.validation.Valid;
 
 /**
  * This class is the controller for managing themes in the API.
@@ -138,63 +135,18 @@ public class ThemesController {
 
             Iterable<Subscriptions> subscriptions = subscriptionsService.findAllUserSubscriptions(userId);
 
-            List<Themes> themesEntityList = themeService.getThemes();
-
-            Iterable<SingleThemeResponse> themesDto = (themeMapper.toDtoThemes(themesEntityList));
-
-            List<SingleThemeResponse> normalizedThemes = new ArrayList<>();
-
-            for (SingleThemeResponse themeDto : themesDto) {
-                boolean isSubscribed = false;
-
-                for (Subscriptions subscription : subscriptions) {
-                    Boolean userHasSubcriptionInfoForTheme = subscription.getThemeId().equals(themeDto.id());
-                    if (userHasSubcriptionInfoForTheme) {
-                        isSubscribed = subscription.getIsSubscribed();
-                        break;
-                    }
-                }
-
-                if (isSubscribed) {
-                    SingleThemeResponse normalizedSingleResponse = new SingleThemeResponse(themeDto.id(),
-                            themeDto.title(),
-                            themeDto.description(), isSubscribed);
-
-                    normalizedThemes.add(normalizedSingleResponse);
-                }
-            }
-
-            MultipleThemesResponse response = new MultipleThemesResponse(normalizedThemes);
-
-            return ResponseEntity.status(HttpStatus.OK).body(response);
+            return ResponseEntity.status(HttpStatus.OK).body(subscriptions);
         } catch (ApiException e) {
             return GlobalExceptionHandler.handleApiException(e);
         }
     }
 
-    /**
-     * Subscribes a user to a theme.
-     *
-     * @param request             The SubscriptionToggleRequest object containing
-     *                            the theme ID.
-     * @param bindingResult       The BindingResult object that holds the validation
-     *                            errors.
-     * @param authorizationHeader The authorization header containing the JWT token.
-     * @return A ResponseEntity containing the response body with the subscription
-     *         status.
-     * @throws ApiException if there is an error while subscribing the user or
-     *                      verifying the user.
-     */
-    @PostMapping("/subscribe")
-    public ResponseEntity<?> subscribe(@Valid @RequestBody SubscriptionToggleRequest request,
-            BindingResult bindingResult,
+    @PostMapping("/subscribe/{themeId}")
+    public ResponseEntity<?> subscribe(
+            @PathVariable Long themeId,
             @RequestHeader("Authorization") String authorizationHeader) {
         try {
-            checkBodyPayloadErrors(bindingResult);
-
             Long userId = verifyUserValidityFromToken(authorizationHeader);
-
-            Long themeId = request.themeId();
 
             verifyAndGetThemeById(themeId);
 
@@ -226,29 +178,12 @@ public class ThemesController {
         }
     }
 
-    /**
-     * Unsubscribes a user from a theme.
-     *
-     * @param request             The SubscriptionToggleRequest object containing
-     *                            the theme ID.
-     * @param bindingResult       The BindingResult object that holds the validation
-     *                            errors.
-     * @param authorizationHeader The authorization header containing the JWT token.
-     * @return A ResponseEntity containing the response body with the subscription
-     *         status.
-     * @throws ApiException if there is an error while unsubscribing the user or
-     *                      verifying the user.
-     */
-    @PostMapping("/unsubscribe")
-    public ResponseEntity<?> unsubscribe(@Valid @RequestBody SubscriptionToggleRequest request,
-            BindingResult bindingResult,
+    @PostMapping("/unsubscribe/{themeId}")
+    public ResponseEntity<?> unsubscribe(
+            @PathVariable Long themeId,
             @RequestHeader("Authorization") String authorizationHeader) {
         try {
-            checkBodyPayloadErrors(bindingResult);
-
             Long userId = verifyUserValidityFromToken(authorizationHeader);
-
-            Long themeId = request.themeId();
 
             verifyAndGetThemeById(themeId);
 
@@ -258,12 +193,13 @@ public class ThemesController {
             if (subscriptionDoesNotExistYet) {
                 MessageResponse response = new MessageResponse("Subscription does not exist!");
 
-                return ResponseEntity.status(HttpStatus.CREATED).body(response);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
             }
 
             Boolean userIsAlreadyUnsubscribedToTheme = !subscription.getIsSubscribed();
             if (userIsAlreadyUnsubscribedToTheme) {
-                MessageResponse response = new MessageResponse("You are already unsubscribed to this theme!");
+                MessageResponse response = new MessageResponse(
+                        "You cannot unsubscribe to a theme that you're not subscribed to !");
 
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
             }
@@ -273,19 +209,6 @@ public class ThemesController {
             return ResponseEntity.status(HttpStatus.OK).body(response);
         } catch (ApiException e) {
             return GlobalExceptionHandler.handleApiException(e);
-        }
-    }
-
-    /**
-     * Checks if there are any payload errors in the request body.
-     *
-     * @param bindingResult The BindingResult object that holds the validation
-     *                      errors.
-     */
-    private void checkBodyPayloadErrors(BindingResult bindingResult) {
-        Boolean payloadIsInvalid = bindingResult.hasErrors();
-        if (payloadIsInvalid) {
-            GlobalExceptionHandler.handlePayloadError("Bad request", bindingResult, HttpStatus.BAD_REQUEST);
         }
     }
 

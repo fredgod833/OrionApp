@@ -50,12 +50,12 @@ public class CommentsService {
      * @param comments The comments to be created for an article.
      * @return The saved or updated comments.
      */
-    public Comments createComment(CommentRequest comments, Long userId) {
+    public Comments createComment(CommentRequest commentRequest, Long userId, Long articleId) {
         Comments newComments = new Comments();
 
-        newComments.setArticleId(comments.articleId());
+        newComments.setArticleId(articleId);
         newComments.setUserId(userId);
-        newComments.setComment(comments.comment());
+        newComments.setComment(commentRequest.comment());
 
         return commentRepository.save(newComments);
     }
