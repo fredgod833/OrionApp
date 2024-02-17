@@ -11,7 +11,28 @@
 			"item": [
 				{
 					"name": "register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responsePayload = pm.response.json();\r",
+									"\r",
+									"const {token} = responsePayload;\r",
+									"\r",
+									"const withBearer = true;\r",
+									"\r",
+									"pm.environment.set(\"token\", withBearer ? `Bearer ${token}`:token);\r",
+									"console.log(pm.environment.get(\"token\"))"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -24,11 +45,10 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3001/api/auth/register",
+							"raw": "{{url}}/api/auth/register",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3001",
 							"path": [
 								"api",
 								"auth",
@@ -40,12 +60,30 @@
 				},
 				{
 					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responsePayload = pm.response.json();\r",
+									"\r",
+									"const {token} = responsePayload;\r",
+									"\r",
+									"const withBearer = true;\r",
+									"\r",
+									"pm.environment.set(\"token\", withBearer ? `Bearer ${token}`:token);\r",
+									"console.log(pm.environment.get(\"token\"))"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{ \r\n    \"identifier\": \"test@test.com\", \r\n    // \"identifier\": \"test\", // Can also use their username to login\r\n    \"password\": \"test!1234\"\r\n}",
+							"raw": "{ \r\n    // \"identifier\": \"test@test.com\", \r\n    \"identifier\": \"updatedUser\", // Can also use their username to login\r\n    \"password\": \"test!1234\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -53,11 +91,10 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3001/api/auth/login",
+							"raw": "{{url}}/api/auth/login",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3001",
 							"path": [
 								"api",
 								"auth",
@@ -74,25 +111,31 @@
 			"item": [
 				{
 					"name": "getAllArticles",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "localhost:3001/api/articles",
+							"raw": "{{url}}/api/articles",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3001",
 							"path": [
 								"api",
 								"articles"
@@ -105,20 +148,19 @@
 					"name": "postArticle",
 					"request": {
 						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "",
-									"type": "string"
-								}
-							]
+							"type": "noauth"
 						},
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"themeId\": 420,\r\n  \"title\": \"string\",\r\n  \"description\": \"string\"\r\n}",
+							"raw": "{\r\n  \"themeId\": 1,\r\n  \"title\": \"I LOATHE Python\",\r\n  \"description\": \"Bruv this language has a weird syntax\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -126,14 +168,20 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3001/api/articles",
+							"raw": "{{url}}/api/articles/:themeId",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3001",
 							"path": [
 								"api",
-								"articles"
+								"articles",
+								":themeId"
+							],
+							"variable": [
+								{
+									"key": "themeId",
+									"value": "1"
+								}
 							]
 						}
 					},
@@ -143,23 +191,21 @@
 					"name": "getArticleById",
 					"request": {
 						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "",
-									"type": "string"
-								}
-							]
+							"type": "noauth"
 						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "localhost:3001/api/articles/:articleId",
+							"raw": "{{url}}/api/articles/:articleId",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3001",
 							"path": [
 								"api",
 								"articles",
@@ -168,7 +214,7 @@
 							"variable": [
 								{
 									"key": "articleId",
-									"value": ""
+									"value": "1"
 								}
 							]
 						}
@@ -179,20 +225,19 @@
 					"name": "postCommentToArticle",
 					"request": {
 						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "",
-									"type": "string"
-								}
-							]
+							"type": "noauth"
 						},
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"articleId\": 69,\r\n    \"comment\": \"string\"\r\n}",
+							"raw": "{\r\n    \"articleId\": 1,\r\n    \"comment\": \"Python comment\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -200,15 +245,21 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3001/api/articles/comment",
+							"raw": "{{url}}/api/articles/comment/:articleId",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3001",
 							"path": [
 								"api",
 								"articles",
-								"comment"
+								"comment",
+								":articleId"
+							],
+							"variable": [
+								{
+									"key": "articleId",
+									"value": "1"
+								}
 							]
 						}
 					},
@@ -223,23 +274,21 @@
 					"name": "getAllThemes",
 					"request": {
 						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIn0.3fuZPSEtPiIEXrloKl0rhUcQFt_hapWW0XlmB-BJGN8dlskR0mHOWFXCeKlH0ohAh23mitCHf90_U3UQd4U5-g",
-									"type": "string"
-								}
-							]
+							"type": "noauth"
 						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "localhost:3001/api/themes",
+							"raw": "{{url}}/api/themes",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3001",
 							"path": [
 								"api",
 								"themes"
@@ -252,23 +301,21 @@
 					"name": "getSubscribedThemes",
 					"request": {
 						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIn0.3QpHtZifhnCYM5nkutb5sX0kYIYgHvLCijdMEaD5UXfQF4Md6Rep7g8sqfM0--pDgliR6RWhwNlsFnNMNFA_CA",
-									"type": "string"
-								}
-							]
+							"type": "noauth"
 						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "localhost:3001/api/themes/subscribed",
+							"raw": "{{url}}/api/themes/subscribed",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3001",
 							"path": [
 								"api",
 								"themes",
@@ -282,56 +329,16 @@
 					"name": "subscribe",
 					"request": {
 						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "",
-									"type": "string"
-								}
-							]
+							"type": "noauth"
 						},
 						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"themeId\": 420\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
 							}
-						},
-						"url": {
-							"raw": "localhost:3001/api/themes/subscribe",
-							"host": [
-								"localhost"
-							],
-							"port": "3001",
-							"path": [
-								"api",
-								"themes",
-								"subscribe"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "unsubscribe",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"themeId\": 1\r\n}",
@@ -342,15 +349,65 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3001/api/themes/unsubscribe",
+							"raw": "{{url}}/api/themes/subscribe/:themeId",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3001",
 							"path": [
 								"api",
 								"themes",
-								"unsubscribe"
+								"subscribe",
+								":themeId"
+							],
+							"variable": [
+								{
+									"key": "themeId",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "unsubscribe",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"themeId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/themes/unsubscribe/:themeId",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"themes",
+								"unsubscribe",
+								":themeId"
+							],
+							"variable": [
+								{
+									"key": "themeId",
+									"value": ""
+								}
 							]
 						}
 					},
@@ -365,20 +422,19 @@
 					"name": "update",
 					"request": {
 						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "",
-									"type": "string"
-								}
-							]
+							"type": "noauth"
 						},
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"string\",\r\n    \"email\": \"string\"\r\n}",
+							"raw": "{\r\n    \"username\": \"updatedUser\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -386,20 +442,49 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3001/api/user",
+							"raw": "{{url}}/api/users",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "3001",
 							"path": [
 								"api",
-								"user"
+								"users"
 							]
 						}
 					},
 					"response": []
 				}
 			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "localhost:3001"
+		},
+		{
+			"key": "token",
+			"value": "token"
 		}
 	]
 }
