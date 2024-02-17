@@ -366,7 +366,7 @@ You can view the different API endpoints from this table:
 | --------- | --------- | ---------- | -------------------------------------------------------- | ------------------------------------ | ------------------------------------ |
 | POST      | /register | x          | {  userName: string,  email: string,  password: string } | {  message: string,  token: string } | An object with a token and a message |
 | POST      | /login    | x          | {  identifier: string,  password: string }               | {  message: string,  token: string } | An object with a token and a message |
- 
+
 ### JWT required endpoints
 
 - `api/articles`:
