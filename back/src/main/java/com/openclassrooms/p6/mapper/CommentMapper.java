@@ -22,7 +22,7 @@ public interface CommentMapper {
      * @param comment The source {@link Comments} object.
      * @return The destination {@link CommentResponse} DTO object.
      */
-    @Mapping(source = "user.username", target = "username")
+    @Mapping(target = "username", source = "user.username")
     CommentResponse toDtoComment(Comments comment);
 
     /**

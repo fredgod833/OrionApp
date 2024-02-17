@@ -1,6 +1,5 @@
 package com.openclassrooms.p6.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.StreamSupport;
@@ -8,7 +7,6 @@ import java.util.stream.StreamSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,13 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.p6.exception.ApiException;
 import com.openclassrooms.p6.exception.GlobalExceptionHandler;
+import com.openclassrooms.p6.mapper.SubscriptionMapper;
 import com.openclassrooms.p6.mapper.ThemeMapper;
 import com.openclassrooms.p6.model.Subscriptions;
 import com.openclassrooms.p6.model.Themes;
 import com.openclassrooms.p6.model.Users;
 import com.openclassrooms.p6.payload.response.MessageResponse;
-import com.openclassrooms.p6.payload.response.MultipleThemesResponse;
 import com.openclassrooms.p6.payload.response.SingleThemeResponse;
+import com.openclassrooms.p6.payload.response.SingleThemeSubscriptionResponse;
 import com.openclassrooms.p6.service.SubscriptionsService;
 import com.openclassrooms.p6.service.ThemeService;
 import com.openclassrooms.p6.service.UserService;
@@ -60,6 +59,9 @@ public class ThemesController {
     @Autowired
     private SubscriptionsService subscriptionsService;
 
+    @Autowired
+    private SubscriptionMapper subscriptionsMapper;
+
     /**
      * {@link ThemeMapper} for converting between entity and DTO types.
      */
@@ -84,36 +86,13 @@ public class ThemesController {
     @GetMapping("")
     public ResponseEntity<?> getAllThemes(@RequestHeader("Authorization") String authorizationHeader) {
         try {
-            Long userId = verifyUserValidityFromToken(authorizationHeader);
-
-            Iterable<Subscriptions> subscriptions = subscriptionsService.findAllUserSubscriptions(userId);
+            verifyUserValidityFromToken(authorizationHeader);
 
             List<Themes> themesEntityList = themeService.getThemes();
 
             Iterable<SingleThemeResponse> themesDto = (themeMapper.toDtoThemes(themesEntityList));
 
-            List<SingleThemeResponse> normalizedThemes = new ArrayList<>();
-
-            for (SingleThemeResponse themeDto : themesDto) {
-                boolean isSubscribed = false;
-
-                for (Subscriptions subscription : subscriptions) {
-                    Boolean userHasSubcriptionInfoForTheme = subscription.getThemeId().equals(themeDto.id());
-                    if (userHasSubcriptionInfoForTheme) {
-                        isSubscribed = subscription.getIsSubscribed();
-                        break;
-                    }
-                }
-
-                SingleThemeResponse normalizedSingleResponse = new SingleThemeResponse(themeDto.id(), themeDto.title(),
-                        themeDto.description(), isSubscribed);
-
-                normalizedThemes.add(normalizedSingleResponse);
-            }
-
-            MultipleThemesResponse response = new MultipleThemesResponse(normalizedThemes);
-
-            return ResponseEntity.status(HttpStatus.OK).body(response);
+            return ResponseEntity.status(HttpStatus.OK).body(themesDto);
         } catch (ApiException e) {
             return GlobalExceptionHandler.handleApiException(e);
         }
@@ -135,7 +114,10 @@ public class ThemesController {
 
             Iterable<Subscriptions> subscriptions = subscriptionsService.findAllUserSubscriptions(userId);
 
-            return ResponseEntity.status(HttpStatus.OK).body(subscriptions);
+            Iterable<SingleThemeSubscriptionResponse> subscriptionsDto = subscriptionsMapper
+                    .toDtoSubscriptions(subscriptions);
+
+            return ResponseEntity.status(HttpStatus.OK).body(subscriptionsDto);
         } catch (ApiException e) {
             return GlobalExceptionHandler.handleApiException(e);
         }
