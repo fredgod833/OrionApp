@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.p6.exception.ApiException;
@@ -127,8 +128,8 @@ public class ArticlesController {
      *         operation.
      * @throws ApiException if there is an error in the API.
      */
-    @GetMapping("/{articleId}")
-    public ResponseEntity<?> getArticlesById(@PathVariable final Long articleId,
+    @GetMapping("/")
+    public ResponseEntity<?> getArticlesById(@RequestParam final Long articleId,
             @Valid @RequestHeader("Authorization") String authorizationHeader) {
         try {
             verifyUserValidityFromToken(authorizationHeader);
@@ -168,9 +169,9 @@ public class ArticlesController {
      * @return ResponseEntity<?> The response entity containing the result of the
      *         operation.
      */
-    @PostMapping("/{themeId}")
+    @PostMapping("/")
     public ResponseEntity<?> postArticle(
-            @PathVariable Long themeId,
+            @RequestParam final Long themeId,
             @Valid @RequestBody ArticleRequest request, BindingResult bindingResult,
             @RequestHeader("Authorization") String authorizationHeader) {
         try {
@@ -190,9 +191,9 @@ public class ArticlesController {
         }
     }
 
-    @PostMapping("/comment/{articleId}")
+    @PostMapping("/comment/")
     public ResponseEntity<?> postCommentToArticle(
-            @PathVariable Long articleId,
+            @RequestParam final Long articleId,
             @Valid @RequestBody CommentRequest request,
             BindingResult bindingResult,
             @RequestHeader("Authorization") String authorizationHeader) {

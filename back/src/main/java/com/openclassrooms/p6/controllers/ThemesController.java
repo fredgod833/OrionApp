@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.p6.exception.ApiException;
@@ -123,9 +124,9 @@ public class ThemesController {
         }
     }
 
-    @PostMapping("/subscribe/{themeId}")
+    @PostMapping("/subscribe/")
     public ResponseEntity<?> subscribe(
-            @PathVariable Long themeId,
+            @RequestParam final Long themeId,
             @RequestHeader("Authorization") String authorizationHeader) {
         try {
             Long userId = verifyUserValidityFromToken(authorizationHeader);
@@ -160,9 +161,9 @@ public class ThemesController {
         }
     }
 
-    @PostMapping("/unsubscribe/{themeId}")
+    @PostMapping("/unsubscribe/")
     public ResponseEntity<?> unsubscribe(
-            @PathVariable Long themeId,
+            @RequestParam final Long themeId,
             @RequestHeader("Authorization") String authorizationHeader) {
         try {
             Long userId = verifyUserValidityFromToken(authorizationHeader);

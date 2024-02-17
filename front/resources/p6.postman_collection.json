@@ -168,16 +168,16 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/api/articles/:themeId",
+							"raw": "{{url}}/api/articles/?themeId=1",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"articles",
-								":themeId"
+								""
 							],
-							"variable": [
+							"query": [
 								{
 									"key": "themeId",
 									"value": "1"
@@ -202,16 +202,16 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/api/articles/:articleId",
+							"raw": "{{url}}/api/articles/?articleId=1",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"articles",
-								":articleId"
+								""
 							],
-							"variable": [
+							"query": [
 								{
 									"key": "articleId",
 									"value": "1"
@@ -245,7 +245,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/api/articles/comment/:articleId",
+							"raw": "{{url}}/api/articles/comment/?articleId=1",
 							"host": [
 								"{{url}}"
 							],
@@ -253,9 +253,9 @@
 								"api",
 								"articles",
 								"comment",
-								":articleId"
+								""
 							],
-							"variable": [
+							"query": [
 								{
 									"key": "articleId",
 									"value": "1"
@@ -340,7 +340,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/api/themes/subscribe/:themeId",
+							"raw": "{{url}}/api/themes/subscribe/?themeId=1",
 							"host": [
 								"{{url}}"
 							],
@@ -348,9 +348,9 @@
 								"api",
 								"themes",
 								"subscribe",
-								":themeId"
+								""
 							],
-							"variable": [
+							"query": [
 								{
 									"key": "themeId",
 									"value": "1"
@@ -375,7 +375,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/api/themes/unsubscribe/:themeId",
+							"raw": "{{url}}/api/themes/unsubscribe/?themeId=1",
 							"host": [
 								"{{url}}"
 							],
@@ -383,9 +383,9 @@
 								"api",
 								"themes",
 								"unsubscribe",
-								":themeId"
+								""
 							],
-							"variable": [
+							"query": [
 								{
 									"key": "themeId",
 									"value": "1"
