@@ -5,13 +5,12 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
 import com.openclassrooms.p6.model.Subscriptions;
-import com.openclassrooms.p6.payload.response.CommentResponse;
 import com.openclassrooms.p6.payload.response.SingleThemeSubscriptionResponse;
 
 /**
  * Interface responsible for mapping between {@link Subscriptions} domain models
  * and
- * {@link CommentResponse} data transfer objects.
+ * {@link SingleThemeSubscriptionResponse} data transfer objects.
  */
 @Mapper(componentModel = "spring")
 public interface SubscriptionMapper {
@@ -20,5 +19,5 @@ public interface SubscriptionMapper {
             @Mapping(target = "themeId", source = "id"),
             @Mapping(target = "isSubscribed", source = "isSubscribed")
     })
-    Iterable<SingleThemeSubscriptionResponse> toDtoSubscriptions(Iterable<Subscriptions> themes);
+    Iterable<SingleThemeSubscriptionResponse> toDtoSubscriptions(Iterable<Subscriptions> subscriptions);
 }
