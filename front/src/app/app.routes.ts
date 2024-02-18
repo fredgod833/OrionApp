@@ -1,6 +1,13 @@
 import { Routes } from '@angular/router';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { HomeComponent } from './pages/home/home.component';
+import { ArticleComponent } from './pages/article/article.component';
+import { ArticlesComponent } from './pages/articles/articles.component';
+import { LoginComponent } from './pages/login/login.component';
+import { RegisterComponent } from './pages/register/register.component';
+import { TopicsComponent } from './pages/topics/topics.component';
+import { UserComponent } from './pages/user/user.component';
+import { CreateArticleComponent } from './pages/create-article/create-article.component';
 
 export const routes: Routes = [
   {
@@ -13,38 +20,41 @@ export const routes: Routes = [
     title: 'Monde de Dév',
     component: HomeComponent,
   },
-  /*
   {
     path: 'register',
-    title: 'Monde de Dév',
-    component: HomeComponent,
+    title: `Page d'enregistrement`,
+    component: RegisterComponent,
   },
   {
     path: 'login',
-    title: 'Monde de Dév',
-    component: HomeComponent,
+    title: 'Page de connexion',
+    component: LoginComponent,
   },
   {
     path: 'articles',
-    title: 'Monde de Dév',
-    component: HomeComponent,
+    title: `Page d'articles`,
+    component: ArticlesComponent,
+  },
+  {
+    path: 'create-articles',
+    title: `Page de création d'articles`,
+    component: CreateArticleComponent,
   },
   {
     path: 'article/:id',
-    title: 'Monde de Dév',
-    component: HomeComponent,
+    title: `Page de l'article`,
+    component: ArticleComponent,
   },
   {
     path: 'topics',
-    title: 'Monde de Dév',
-    component: HomeComponent,
+    title: 'Thèmes',
+    component: TopicsComponent,
   },
   {
     path: 'user',
-    title: 'Monde de Dév',
-    component: HomeComponent,
+    title: 'Profil utilisateur',
+    component: UserComponent,
   },
-  */
   {
     path: '**',
     title: 'Error 404, page not found!',
