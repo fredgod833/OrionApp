@@ -3,14 +3,21 @@
 
   <nav class="header__navigation-bar">
     <ul class="header__links-list">
-      <li class="header__link">
-        (TODO) Articles
+      <li class="header__list-item">
+        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="header__link"
+          ariaCurrentWhenActive="page">
+          (TODO) Articles
+        </a>
       </li>
-      <li class="header__link">
-        (TODO) Thèmes
+      <li class="header__list-item">
+        <a routerLink="/topic" routerLinkActive="active" class="header__link" ariaCurrentWhenActive="page">
+          (TODO) Thèmes
+        </a>
       </li>
-      <li class="header__link">
-        (TODO) Utilisateur (SVG)
+      <li class="header__list-item">
+        <a routerLink="/user" routerLinkActive="active" class="header__link" ariaCurrentWhenActive="page">
+          (TODO) Utilisateur (SVG)
+        </a>
       </li>
     </ul>
   </nav>
