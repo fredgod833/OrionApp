@@ -12,6 +12,7 @@ target/
 .settings
 .springBeans
 .sts4-cache
+mdd-infrastructure/.env
 
 ### IntelliJ IDEA ###
 .idea
