@@ -1,0 +1,7 @@
+@use "../../utils/preprocessed-sass/index.scss" as *;
+
+.home {
+  background-color: rgb(121, 30, 30);
+
+  min-height: 100svh;
+}
