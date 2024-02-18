@@ -1,0 +1,15 @@
+@use "../../../utils/preprocessed-sass/" as *;
+
+.header {
+
+  &__logo-container {}
+
+  &__navigation-bar {}
+
+  &__links-list {
+    width: inherit;
+  }
+
+  &__link {}
+
+}

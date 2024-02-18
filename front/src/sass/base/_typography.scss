@@ -1,0 +1,9 @@
+@use "../utils/" as *;
+
+@layer typography {
+
+  // Typography
+  body {
+    font-family: system-ui;
+  }
+}
