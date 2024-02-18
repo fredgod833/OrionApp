@@ -4,13 +4,13 @@
   * {
     --_scrollbar-track-bg: transparent;
 
-    --_scrollbar-bg: var(--scrollbar-track-bg-color);
+    --_scrollbar-bg: var(--_scrollbar-track-bg);
     --_scrollbar-border-radius: 100vmax;
-    --_scrollbar-width: 10px;
+    --_scrollbar-width: 5px;
     --_scrollbar-moz-width: thin;
     --_scrollbar-margin-block: 0px;
 
-    --_scrollbar-thumb-border: 3px solid var(--bg-primary);
+    --_scrollbar-thumb-border: 0px solid var(--bg-primary);
 
     --_scrollbar-thumb-bg: var(--bg-secondary);
     --_scrollbar-thumb-bg-hover: var(--bg-secondary);
