@@ -7,5 +7,5 @@ public interface EntMapper <E, D> {
         D toDto(E entity);
         List<E> toEntity(List<D> dto);
         List<D> toDto(List<E> entity);
-    }
 }
+

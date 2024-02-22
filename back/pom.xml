@@ -9,13 +9,12 @@
     <name>mdd-api</name>
     <description>Mdd api parent maven</description>
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>17</java.version>
     </properties>
     <modules>
         <module>mdd-core</module>
         <module>mdd-details</module>
         <module>mdd-infrastructure</module>
-        <module>mdd-common</module>
     </modules>
 
     <build>

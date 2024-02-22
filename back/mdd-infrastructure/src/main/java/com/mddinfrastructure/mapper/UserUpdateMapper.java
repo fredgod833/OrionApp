@@ -1,8 +1,11 @@
 package com.mddinfrastructure.mapper;
 
 
-import com.mddcore.usecases.EntityMapper;
-import com.mddcore.usecases.user.dto.UserDto;
+import com.mddcore.usecases.dto.UserDto;
+import com.mddcore.usecases.mapper.EntityMapper;
+import com.mddinfrastructure.request.UserUpdateDto;
+import org.mapstruct.Mapper;
 
-public interface UserUpdateMapper extends EntityMapper<request.UserUpdateDto, UserDto> {
+@Mapper(componentModel = "spring")
+public interface UserUpdateMapper extends EntityMapper<UserUpdateDto, UserDto> {
 }

@@ -1,8 +1,10 @@
-package mapper;
+package com.mddinfrastructure.mapper;
 
-import com.openclassrooms.mddapi.core.usecases.EntityMapper;
-import com.openclassrooms.mddapi.core.usecases.user.dto.UserDto;
-import com.openclassrooms.mddapi.infrastructure.request.RegisterRequest;
+import com.mddcore.usecases.dto.UserDto;
+import com.mddcore.usecases.mapper.EntityMapper;
+import com.mddinfrastructure.request.RegisterRequest;
+import org.mapstruct.Mapper;
 
+@Mapper(componentModel = "spring")
 public interface RegisterMapper extends EntityMapper<RegisterRequest, UserDto> {
 }

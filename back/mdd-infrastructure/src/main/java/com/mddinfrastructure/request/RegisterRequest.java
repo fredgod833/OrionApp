@@ -1,20 +1,14 @@
-package request;
+package com.mddinfrastructure.request;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
-@Getter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class RegisterRequest {
-    @NotNull
-    @Email
     String email;
-    @NotNull
-    @Size(min = 3, max = 50)
     private String username;
-    @NotNull
-    @Size(min = 8, max = 80)
     private String password;
 }
