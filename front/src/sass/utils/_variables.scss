@@ -15,7 +15,7 @@
   --_scrollbar-thumb-bg-color--active: #8059ff;
 
   // * Style for the text selection
-  --selection-bg-color: blue;
+  --selection-bg-color: var(--bg-secondary);
   --selection-color: white;
 }
 

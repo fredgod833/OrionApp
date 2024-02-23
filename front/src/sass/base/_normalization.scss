@@ -15,6 +15,27 @@
     }
   }
 
+  /*
+  html::view-transition {
+
+  }
+  html::view-transition-old {
+
+  }
+  html::view-transition-new {
+
+  }
+
+  html::view-transition-image-pair {
+
+  }
+
+  html::view-transition-group() {
+
+  }
+*/
+
+
   // Reset
   *,
   ::before,
@@ -96,6 +117,7 @@
   input {
     font-family: inherit;
 
+    background-color: transparent;
 
     border-color: transparent;
     outline-color: transparent;
