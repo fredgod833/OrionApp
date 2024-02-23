@@ -13,7 +13,8 @@ import { filter } from 'rxjs';
 export class AppComponent {
   title = 'mdd-app';
 
-  showHeader = true;
+  // * Instance properties
+  public showHeader = true;
 
   // * Dependency injections
   public router = inject(Router);
