@@ -273,7 +273,6 @@ Here's the steps:
       # Now using node v20.11.0 (64-bit)
     ```
 
-
 **In case it doesn't work:**
 
 Go to the `nodejs/` folder and slightly rename it, then re-execute `nvm use`
