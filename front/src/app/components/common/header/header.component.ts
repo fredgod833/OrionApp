@@ -13,10 +13,13 @@ import { matchesCssMediaQuery } from '@utils/helpers/window.helpers';
   },
 })
 export class HeaderComponent {
+  /** Reference to the navigation bar element. */
   @ViewChild('navigationBarRef') navigationBarRef!: ElementRef;
 
-  public isMobileBurgerMenuCollapsed: boolean = false;
-
+  /**
+   * Handles click events on the host element using event delegation
+   * @param e The PointerEvent object representing the click event.
+   */
   onHostClick(e: PointerEvent) {
     const isNotMobile = matchesCssMediaQuery('width > 768px');
     if (isNotMobile) {
@@ -33,10 +36,12 @@ export class HeaderComponent {
     if (hasClickedOverlay) {
       this.toggleMobileBurgerMenuSidebar(false);
     }
-
-    console.log(clickedElement, { hasClickedOverlay });
   }
 
+  /**
+   * Toggles the visibility of the mobile burger menu sidebar.
+   * @param isActive A boolean indicating whether the sidebar should be active.
+   */
   toggleMobileBurgerMenuSidebar(isActive: boolean) {
     this.navigationBarRef.nativeElement.classList.toggle('active', isActive);
   }
