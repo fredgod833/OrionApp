@@ -23,6 +23,7 @@ The MVP will allow users to subscribe to programming topics, view articles chron
   - [Configuration](#configuration)
     - [1. Java Development Kit (JDK)](#1-java-development-kit-jdk)
     - [2. PostgreSQL](#2-postgresql)
+    - [3. Node.js](#3-nodejs)
   - [Installation procedure](#installation-procedure)
     - [Front-End](#front-end-1)
     - [Back-End](#back-end-1)
@@ -237,6 +238,45 @@ VALUES
     (4, 2, 2, TRUE, NOW(), NOW()),
     (5, 2, 5, TRUE, NOW(), NOW());    
 ```
+
+### 3. Node.js
+
+The project requires Node.js version 20.11.0
+
+You can install Node.js also using the [node version manager (nvm)](https://github.com/coreybutler/nvm-windows), after clicking on the latest release and installing the  `nvm-setup.exe` file, you can upgrade or downgrade node version using the `nvm` commands
+
+Here's the steps:
+
+1. Check the list of node versions installed:
+
+    ```shell
+    nvm ls
+
+    # Output example:
+    # * 16.15.0 (Currently using 64-bit executable)
+    ```
+
+2. Install the node version to upgrade/downgrade to:
+
+    ```shell
+      nvm install 20.11.0
+    ```
+
+3. Use the freshly installed version:
+
+    ```shell
+      nvm ls
+      # 20.11.0
+      # * 16.13.1 (Currently using 64-bit executable)
+
+      nvm use 20.11.0
+      # Now using node v20.11.0 (64-bit)
+    ```
+
+
+**In case it doesn't work:**
+
+Go to the `nodejs/` folder and slightly rename it, then re-execute `nvm use`
 
 ## Installation procedure
 
