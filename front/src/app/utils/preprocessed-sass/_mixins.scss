@@ -39,6 +39,12 @@
   }
 }
 
+@mixin dark-mode-only {
+  @media (prefers-color-scheme: dark) {
+    @content;
+  }
+}
+
 //Other
 //Flex mixins
 @mixin center-flex($gap: 0px) {
