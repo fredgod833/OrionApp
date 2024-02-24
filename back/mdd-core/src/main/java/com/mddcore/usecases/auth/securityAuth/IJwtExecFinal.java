@@ -1,9 +1,11 @@
 package com.mddcore.usecases.auth.securityAuth;
 
 
-import com.mddcore.usecases.request.LoginRequest;
-import com.mddcore.usecases.response.JwtResponse;
+import com.mddcore.domain.models.Identity;
+import com.mddcore.usecases.request.SignInRequest;
+import com.mddcore.usecases.response.AuthResponse;
 
 public interface IJwtExecFinal {
-    JwtResponse jwtToken(LoginRequest request);
+    AuthResponse jwtToken(SignInRequest request);
+    Identity getAuthenticateUser();
 }

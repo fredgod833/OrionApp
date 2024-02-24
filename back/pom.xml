@@ -14,7 +14,7 @@
     <modules>
         <module>mdd-core</module>
         <module>mdd-details</module>
-        <module>mdd-infrastructure</module>
+        <module>mdd-presenter</module>
     </modules>
 
     <build>

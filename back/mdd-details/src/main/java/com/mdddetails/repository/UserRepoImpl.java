@@ -1,11 +1,13 @@
 package com.mdddetails.repository;
 
+import com.mddcore.domain.models.Identity;
 import com.mddcore.domain.models.User;
 import com.mddcore.domain.repository.IUserRepository;
 import com.mdddetails.mapper.UserMapperDetails;
 import com.mdddetails.models.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -24,13 +26,13 @@ public class UserRepoImpl implements IUserRepository {
 
     @Override
     public List<User> findAll() {
-        return jpaUserRepository.findAll().stream().map(userMapperDetails::toDto)
+        return jpaUserRepository.findAll().stream().map(userMapperDetails::toDomain)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Optional<User> findById(Long id) {
-        return jpaUserRepository.findById(id).map(userMapperDetails::toDto);
+    public Optional<User> findById(Identity id) {
+        return jpaUserRepository.findById(id.getNumber()).map(userMapperDetails::toDomain);
     }
 
     @Override
@@ -51,8 +53,7 @@ public class UserRepoImpl implements IUserRepository {
         return jpaUserRepository.existsByEmail(email);
     }
 
-    @Override
     public Optional<User> findByEmail(String email) {
-       return jpaUserRepository.findByEmail(email).map(userMapperDetails::toDto);
+       return jpaUserRepository.findByEmail(email).map(userMapperDetails::toDomain);
     }
 }
