@@ -1,3 +1,16 @@
 @use "../../utils/preprocessed-sass/" as *;
 
-.topics {}
+.topics {
+
+  padding: 25px;
+
+  &__no-topics {
+    text-align: center;
+  }
+
+  &__container {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(min(350px, 100%), 1fr));
+  }
+}
