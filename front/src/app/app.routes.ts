@@ -36,7 +36,7 @@ export const routes: Routes = [
     component: ArticlesComponent,
   },
   {
-    path: 'create-articles',
+    path: 'create-article',
     title: `Page de création d'articles`,
     component: CreateArticleComponent,
   },
