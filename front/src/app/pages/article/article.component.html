@@ -6,7 +6,7 @@
     </svg>
   </a>
 
-  <h1 class="article__title">Titre de l'article sélectionné</h1>
+  <h1 class="article__title">Titre de l'article sélectionné, ID: {{id}}</h1>
 
   <div class="article__info">
     <p class="article__date">Date</p>
@@ -22,6 +22,12 @@
 
   <hr class="article__horizontal-line" />
 
-  <h2 class="article_comment-title">Commentaires</h2>
+  <section class="article__comments-section">
+    <h2 class="article_comment-title">Commentaires</h2>
+
+    @for (comment of commentArray; track comment.username) {
+    <app-comments [username]="comment.username" [comment]="comment.comment"></app-comments>
+    }
+  </section>
 
 </article>

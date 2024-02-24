@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Article } from '@core/types/article.type';
+import { ArticleSummary } from '@core/types/article.type';
 import { ArticlesSummaryComponent } from '@components/common/articles/articles-summary/articles-summary.component';
 import { BehaviorSubject, Subject } from 'rxjs';
 
@@ -15,7 +15,7 @@ export class ArticlesComponent {
   public isAscending: boolean = true;
 
   // Array of articles
-  public arrOfArticles: Array<Article> = [
+  public arrOfArticles: Array<ArticleSummary> = [
     {
       id: 1,
       title: 'Article 1',
@@ -34,7 +34,7 @@ export class ArticlesComponent {
   ];
 
   // Create a Subject of type Article array
-  public test = new BehaviorSubject<Article[]>(this.arrOfArticles)
+  public test = new BehaviorSubject<ArticleSummary[]>(this.arrOfArticles)
     .asObservable()
     .subscribe();
 }
