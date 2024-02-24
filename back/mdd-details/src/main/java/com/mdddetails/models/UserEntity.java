@@ -11,6 +11,7 @@ import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -33,8 +34,9 @@ public class UserEntity {
     @NotNull
     @Size(min = 8, max = 80)
     private String password;
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<SubscriptionEntity> subscriptionEntities;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<SubscriptionEntity> subscriptionEntities = new ArrayList<>();;
+    private String picture;
     @CreatedDate
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();

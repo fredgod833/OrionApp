@@ -1,16 +1,17 @@
 package com.mddcore.domain.models;
 
 public class Subscription {
-    private Long id;
+    private Identity id;
     private Subject subject;
     private User user;
 
-    public Subscription(Subject subject, User user) {
+    public Subscription(Identity id, Subject subject, User user) {
+        this.id = id;
         this.subject = subject;
         this.user = user;
     }
 
-    public void setId(Long id) {
+    public void setId(Identity id) {
         this.id = id;
     }
 
@@ -22,7 +23,7 @@ public class Subscription {
         this.user = user;
     }
 
-    public Long getId() {
+    public Identity getId() {
         return id;
     }
 

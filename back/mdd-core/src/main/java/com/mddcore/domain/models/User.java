@@ -1,59 +1,34 @@
 package com.mddcore.domain.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
 import java.util.List;
 
+
+@AllArgsConstructor
+@EqualsAndHashCode
+@Data
+@NoArgsConstructor
 public class User {
-    private Long id;
+    private Identity id;
     private String email;
     private String username;
     private String password;
-    private List<Subscription> subscriptionList;
+    private String picture;
+    private List<Subscription> subscriptionList = new ArrayList<>();
 
-    public User(Long id, String email, String username, String password, List<Subscription> subscriptionList) {
-        this.id = id;
-        this.email = email;
-        this.username = username;
-        this.password = password;
-        this.subscriptionList = subscriptionList;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public List<Subscription> getSubscriptionList() {
-        return subscriptionList;
-    }
-
-    public void setSubscriptionList(List<Subscription> subscriptionList) {
-        this.subscriptionList = subscriptionList;
+    public static User newInstance(String email, String username, String password, String picture, List<Subscription> subscriptionList) {
+        return new User(
+                Identity.nothing(),
+                email,
+                username,
+                password,
+                picture,
+                subscriptionList
+        );
     }
 }
