@@ -1,5 +1,5 @@
 <section class="create-article">
-  <a routerLink="/" class="create-article__go-back-button">
+  <a routerLink="/articles" class="create-article__go-back-button">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
       <path fill="currentColor"
         d="M169.4 502.6c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 402.7 224 32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 370.7L86.6 329.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128z" />
@@ -9,10 +9,14 @@
   <h1 class="create-article__title">Créer un nouvel article</h1>
 
   <form class="create-article__form">
-    <select name="topics" id="topics">
-      <option value="test">Test</option>
+    <select name="topics" id="topics" class="create-article__select">
+      <option value="1">Test</option>
     </select>
 
+    <input type="text" class="create-article__input" placeholder="Titre de l'article" />
 
+    <textarea name="description" id="" class="create-article__textarea" placeholder="Contenu de l'article"></textarea>
+
+    <button type="button" class="create-article__button">Créer</button>
   </form>
 </section>

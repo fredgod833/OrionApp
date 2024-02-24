@@ -1,1 +1,28 @@
 @use "../../utils/preprocessed-sass/" as *;
+
+.article {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  position: relative;
+
+  --_article-element-padding: 25px;
+  padding: var(--_article-element-padding);
+
+  &__go-back-button {
+    @include go-back-button-style(var(--_article-element-padding));
+  }
+
+  &__title {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    @include mobile-only {
+      margin-top: 50px;
+    }
+  }
+}

@@ -9,12 +9,7 @@
         "**node_modules": true,
         ".husky": true,
         ".vscode": true,
-        ".next": true,
-        "[!f]*/**": true,
-        "f[!r]*/**": true,
-        "fr[!o]*/**": true,
-        "fro[!n]*/**": true,
-        "fron[!t]*/**": true
+        ".next": true
     },
     "java.configuration.updateBuildConfiguration": "automatic"
 }
