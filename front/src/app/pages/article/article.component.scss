@@ -3,7 +3,8 @@
 .article {
   display: flex;
   flex-direction: column;
-  align-items: center;
+
+  gap: 35px;
 
   position: relative;
 
@@ -11,18 +12,81 @@
   padding: var(--_article-element-padding);
 
   &__go-back-button {
-    @include go-back-button-style(var(--_article-element-padding));
+    display: inline-block;
+    rotate: 90deg;
+
+    height: 30px;
+
+    @include mobile-only {
+      height: 25px;
+    }
+
+    &>svg {
+      height: inherit;
+      ;
+    }
   }
 
   &__title {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
 
     gap: 10px;
 
     @include mobile-only {
       margin-top: 50px;
+    }
+  }
+
+  &__info {
+    display: flex;
+    gap: 15px;
+  }
+
+  &__comment-title {}
+
+  &__comments-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  &__create-comment-section {
+    @include center-flex(15px);
+
+    position: relative;
+
+    --_send-comment-btn-width: 50px;
+    --_send-comment-btn-x-offset: 20px;
+  }
+
+  &__create-comment-textarea {
+    @include input-style;
+
+    border-radius: 15px;
+    border: 2px solid currentColor;
+
+    resize: none;
+
+    width: 570px;
+    height: 120px;
+
+    field-sizing: content;
+
+    @include mobile-only {
+      width: 100%;
+
+      padding-inline-end: calc(var(--_send-comment-btn-width) + var(--_send-comment-btn-x-offset));
+    }
+  }
+
+  &__create-comment-button {
+    @include mobile-only {
+      position: absolute;
+
+      right: var(--_send-comment-btn-x-offset);
+
+      width: var(--_send-comment-btn-width);
     }
   }
 }
