@@ -28,6 +28,9 @@
       "@utils/*": [
         "src/app/utils/*"
       ],
+      "@core/*": [
+        "src/app/core/*"
+      ],
     }
   },
   "angularCompilerOptions": {
