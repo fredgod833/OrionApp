@@ -21,7 +21,9 @@ export class AppComponent {
 
   // * Observables
   private navigationEndEvents$ = this.router.events.pipe(
-    filter((event): event is NavigationEnd => event instanceof NavigationEnd)
+    filter((event): event is NavigationEnd => {
+      return event instanceof NavigationEnd;
+    })
   );
 
   ngOnInit() {

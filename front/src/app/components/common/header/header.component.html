@@ -15,8 +15,9 @@
     </svg>
   </button>
 
+  @if(passedAuthentication){
   <nav class="header__navigation-bar" #navigationBarRef>
-    <div class="header__overlay"></div>
+    <div class="header__overlay" (click)="toggleMobileBurgerMenuSidebar(false)"></div>
     <ul class="header__links-list">
       <li class="header__list-item">
         <a class="header__link" routerLink="/articles" routerLinkActive="active" ariaCurrentWhenActive="page">
@@ -43,4 +44,5 @@
       </li>
     </ul>
   </nav>
+  }
 </header>

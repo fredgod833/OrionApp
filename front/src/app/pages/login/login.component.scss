@@ -41,51 +41,22 @@
   }
 
   &__form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 30px;
-
-    width: 80%;
-
-    margin-top: 15%;
+    @include form-style;
   }
 
   &__fieldset {
-    display: inherit;
-    flex-direction: inherit;
-
-    width: inherit;
-
-    gap: 15px;
+    @include fieldset-style;
   }
 
   &__label {
-    display: inline-flex;
-    flex-direction: column;
+    @include label-style;
   }
 
   &__input {
-    font-size: 18px;
-    padding: 10px;
-
-    border-radius: 5px;
-
-    border: 2px solid currentColor;
+    @include input-style;
   }
 
   &__submit-button {
-    min-width: 120px;
-
-    background-color: var(--bg-secondary);
-    color: var(--bg-primary);
-
-    padding: 10px;
-
-    border-radius: 5px;
-
-    font-size: 16px;
-
-    font-weight: bold;
+    @include button-style;
   }
 }
