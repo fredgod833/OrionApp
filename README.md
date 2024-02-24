@@ -1,6 +1,6 @@
 # Monde De Dév Fullstack project
 
-![MDD](./front/public/mdd-logo.svg)
+![MDD](./front/src/assets/png/mdd-logo.png)
 
 ORION, a software development company, aims to create a social network dedicated to developers called "MDD" (Monde de Dév). The social network aims to assist developers in finding employment by encouraging collaboration among peers.
 
