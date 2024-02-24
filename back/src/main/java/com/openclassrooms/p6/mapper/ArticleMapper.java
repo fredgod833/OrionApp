@@ -32,7 +32,7 @@ public interface ArticleMapper {
     @Mappings({
             @Mapping(target = "id", ignore = false),
             @Mapping(target = "publicationDate", source = "createdAt"),
-            @Mapping(target = "userId", source = "userId"),
+            @Mapping(target = "username", source = "user.username"),
             @Mapping(target = "articleId", source = "id")
     })
     ArticleSummaryResponse toDtoArticle(Articles article);
