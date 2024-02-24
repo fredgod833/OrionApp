@@ -1,6 +1,10 @@
 @use "../../../../utils/preprocessed-sass/" as *;
 
 .header {
+  z-index: 3;
+  background: var(--bg-primary);
+  top: 0;
+  position: sticky;
 
   display: flex;
   justify-content: space-between;
