@@ -136,7 +136,7 @@ public class ArticlesController {
             Articles articleEntity = verifyAndGetArticlesById(articleId);
             ArticleSummaryResponse articleDto = articleMapper.toDtoArticle(articleEntity);
 
-            String articleAuthor = getVerifiedUserById(articleDto.userId()).getUsername();
+            String articleAuthor = getVerifiedUserById(articleEntity.getUserId()).getUsername();
 
             String theme = articleEntity.getTheme().getTitle();
 
