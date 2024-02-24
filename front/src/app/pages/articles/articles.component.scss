@@ -1,1 +1,22 @@
 @use "../../utils/preprocessed-sass/" as *;
+
+.articles {
+  width: 80%;
+
+  margin-inline: auto;
+  padding-top: 30px;
+
+  &__create-sort {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    flex-wrap: wrap;
+  }
+
+  &__create-article-button {
+    @include button-style;
+  }
+
+  &__article-summaries {}
+}
