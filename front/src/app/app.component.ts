@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { HeaderComponent } from './components/common/header/header.component';
+import { HeaderComponent } from './components/common/layout/header/header.component';
 import { filter } from 'rxjs';
 
 @Component({
