@@ -1,0 +1,34 @@
+@use "../../../../utils/preprocessed-sass/" as *;
+
+.articles-summary {
+  background-color: var(--bg-tertiary);
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+
+  padding: 10px;
+
+  border-radius: 8px;
+
+  &__title {}
+
+  &__info {
+    display: flex;
+
+    font-size: 14px;
+  }
+
+  &__date {
+    flex: 1;
+  }
+
+  &__author {
+    flex: 1;
+  }
+
+  &__description {
+    @include multiline-ellipsis-effect(5);
+  }
+}

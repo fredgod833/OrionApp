@@ -1,10 +1,22 @@
 <section class="articles">
   <div class="articles__create-sort">
-    <a routerLink="/create-article" class="articles__create-article-button">Se connecter</a>
+    <a routerLink="/create-article" class="articles__create-article-button">Créer un article</a>
 
-    <button type="button" class="article__sort-button">Trier par: <span
-        class="article__sort-order article__sort-order--asc article__sort-order--desc">↓</span></button>
+    <button type="button" class="articles__sort-button">Trier par:
+      <span class="articles__sort-order articles__sort-order{{isAscending ? '--asc' : '--desc'}}">↓</span>
+    </button>
   </div>
 
-  <div class="articles__article-summaries"></div>
+  <div class="articles__article-summaries">
+    @if(arrOfArticles.length === 0){
+    <p class="articles__no-articles">There are no articles to show ಠ_ಠ</p>
+    }
+    @else {
+    @for (article of arrOfArticles ; track article.id) {
+    <app-articles-summary [id]="article.id" [title]="article.title" [description]="article.description"
+      [author]="article.username" [date]="article.date"></app-articles-summary>
+    }
+    }
+
+  </div>
 </section>
