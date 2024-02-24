@@ -6,7 +6,8 @@
   </p>
 
   <button type="submit"
-    class="topic-subscription__subscription-button topic-subscription__subscription-button{{ isSubscribed()? '--unsubscribe' : '--subscribe'}}">
+    class="topic-subscription__subscription-button topic-subscription__subscription-button{{ isSubscribed()? '--unsubscribe' : '--subscribe'}}"
+    (click)="toggleTopicSubscription()">
     {{ isSubscribed()? "Se désabonner" :
     "S'abonner"}}
   </button>

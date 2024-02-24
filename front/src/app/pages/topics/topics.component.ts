@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { Topic } from '@core/types/topic.type';
 import { TopicSubscriptionComponent } from '@components/common/topics/topic-subscription/topic-subscription.component';
 
@@ -10,7 +10,7 @@ import { TopicSubscriptionComponent } from '@components/common/topics/topic-subs
   imports: [TopicSubscriptionComponent],
 })
 export class TopicsComponent {
-  public topicsArray: Topic[] = [
+  public topicsArray = signal<Topic[]>([
     {
       id: 1,
       userId: 1,
@@ -27,5 +27,15 @@ export class TopicsComponent {
       description: 'Description of the second topic',
       isSubscribed: true,
     },
-  ];
+  ]);
+
+  updateUserThemeSubscription(newValue?: {
+    id: number;
+    isSubscribed: boolean;
+  }) {
+    console.log('PARENT Clicked subs toggle btn', newValue);
+    this.topicsArray.map((t) => {
+      t.id === newValue?.id;
+    });
+  }
 }
