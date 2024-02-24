@@ -1,5 +1,9 @@
 @use "../../../../utils/preprocessed-sass/" as *;
 
+:host {
+  height: 100%;
+}
+
 .articles-summary {
   background-color: var(--bg-tertiary);
 
@@ -11,6 +15,12 @@
   padding: 10px;
 
   border-radius: 8px;
+
+  height: inherit;
+
+  &__link {
+    height: inherit;
+  }
 
   &__title {}
 

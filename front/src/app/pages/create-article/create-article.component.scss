@@ -1,1 +1,12 @@
 @use "../../utils/preprocessed-sass/" as *;
+
+.create-article {
+  position: relative;
+
+  --_create-article-element-padding: 25px;
+  padding: var(--_create-article-element-padding);
+
+  &__go-back-button {
+    @include go-back-button-style(var(--_create-article-element-padding));
+  }
+}

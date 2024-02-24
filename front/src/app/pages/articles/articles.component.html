@@ -12,7 +12,7 @@
     <p class="articles__no-articles">There are no articles to show ಠ_ಠ</p>
     }
     @else {
-    @for (article of arrOfArticles ; track article.id) {
+    @for (article of arrOfArticles; track article.id) {
     <app-articles-summary [id]="article.id" [title]="article.title" [description]="article.description"
       [author]="article.username" [date]="article.date"></app-articles-summary>
     }
