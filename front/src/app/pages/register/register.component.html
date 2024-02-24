@@ -1,4 +1,9 @@
 <section class="register">
+
+  <div class="register__image-container">
+    <img src="/assets/png/mdd-logo.png" alt="Monde de Dév logo" class="register__image">
+  </div>
+
   <a routerLink="/" class="register__go-back-button">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
       <path fill="currentColor"
@@ -12,17 +17,17 @@
     <fieldset class="register__fieldset">
       <label class="register__label">
         Nom d'utilisateur
-        <input type="text" class="register__input" />
+        <input type="text" class="register__input" autocomplete="username" />
       </label>
 
       <label class="register__label">
         Adresse e-mail
-        <input type="text" class="register__input" />
+        <input type="email" class="register__input" autocomplete="email" />
       </label>
 
       <label class="register__label">
         Mot de passe
-        <input type="password" class="register__input" />
+        <input type="password" autocomplete="current-password" class="register__input" />
       </label>
     </fieldset>
 

@@ -93,6 +93,26 @@
 
 // * Project styling
 
+@mixin go-back-button-style($padding) {
+  position: absolute;
+  top: $padding;
+  left: $padding;
+
+  display: inline-block;
+  rotate: 90deg;
+
+  height: 50px;
+
+  @include mobile-only {
+    height: 35px;
+  }
+
+  &>svg {
+    height: inherit;
+    ;
+  }
+}
+
 @mixin form-style {
   display: flex;
   flex-direction: column;

@@ -3,7 +3,7 @@
 .login {
   position: relative;
 
-  // min-height: 500px;
+
   --_login-element-padding: 25px;
   padding: var(--_login-element-padding);
 
@@ -11,25 +11,27 @@
   flex-direction: column;
   align-items: center;
 
-
-  &__go-back-button {
-    position: absolute;
-    top: var(--_login-element-padding);
-    left: var(--_login-element-padding);
-
-    display: inline-block;
-    rotate: 90deg;
-
-    height: 50px;
+  &__image-container {
+    display: none;
+    margin-bottom: 10%;
 
     @include mobile-only {
-      height: 35px;
+      display: block;
     }
+  }
 
-    &>svg {
-      height: inherit;
-      ;
+  &__image {
+    display: none;
+    width: 225px;
+
+    @include mobile-only {
+      display: block;
     }
+  }
+
+
+  &__go-back-button {
+    @include go-back-button-style(var(--_login-element-padding));
   }
 
   &__title {

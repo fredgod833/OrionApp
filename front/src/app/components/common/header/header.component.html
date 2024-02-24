@@ -1,4 +1,4 @@
-<header class="header">
+<header class="header {{ passedAuthentication ? '' : 'header--not-authenticated' }}">
   <section class="header__logo-container">
     <a class="header__link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
       ariaCurrentWhenActive="page">
