@@ -145,16 +145,20 @@
     }
 
     &--user {
+
+
       @include mobile-only {
         margin-top: auto;
         margin-bottom: 15px;
+      }
+
+      &>.header__link.active {
+        outline: 2px solid currentColor;
       }
     }
   }
 
   &__link {
-    display: inline-block;
-    width: fit-content;
     --_circle-stroke-color: #d9d9d9;
     --_path-stroke-color: #6d6d6d;
 
@@ -162,6 +166,12 @@
       --_circle-stroke-color: #262626;
       --_path-stroke-color: #929292;
     }
+
+    display: inline-block;
+    width: fit-content;
+
+    border-radius: 50%;
+    outline: 2px solid transparent;
 
     &.active {
       color: var(--bg-secondary)
