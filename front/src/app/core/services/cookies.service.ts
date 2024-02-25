@@ -5,7 +5,7 @@ import { CookieService, CookieType } from '@lephenix47/cookies-utility';
   providedIn: 'root',
 })
 export class CookiesService {
-  public TOKEN_KEY_NAME: string = 'jwt';
+  private TOKEN_KEY_NAME: string = 'jwt';
 
   public getJwt(): CookieType | null {
     return CookieService.getCookieByName(this.TOKEN_KEY_NAME);

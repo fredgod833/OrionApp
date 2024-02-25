@@ -10,7 +10,7 @@
         ".husky": true,
         ".vscode": true,
         ".next": true,
-        "**/node_modules": false,
+        "**/node_modules": true,
         "[!f]*/**": true,
         "f[!r]*/**": true,
         "fr[!o]*/**": true,
