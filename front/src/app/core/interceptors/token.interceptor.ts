@@ -1,11 +1,23 @@
 import { HttpInterceptorFn } from '@angular/common/http';
+import { inject } from '@angular/core';
+import { CookiesService } from '@core/services/cookies.service';
+import { CookieType } from '@lephenix47/cookies-utility';
 
 export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
-  // TODO: Create a cookie service to retrieve the JWT
-  // TODO: Copy the request then add the JWT to the headers of the request
+  const cookiesService = inject(CookiesService);
+
+  const jwtCookie: CookieType | null = cookiesService.getJwt();
+
+  console.log('tokenInterceptor called', jwtCookie);
+
+  const jwt: Partial<string> = jwtCookie?.value;
+
+  if (!jwt) {
+    return next(req);
+  }
 
   const requestWithToken = req.clone({
-    headers: req.headers.set('Authorization', `Bearer `),
+    headers: req.headers.set('Authorization', `Bearer ${jwt}`),
   });
 
   return next(requestWithToken);
