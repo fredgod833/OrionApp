@@ -10,7 +10,7 @@ export class ApiService {
    * The base URL for making HTTP requests to the API.
    * It is initialized to an empty string by default.
    */
-  protected BASE_URL: string = 'localhost:3001';
+  protected BASE_URL: string = 'http://localhost:3001';
 
   protected http = inject(HttpClient);
 
@@ -31,11 +31,12 @@ export class ApiService {
   /**
    * Performs an HTTP GET request.
    *
-   * @param {args} - An object containing urlPathname and options.
+   * @param {string} urlPathname - The URL segment to be appended to the base URL. ex: `/api/auth/login`
    * @returns An Observable with the response data.
    */
   protected fetchGet<T>(urlPathname: string): Observable<T> {
     const constructedUrl: string = this.constructUrl(urlPathname);
+
     return this.http.get<T>(constructedUrl);
   }
 
@@ -48,9 +49,7 @@ export class ApiService {
   protected fetchPost<T>(urlPathname: string, body: any): Observable<T> {
     const constructedUrl: string = this.constructUrl(urlPathname);
 
-    const stringifiedBody: string = JSON.stringify(body);
-
-    return this.http.post<T>(constructedUrl, stringifiedBody);
+    return this.http.post<T>(constructedUrl, body);
   }
 
   /**
@@ -62,9 +61,7 @@ export class ApiService {
   protected fetchPut<T>(urlPathname: string, body: any): Observable<T> {
     const constructedUrl: string = this.constructUrl(urlPathname);
 
-    const stringifiedBody: string = JSON.stringify(body);
-
-    return this.http.put<T>(constructedUrl, stringifiedBody);
+    return this.http.put<T>(constructedUrl, body);
   }
 
   /**
