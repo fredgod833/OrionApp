@@ -15,26 +15,6 @@
     }
   }
 
-  /*
-  html::view-transition {
-
-  }
-  html::view-transition-old {
-
-  }
-  html::view-transition-new {
-
-  }
-
-  html::view-transition-image-pair {
-
-  }
-
-  html::view-transition-group() {
-
-  }
-*/
-
 
   // Reset
   *,
@@ -61,6 +41,18 @@
     scroll-snap-type: y proximity;
 
     color-scheme: dark light;
+
+    scrollbar-gutter: stable;
+
+    &::view-transition {}
+
+    &::view-transition-old {}
+
+    &::view-transition-new {}
+
+    &::view-transition-image-pair {}
+
+    &::view-transition-group() {}
   }
 
 
@@ -83,6 +75,8 @@
     -moz-osx-font-smoothing: grayscale;
 
     text-rendering: optimizeLegibility;
+
+
   }
 
   ul,
