@@ -8,6 +8,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { TopicsComponent } from './pages/topics/topics.component';
 import { UserComponent } from './pages/user/user.component';
 import { CreateArticleComponent } from './pages/create-article/create-article.component';
+import { authGuard } from '@core/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -31,26 +32,31 @@ export const routes: Routes = [
     component: LoginComponent,
   },
   {
+    canActivate: [authGuard],
     path: 'articles',
     title: `Page d'articles`,
     component: ArticlesComponent,
   },
   {
+    canActivate: [authGuard],
     path: 'create-article',
     title: `Page de création d'articles`,
     component: CreateArticleComponent,
   },
   {
+    canActivate: [authGuard],
     path: 'article/:id',
     title: `Page de l'article`,
     component: ArticleComponent,
   },
   {
+    canActivate: [authGuard],
     path: 'topics',
     title: 'Thèmes',
     component: TopicsComponent,
   },
   {
+    canActivate: [authGuard],
     path: 'user',
     title: 'Profil utilisateur',
     component: UserComponent,
