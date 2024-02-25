@@ -22,7 +22,7 @@
     "@angular/platform-server": "^17.1.0",
     "@angular/router": "^17.1.0",
     "@angular/ssr": "^17.1.3",
-    "@lephenix47/cookies-utility": "^1.1.3",
+    "@lephenix47/cookies-utility": "^1.1.4",
     "@lephenix47/webstorage-utility": "^1.2.1",
     "express": "^4.18.2",
     "rxjs": "~7.8.0",
