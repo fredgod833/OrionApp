@@ -1,13 +1,4 @@
 <section class="topics">
-  <div class="topics__container">
-    @if(topicsArray().length === 0){
-    <h3 class="topics__no-topics">Il n'y a pas encore de thèmes (╯°□°）╯︵ ┻━┻</h3>
-    }@else {
-    @for(topic of topicsArray(); track topic.id){
-    <app-topic-subscription [id]="topic.id" [title]="topic.title" [description]="topic.description"
-      [isSubscribed]="topic.isSubscribed"
-      (toggleSubscription)="updateUserThemeSubscription($event)"></app-topic-subscription>
-    }
-    }
-  </div>
+  <app-topics-container [onSubscriptionChange]="updateUserThemeSubscription"
+    [topicsArray]="topicsArray"></app-topics-container>
 </section>

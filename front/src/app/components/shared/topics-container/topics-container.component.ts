@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, WritableSignal, input } from '@angular/core';
 import { Topic } from '@core/types/topic.type';
 import { TopicSubscriptionComponent } from '@components/common/topics/topic-subscription/topic-subscription.component';
 
@@ -10,7 +10,7 @@ import { TopicSubscriptionComponent } from '@components/common/topics/topic-subs
   imports: [TopicSubscriptionComponent],
 })
 export class TopicsContainerComponent {
-  public topicsArray = input.required<Topic[]>();
+  public topicsArray = input.required<WritableSignal<Topic[]>>();
 
   public onSubscriptionChange = input.required<(emittedEvent: number) => any>();
 }
