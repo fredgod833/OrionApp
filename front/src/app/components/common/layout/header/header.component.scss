@@ -174,7 +174,9 @@
     outline: 2px solid transparent;
 
     &.active {
-      color: var(--bg-secondary)
+      color: var(--bg-secondary);
+
+      --_path-stroke-color: var(--bg-secondary)
     }
 
     @include mobile-only {
