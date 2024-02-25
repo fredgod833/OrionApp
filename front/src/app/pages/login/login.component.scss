@@ -60,5 +60,12 @@
 
   &__submit-button {
     @include button-style;
+
+  }
+
+  &__loading {}
+
+  &__error {
+    color: var(--color-error);
   }
 }

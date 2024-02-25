@@ -22,7 +22,9 @@ export class AuthService extends ApiService {
 
   public isLoading$ = new BehaviorSubject<boolean>(false);
 
-  public userInfo = new BehaviorSubject<UserInfo | undefined>(undefined);
+  public hasError$ = new BehaviorSubject<boolean>(false);
+
+  public userInfo$ = new BehaviorSubject<UserInfo | undefined>(undefined);
 
   public register(registerRequest: RegisterRequest): Observable<UserInfo> {
     this.isLoading$.next(true);
@@ -33,11 +35,13 @@ export class AuthService extends ApiService {
     ).pipe(
       tap((value) => {
         this.isLoading$.next(false);
+        this.hasError$.next(false);
 
-        this.userInfo.next(value);
+        this.userInfo$.next(value);
       }),
       catchError((err: any, caught: Observable<UserInfo>) => {
         this.isLoading$.next(false);
+        this.hasError$.next(true);
 
         throw new Error(`An error occurred: ${err}`);
       })
@@ -53,11 +57,13 @@ export class AuthService extends ApiService {
     ).pipe(
       tap((value) => {
         this.isLoading$.next(false);
+        this.hasError$.next(false);
 
-        this.userInfo.next(value);
+        this.userInfo$.next(value);
       }),
       catchError((err: any, caught: Observable<UserInfo>) => {
         this.isLoading$.next(false);
+        this.hasError$.next(true);
 
         throw new Error(`An error occurred: ${err}`);
       })

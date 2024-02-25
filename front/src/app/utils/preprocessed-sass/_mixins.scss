@@ -150,6 +150,8 @@
 }
 
 @mixin button-style {
+  margin-bottom: 15px;
+
   min-width: 120px;
 
   background-color: var(--bg-secondary);
@@ -171,6 +173,10 @@
 
   &:active {
     filter: brightness(115%);
+  }
+
+  &:disabled {
+    filter: contrast(50%);
   }
 }
 

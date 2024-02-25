@@ -13,20 +13,31 @@
 
   <h1 class="login__title">Se connecter</h1>
 
-  <form class="login__form" (submit)="onSubmit($event)">
+  <form class="login__form" [formGroup]="loginForm" (ngSubmit)="onSubmit($event)">
     <fieldset class="login__fieldset">
       <label class="login__label">
         E-mail ou nom d'utilisateur
-        <input type="text" class="login__input" />
+        <input type="text" class="login__input" formControlName="identifier" />
       </label>
 
       <label class="login__label">
         Mot de passe
-        <input type="password" autocomplete="current-password" class="login__input" />
+        <input type="password" autocomplete="current-password" class="login__input" formControlName="password" />
       </label>
     </fieldset>
 
-
-    <button type="submit" class="login__submit-button">Se connecter</button>
+    <button type="submit" class="login__submit-button" [disabled]="isLoading()">Se connecter</button>
   </form>
+
+  @if(isLoading()){
+  <p class="login__loading">En attente</p>
+  }
+
+  @if(hasError()) {
+  <p class="login__error">Une erreur est survenue</p>
+  }
+
+  @if(userInfo()){
+  <p class="login__success">Succès!</p>
+  }
 </section>

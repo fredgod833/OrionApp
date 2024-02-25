@@ -1,39 +1,59 @@
-import { Component, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, inject, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '@core/services/auth/auth.service';
-import { Observable } from 'rxjs';
+import { CookiesService } from '@core/services/cookies/cookies.service';
+import { UserInfo } from '@core/types/user.type';
+import { WebStorage } from '@lephenix47/webstorage-utility';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
+  public cookiesService = inject(CookiesService);
+
+  public router = inject(Router);
+
   public authService = inject(AuthService);
 
-  public test = {};
+  public formBuilder = inject(FormBuilder);
 
-  ngOnInit() {
-    const obs = this.authService.login({
-      identifier: 'test',
-      password: 'test',
-    });
+  public isLoading = toSignal(this.authService.isLoading$);
 
-    // console.log({ obs });
-  }
+  public hasError = toSignal(this.authService.hasError$);
+
+  public userInfo = toSignal(this.authService.userInfo$);
+
+  // Form for login
+  public loginForm = this.formBuilder.group({
+    identifier: ['', [Validators.required]],
+    password: ['', Validators.required],
+  });
+
+  ngOnInit() {}
 
   onSubmit(event: Event) {
     event.preventDefault();
 
     this.authService
       .login({
-        identifier: 'test@test.com',
-        password: 'test!1234',
+        identifier: this.loginForm.value.identifier as string,
+        password: this.loginForm.value.password as string,
       })
-      .subscribe(() => {
-        console.log(this.authService.userInfo);
+      .subscribe((value: UserInfo) => {
+        const { username, id, email, token } = value;
+        WebStorage.setKey('userInfo', { username, id, email });
+
+        this.cookiesService.setJwt(token);
+
+        setTimeout(() => {
+          this.router.navigate(['/articles']);
+        }, 3_000);
       });
   }
 }
