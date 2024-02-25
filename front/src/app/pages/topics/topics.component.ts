@@ -29,13 +29,20 @@ export class TopicsComponent {
     },
   ]);
 
-  updateUserThemeSubscription(newValue?: {
-    id: number;
-    isSubscribed: boolean;
-  }) {
-    console.log('PARENT Clicked subs toggle btn', newValue);
-    this.topicsArray.map((t) => {
-      t.id === newValue?.id;
+  updateUserThemeSubscription(id?: number) {
+    console.log('PARENT Clicked subs toggle btn', id);
+    this.topicsArray.update((topics) => {
+      for (let i = 0; i < topics.length; i++) {
+        const topic = topics[i];
+
+        if (topic.id !== id) {
+          continue;
+        }
+
+        topics[i].isSubscribed = !topic.isSubscribed;
+      }
+
+      return topics;
     });
   }
 }

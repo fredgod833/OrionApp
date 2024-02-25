@@ -8,10 +8,7 @@ import { Component, EventEmitter, Output, input } from '@angular/core';
   styleUrl: './topic-subscription.component.scss',
 })
 export class TopicSubscriptionComponent {
-  @Output() toggleSubscription = new EventEmitter<{
-    id: number;
-    isSubscribed: boolean;
-  }>();
+  @Output() toggleSubscription = new EventEmitter<number>();
 
   public id = input.required<number>();
 
@@ -23,13 +20,7 @@ export class TopicSubscriptionComponent {
 
   toggleTopicSubscription(): void {
     const id = this.id();
-    const newSubscriptionValue = !this.isSubscribed();
 
-    const newValue = {
-      id,
-      isSubscribed: newSubscriptionValue,
-    };
-    console.log('CHILD, toggle topic subscription', newValue);
-    this.toggleSubscription.emit(newValue);
+    this.toggleSubscription.emit(id);
   }
 }
