@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,7 @@ export class ApiService {
    * The base URL for making HTTP requests to the API.
    * It is initialized to an empty string by default.
    */
-  protected BASE_URL: string = 'http://localhost:3001';
+  protected BASE_URL: string = environment.BASE_URL;
 
   protected http = inject(HttpClient);
 
