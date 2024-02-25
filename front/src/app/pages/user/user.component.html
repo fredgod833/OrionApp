@@ -1,1 +1,28 @@
-<p>user works!</p>
+<section class="user">
+
+  <h1 class="user__title">Profil utilisateur</h1>
+
+  <form class="user__form">
+    <fieldset class="user__fieldset">
+      <input type="text" class="user__input" autocomplete="username" value="" />
+
+      <input type="email" class="user__input" autocomplete="email" value="" />
+
+      <input type="password" autocomplete="current-password" class="user__input" value="" />
+    </fieldset>
+
+
+    <button type="submit" class="user__submit-button">Sauvegarder</button>
+  </form>
+
+  <button type="submit" class="user__logout-button">Se déconnecter</button>
+
+  <hr class="user__horizontal-line" />
+
+  <div class="user__subscriptions-container">
+    <h2 class="user__subscriptions-title">Abonnements</h2>
+
+    <app-topics-container [onSubscriptionChange]="updateUserThemeSubscription"
+      [topicsArray]="topicsArray"></app-topics-container>
+  </div>
+</section>
