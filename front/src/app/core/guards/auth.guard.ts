@@ -5,6 +5,8 @@ import {
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
+import { CookiesService } from '@core/services/cookies.service';
+import { CookieType } from '@lephenix47/cookies-utility';
 
 export const authGuard: CanActivateFn = (
   route: ActivatedRouteSnapshot,
@@ -12,9 +14,11 @@ export const authGuard: CanActivateFn = (
 ) => {
   const router = inject(Router);
 
-  if (true) {
-    // TODO: Create an auth service
-    // TODO: Check if the user is logged in from the service 'isLoggedIn' property
+  const cookiesService = inject(CookiesService);
+
+  const jwtCookie: CookieType | null = cookiesService.getJwt();
+
+  if (jwtCookie) {
     return true;
   } else {
     router.navigate(['/login']);
