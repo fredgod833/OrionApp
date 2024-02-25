@@ -5,7 +5,7 @@ import {
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
-import { CookiesService } from '@core/services/cookies.service';
+import { CookiesService } from '@core/services/cookies/cookies.service';
 import { CookieType } from '@lephenix47/cookies-utility';
 
 export const authGuard: CanActivateFn = (

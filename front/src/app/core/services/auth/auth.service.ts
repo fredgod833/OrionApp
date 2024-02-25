@@ -4,7 +4,7 @@ import { WebStorage } from '@lephenix47/webstorage-utility';
 
 import { CookieService } from '@lephenix47/cookies-utility';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { CookiesService } from './cookies.service';
+import { CookiesService } from '@core/services/cookies/cookies.service';
 import { HttpClient } from '@angular/common/http';
 import { RegisterRequest, LoginRequest } from '@core/types/auth.type';
 import { UserInfo } from '@core/types/user.type';
@@ -21,8 +21,8 @@ export class AuthService {
 
   public isLoggedIn = false;
 
-  public register(registerRequest: RegisterRequest): Observable<void> {
-    return this.httpClient.post<void>(
+  public register(registerRequest: RegisterRequest): Observable<UserInfo> {
+    return this.httpClient.post<UserInfo>(
       `${this.API_PATHNAME}/register`,
       registerRequest
     );
