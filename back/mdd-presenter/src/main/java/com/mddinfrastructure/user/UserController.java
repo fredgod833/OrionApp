@@ -1,12 +1,11 @@
 package com.mddinfrastructure.user;
 
-import com.mddcore.domain.models.Identity;
 import com.mddcore.usecases.UseCaseExecutor;
-import com.mddcore.usecases.auth.securityAuth.IJwtExecFinal;
+import com.mddcore.usecases.auth.IJwtExecFinal;
 import com.mddcore.usecases.user.DeleteUserUseCase;
 import com.mddcore.usecases.user.GetUserUseCase;
 import com.mddcore.usecases.user.UpdateUserUseCase;
-import com.mddinfrastructure.mapper.UserMapper;
+import com.mddinfrastructure.mapper.UserPresenterMapper;
 import com.mddinfrastructure.mapper.UserUpdateMapper;
 import com.mddinfrastructure.request.UserSettingRequest;
 import com.mddinfrastructure.response.ApiResponse;
@@ -40,17 +39,17 @@ public class UserController implements UserResource {
     public CompletableFuture<UserResponse> getUserById(@PathVariable Long id) {
         return useCaseExecutor.execute(
                 getUserUseCase,
-                new GetUserUseCase.InputValues(new Identity(id)),
-                (outputValues) -> UserMapper.INSTANCE.toPresenter(outputValues.user())
+                new GetUserUseCase.InputValues(id),
+                (outputValues) -> UserPresenterMapper.INSTANCE.toPresenter(outputValues.user())
         );
     }
 
     @Override
     public CompletableFuture<ResponseEntity<ApiResponse>> deleteUserById(@PathVariable Long id) {
-        Identity authId = jwtExecFinal.getAuthenticateUser();
+        Long authId = jwtExecFinal.getAuthenticateUser();
         return useCaseExecutor.execute(
                 deleteUserUseCase,
-                new DeleteUserUseCase.InputValues(new Identity(id), authId),
+                new DeleteUserUseCase.InputValues(id, authId),
                 outputValues -> {
                     if (outputValues.isDeleted()) {
                         return ResponseEntity.ok(new ApiResponse(true, "Delete user successfully"));
@@ -63,19 +62,19 @@ public class UserController implements UserResource {
 
     @Override
     public CompletableFuture<UserResponse> updateUser(@PathVariable Long id, @RequestBody UserSettingRequest userSettingRequest) {
-        Identity authId = jwtExecFinal.getAuthenticateUser();
+        Long authId = jwtExecFinal.getAuthenticateUser();
         return useCaseExecutor.execute(
                 updateUserUseCase,
-                new UpdateUserUseCase.InputValues(new Identity(id), UserUpdateMapper.INSTANCE.toDomain(userSettingRequest), authId),
-                outputValues -> UserMapper.INSTANCE.toPresenter(outputValues.user())
+                new UpdateUserUseCase.InputValues(id, UserUpdateMapper.INSTANCE.toDomain(userSettingRequest), authId),
+                outputValues -> UserPresenterMapper.INSTANCE.toPresenter(outputValues.user())
         );
 
     }
 
     @Override
     public CompletableFuture<ResponseEntity<?>> getUserAuth() {
-        Identity authId =  jwtExecFinal.getAuthenticateUser();
-        ResponseEntity<Identity> responseEntity = ResponseEntity.ok(authId);
+        Long authId =  jwtExecFinal.getAuthenticateUser();
+        ResponseEntity<Long> responseEntity = ResponseEntity.ok(authId);
         return CompletableFuture.completedFuture(responseEntity);
     }
 }

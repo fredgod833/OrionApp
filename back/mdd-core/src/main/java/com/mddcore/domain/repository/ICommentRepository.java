@@ -2,5 +2,9 @@ package com.mddcore.domain.repository;
 
 import com.mddcore.domain.models.Comment;
 
-public interface ICommentRepository extends IRepository<Comment> {
+import java.util.List;
+
+public interface ICommentRepository {
+    List<Comment> findAll();
+    void save(Comment entity);
 }

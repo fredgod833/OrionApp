@@ -3,8 +3,8 @@ package com.mddcore.usecases.user;
 import com.mddcore.domain.models.User;
 import com.mddcore.domain.repository.IUserRepository;
 import com.mddcore.usecases.UseCase;
-import com.mddcore.usecases.auth.securityAuth.IPasswordEncodeFinal;
-import com.mddcore.usecases.request.SignInRequest;
+import com.mddcore.usecases.auth.IPasswordEncodeFinal;
+import com.mddcore.usecases.auth.SignInRequest;
 
 public class RegisterUseCase extends UseCase<RegisterUseCase.InputValues, RegisterUseCase.OutputValues> {
     private final IUserRepository userRepository;

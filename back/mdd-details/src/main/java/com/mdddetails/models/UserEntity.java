@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -35,7 +35,7 @@ public class UserEntity {
     @Size(min = 8, max = 80)
     private String password;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<SubscriptionEntity> subscriptionEntities = new ArrayList<>();;
+    private List<SubscriptionEntity> subscriptionEntities = new ArrayList<>();
     private String picture;
     @CreatedDate
     @Column(name = "created_at", updatable = false)

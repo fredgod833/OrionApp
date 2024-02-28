@@ -2,9 +2,9 @@ package com.mddcore.usecases.user;
 
 
 import com.mddcore.usecases.UseCase;
-import com.mddcore.usecases.auth.securityAuth.IJwtExecFinal;
-import com.mddcore.usecases.request.SignInRequest;
-import com.mddcore.usecases.response.AuthResponse;
+import com.mddcore.usecases.auth.IJwtExecFinal;
+import com.mddcore.usecases.auth.SignInRequest;
+import com.mddcore.usecases.auth.AuthResponse;
 
 public class LoginUseCase extends UseCase<LoginUseCase.InputValues, LoginUseCase.OutputValues> {
     private final IJwtExecFinal jwtExecFinal;

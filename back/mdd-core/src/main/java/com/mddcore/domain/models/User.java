@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class User {
-    private Identity id;
+    private Long id;
     private String email;
     private String username;
     private String password;
@@ -23,7 +23,7 @@ public class User {
 
     public static User newInstance(String email, String username, String password, String picture, List<Subscription> subscriptionList) {
         return new User(
-                Identity.nothing(),
+                null,
                 email,
                 username,
                 password,

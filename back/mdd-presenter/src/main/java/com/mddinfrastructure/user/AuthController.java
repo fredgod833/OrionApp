@@ -1,8 +1,8 @@
 package com.mddinfrastructure.user;
 
 import com.mddcore.usecases.UseCaseExecutor;
-import com.mddcore.usecases.request.SignInRequest;
-import com.mddcore.usecases.response.AuthResponse;
+import com.mddcore.usecases.auth.SignInRequest;
+import com.mddcore.usecases.auth.AuthResponse;
 import com.mddcore.usecases.user.LoginUseCase;
 import com.mddcore.usecases.user.RegisterUseCase;
 import com.mddinfrastructure.mapper.UserUpdateMapper;

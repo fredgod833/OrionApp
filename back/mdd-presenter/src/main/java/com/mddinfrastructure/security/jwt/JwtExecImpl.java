@@ -1,9 +1,8 @@
 package com.mddinfrastructure.security.jwt;
 
-import com.mddcore.domain.models.Identity;
-import com.mddcore.usecases.auth.securityAuth.IJwtExecFinal;
-import com.mddcore.usecases.request.SignInRequest;
-import com.mddcore.usecases.response.AuthResponse;
+import com.mddcore.usecases.auth.AuthResponse;
+import com.mddcore.usecases.auth.IJwtExecFinal;
+import com.mddcore.usecases.auth.SignInRequest;
 import com.mddinfrastructure.security.userdetails.CustomUserDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +39,7 @@ public class JwtExecImpl implements IJwtExecFinal {
             logger.info("Before token created");
             String jwt = jwtTokenProvider.createToken(authenticate);
             logger.info("After token created");
-            return new AuthResponse(userDetails.getUser().getId().getNumber(), jwt, userDetails.getPictureUrl());
+            return new AuthResponse(userDetails.getUser().getId(), jwt, userDetails.getPictureUrl());
             } catch (BadCredentialsException e) {
                 logger.error("Authentication failed for user: {}. Reason: Invalid credentials", signInRequest.email());
             } catch (Exception e) {
@@ -53,7 +52,7 @@ public class JwtExecImpl implements IJwtExecFinal {
     }
 
     @Override
-    public Identity getAuthenticateUser() {
+    public Long getAuthenticateUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null) {
             throw new IllegalStateException("Authentication object is null. User is not authenticated.");

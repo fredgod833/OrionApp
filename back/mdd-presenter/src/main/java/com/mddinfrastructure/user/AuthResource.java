@@ -1,7 +1,7 @@
 package com.mddinfrastructure.user;
 
-import com.mddcore.usecases.request.SignInRequest;
-import com.mddcore.usecases.response.AuthResponse;
+import com.mddcore.usecases.auth.SignInRequest;
+import com.mddcore.usecases.auth.AuthResponse;
 import com.mddinfrastructure.request.UserSettingRequest;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

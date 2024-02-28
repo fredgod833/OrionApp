@@ -1,8 +1,7 @@
 package com.mddinfrastructure.security.userdetails;
 
-import com.mddcore.domain.models.Identity;
 import com.mddcore.domain.models.User;
-import com.mdddetails.repository.UserRepoImpl;
+import com.mdddetails.repository.user.UserRepoImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -35,8 +34,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Transactional
     public UserDetails loadUserById(Long userId) {
-        Identity identity = new Identity(userId);
-        User user = userRepository.findById(identity)
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with id : " + userId));
         return new CustomUserDetails(user);
     }

@@ -1,21 +1,17 @@
 package com.mddcore.usecases.user;
 
-import com.mddcore.domain.models.Identity;
 import com.mddcore.domain.models.User;
 import com.mddcore.domain.repository.IUserRepository;
 import com.mddcore.usecases.UseCase;
-import com.mddcore.usecases.auth.securityAuth.IJwtExecFinal;
-import com.mddcore.usecases.auth.securityAuth.IPasswordEncodeFinal;
+import com.mddcore.usecases.auth.IPasswordEncodeFinal;
 
 public class UpdateUserUseCase extends UseCase<UpdateUserUseCase.InputValues, UpdateUserUseCase.OutputValues> {
     private final IUserRepository userRepository;
     private final IPasswordEncodeFinal passwordEncodeFinal;
-    private final IJwtExecFinal jwtExecFinal;
 
-    public UpdateUserUseCase(IUserRepository userRepository, IPasswordEncodeFinal passwordEncodeFinal, IJwtExecFinal jwtExecFinal) {
+    public UpdateUserUseCase(IUserRepository userRepository, IPasswordEncodeFinal passwordEncodeFinal) {
         this.userRepository = userRepository;
         this.passwordEncodeFinal = passwordEncodeFinal;
-        this.jwtExecFinal = jwtExecFinal;
     }
 
     @Override
@@ -49,7 +45,7 @@ public class UpdateUserUseCase extends UseCase<UpdateUserUseCase.InputValues, Up
 
 
 
-    public record InputValues(Identity id, User user, Identity authId) implements UseCase.InputValues { }
+    public record InputValues(Long id, User user, Long authId) implements UseCase.InputValues { }
 
 
     public record OutputValues(User user) implements UseCase.OutputValues { }

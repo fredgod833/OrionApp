@@ -1,6 +1,6 @@
 package com.mddinfrastructure.security;
 
-import com.mddcore.usecases.auth.securityAuth.IPasswordEncodeFinal;
+import com.mddcore.usecases.auth.IPasswordEncodeFinal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 

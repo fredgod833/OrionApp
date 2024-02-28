@@ -1,39 +1,28 @@
 package com.mddcore.domain.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
+@AllArgsConstructor
+@EqualsAndHashCode
+@Data
+@NoArgsConstructor
 public class Subject {
-    private Identity id;
+    private Long id;
     private String name;
+    private String description;
     private List<Article> articleList;
 
-    public Subject(Identity id, String name, List<Article> articleList) {
-        this.id = id;
-        this.name = name;
-        this.articleList = articleList;
-    }
-
-    public Identity getId() {
-        return id;
-    }
-
-    public void setId(Identity id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<Article> getArticleList() {
-        return articleList;
-    }
-
-    public void setArticleList(List<Article> articleList) {
-        this.articleList = articleList;
+    public static Subject newInstance(String name, String description, List<Article> articleList) {
+        return new Subject(
+                null,
+                name,
+                description,
+                articleList
+        );
     }
 }

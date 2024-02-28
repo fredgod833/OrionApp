@@ -1,6 +1,5 @@
 package com.mddcore.usecases.user;
 
-import com.mddcore.domain.models.Identity;
 import com.mddcore.domain.models.User;
 import com.mddcore.domain.repository.IUserRepository;
 import com.mddcore.usecases.UseCase;
@@ -24,7 +23,7 @@ public class GetUserUseCase extends UseCase<GetUserUseCase.InputValues, GetUserU
     }
 
 
-    public record InputValues(Identity id) implements UseCase.InputValues {}
+    public record InputValues(Long id) implements UseCase.InputValues {}
 
 
     public record OutputValues(User user) implements UseCase.OutputValues {}

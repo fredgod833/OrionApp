@@ -2,7 +2,6 @@ package com.mddinfrastructure.mapper;
 
 
 import com.mddcore.domain.models.User;
-import com.mddcore.usecases.mapper.EntityMapper;
 import com.mddinfrastructure.request.UserSettingRequest;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
