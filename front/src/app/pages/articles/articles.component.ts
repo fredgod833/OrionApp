@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ArticleSummary } from '@core/types/article.type';
 import { ArticlesSummaryComponent } from '@components/common/articles/articles-summary/articles-summary.component';
 import { BehaviorSubject, Subject } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { UserBasicInfo, UserInfo } from '@core/types/user.type';
 
 @Component({
   selector: 'app-articles',
@@ -12,6 +15,10 @@ import { BehaviorSubject, Subject } from 'rxjs';
   imports: [RouterLink, ArticlesSummaryComponent],
 })
 export class ArticlesComponent {
+  private store = inject(Store);
+
+  public userInfo = toSignal<UserBasicInfo>(this.store.select('userInfo'));
+
   public isAscending: boolean = true;
 
   // Array of articles
@@ -37,4 +44,8 @@ export class ArticlesComponent {
   public test = new BehaviorSubject<ArticleSummary[]>(this.arrOfArticles)
     .asObservable()
     .subscribe();
+
+  ngOnInit() {
+    console.log(this.userInfo());
+  }
 }

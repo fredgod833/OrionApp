@@ -4,13 +4,16 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '@core/services/auth/auth.service';
 import { CookiesService } from '@core/services/cookies/cookies.service';
-import { UserInfo } from '@core/types/user.type';
+import { UserBasicInfo, UserInfo } from '@core/types/user.type';
 import { SpinLoaderComponent } from '@components/shared/spin-loader/spin-loader.component';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import {
   bootstrapEyeFill,
   bootstrapEyeSlashFill,
 } from '@ng-icons/bootstrap-icons';
+
+import { Store } from '@ngrx/store';
+import { setInfo } from '@mdd-global-state-ngrx/actions/user-info.actions';
 
 @Component({
   selector: 'app-login',
@@ -35,19 +38,21 @@ export class LoginComponent {
 
   public formBuilder = inject(FormBuilder);
 
+  private store = inject(Store);
+
   public timeoutId!: NodeJS.Timeout;
 
   // * Signals
 
   public showPassword = signal(false);
 
-  public isLoading = toSignal(this.authService.isLoading$);
+  public isLoading = toSignal<boolean>(this.authService.isLoading$);
 
-  public hasError = toSignal(this.authService.hasError$);
+  public hasError = toSignal<boolean>(this.authService.hasError$);
 
-  public errorMessage = toSignal(this.authService.errorMessage$);
+  public errorMessage = toSignal<string>(this.authService.errorMessage$);
 
-  public userInfo = toSignal(this.authService.userInfo$);
+  public userInfo = toSignal<UserBasicInfo>(this.store.select('userInfo'));
 
   // Form for login
   public loginForm = this.formBuilder.group({
@@ -77,8 +82,12 @@ export class LoginComponent {
       })
       // TODO: Unsubscribe from this observable
       .subscribe((value: UserInfo) => {
-        const { token } = value;
+        const { token, id, email, username } = value;
+        // Setting the cookies
         this.cookiesService.setJwt(token);
+
+        // Dispatching an action
+        this.store.dispatch(setInfo({ id, email, username }));
 
         this.timeoutId = setTimeout(() => {
           this.router.navigate(['/articles']);

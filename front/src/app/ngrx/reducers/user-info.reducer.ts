@@ -1,8 +1,8 @@
 import { createReducer, on } from '@ngrx/store';
-import { setInfo } from '../actions/user-info.actions';
-import { UserInfo } from '@core/types/user.type';
+import { setInfo } from '@mdd-global-state-ngrx/actions/user-info.actions';
+import { UserBasicInfo, UserInfo } from '@core/types/user.type';
 
-export const userInfoInitialState: Omit<UserInfo, 'token'> = {
+export const userInfoInitialState: UserBasicInfo = {
   id: 0,
   username: '',
   email: '',
@@ -10,7 +10,7 @@ export const userInfoInitialState: Omit<UserInfo, 'token'> = {
 
 export const userInfoReducer = createReducer(
   userInfoInitialState,
-  on(setInfo, (state, info: Omit<UserInfo, 'token'>) => {
+  on(setInfo, (state, info: UserBasicInfo) => {
     const { id, email, username } = info;
 
     return { ...state, id, username, email };

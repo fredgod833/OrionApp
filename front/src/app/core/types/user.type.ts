@@ -4,3 +4,5 @@ export type UserInfo = {
   username: string;
   email: string;
 };
+
+export type UserBasicInfo = Omit<UserInfo, 'token'>;

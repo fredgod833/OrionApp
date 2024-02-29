@@ -17,13 +17,13 @@
     <fieldset class="login__fieldset">
       <label class="login__label">
         E-mail ou nom d'utilisateur
-        <input type="text" class="login__input" formControlName="identifier" [readonly]="userInfo() || isLoading()" />
+        <input type="text" class="login__input" formControlName="identifier" [readonly]="isLoading()" />
       </label>
 
       <label class="login__label login__label--password">
         Mot de passe
         <input type="{{showPassword() ? 'text' : 'password'}}" autocomplete="current-password"
-          class="login__input login__input--password" formControlName="password" [readonly]="userInfo()||isLoading()" />
+          class="login__input login__input--password" formControlName="password" [readonly]="isLoading()" />
 
         @if(showPassword()){
         <ng-icon class="login__input-password-icon login__input-password-icon--toggle" name="bootstrapEyeFill"
@@ -35,7 +35,7 @@
       </label>
     </fieldset>
 
-    <button type="submit" class="login__submit-button" [disabled]="userInfo() || isLoading()">Se connecter</button>
+    <button type="submit" class="login__submit-button" [disabled]="isLoading()">Se connecter</button>
   </form>
 
   @if(isLoading()){
@@ -47,7 +47,7 @@
   <p class="login__error">Une erreur est survenue: <br /> {{errorMessage()}}</p>
   }
 
-  @if(userInfo()){
+  @if(userInfo()?.id !== 0){
   <p class="login__success">Succès! Vous serez redirigé dans 3 secondes</p>
   }
 </section>
