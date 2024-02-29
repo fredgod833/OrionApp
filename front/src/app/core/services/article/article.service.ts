@@ -16,6 +16,13 @@ export class ArticleService extends ApiService {
 
   public hasError$ = new BehaviorSubject<boolean>(false);
 
+  constructor() {
+    super();
+
+    this.updateLoadingState = this.updateLoadingState.bind(this);
+    this.handleErrors = this.handleErrors.bind(this);
+  }
+
   public getAllArticles(): Observable<ArticleSummary> {
     this.isLoading$.next(true);
 

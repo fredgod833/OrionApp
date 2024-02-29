@@ -15,6 +15,13 @@ export class TopicService extends ApiService {
 
   public hasError$ = new BehaviorSubject<boolean>(false);
 
+  constructor() {
+    super();
+
+    this.updateLoadingState = this.updateLoadingState.bind(this);
+    this.handleErrors = this.handleErrors.bind(this);
+  }
+
   public getAllThemes(): Observable<Array<Topic>> {
     this.isLoading$.next(true);
 
