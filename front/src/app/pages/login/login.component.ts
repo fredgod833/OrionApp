@@ -6,13 +6,14 @@ import { AuthService } from '@core/services/auth/auth.service';
 import { CookiesService } from '@core/services/cookies/cookies.service';
 import { UserInfo } from '@core/types/user.type';
 import { WebStorage } from '@lephenix47/webstorage-utility';
+import { SpinLoaderComponent } from '@components/shared/spin-loader/spin-loader.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
+  imports: [RouterLink, ReactiveFormsModule, SpinLoaderComponent],
 })
 export class LoginComponent {
   public cookiesService = inject(CookiesService);
