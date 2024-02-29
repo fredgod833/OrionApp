@@ -14,7 +14,7 @@
     @else {
     @for (article of arrOfArticles; track article.id) {
     <app-articles-summary [id]="article.id" [title]="article.title" [description]="article.description"
-      [author]="article.username" [date]="article.date"></app-articles-summary>
+      [author]="article.username" [date]="article.publicationDate"></app-articles-summary>
     }
     }
 

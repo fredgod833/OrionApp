@@ -1,9 +1,9 @@
 export type ArticleSummary = {
   id: number;
   title: string;
-  date: string;
   username: string;
   description: string;
+  publicationDate: string;
 };
 
 export type UserComment = {
@@ -13,7 +13,8 @@ export type UserComment = {
 
 export type Article = {
   id: number;
-  authorName: string;
   title: string;
+  description: string;
+  authorName: string;
   comments: Comment[];
 };
