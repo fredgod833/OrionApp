@@ -1,5 +1,6 @@
 export type ArticleSummary = {
   id: number;
+  articleId: number;
   title: string;
   username: string;
   description: string;

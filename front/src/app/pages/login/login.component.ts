@@ -54,6 +54,8 @@ export class LoginComponent {
 
   public userInfo = toSignal<UserBasicInfo>(this.store.select('userInfo'));
 
+  // * Observables
+
   // Form for login
   public loginForm = this.formBuilder.group({
     identifier: ['', [Validators.required]],
