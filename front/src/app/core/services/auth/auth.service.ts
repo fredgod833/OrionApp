@@ -9,8 +9,6 @@ import { ApiService } from '@core/services/api/api.service';
   providedIn: 'root',
 })
 export class AuthService extends ApiService {
-  // private httpClient = inject(HttpClient);
-
   private API_PATHNAME: string = 'api/auth';
 
   public isLoading$ = new BehaviorSubject<boolean>(false);
@@ -46,7 +44,7 @@ export class AuthService extends ApiService {
     ).pipe(tap(this.updateUserInfo), catchError(this.handleErrors));
   }
 
-  private updateUserInfo(value: UserInfo): void {
+  private updateUserInfo(value: Readonly<UserInfo>): void {
     this.isLoading$.next(false);
     this.hasError$.next(false);
 
