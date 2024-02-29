@@ -38,6 +38,8 @@ export class RegisterComponent {
 
   public formBuilder = inject(FormBuilder);
 
+  public timeoutId!: NodeJS.Timeout;
+
   // * Signals
   public showPassword = signal(false);
 
@@ -55,6 +57,10 @@ export class RegisterComponent {
     password: ['', Validators.required],
   });
 
+  ngOnDestroy() {
+    clearTimeout(this.timeoutId);
+  }
+
   togglePasswordVisibility() {
     this.showPassword.update((oldValue: boolean) => {
       return !oldValue;
@@ -66,7 +72,7 @@ export class RegisterComponent {
 
     console.log(this.registerForm);
 
-    const { username, email, password } = this.registerForm.value;
+    const { username, email, password } = this.registerForm.getRawValue();
 
     this.authService
       .register({

@@ -35,6 +35,8 @@ export class LoginComponent {
 
   public formBuilder = inject(FormBuilder);
 
+  public timeoutId!: NodeJS.Timeout;
+
   // * Signals
 
   public showPassword = signal(false);
@@ -53,6 +55,10 @@ export class LoginComponent {
     password: ['', Validators.required],
   });
 
+  ngOnDestroy() {
+    clearTimeout(this.timeoutId);
+  }
+
   togglePasswordVisibility() {
     this.showPassword.update((oldValue: boolean) => {
       return !oldValue;
@@ -62,17 +68,19 @@ export class LoginComponent {
   onSubmit(event: Event) {
     event.preventDefault();
 
+    const { identifier, password } = this.loginForm.getRawValue();
+
     this.authService
       .login({
-        identifier: this.loginForm.value.identifier as string,
-        password: this.loginForm.value.password as string,
+        identifier: identifier as string,
+        password: password as string,
       })
       // TODO: Unsubscribe from this observable
       .subscribe((value: UserInfo) => {
         const { token } = value;
         this.cookiesService.setJwt(token);
 
-        setTimeout(() => {
+        this.timeoutId = setTimeout(() => {
           this.router.navigate(['/articles']);
         }, 3_000);
       });
