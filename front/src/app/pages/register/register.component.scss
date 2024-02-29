@@ -52,13 +52,37 @@
 
   &__label {
     @include label-style;
+
+    &--password {
+      position: relative;
+    }
   }
 
   &__input {
     @include input-style;
+
+    &--password {
+      padding-inline-end: 30px;
+    }
   }
 
   &__submit-button {
     @include button-style;
+  }
+
+  &__input-password-icon {
+    position: absolute;
+    right: 10px;
+
+    top: 53%;
+
+    &--toggle {}
+  }
+
+  &__loading {}
+
+  &__error {
+    text-align: center;
+    color: var(--color-error);
   }
 }

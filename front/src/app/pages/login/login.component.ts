@@ -5,17 +5,28 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '@core/services/auth/auth.service';
 import { CookiesService } from '@core/services/cookies/cookies.service';
 import { UserInfo } from '@core/types/user.type';
-import { WebStorage } from '@lephenix47/webstorage-utility';
 import { SpinLoaderComponent } from '@components/shared/spin-loader/spin-loader.component';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import {
+  bootstrapEyeFill,
+  bootstrapEyeSlashFill,
+} from '@ng-icons/bootstrap-icons';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
-  imports: [RouterLink, ReactiveFormsModule, SpinLoaderComponent],
+  imports: [
+    RouterLink,
+    ReactiveFormsModule,
+    SpinLoaderComponent,
+    NgIconComponent,
+  ],
+  viewProviders: [provideIcons({ bootstrapEyeFill, bootstrapEyeSlashFill })],
 })
 export class LoginComponent {
+  // * Services
   public cookiesService = inject(CookiesService);
 
   public router = inject(Router);
@@ -24,9 +35,15 @@ export class LoginComponent {
 
   public formBuilder = inject(FormBuilder);
 
+  // * Signals
+
+  public showPassword = signal(false);
+
   public isLoading = toSignal(this.authService.isLoading$);
 
   public hasError = toSignal(this.authService.hasError$);
+
+  public errorMessage = toSignal(this.authService.errorMessage$);
 
   public userInfo = toSignal(this.authService.userInfo$);
 
@@ -36,6 +53,12 @@ export class LoginComponent {
     password: ['', Validators.required],
   });
 
+  togglePasswordVisibility() {
+    this.showPassword.update((oldValue: boolean) => {
+      return !oldValue;
+    });
+  }
+
   onSubmit(event: Event) {
     event.preventDefault();
 
@@ -44,10 +67,9 @@ export class LoginComponent {
         identifier: this.loginForm.value.identifier as string,
         password: this.loginForm.value.password as string,
       })
+      // TODO: Unsubscribe from this observable
       .subscribe((value: UserInfo) => {
-        const { username, id, email, token } = value;
-        WebStorage.setKey('userInfo', { username, id, email });
-
+        const { token } = value;
         this.cookiesService.setJwt(token);
 
         setTimeout(() => {

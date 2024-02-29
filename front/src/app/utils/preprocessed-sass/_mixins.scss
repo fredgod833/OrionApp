@@ -146,7 +146,9 @@
 
   border: 2px solid currentColor;
 
-  background-color: transparent
+  background-color: transparent;
+
+  &:focus-visible {}
 }
 
 @mixin button-style {
