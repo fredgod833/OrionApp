@@ -66,6 +66,18 @@ export class ApiService {
   }
 
   /**
+   * Performs an HTTP PATCH request.
+   *
+   * @param {args} - An object containing urlPathname, body, and headers.
+   * @returns An Observable with the response data.
+   */
+  protected fetchPatch<T>(urlPathname: string, body: any): Observable<T> {
+    const constructedUrl: string = this.constructUrl(urlPathname);
+
+    return this.http.patch<T>(constructedUrl, body);
+  }
+
+  /**
    * Performs an HTTP DELETE request.
    *
    * @param {args} - An object containing urlPathname and headers.
