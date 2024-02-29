@@ -17,8 +17,6 @@ export class AuthService extends ApiService {
 
   public hasError$ = new BehaviorSubject<boolean>(false);
 
-  public userInfo$ = new BehaviorSubject<UserInfo | undefined>(undefined);
-
   constructor() {
     super();
 
@@ -47,13 +45,9 @@ export class AuthService extends ApiService {
   private updateUserInfo(value: Readonly<UserInfo>): void {
     this.isLoading$.next(false);
     this.hasError$.next(false);
-
-    this.userInfo$.next(value);
   }
 
   private handleErrors(err: any, caught: Observable<UserInfo>): never {
-    console.log({ err });
-
     this.isLoading$.next(false);
     this.hasError$.next(true);
 
