@@ -20,7 +20,7 @@ export class AuthService extends ApiService {
   constructor() {
     super();
 
-    this.updateUserInfo = this.updateUserInfo.bind(this);
+    this.updateLoadingState = this.updateLoadingState.bind(this);
     this.handleErrors = this.handleErrors.bind(this);
   }
 
@@ -30,7 +30,7 @@ export class AuthService extends ApiService {
     return this.fetchPost<UserInfo>(
       `${this.API_PATHNAME}/register`,
       registerRequest
-    ).pipe(tap(this.updateUserInfo), catchError(this.handleErrors));
+    ).pipe(tap(this.updateLoadingState), catchError(this.handleErrors));
   }
 
   public login(loginRequest: LoginRequest): Observable<UserInfo> {
@@ -39,10 +39,10 @@ export class AuthService extends ApiService {
     return this.fetchPost<UserInfo>(
       `${this.API_PATHNAME}/login`,
       loginRequest
-    ).pipe(tap(this.updateUserInfo), catchError(this.handleErrors));
+    ).pipe(tap(this.updateLoadingState), catchError(this.handleErrors));
   }
 
-  private updateUserInfo(value: Readonly<UserInfo>): void {
+  private updateLoadingState(value: Readonly<UserInfo>): void {
     this.isLoading$.next(false);
     this.hasError$.next(false);
   }
