@@ -41,7 +41,12 @@ public class CommentController implements CommentResource{
                         request.content(),
                         request.article_id(),
                         request.userName())),
-                outputValues -> new ApiResponse(outputValues.success(), "Create Comment successfully")
+                outputValues -> {
+                        if(outputValues.success()) {
+                          return new ApiResponse(true, "Create Comment successfully");
+                        }
+                        return new ApiResponse(false, "Already Commented");
+                }
         );
     }
 }

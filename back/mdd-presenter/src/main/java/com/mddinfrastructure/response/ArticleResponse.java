@@ -2,14 +2,14 @@ package com.mddinfrastructure.response;
 
 import com.mddcore.domain.models.Article;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public record ArticleResponse(
         Long id,
         String title,
-        Date date,
+        LocalDateTime date,
         String authorName,
         String SubjectName,
         String content,
@@ -20,7 +20,7 @@ public record ArticleResponse(
         return new ArticleResponse(
                 article.getId(),
                 article.getTitle(),
-                article.getDate(),
+                article.getCreatedAt(),
                 article.getUser().getUsername(),
                 article.getSubject().getName(),
                 article.getContent(),
