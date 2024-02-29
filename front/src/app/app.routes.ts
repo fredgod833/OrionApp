@@ -9,6 +9,7 @@ import { TopicsComponent } from './pages/topics/topics.component';
 import { UserComponent } from './pages/user/user.component';
 import { CreateArticleComponent } from './pages/create-article/create-article.component';
 import { authGuard } from '@core/guards/auth.guard';
+import { unauthGuard } from '@core/guards/unauth.guard';
 
 export const routes: Routes = [
   {
@@ -22,11 +23,13 @@ export const routes: Routes = [
     component: HomeComponent,
   },
   {
+    canActivate: [unauthGuard],
     path: 'register',
     title: `Page d'enregistrement`,
     component: RegisterComponent,
   },
   {
+    canActivate: [unauthGuard],
     path: 'login',
     title: 'Page de connexion',
     component: LoginComponent,
