@@ -36,8 +36,6 @@ export class LoginComponent {
     password: ['', Validators.required],
   });
 
-  ngOnInit() {}
-
   onSubmit(event: Event) {
     event.preventDefault();
 
