@@ -9,11 +9,14 @@ import {
   withInterceptors,
 } from '@angular/common/http';
 import { tokenInterceptor } from '@core/interceptors/token.interceptor';
+import { provideStore } from '@ngrx/store';
+import { reducers, metaReducers } from './ngrx/reducers';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes, withViewTransitions()),
     provideClientHydration(),
     provideHttpClient(withFetch(), withInterceptors([tokenInterceptor])),
+    provideStore(reducers, { metaReducers }),
   ],
 };
