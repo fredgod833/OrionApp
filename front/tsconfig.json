@@ -34,6 +34,9 @@
       "@components/*": [
         "src/app/components/*"
       ],
+      "@mdd-global-state-ngrx/*": [
+        "src/app/ngrx/*"
+      ],
     }
   },
   "angularCompilerOptions": {
