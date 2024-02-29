@@ -33,7 +33,7 @@ export class AuthService extends ApiService {
       `${this.API_PATHNAME}/register`,
       registerRequest
     ).pipe(
-      tap((value) => {
+      tap((value: UserInfo) => {
         this.isLoading$.next(false);
         this.hasError$.next(false);
 
@@ -43,7 +43,7 @@ export class AuthService extends ApiService {
         this.isLoading$.next(false);
         this.hasError$.next(true);
 
-        throw new Error(`An error occurred: ${err}`);
+        throw new Error(`An error occurred: ${err?.message}`);
       })
     );
   }
@@ -55,7 +55,7 @@ export class AuthService extends ApiService {
       `${this.API_PATHNAME}/login`,
       loginRequest
     ).pipe(
-      tap((value) => {
+      tap((value: UserInfo) => {
         this.isLoading$.next(false);
         this.hasError$.next(false);
 
@@ -65,7 +65,7 @@ export class AuthService extends ApiService {
         this.isLoading$.next(false);
         this.hasError$.next(true);
 
-        throw new Error(`An error occurred: ${err}`);
+        throw new Error(`An error occurred: ${err?.message}`);
       })
     );
   }
