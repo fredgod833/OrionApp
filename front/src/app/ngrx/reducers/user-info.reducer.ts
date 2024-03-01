@@ -3,9 +3,9 @@ import { setInfo } from '@mdd-global-state-ngrx/actions/user-info.actions';
 import { UserBasicInfo, UserInfo } from '@core/types/user.type';
 
 export const userInfoInitialState: UserBasicInfo = {
-  id: 0,
-  username: '',
-  email: '',
+  id: null,
+  username: null,
+  email: null,
 };
 
 export const userInfoReducer = createReducer(
