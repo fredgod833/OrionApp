@@ -8,7 +8,7 @@ import { Message } from '@core/types/message.type';
   providedIn: 'root',
 })
 export class UserService extends ApiService {
-  private API_PATHNAME: string = 'api/user';
+  private API_PATHNAME: string = 'api/users';
 
   public isLoading$ = new BehaviorSubject<boolean>(false);
 
