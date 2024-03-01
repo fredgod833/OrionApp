@@ -25,7 +25,6 @@ public interface UserMapper {
             @Mapping(target = "created_at", source = "createdAt"),
             @Mapping(target = "updated_at", source = "updatedAt")
     })
-
     UserInfoResponse toDtoUser(Users request);
 
 }

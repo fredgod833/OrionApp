@@ -70,6 +70,7 @@ public class AuthController {
 
             Users user = userService.saveUserBySignUp(request);
 
+            // TODO: Fix this variable name → not an entity but a DTO
             UserInfoResponse userEntity = userMapper.toDtoUser(user);
 
             String jwtToken = JwtUtil.generateJwtToken(userEntity.id());

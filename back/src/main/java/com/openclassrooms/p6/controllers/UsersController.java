@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -15,9 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.p6.exception.ApiException;
 import com.openclassrooms.p6.exception.GlobalExceptionHandler;
+import com.openclassrooms.p6.mapper.UserMapper;
 import com.openclassrooms.p6.model.Users;
 import com.openclassrooms.p6.payload.request.UserRequest;
 import com.openclassrooms.p6.payload.response.MessageResponse;
+import com.openclassrooms.p6.payload.response.UserInfoResponse;
 import com.openclassrooms.p6.service.UserService;
 import com.openclassrooms.p6.utils.JwtUtil;
 
@@ -43,6 +46,28 @@ public class UsersController {
      */
     @Autowired
     UserService userService;
+
+    /**
+     * UserMapper for converting between entity and DTO types.
+     */
+    @Autowired
+    private UserMapper userMapper;
+
+    @GetMapping("")
+    public ResponseEntity<?> getUserInfo(
+            @RequestHeader("Authorization") String authorizationHeader) {
+        try {
+            Long userId = verifyUserValidityFromToken(authorizationHeader);
+
+            Users user = getVerifiedUserById(userId);
+
+            UserInfoResponse response = userMapper.toDtoUser(user);
+
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        } catch (ApiException e) {
+            return GlobalExceptionHandler.handleApiException(e);
+        }
+    }
 
     @PutMapping("")
     public ResponseEntity<?> update(@Valid @RequestBody UserRequest request,
