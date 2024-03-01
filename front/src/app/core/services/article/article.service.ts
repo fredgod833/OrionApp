@@ -39,8 +39,14 @@ export class ArticleService extends ApiService {
 
     return this.fetchPost<Pick<Article, 'title' | 'description'>>(
       // TODO: Improve the Api service → allow query params as arguments
-      `${this.API_PATHNAME}/?themeId=${themeId}`,
-      newArticle
+      `${this.API_PATHNAME}/`,
+      newArticle,
+      [
+        {
+          parameterName: 'themeId',
+          value: themeId,
+        },
+      ]
     ).pipe(tap(this.updateLoadingState), catchError(this.handleErrors));
   }
 

@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
+import { apiParams } from '@core/types/api.type';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 
@@ -22,9 +23,21 @@ export class ApiService {
    * @param {string} urlPathname - The URL segment to be appended to the base URL.
    * @returns {string} The constructed URL.
    */
-  private constructUrl(urlPathname: string): string {
+  private constructUrl(urlPathname: string, params?: apiParams): string {
     const constructedUrl: URL = new URL(this.BASE_URL);
     constructedUrl.pathname = urlPathname;
+
+    if (params) {
+      const urlSearchParams = new URLSearchParams();
+
+      for (const param of params) {
+        const { parameterName, value } = param;
+
+        urlSearchParams.set(parameterName, value);
+      }
+
+      constructedUrl.search = urlSearchParams.toString();
+    }
 
     return constructedUrl.href;
   }
@@ -35,8 +48,11 @@ export class ApiService {
    * @param {string} urlPathname - The URL segment to be appended to the base URL. ex: `/api/auth/login`
    * @returns An Observable with the response data.
    */
-  protected fetchGet<T>(urlPathname: string): Observable<T> {
-    const constructedUrl: string = this.constructUrl(urlPathname);
+  protected fetchGet<T>(
+    urlPathname: string,
+    params?: apiParams
+  ): Observable<T> {
+    const constructedUrl: string = this.constructUrl(urlPathname, params);
 
     return this.http.get<T>(constructedUrl);
   }
@@ -47,8 +63,12 @@ export class ApiService {
    * @param {args} - An object containing urlPathname, body, and headers.
    * @returns An Observable with the response data.
    */
-  protected fetchPost<T>(urlPathname: string, body: any): Observable<T> {
-    const constructedUrl: string = this.constructUrl(urlPathname);
+  protected fetchPost<T>(
+    urlPathname: string,
+    body: any,
+    params?: apiParams
+  ): Observable<T> {
+    const constructedUrl: string = this.constructUrl(urlPathname, params);
 
     return this.http.post<T>(constructedUrl, body);
   }
@@ -59,8 +79,12 @@ export class ApiService {
    * @param {args} - An object containing urlPathname, body, and headers.
    * @returns An Observable with the response data.
    */
-  protected fetchPut<T>(urlPathname: string, body: any): Observable<T> {
-    const constructedUrl: string = this.constructUrl(urlPathname);
+  protected fetchPut<T>(
+    urlPathname: string,
+    body: any,
+    params?: apiParams
+  ): Observable<T> {
+    const constructedUrl: string = this.constructUrl(urlPathname, params);
 
     return this.http.put<T>(constructedUrl, body);
   }
@@ -71,8 +95,12 @@ export class ApiService {
    * @param {args} - An object containing urlPathname, body, and headers.
    * @returns An Observable with the response data.
    */
-  protected fetchPatch<T>(urlPathname: string, body: any): Observable<T> {
-    const constructedUrl: string = this.constructUrl(urlPathname);
+  protected fetchPatch<T>(
+    urlPathname: string,
+    body: any,
+    params?: apiParams
+  ): Observable<T> {
+    const constructedUrl: string = this.constructUrl(urlPathname, params);
 
     return this.http.patch<T>(constructedUrl, body);
   }
@@ -83,8 +111,11 @@ export class ApiService {
    * @param {args} - An object containing urlPathname and headers.
    * @returns An Observable with the response data.
    */
-  protected fetchDelete<T>(urlPathname: string): Observable<T> {
-    const constructedUrl: string = this.constructUrl(urlPathname);
+  protected fetchDelete<T>(
+    urlPathname: string,
+    params?: apiParams
+  ): Observable<T> {
+    const constructedUrl: string = this.constructUrl(urlPathname, params);
     return this.http.delete<T>(constructedUrl);
   }
 }
