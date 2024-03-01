@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { UserBasicInfo } from '@core/types/user.type';
 import { UserService } from '@core/services/user/user.service';
+import { setInfo } from '@mdd-global-state-ngrx/actions/user-info.actions';
 
 @Component({
   selector: 'app-root',
@@ -15,11 +16,11 @@ import { UserService } from '@core/services/user/user.service';
   imports: [RouterOutlet, HeaderComponent],
 })
 export class AppComponent {
-  private store = inject(Store);
+  // private store = inject(Store);
 
-  public userService = inject(UserService);
+  // public userService = inject(UserService);
 
-  public userInfo = toSignal<UserBasicInfo>(this.store.select('userInfo'));
+  // public userInfo = toSignal<UserBasicInfo>(this.store.select('userInfo'));
 
   // * Instance properties
   public showHeader = true;
@@ -35,11 +36,16 @@ export class AppComponent {
   );
 
   ngOnInit() {
-    // this.userService.updateUser
+    // if (this.router.url !== 'login' && this.router.url !== 'register') {
+    //   this.userService.getUser().subscribe((userInfo) => {
+    //     const { id, email, username } = userInfo;
+
+    //     this.store.dispatch(setInfo({ id, email, username }));
+    //   });
+    // }
 
     this.navigationEndEvents$.subscribe(() => {
-      this.showHeader =
-        this.router.url !== '/home' || Boolean(this.userInfo()?.id);
+      this.showHeader = this.router.url !== '/home';
     });
   }
 }
