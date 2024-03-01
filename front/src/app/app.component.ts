@@ -7,6 +7,8 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { UserBasicInfo, UserEntity } from '@core/types/user.type';
 import { UserService } from '@core/services/user/user.service';
 import { setInfo } from '@mdd-global-state-ngrx/actions/user-info.actions';
+import { CookiesService } from '@core/services/cookies/cookies.service';
+import { CookieType } from '@lephenix47/cookies-utility';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +19,8 @@ import { setInfo } from '@mdd-global-state-ngrx/actions/user-info.actions';
 })
 export class AppComponent {
   title = 'mdd-app';
+
+  private cookiesService = inject(CookiesService);
 
   private store = inject(Store);
 
@@ -38,12 +42,16 @@ export class AppComponent {
   );
 
   ngOnInit() {
-    if (this.router.url !== 'login' && this.router.url !== 'register') {
-      this.userService.getUser().pipe(take(1));
-      // .subscribe((userInfo) => {
-      //   const { id, email, username } = userInfo;
-      //   this.store.dispatch(setInfo({ id, email, username }));
-      // });
+    const jwt: CookieType | null = this.cookiesService.getJwt();
+    if (jwt) {
+      this.userService
+        .getUser()
+        .pipe(take(1))
+        .subscribe((userInfo: UserEntity) => {
+          const { id, email, username } = userInfo;
+
+          this.store.dispatch(setInfo({ id, email, username }));
+        });
     }
 
     this.navigationEndEvents$.subscribe(() => {

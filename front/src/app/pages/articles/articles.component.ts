@@ -63,21 +63,9 @@ export class ArticlesComponent {
         articles: sortedArray,
       };
     });
-
-    console.log(
-      'Click changeArticlesOrder',
-      this.isAscending(),
-      this.arrOfArticles()
-    );
   }
 
   ngOnInit() {
-    // this.userService.getUser().subscribe((user: UserEntity) => {
-    //   const { id, username, email } = user;
-
-    //   this.store.dispatch(setInfo({ id, username, email }));
-    // });
-
     console.log(this.userInfo());
 
     this.test = this.articleService

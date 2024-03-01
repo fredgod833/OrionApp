@@ -7,25 +7,20 @@
     </button>
   </div>
 
+  @if(isLoading()){
+  <app-spin-loader></app-spin-loader>
+  <p class="articles__loading">Chargement des articles</p>
+  }
+
   <div class="articles__article-summaries">
-    @if(isLoading()){
-    <app-spin-loader></app-spin-loader>
-    <p class="articles__loading">Chargement des articles</p>
-    }@else {
     @if(arrOfArticles().articles.length === 0){
     <p class="articles__no-articles">Il n'y a pas d'articles à montrer ಠ_ಠ</p>
     }
     @else{
-
     @for (article of arrOfArticles().articles; track article.id) {
     <app-articles-summary [id]="article.id" [title]="article.title" [description]="article.description"
       [author]="article.username" [date]="article.publicationDate"></app-articles-summary>
     }
     }
-    }
-
-
-
-
   </div>
 </section>
