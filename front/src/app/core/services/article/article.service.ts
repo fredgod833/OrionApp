@@ -75,7 +75,7 @@ export class ArticleService extends ApiService {
     this.isLoading$.next(false);
     this.hasError$.next(true);
 
-    this.errorMessage$.next(err?.error.message);
+    this.errorMessage$.next(err?.error?.message);
 
     throw new Error(`An error occurred: ${err?.message}`);
   }

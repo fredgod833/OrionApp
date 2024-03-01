@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, catchError, tap } from 'rxjs';
 import { ApiService } from '../api/api.service';
-import { UserBasicInfo, UserInfo } from '@core/types/user.type';
+import { UserBasicInfo, UserEntity } from '@core/types/user.type';
 import { Message } from '@core/types/message.type';
 
 @Injectable({
@@ -23,10 +23,10 @@ export class UserService extends ApiService {
     this.handleErrors = this.handleErrors.bind(this);
   }
 
-  public getUser(): Observable<UserInfo> {
+  public getUser(): Observable<UserEntity> {
     this.isLoading$.next(true);
 
-    return this.fetchGet<any>(`${this.API_PATHNAME}`).pipe(
+    return this.fetchGet<UserEntity>(`${this.API_PATHNAME}`).pipe(
       tap(this.updateLoadingState),
       catchError(this.handleErrors)
     );
@@ -37,7 +37,7 @@ export class UserService extends ApiService {
   ): Observable<Message> {
     this.isLoading$.next(true);
 
-    return this.fetchPut<any>(`${this.API_PATHNAME}`, updatedUser).pipe(
+    return this.fetchPut<Message>(`${this.API_PATHNAME}`, updatedUser).pipe(
       tap(this.updateLoadingState),
       catchError(this.handleErrors)
     );
@@ -52,7 +52,7 @@ export class UserService extends ApiService {
     this.isLoading$.next(false);
     this.hasError$.next(true);
 
-    this.errorMessage$.next(err?.error.message);
+    this.errorMessage$.next(err?.error?.message);
 
     throw new Error(`An error occurred: ${err?.message}`);
   }
