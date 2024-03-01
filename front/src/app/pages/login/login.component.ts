@@ -89,7 +89,7 @@ export class LoginComponent {
       .subscribe((value: UserInfo) => {
         const { token, id, email, username } = value;
         // Setting the cookies
-        this.cookiesService.setJwt(token);
+        this.cookiesService.setJwt(token as string);
 
         // Dispatching an action
         this.store.dispatch(setInfo({ id, email, username }));

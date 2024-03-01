@@ -25,13 +25,9 @@
         <input type="{{showPassword() ? 'text' : 'password'}}" autocomplete="current-password"
           class="login__input login__input--password" formControlName="password" [readonly]="isLoading()" />
 
-        @if(showPassword()){
-        <ng-icon class="login__input-password-icon login__input-password-icon--toggle" name="bootstrapEyeFill"
+        <ng-icon class="login__input-password-icon login__input-password-icon--toggle"
+          name="{{showPassword() ? 'bootstrapEyeFill' : 'bootstrapEyeSlashFill'}}"
           (click)="togglePasswordVisibility()"></ng-icon>
-        }@else {
-        <ng-icon class="login__input-password-icon login__input-password-icon--toggle" name="bootstrapEyeSlashFill"
-          (click)="togglePasswordVisibility()"></ng-icon>
-        }
       </label>
     </fieldset>
 
@@ -47,7 +43,7 @@
   <p class="login__error">Une erreur est survenue: <br /> {{errorMessage()}}</p>
   }
 
-  @if(userInfo()?.id !== 0){
+  @if(!userInfo()?.id){
   <p class="login__success">Succès! Vous serez redirigé dans 3 secondes</p>
   }
 </section>

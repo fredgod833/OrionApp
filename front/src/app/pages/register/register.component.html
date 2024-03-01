@@ -32,14 +32,10 @@
         <input type="{{showPassword() ? 'text' : 'password'}}" class="register__input register__input--password"
           formControlName="password" autocomplete="current-password" [readonly]="isLoading()" />
 
-        <!-- @if(showPassword()){ -->
         <ng-icon class="register__input-password-icon register__input-password-icon--toggle"
           name="{{showPassword() ? 'bootstrapEyeFill' : 'bootstrapEyeSlashFill'}}"
           (click)="togglePasswordVisibility()"></ng-icon>
-        <!-- }@else {
-        <ng-icon class="register__input-password-icon register__input-password-icon--toggle"
-          name="bootstrapEyeSlashFill" (click)="togglePasswordVisibility()"></ng-icon>
-        } -->
+
       </label>
     </fieldset>
 
@@ -57,7 +53,7 @@
   <p class="register__error">Une erreur est survenue: <br /> {{errorMessage()}}</p>
   }
 
-  @if(userInfo()?.id !== 0){
+  @if(!userInfo()?.id){
   <p class="register__success">Compte créé avec succès! Vous serez redirigé dans 3 secondes</p>
   }
 </section>
