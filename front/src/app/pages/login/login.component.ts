@@ -64,6 +64,9 @@ export class LoginComponent {
 
   ngOnDestroy() {
     clearTimeout(this.timeoutId);
+
+    this.authService.isLoading$.next(false);
+    this.authService.hasError$.next(false);
   }
 
   togglePasswordVisibility() {

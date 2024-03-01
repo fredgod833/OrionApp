@@ -43,7 +43,7 @@
   <p class="login__loading">En attente</p>
   }
 
-  @if(hasError()) {
+  @if(!isLoading() && hasError()) {
   <p class="login__error">Une erreur est survenue: <br /> {{errorMessage()}}</p>
   }
 

@@ -18,33 +18,34 @@
       <label class="register__label">
         Nom d'utilisateur
         <input type="text" class="register__input" formControlName="username" autocomplete="username"
-          [readonly]="userInfo() || isLoading()" />
+          [readonly]="isLoading()" />
       </label>
 
       <label class="register__label">
         Adresse e-mail
         <input type="email" class="register__input" formControlName="email" autocomplete="email"
-          [readonly]="userInfo() || isLoading()" />
+          [readonly]="isLoading()" />
       </label>
 
       <label class="register__label register__label--password">
         Mot de passe
         <input type="{{showPassword() ? 'text' : 'password'}}" class="register__input register__input--password"
-          formControlName="password" autocomplete="current-password" [readonly]="userInfo() || isLoading()" />
+          formControlName="password" autocomplete="current-password" [readonly]="isLoading()" />
 
-        @if(showPassword()){
-        <ng-icon class="register__input-password-icon register__input-password-icon--toggle" name="bootstrapEyeFill"
+        <!-- @if(showPassword()){ -->
+        <ng-icon class="register__input-password-icon register__input-password-icon--toggle"
+          name="{{showPassword() ? 'bootstrapEyeFill' : 'bootstrapEyeSlashFill'}}"
           (click)="togglePasswordVisibility()"></ng-icon>
-        }@else {
+        <!-- }@else {
         <ng-icon class="register__input-password-icon register__input-password-icon--toggle"
           name="bootstrapEyeSlashFill" (click)="togglePasswordVisibility()"></ng-icon>
-        }
+        } -->
       </label>
     </fieldset>
 
 
 
-    <button type="submit" class="register__submit-button" [disabled]="userInfo() || isLoading()">S'inscrire</button>
+    <button type="submit" class="register__submit-button" [disabled]="isLoading()">S'inscrire</button>
   </form>
 
   @if(isLoading()){
@@ -52,11 +53,11 @@
   <p class="register__loading">En attente</p>
   }
 
-  @if(hasError()) {
+  @if(!isLoading() && hasError()) {
   <p class="register__error">Une erreur est survenue: <br /> {{errorMessage()}}</p>
   }
 
-  @if(userInfo()){
+  @if(userInfo()?.id !== 0){
   <p class="register__success">Compte créé avec succès! Vous serez redirigé dans 3 secondes</p>
   }
 </section>
