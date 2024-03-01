@@ -5,9 +5,11 @@ import { ArticlesSummaryComponent } from '@components/common/articles/articles-s
 import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { UserBasicInfo, UserInfo } from '@core/types/user.type';
+import { UserBasicInfo, UserEntity, UserInfo } from '@core/types/user.type';
 import { ArticleService } from '@core/services/article/article.service';
 import { SpinLoaderComponent } from '@components/shared/spin-loader/spin-loader.component';
+import { UserService } from '@core/services/user/user.service';
+import { setInfo } from '@mdd-global-state-ngrx/actions/user-info.actions';
 
 @Component({
   selector: 'app-articles',
@@ -18,6 +20,8 @@ import { SpinLoaderComponent } from '@components/shared/spin-loader/spin-loader.
 })
 export class ArticlesComponent {
   private store = inject(Store);
+
+  public userService = inject(UserService);
 
   public articleService = inject(ArticleService);
 
@@ -68,6 +72,12 @@ export class ArticlesComponent {
   }
 
   ngOnInit() {
+    // this.userService.getUser().subscribe((user: UserEntity) => {
+    //   const { id, username, email } = user;
+
+    //   this.store.dispatch(setInfo({ id, username, email }));
+    // });
+
     console.log(this.userInfo());
 
     this.test = this.articleService

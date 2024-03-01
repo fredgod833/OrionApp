@@ -1,10 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/common/layout/header/header.component';
-import { filter } from 'rxjs';
+import { filter, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { UserBasicInfo } from '@core/types/user.type';
+import { UserBasicInfo, UserEntity } from '@core/types/user.type';
 import { UserService } from '@core/services/user/user.service';
 import { setInfo } from '@mdd-global-state-ngrx/actions/user-info.actions';
 
@@ -16,11 +16,11 @@ import { setInfo } from '@mdd-global-state-ngrx/actions/user-info.actions';
   imports: [RouterOutlet, HeaderComponent],
 })
 export class AppComponent {
-  // private store = inject(Store);
+  private store = inject(Store);
 
-  // public userService = inject(UserService);
+  public userService = inject(UserService);
 
-  // public userInfo = toSignal<UserBasicInfo>(this.store.select('userInfo'));
+  public userInfo = toSignal<UserBasicInfo>(this.store.select('userInfo'));
 
   // * Instance properties
   public showHeader = true;
@@ -36,13 +36,13 @@ export class AppComponent {
   );
 
   ngOnInit() {
-    // if (this.router.url !== 'login' && this.router.url !== 'register') {
-    //   this.userService.getUser().subscribe((userInfo) => {
-    //     const { id, email, username } = userInfo;
-
-    //     this.store.dispatch(setInfo({ id, email, username }));
-    //   });
-    // }
+    if (this.router.url !== 'login' && this.router.url !== 'register') {
+      this.userService.getUser().pipe(take(1));
+      // .subscribe((userInfo) => {
+      //   const { id, email, username } = userInfo;
+      //   this.store.dispatch(setInfo({ id, email, username }));
+      // });
+    }
 
     this.navigationEndEvents$.subscribe(() => {
       this.showHeader = this.router.url !== '/home';
