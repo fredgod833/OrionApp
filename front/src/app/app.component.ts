@@ -16,6 +16,8 @@ import { setInfo } from '@mdd-global-state-ngrx/actions/user-info.actions';
   imports: [RouterOutlet, HeaderComponent],
 })
 export class AppComponent {
+  title = 'mdd-app';
+
   private store = inject(Store);
 
   public userService = inject(UserService);
