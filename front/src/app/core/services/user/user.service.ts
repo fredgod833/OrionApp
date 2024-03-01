@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, catchError, tap } from 'rxjs';
 import { ApiService } from '../api/api.service';
-import { UserBasicInfo } from '@core/types/user.type';
+import { UserBasicInfo, UserInfo } from '@core/types/user.type';
+import { Message } from '@core/types/message.type';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +23,18 @@ export class UserService extends ApiService {
     this.handleErrors = this.handleErrors.bind(this);
   }
 
-  public updateUser(updatedUser: Omit<UserBasicInfo, 'id'>): Observable<any> {
+  public getUser(): Observable<UserInfo> {
+    this.isLoading$.next(true);
+
+    return this.fetchGet<any>(`${this.API_PATHNAME}`).pipe(
+      tap(this.updateLoadingState),
+      catchError(this.handleErrors)
+    );
+  }
+
+  public updateUser(
+    updatedUser: Omit<UserBasicInfo, 'id'>
+  ): Observable<Message> {
     this.isLoading$.next(true);
 
     return this.fetchPut<any>(`${this.API_PATHNAME}`, updatedUser).pipe(
