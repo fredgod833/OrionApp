@@ -25,7 +25,7 @@ export class TopicService extends ApiService {
   public getAllThemes(): Observable<Array<Topic>> {
     this.isLoading$.next(true);
 
-    return this.fetchGet<Array<Topic>>(`${this.API_PATHNAME}/`).pipe(
+    return this.fetchGet<Array<Topic>>(`${this.API_PATHNAME}`).pipe(
       tap(this.updateLoadingState),
       catchError(this.handleErrors)
     );

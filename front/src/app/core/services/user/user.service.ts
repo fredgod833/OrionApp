@@ -25,7 +25,7 @@ export class UserService extends ApiService {
   public updateUser(updatedUser: Omit<UserBasicInfo, 'id'>): Observable<any> {
     this.isLoading$.next(true);
 
-    return this.fetchPut<any>(`${this.API_PATHNAME}/`, updatedUser).pipe(
+    return this.fetchPut<any>(`${this.API_PATHNAME}`, updatedUser).pipe(
       tap(this.updateLoadingState),
       catchError(this.handleErrors)
     );

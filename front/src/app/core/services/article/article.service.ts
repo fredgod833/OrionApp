@@ -26,7 +26,7 @@ export class ArticleService extends ApiService {
   public getAllArticles(): Observable<Array<ArticleSummary>> {
     this.isLoading$.next(true);
 
-    return this.fetchGet<Array<ArticleSummary>>(`${this.API_PATHNAME}/`).pipe(
+    return this.fetchGet<Array<ArticleSummary>>(`${this.API_PATHNAME}`).pipe(
       tap(this.updateLoadingState),
       catchError(this.handleErrors)
     );
