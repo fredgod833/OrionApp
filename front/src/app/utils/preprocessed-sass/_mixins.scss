@@ -196,3 +196,8 @@
 
   height: inherit;
 }
+
+@mixin error-paragraph-style {
+  text-align: center;
+  color: var(--color-error);
+}

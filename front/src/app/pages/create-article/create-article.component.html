@@ -10,7 +10,9 @@
 
   <form class="create-article__form">
     <select name="topics" id="topics" class="create-article__select">
-      <option value="1">Test</option>
+      @for(themeItem of themesArray; track themeItem.id){
+      <option [value]="themeItem.id" class="create-article__option">{{themeItem.theme}}</option>
+      }
     </select>
 
     <input type="text" class="create-article__input" placeholder="Titre de l'article" />
@@ -19,4 +21,13 @@
 
     <button type="button" class="create-article__button">Créer</button>
   </form>
+
+  @if(isLoading()){
+  <app-spin-loader></app-spin-loader>
+  <p class="create-article__loading">En attente de la réponse du serveur</p>
+  }
+
+  @if(hasError()) {
+  <p class="create-article__error">Une erreur est survenue: <br /> {{errorMessage()}}</p>
+  }
 </section>

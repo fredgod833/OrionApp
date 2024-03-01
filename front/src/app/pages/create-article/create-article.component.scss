@@ -41,6 +41,12 @@
     border-color: var(--bg-secondary);
   }
 
+  &__option {
+    @include input-style;
+
+    background-color: var(--bg-primary);
+  }
+
   &__input {
     width: inherit;
     @include input-style;
@@ -59,5 +65,13 @@
 
   &__button {
     @include button-style;
+  }
+
+  &__loading {
+    margin-top: 15px;
+  }
+
+  &__error {
+    @include error-paragraph-style;
   }
 }

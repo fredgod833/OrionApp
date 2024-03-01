@@ -82,7 +82,6 @@
   &__loading {}
 
   &__error {
-    text-align: center;
-    color: var(--color-error);
+    @include error-paragraph-style;
   }
 }
