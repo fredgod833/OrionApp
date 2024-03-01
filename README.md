@@ -428,9 +428,10 @@ You can view the different API endpoints from this table:
 
 - `api/user`
 
-| HTTP VERB | Endpoint | Parameters | Request payload                        | Response payload     | Description of the response                                            |
-| --------- | -------- | ---------- | -------------------------------------- | -------------------- | ---------------------------------------------------------------------- |
-| PUT       | /        | x          | {  username: string,  email: string, } | {  message: string } | A message saying if the user info has been successfully updated or not |
+| HTTP VERB | Endpoint | Parameters | Request payload                        | Response payload                                                                       | Description of the response                                            |
+| --------- | -------- | ---------- | -------------------------------------- | -------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| GET       | /        | x          | x                                      | { id:number, username: string ,email: string, created_at: string, updated_at: string } | The user info                                                          |
+| PUT       | /        | x          | {  username: string,  email: string, } | {  message: string }                                                                   | A message saying if the user info has been successfully updated or not |
 
 ## Miscellaneous
 
