@@ -7,10 +7,8 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
   const cookiesService = inject(CookiesService);
 
   const jwtCookie: CookieType | null = cookiesService.getJwt();
-  console.log('tokenInterceptor called', jwtCookie);
 
   const jwt: Partial<string> = jwtCookie?.value;
-
   if (!jwt) {
     return next(req);
   }
