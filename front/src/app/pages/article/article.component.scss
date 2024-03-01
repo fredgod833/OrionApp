@@ -11,6 +11,14 @@
   --_article-element-padding: 25px;
   padding: var(--_article-element-padding);
 
+  &__error {
+    @include error-paragraph-style;
+
+    &--not-found {}
+  }
+
+  &__loading {}
+
   &__go-back-button {
     display: inline-block;
     rotate: 90deg;

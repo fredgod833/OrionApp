@@ -17,5 +17,7 @@ export type Article = {
   title: string;
   description: string;
   authorName: string;
-  comments: Comment[];
+  comments: UserComment[];
+  theme: string;
+  creationDate: string;
 };

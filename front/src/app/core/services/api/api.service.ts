@@ -42,6 +42,19 @@ export class ApiService {
     return constructedUrl.href;
   }
 
+  protected changeObjectParamsToArray(object: {
+    [key: string]: any;
+  }): apiParams {
+    const objectEntries = Object.entries(object);
+
+    return objectEntries.map(([prop, value]) => {
+      return {
+        parameterName: prop,
+        value: value,
+      };
+    });
+  }
+
   /**
    * Performs an HTTP GET request.
    *

@@ -12,12 +12,19 @@ export class ArticleService extends ApiService {
 
   public isLoading$ = new BehaviorSubject<boolean>(false);
 
+  public isWaitingForCommentsResponse$ = new BehaviorSubject<boolean>(false);
+  public hasCommentSubmissionError$ = new BehaviorSubject<boolean>(false);
+
   public errorMessage$ = new BehaviorSubject<string>('');
 
   public hasError$ = new BehaviorSubject<boolean>(false);
 
   constructor() {
     super();
+
+    this.updateCommentLoading = this.updateCommentLoading.bind(this);
+    this.handleCommentSubmissionErrors =
+      this.handleCommentSubmissionErrors.bind(this);
 
     this.updateLoadingState = this.updateLoadingState.bind(this);
     this.handleErrors = this.handleErrors.bind(this);
@@ -37,39 +44,47 @@ export class ArticleService extends ApiService {
   ): Observable<Message> {
     this.isLoading$.next(true);
 
+    const params = this.changeObjectParamsToArray({ themeId });
+
     return this.fetchPost<Pick<Article, 'title' | 'description'>>(
-      // TODO: Improve the Api service → allow query params as arguments
       `${this.API_PATHNAME}/`,
       newArticle,
-      [
-        {
-          parameterName: 'themeId',
-          value: themeId,
-        },
-      ]
+      params
     ).pipe(tap(this.updateLoadingState), catchError(this.handleErrors));
   }
 
   public getArticleById(articleId: number): Observable<Article> {
     this.isLoading$.next(true);
 
-    return this.fetchGet<ArticleSummary>(
-      // TODO: Improve the Api service → allow query params as arguments
-      `${this.API_PATHNAME}/?articleId=${articleId}`
-    ).pipe(tap(this.updateLoadingState), catchError(this.handleErrors));
+    const params = this.changeObjectParamsToArray({ articleId });
+
+    return this.fetchGet<ArticleSummary>(`${this.API_PATHNAME}/`, params).pipe(
+      tap(this.updateLoadingState),
+      catchError(this.handleErrors)
+    );
   }
 
   public createComment(
     articleId: number,
     newComment: Omit<UserComment, 'username'>
   ): Observable<Message> {
-    this.isLoading$.next(true);
+    this.isWaitingForCommentsResponse$.next(true);
+
+    const params = this.changeObjectParamsToArray({ articleId });
 
     return this.fetchPost<Pick<Article, 'title' | 'description'>>(
-      // TODO: Improve the Api service → allow query params as arguments
-      `${this.API_PATHNAME}/comment?articleId=${articleId}`,
-      newComment
-    ).pipe(tap(this.updateLoadingState), catchError(this.handleErrors));
+      `${this.API_PATHNAME}/comment/`,
+      newComment,
+      params
+    ).pipe(
+      tap(this.updateCommentLoading),
+      catchError(this.handleCommentSubmissionErrors)
+    );
+  }
+
+  private updateCommentLoading(value: any): void {
+    this.isWaitingForCommentsResponse$.next(false);
+    this.hasCommentSubmissionError$.next(false);
   }
 
   private updateLoadingState(value: any): void {
@@ -77,9 +92,21 @@ export class ArticleService extends ApiService {
     this.hasError$.next(false);
   }
 
+  private handleCommentSubmissionErrors(err: any, caught: any): never {
+    this.hasCommentSubmissionError$.next(true);
+
+    this.isWaitingForCommentsResponse$.next(false);
+
+    this.errorMessage$.next(err?.error?.message);
+
+    throw new Error(`An error occurred: ${err?.message}`);
+  }
+
   private handleErrors(err: any, caught: any): never {
     this.isLoading$.next(false);
     this.hasError$.next(true);
+
+    this.isWaitingForCommentsResponse$.next(false);
 
     this.errorMessage$.next(err?.error?.message);
 

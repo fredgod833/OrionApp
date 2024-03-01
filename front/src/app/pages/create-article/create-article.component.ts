@@ -44,21 +44,10 @@ export class CreateArticleComponent {
 
   // Form for login
   public createArticleForm = this.formBuilder.group({
-    themeId: ['', [Validators.required, this.themeIdValidator.bind(this)]],
+    themeId: ['', [Validators.required]],
     title: ['', Validators.required],
     description: ['', Validators.required],
   });
-
-  // Method to validate themeId
-  themeIdValidator(control: AbstractControl): ValidationErrors | null {
-    const themeId = control.value;
-    // Check if themeId is not equal to 0
-    if (themeId !== 0) {
-      return null; // Return null if validation passes
-    } else {
-      return { invalidThemeId: true }; // Return an error object if validation fails
-    }
-  }
 
   onSubmit(event: Event) {
     event.preventDefault();
