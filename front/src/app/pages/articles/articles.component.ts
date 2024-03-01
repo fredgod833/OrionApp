@@ -7,13 +7,14 @@ import { Store } from '@ngrx/store';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { UserBasicInfo, UserInfo } from '@core/types/user.type';
 import { ArticleService } from '@core/services/article/article.service';
+import { SpinLoaderComponent } from '@components/shared/spin-loader/spin-loader.component';
 
 @Component({
   selector: 'app-articles',
   standalone: true,
   templateUrl: './articles.component.html',
   styleUrl: './articles.component.scss',
-  imports: [RouterLink, ArticlesSummaryComponent],
+  imports: [RouterLink, ArticlesSummaryComponent, SpinLoaderComponent],
 })
 export class ArticlesComponent {
   private store = inject(Store);
@@ -22,7 +23,7 @@ export class ArticlesComponent {
 
   public userInfo = toSignal<UserBasicInfo>(this.store.select('userInfo'));
 
-  public isAscending: boolean = true;
+  public isAscending = signal<boolean>(false);
 
   public isLoading = toSignal<boolean>(this.articleService.isLoading$);
 
@@ -31,10 +32,40 @@ export class ArticlesComponent {
   public errorMessage = toSignal<string>(this.articleService.errorMessage$);
 
   // Array of articles
-  public arrOfArticles = signal<Array<ArticleSummary>>([]);
+  public arrOfArticles = signal<{ articles: Array<ArticleSummary> }>({
+    articles: [],
+  });
 
   // Create a Subject of type Article array
   public test = new Subscription();
+
+  changeArticlesOrder() {
+    this.isAscending.update((previousValue) => {
+      return !previousValue;
+    });
+
+    const sortedArray = this.arrOfArticles().articles.sort(
+      (a: ArticleSummary, b: ArticleSummary) => {
+        const difference =
+          new Date(a.publicationDate).getTime() -
+          new Date(b.publicationDate).getTime();
+
+        return this.isAscending() ? -1 * difference : difference;
+      }
+    );
+
+    this.arrOfArticles.update(() => {
+      return {
+        articles: sortedArray,
+      };
+    });
+
+    console.log(
+      'Click changeArticlesOrder',
+      this.isAscending(),
+      this.arrOfArticles()
+    );
+  }
 
   ngOnInit() {
     console.log(this.userInfo());
@@ -46,5 +77,9 @@ export class ArticlesComponent {
           return articlesArray;
         });
       });
+  }
+
+  ngOnDestroy() {
+    this.test.unsubscribe();
   }
 }

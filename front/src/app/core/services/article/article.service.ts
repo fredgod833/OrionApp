@@ -23,13 +23,12 @@ export class ArticleService extends ApiService {
     this.handleErrors = this.handleErrors.bind(this);
   }
 
-  public getAllArticles(): Observable<Array<ArticleSummary>> {
+  public getAllArticles(): Observable<{ articles: Array<ArticleSummary> }> {
     this.isLoading$.next(true);
 
-    return this.fetchGet<Array<ArticleSummary>>(`${this.API_PATHNAME}`).pipe(
-      tap(this.updateLoadingState),
-      catchError(this.handleErrors)
-    );
+    return this.fetchGet<{ articles: Array<ArticleSummary> }>(
+      `${this.API_PATHNAME}`
+    ).pipe(tap(this.updateLoadingState), catchError(this.handleErrors));
   }
 
   public postArticle(

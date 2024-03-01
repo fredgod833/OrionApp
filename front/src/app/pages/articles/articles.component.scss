@@ -29,6 +29,8 @@
   }
 
   &__sort-order {
+    display: inline-block;
+
     transition: rotate 250ms ease-in-out;
 
     &--asc {
@@ -36,7 +38,7 @@
     }
 
     &--desc {
-      rotate: 90deg
+      rotate: 180deg
     }
   }
 
@@ -48,6 +50,10 @@
     display: grid;
     gap: 10px;
 
-    grid-template-columns: repeat(auto-fit, minmax(min(350px, 100%), 1fr));
+    grid-template-columns: repeat(2, 1fr);
+
+    @include mobile-only {
+      grid-template-columns: repeat(1, 1fr);
+    }
   }
 }
