@@ -18,10 +18,10 @@
     </select>
 
     <input name="title" type="text" class="create-article__input" placeholder="Titre de l'article"
-      formControlName="title" (change)="setDefaultValueToLocalStorage($event)" />
+      formControlName="title" (input)="setDefaultValueToLocalStorage($event)" />
 
     <textarea name="description" id="" class="create-article__textarea" placeholder="Contenu de l'article"
-      formControlName="description" (change)="setDefaultValueToLocalStorage($event)"></textarea>
+      formControlName="description" (input)="setDefaultValueToLocalStorage($event)"></textarea>
 
     <button type="submit" class="create-article__button" [disabled]="isLoading()">Créer</button>
   </form>
