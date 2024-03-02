@@ -9,17 +9,19 @@
   <h1 class="create-article__title">Créer un nouvel article</h1>
 
   <form class="create-article__form" [formGroup]="createArticleForm" (ngSubmit)="onSubmit($event)">
-    <select name="topics" id="topics" class="create-article__select" formControlName="themeId">
+    <select name="topics" id="topics" class="create-article__select" formControlName="themeId"
+      (change)="setDefaultValueToLocalStorage($event)">
       @for(themeItem of themesArray; track themeItem.id){
       <option [value]="themeItem.id" class="create-article__option">{{themeItem.theme}}
       </option>
       }
     </select>
 
-    <input type="text" class="create-article__input" placeholder="Titre de l'article" formControlName="title" />
+    <input name="title" type="text" class="create-article__input" placeholder="Titre de l'article"
+      formControlName="title" (change)="setDefaultValueToLocalStorage($event)" />
 
     <textarea name="description" id="" class="create-article__textarea" placeholder="Contenu de l'article"
-      formControlName="description"></textarea>
+      formControlName="description" (change)="setDefaultValueToLocalStorage($event)"></textarea>
 
     <button type="submit" class="create-article__button" [disabled]="isLoading()">Créer</button>
   </form>

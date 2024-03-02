@@ -16,8 +16,10 @@ import {
 import { RouterLink } from '@angular/router';
 import { SpinLoaderComponent } from '@components/shared/spin-loader/spin-loader.component';
 import { ArticleService } from '@core/services/article/article.service';
+import { ArticleCreationValues } from '@core/types/article.type';
 import { Message } from '@core/types/message.type';
 import { TopicOptions } from '@core/types/topic.type';
+import { WebStorage } from '@lephenix47/webstorage-utility';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -49,14 +51,64 @@ export class CreateArticleComponent {
     { id: 6, theme: 'C++' },
   ];
 
+  public creationFormDefaultValues: ArticleCreationValues | null =
+    WebStorage.getKey('article-creation');
+
+  ngOnInit() {
+    if (!this.creationFormDefaultValues) {
+      this.resetLocalStorage();
+    }
+  }
+
   // Form for login
   public createArticleForm = this.formBuilder.group({
-    themeId: ['1', [Validators.required]],
-    title: ['', Validators.required],
-    description: ['', Validators.required],
+    themeId: [
+      this.creationFormDefaultValues?.themeId || '1',
+      [Validators.required],
+    ],
+    title: [this.creationFormDefaultValues?.title || '', Validators.required],
+    description: [
+      this.creationFormDefaultValues?.description || '',
+      Validators.required,
+    ],
   });
 
-  onSubmit(event: Event): void {
+  public setDefaultValueToLocalStorage(event: Event): void {
+    const element = event.target as HTMLElement;
+
+    const articleCreationValues =
+      WebStorage.getKey<ArticleCreationValues>('article-creation');
+
+    switch (element.tagName.toLowerCase()) {
+      case 'select': {
+        if ((element as HTMLSelectElement).name === 'topics') {
+          articleCreationValues.themeId = (element as HTMLSelectElement).value;
+        }
+        break;
+      }
+      case 'input': {
+        if ((element as HTMLInputElement).name === 'title') {
+          articleCreationValues.title = (element as HTMLInputElement).value;
+        }
+        break;
+      }
+      case 'textarea': {
+        if ((element as HTMLTextAreaElement).name === 'description') {
+          articleCreationValues.description = (
+            element as HTMLTextAreaElement
+          ).value;
+        }
+        break;
+      }
+
+      default:
+        break;
+    }
+
+    WebStorage.setKey('article-creation', articleCreationValues);
+  }
+
+  public onSubmit(event: Event): void {
     event.preventDefault();
 
     const { themeId, title, description } =
@@ -79,6 +131,7 @@ export class CreateArticleComponent {
         });
 
         this.resetForm();
+        this.resetLocalStorage();
 
         subscription.unsubscribe();
       });
@@ -88,6 +141,14 @@ export class CreateArticleComponent {
     this.createArticleForm.setValue({
       title: '',
       themeId: '1',
+      description: '',
+    });
+  }
+
+  private resetLocalStorage() {
+    WebStorage.setKey('article-creation', {
+      themeId: '1',
+      title: '',
       description: '',
     });
   }

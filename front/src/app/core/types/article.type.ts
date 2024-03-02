@@ -21,3 +21,9 @@ export type Article = {
   theme: string;
   creationDate: string;
 };
+
+export type ArticleCreationValues = {
+  themeId: string;
+  title: string;
+  description: string;
+};

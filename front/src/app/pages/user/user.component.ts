@@ -19,6 +19,7 @@ import { UserService } from '@core/services/user/user.service';
 import { TopicService } from '@core/services/topic/topic.service';
 import { Message } from '@core/types/message.type';
 import { Subscription } from 'rxjs';
+import { WebStorage } from '@lephenix47/webstorage-utility';
 
 @Component({
   selector: 'app-user',
@@ -113,6 +114,12 @@ export class UserComponent {
 
   public logout(): void {
     this.cookiesService.deleteJwt();
+
+    WebStorage.setKey('article-creation', {
+      themeId: '1',
+      title: '',
+      description: '',
+    });
 
     this.router.navigate(['/']);
   }
