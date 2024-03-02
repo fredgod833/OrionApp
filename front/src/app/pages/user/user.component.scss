@@ -39,6 +39,10 @@
     @include button-style;
   }
 
+  &__error {
+    @include error-paragraph-style;
+  }
+
   &__logout-button {
     @include button-style;
 

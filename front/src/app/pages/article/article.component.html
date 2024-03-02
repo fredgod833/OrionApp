@@ -1,12 +1,12 @@
 @if(isLoading()) {
-<p class="article__loading article__loading--article">Récupération de l'article avec l'ID: {{id}} en cours</p>
+<h1 class="article__loading article__loading--article">Récupération de l'article avec l'ID: {{id}} en cours</h1>
 <app-spin-loader></app-spin-loader>
 }
 @else {
-@if(hasError()) {
-<p class="article__error article__error--not-found">L'article avec l'ID: {{id}} n'existe pas</p>
-}@else {
 <article class="article">
+  @if(hasError()) {
+  <h2 class="article__error article__error--not-found">L'article avec l'ID: {{id}} n'existe pas</h2>
+  }@else {
 
   <h1 class="article__title">
     <a routerLink="/articles" class="article__go-back-button">
@@ -65,6 +65,6 @@
   </section>
 
 
+  }
 </article>
-}
 }

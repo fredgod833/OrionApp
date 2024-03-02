@@ -1,6 +1,8 @@
 @use "../../utils/preprocessed-sass/" as *;
 
 .article {
+  min-height: 50svh;
+
   display: flex;
   flex-direction: column;
 
@@ -14,7 +16,12 @@
   &__error {
     @include error-paragraph-style;
 
-    &--not-found {}
+    display: inline-block;
+    height: 100%;
+
+    &--not-found {
+      margin-block: auto
+    }
   }
 
   &__loading {}

@@ -14,6 +14,7 @@ import {
 
 import { Store } from '@ngrx/store';
 import { setInfo } from '@mdd-global-state-ngrx/actions/user-info.actions';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -54,7 +55,7 @@ export class LoginComponent {
 
   public userInfo = toSignal<UserBasicInfo>(this.store.select('userInfo'));
 
-  // * Observables
+  public hasJwt: boolean = false;
 
   // Form for login
   public loginForm = this.formBuilder.group({
@@ -80,7 +81,7 @@ export class LoginComponent {
 
     const { identifier, password } = this.loginForm.getRawValue();
 
-    this.authService
+    const subscription: Subscription = this.authService
       .login({
         identifier: identifier as string,
         password: password as string,
@@ -91,8 +92,12 @@ export class LoginComponent {
         // Setting the cookies
         this.cookiesService.setJwt(token as string);
 
+        this.hasJwt = true;
+
         // Dispatching an action
         this.store.dispatch(setInfo({ id, email, username }));
+
+        subscription.unsubscribe();
 
         this.timeoutId = setTimeout(() => {
           this.router.navigate(['/articles']);

@@ -43,7 +43,7 @@
   <p class="login__error">Une erreur est survenue: <br /> {{errorMessage()}}</p>
   }
 
-  @if(!userInfo()?.id !== null) {
+  @if(hasJwt) {
   <p class="login__success">Succès! Vous serez redirigé dans 3 secondes</p>
   }
 </section>
