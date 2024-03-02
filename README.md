@@ -426,7 +426,7 @@ You can view the different API endpoints from this table:
 | POST      | /subscribe?:themeId   | Id of the theme the user wants to subscribe to   | x               | {  message: string }                                                                                               | A message saying if the subscription request worked or not   |
 | POST      | /unsubscribe?:themeId | Id of the theme the user wants to unsubscribe to | x               | {  message: string }                                                                                               | A message saying if the unsubscription request worked or not |
 
-- `api/user`
+- `api/users`
 
 | HTTP VERB | Endpoint | Parameters | Request payload                        | Response payload                                                                       | Description of the response                                            |
 | --------- | -------- | ---------- | -------------------------------------- | -------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
