@@ -1,11 +1,17 @@
 @use "../../../../utils/preprocessed-sass/" as *;
 
+:host {
+  height: 100%;
+}
+
 .topic-subscription {
   @include card-style;
 
   display: flex;
   flex-direction: column;
   gap: 15px;
+
+  height: inherit;
 
   &__title {}
 
