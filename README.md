@@ -443,6 +443,13 @@ You can view the different API endpoints from this table:
 </details>
 
 <details>
+  <summary>🗺️ Draw.io schema</summary>
+  <a href="./back/p6-table-relationships.drawio">
+    Check the draw.io schema for the table relationships !
+  </a>
+</details>
+
+<details>
   <summary>🔗 Link to the original GitHub Repository</summary>
   <a href="https://github.com/OpenClassrooms-Student-Center/Developpez-une-application-full-stack-complete" target="_blank">
     Link to the Back-End and Front-End Code
