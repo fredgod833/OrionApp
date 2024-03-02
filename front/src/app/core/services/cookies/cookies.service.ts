@@ -14,4 +14,8 @@ export class CookiesService {
   public setJwt(jwt: string): void {
     CookieService.setCookie(this.TOKEN_KEY_NAME, jwt);
   }
+
+  public deleteJwt(): void {
+    CookieService.deleteCookieByName(this.TOKEN_KEY_NAME);
+  }
 }
