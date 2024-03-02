@@ -1,4 +1,10 @@
-import { Component, inject, signal } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  ViewChild,
+  inject,
+  signal,
+} from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import {
   AbstractControl,
@@ -50,7 +56,7 @@ export class CreateArticleComponent {
     description: ['', Validators.required],
   });
 
-  onSubmit(event: Event) {
+  onSubmit(event: Event): void {
     event.preventDefault();
 
     const { themeId, title, description } =
@@ -72,7 +78,17 @@ export class CreateArticleComponent {
           return true;
         });
 
+        this.resetForm();
+
         subscription.unsubscribe();
       });
+  }
+
+  private resetForm() {
+    this.createArticleForm.setValue({
+      title: '',
+      themeId: '1',
+      description: '',
+    });
   }
 }

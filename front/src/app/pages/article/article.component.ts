@@ -30,9 +30,6 @@ import { Subscription } from 'rxjs';
   ],
 })
 export class ArticleComponent {
-  @ViewChild('commentTextareaRef')
-  commentTextareaRef!: ElementRef<HTMLTextAreaElement>;
-
   private store = inject(Store);
 
   public userInfo = toSignal<UserBasicInfo>(this.store.select('userInfo'));
@@ -85,9 +82,6 @@ export class ArticleComponent {
 
     const { comment } = this.commentCreationForm.getRawValue();
 
-    console.log('onCommentSubmission', comment);
-    console.log(this.commentTextareaRef);
-
        const subscription: Subscription = this.articleService
       .createComment(this.id, { comment: comment as string })
       .subscribe((message: Message) => {
@@ -128,8 +122,8 @@ export class ArticleComponent {
   }
 
   private resetTextAreaValue() {
-    const textArea: HTMLTextAreaElement = this.commentTextareaRef.nativeElement;
-
-    textArea.value = '';
+    this.commentCreationForm.setValue({
+      comment:""
+    });
   }
 }

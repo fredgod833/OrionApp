@@ -11,7 +11,7 @@
   <form class="create-article__form" [formGroup]="createArticleForm" (ngSubmit)="onSubmit($event)">
     <select name="topics" id="topics" class="create-article__select" formControlName="themeId">
       @for(themeItem of themesArray; track themeItem.id){
-      <option [value]="themeItem.id" class="create-article__option" [selected]="themeItem.id === 1">{{themeItem.theme}}
+      <option [value]="themeItem.id" class="create-article__option">{{themeItem.theme}}
       </option>
       }
     </select>
