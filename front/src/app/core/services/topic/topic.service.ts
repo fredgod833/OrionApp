@@ -9,6 +9,7 @@ import {
   tap,
 } from 'rxjs';
 import { Topic, TopicSubscription } from '@core/types/topic.type';
+import { Message } from '@core/types/message.type';
 
 @Injectable({
   providedIn: 'root',
@@ -77,24 +78,24 @@ export class TopicService extends ApiService {
     );
   }
 
-  public subscribeToTheme(themeId: number): Observable<Topic[]> {
+  public subscribeToTheme(themeId: number): Observable<Message> {
     this.isLoading$.next(true);
 
     const params = this.changeObjectParamsToArray({ themeId });
 
-    return this.fetchPost<Topic[]>(
+    return this.fetchPost<Message>(
       `${this.API_PATHNAME}/subscribe/`,
       null, // * Empty body
       params
     ).pipe(tap(this.updateLoadingState), catchError(this.handleErrors));
   }
 
-  public unsubscribeToTheme(themeId: number): Observable<Topic[]> {
+  public unsubscribeToTheme(themeId: number): Observable<Message> {
     this.isLoading$.next(true);
 
     const params = this.changeObjectParamsToArray({ themeId });
 
-    return this.fetchPost<Topic[]>(
+    return this.fetchPost<Message>(
       `${this.API_PATHNAME}/unsubscribe/`,
       null, // * Empty body
       params

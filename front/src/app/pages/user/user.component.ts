@@ -37,20 +37,18 @@ export class UserComponent {
 
   private userService = inject(UserService);
 
-  private topicsService = inject(TopicService);
+  private topicService = inject(TopicService);
 
   public formBuilder = inject(FormBuilder);
 
   // * Signals
   public userInfo = toSignal<UserBasicInfo>(this.store.select('userInfo'));
 
-  public topicsAreLoading = toSignal<boolean>(this.topicsService.isLoading$);
+  public topicsAreLoading = toSignal<boolean>(this.topicService.isLoading$);
 
-  public topicsHaveAnError = toSignal<boolean>(this.topicsService.hasError$);
+  public topicsHaveAnError = toSignal<boolean>(this.topicService.hasError$);
 
-  public topicsErrorMessage = toSignal<string>(
-    this.topicsService.errorMessage$
-  );
+  public topicsErrorMessage = toSignal<string>(this.topicService.errorMessage$);
 
   public userUpdateIsLoading = toSignal<boolean>(this.userService.isLoading$);
 
@@ -58,7 +56,7 @@ export class UserComponent {
 
   public userErrorMessage = toSignal<string>(this.userService.errorMessage$);
 
-  public userSuccessMessage = signal<string>('');
+  public userSuccessMessage: string = '';
 
   public topicsArray = signal<Topic[]>([]);
 
@@ -74,10 +72,28 @@ export class UserComponent {
 
   ngOnInit() {
     console.log('ngOnInit', this.userInfo());
+
+    this.initializeTopicsArray();
+  }
+
+  private initializeTopicsArray(): void {
+    this.topicService
+      .getAllThemesWithSubscription()
+      .subscribe((res: Topic[]) => {
+        const subscribedTopics: Topic[] = res.filter(
+          (t: Topic) => t.isSubscribed
+        );
+
+        this.topicsArray.update(() => {
+          return subscribedTopics;
+        });
+      });
   }
 
   onSubmit(event: Event): void {
     event.preventDefault();
+
+    this.userSuccessMessage = '';
 
     const { username, email } = this.userCredentialsForm.getRawValue();
 
@@ -87,9 +103,7 @@ export class UserComponent {
         email: email as string,
       })
       .subscribe((result: Message) => {
-        this.userSuccessMessage.update(() => {
-          return result.message;
-        });
+        this.userSuccessMessage = result.message;
 
         subscription.unsubscribe();
       });
@@ -101,9 +115,21 @@ export class UserComponent {
     this.router.navigate(['/']);
   }
 
-  updateUserThemeSubscription(id?: number) {
-    console.log('PARENT Clicked subs toggle btn', this);
+  updateUserThemeSubscription(id: number) {
+    console.log('PARENT Clicked subs toggle btn', id);
 
+    this.updateTopicsArray(id);
+
+    const subscription: Subscription = this.topicService
+      .unsubscribeToTheme(id)
+      .subscribe(() => {
+        this.updateTopicsArray(id);
+
+        subscription.unsubscribe();
+      });
+  }
+
+  private updateTopicsArray(id: number): void {
     this.topicsArray.update((topics) => topics.filter((t) => t.id !== id));
   }
 }

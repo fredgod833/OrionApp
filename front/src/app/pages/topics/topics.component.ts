@@ -43,9 +43,7 @@ export class TopicsComponent {
     const topic = this.getTopicById(id) as Topic;
     const { isSubscribed } = topic;
 
-    let subscription: Subscription;
-
-    subscription = this.topicService[
+    const subscription: Subscription = this.topicService[
       isSubscribed ? 'unsubscribeToTheme' : 'subscribeToTheme'
     ](id).subscribe(() => {
       this.updateTopicsArray(id);
