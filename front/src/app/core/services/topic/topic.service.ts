@@ -43,18 +43,24 @@ export class TopicService extends ApiService {
   public subscribeToTheme(themeId: number): Observable<Array<Topic>> {
     this.isLoading$.next(true);
 
+    const params = this.changeObjectParamsToArray({ themeId });
+
     return this.fetchPost<Array<Topic>>(
-      `${this.API_PATHNAME}/subscribe?themeId=${themeId}`,
-      null
+      `${this.API_PATHNAME}`,
+      null,
+      params
     ).pipe(tap(this.updateLoadingState), catchError(this.handleErrors));
   }
 
   public unsubscribeToTheme(themeId: number): Observable<Array<Topic>> {
     this.isLoading$.next(true);
 
+    const params = this.changeObjectParamsToArray({ themeId });
+
     return this.fetchPost<Array<Topic>>(
-      `${this.API_PATHNAME}/unsubscribe?themeId=${themeId}`,
-      null
+      `${this.API_PATHNAME}`,
+      null,
+      params
     ).pipe(tap(this.updateLoadingState), catchError(this.handleErrors));
   }
 
