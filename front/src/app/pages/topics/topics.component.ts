@@ -4,7 +4,7 @@ import { TopicSubscriptionComponent } from '@components/common/topics/topic-subs
 import { TopicsContainerComponent } from '@components/shared/topics-container/topics-container.component';
 import { TopicService } from '@core/services/topic/topic.service';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, take } from 'rxjs';
 
 @Component({
   selector: 'app-topics',
@@ -37,27 +37,19 @@ export class TopicsComponent {
     });
   }
 
-  updateUserThemeSubscription(id: number): void {
+  public updateUserThemeSubscription(id: number): void {
     const topic = this.getTopicById(id) as Topic;
-    console.log('PARENT Clicked subs toggle btn', topic);
-
     const { isSubscribed } = topic;
 
-    let subscriber: Subscription;
+    let subscription: Subscription;
 
-    if (isSubscribed) {
-      subscriber = this.topicService
-        .unsubscribeToTheme(id)
-        .subscribe((value) => {
-          this.updateTopicsArray(id);
-        });
-    } else {
-      subscriber = this.topicService.subscribeToTheme(id).subscribe((value) => {
-        this.updateTopicsArray(id);
-      });
-    }
+    subscription = this.topicService[
+      isSubscribed ? 'unsubscribeToTheme' : 'subscribeToTheme'
+    ](id).subscribe(() => {
+      this.updateTopicsArray(id);
+      subscription.unsubscribe();
+    });
   }
-
   private getTopicById(id: number): Topic | null {
     const topicsArray = this.topicsArray();
 
