@@ -15,6 +15,10 @@ import { SpinLoaderComponent } from '@components/shared/spin-loader/spin-loader.
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CookiesService } from '@core/services/cookies/cookies.service';
+import { UserService } from '@core/services/user/user.service';
+import { TopicService } from '@core/services/topic/topic.service';
+import { Message } from '@core/types/message.type';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-user',
@@ -24,15 +28,37 @@ import { CookiesService } from '@core/services/cookies/cookies.service';
   styleUrl: './user.component.scss',
 })
 export class UserComponent {
-  private store = inject(Store);
-
+  // * Services
   private router = inject(Router);
+
+  private store = inject(Store);
 
   private cookiesService = inject(CookiesService);
 
-  public userInfo = toSignal<UserBasicInfo>(this.store.select('userInfo'));
+  private userService = inject(UserService);
+
+  private topicsService = inject(TopicService);
 
   public formBuilder = inject(FormBuilder);
+
+  // * Signals
+  public userInfo = toSignal<UserBasicInfo>(this.store.select('userInfo'));
+
+  public topicsAreLoading = toSignal<boolean>(this.topicsService.isLoading$);
+
+  public topicsHaveAnError = toSignal<boolean>(this.topicsService.hasError$);
+
+  public topicsErrorMessage = toSignal<string>(
+    this.topicsService.errorMessage$
+  );
+
+  public userUpdateIsLoading = toSignal<boolean>(this.userService.isLoading$);
+
+  public userHasAnError = toSignal<boolean>(this.userService.hasError$);
+
+  public userErrorMessage = toSignal<string>(this.userService.errorMessage$);
+
+  public userSuccessMessage = signal<string>('');
 
   public topicsArray = signal<Topic[]>([]);
 
@@ -53,7 +79,20 @@ export class UserComponent {
   onSubmit(event: Event): void {
     event.preventDefault();
 
-    console.log(this.userCredentialsForm.getRawValue());
+    const { username, email } = this.userCredentialsForm.getRawValue();
+
+    const subscription: Subscription = this.userService
+      .updateUser({
+        username: username as string,
+        email: email as string,
+      })
+      .subscribe((result: Message) => {
+        this.userSuccessMessage.update(() => {
+          return result.message;
+        });
+
+        subscription.unsubscribe();
+      });
   }
 
   public logout(): void {
