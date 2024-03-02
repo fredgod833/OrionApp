@@ -1,7 +1,14 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '../api/api.service';
-import { BehaviorSubject, Observable, catchError, tap } from 'rxjs';
-import { Topic } from '@core/types/topic.type';
+import {
+  BehaviorSubject,
+  Observable,
+  catchError,
+  combineLatest,
+  map,
+  tap,
+} from 'rxjs';
+import { Topic, TopicSubscription } from '@core/types/topic.type';
 
 @Injectable({
   providedIn: 'root',
@@ -22,44 +29,69 @@ export class TopicService extends ApiService {
     this.handleErrors = this.handleErrors.bind(this);
   }
 
-  public getAllThemes(): Observable<Array<Topic>> {
+  public getAllThemes(): Observable<Topic[]> {
     this.isLoading$.next(true);
 
-    return this.fetchGet<Array<Topic>>(`${this.API_PATHNAME}`).pipe(
+    return this.fetchGet<Topic[]>(this.API_PATHNAME).pipe(
       tap(this.updateLoadingState),
       catchError(this.handleErrors)
     );
   }
 
-  public getAllSubscribedThemes(): Observable<Array<Topic>> {
+  public getAllSubscribedThemes(): Observable<TopicSubscription[]> {
     this.isLoading$.next(true);
 
-    return this.fetchGet<Array<Topic>>(`${this.API_PATHNAME}/subscribed`).pipe(
+    return this.fetchGet<TopicSubscription[]>(
+      `${this.API_PATHNAME}/subscribed`
+    ).pipe(tap(this.updateLoadingState), catchError(this.handleErrors));
+  }
+
+  public getAllThemesWithSubscription(): Observable<Topic[]> {
+    this.isLoading$.next(true);
+
+    const themesObs: Observable<Topic[]> = this.getAllThemes();
+    const subscribedIdsObs: Observable<TopicSubscription[]> =
+      this.getAllSubscribedThemes();
+
+    return combineLatest([themesObs, subscribedIdsObs]).pipe(
+      map(([themes, subscribedIds]) => {
+        return themes.map((theme: Topic) => {
+          const isSubscribed = subscribedIds.some(
+            (subscription) => subscription.themeId === theme.id
+          );
+          return {
+            id: theme.id,
+            title: theme.title,
+            description: theme.description,
+            isSubscribed,
+          };
+        });
+      }),
       tap(this.updateLoadingState),
       catchError(this.handleErrors)
     );
   }
 
-  public subscribeToTheme(themeId: number): Observable<Array<Topic>> {
+  public subscribeToTheme(themeId: number): Observable<Topic[]> {
     this.isLoading$.next(true);
 
     const params = this.changeObjectParamsToArray({ themeId });
 
-    return this.fetchPost<Array<Topic>>(
-      `${this.API_PATHNAME}`,
-      null,
+    return this.fetchPost<Topic[]>(
+      this.API_PATHNAME,
+      {}, // * Empty body
       params
     ).pipe(tap(this.updateLoadingState), catchError(this.handleErrors));
   }
 
-  public unsubscribeToTheme(themeId: number): Observable<Array<Topic>> {
+  public unsubscribeToTheme(themeId: number): Observable<Topic[]> {
     this.isLoading$.next(true);
 
     const params = this.changeObjectParamsToArray({ themeId });
 
-    return this.fetchPost<Array<Topic>>(
-      `${this.API_PATHNAME}`,
-      null,
+    return this.fetchPost<Topic[]>(
+      this.API_PATHNAME,
+      {}, // * Empty body
       params
     ).pipe(tap(this.updateLoadingState), catchError(this.handleErrors));
   }
