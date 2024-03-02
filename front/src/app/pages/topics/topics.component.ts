@@ -30,11 +30,13 @@ export class TopicsComponent {
   }
 
   ngOnInit() {
-    this.topicService.getAllThemesWithSubscription().subscribe((v: Topic[]) => {
-      this.topicsArray.update(() => {
-        return v;
+    this.topicService
+      .getAllThemesWithSubscription()
+      .subscribe((res: Topic[]) => {
+        this.topicsArray.update(() => {
+          return res;
+        });
       });
-    });
   }
 
   public updateUserThemeSubscription(id: number): void {
