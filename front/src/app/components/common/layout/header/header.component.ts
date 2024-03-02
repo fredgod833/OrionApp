@@ -14,7 +14,7 @@ import {
 } from '@angular/router';
 import { CookiesService } from '@core/services/cookies/cookies.service';
 import { matchesCssMediaQuery } from '@utils/helpers/window.helpers';
-import { filter } from 'rxjs';
+import { Subscription, filter } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -34,24 +34,34 @@ export class HeaderComponent {
   private cookiesService = inject(CookiesService);
 
   // * Observables
-  private navigationEndEvents = toSignal<NavigationEnd>(
-    this.router.events.pipe(
-      filter((event): event is NavigationEnd => {
-        return event instanceof NavigationEnd;
-      })
-    )
-  );
+  private routerNavigationEventsSubscription: Subscription = new Subscription();
 
-  constructor() {
-    effect(() => {
-      this.passedAuthentication =
-        this.router.url !== '/register' &&
-        this.router.url !== '/login' &&
-        this.cookiesService.getJwt() !== null;
-    });
+  ngOnInit() {
+    // Subscribe to NavigationEnd events to update authentication status on route changes
+    this.routerNavigationEventsSubscription = this.router.events
+      .pipe(
+        filter(
+          (event): event is NavigationEnd => event instanceof NavigationEnd
+        )
+      )
+      .subscribe(() => {
+        this.updateAuthenticationStatus();
+      });
   }
 
-  ngOnInit() {}
+  ngOnDestroy() {
+    this.routerNavigationEventsSubscription.unsubscribe();
+  }
+
+  /**
+   * Updates the authentication status based on the current route.
+   */
+  private updateAuthenticationStatus(): void {
+    this.passedAuthentication =
+      this.router.url !== '/register' &&
+      this.router.url !== '/login' &&
+      this.cookiesService.getJwt() !== null;
+  }
 
   /**
    * Toggles the visibility of the mobile burger menu sidebar.
