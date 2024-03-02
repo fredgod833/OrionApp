@@ -78,8 +78,8 @@ export class TopicService extends ApiService {
     const params = this.changeObjectParamsToArray({ themeId });
 
     return this.fetchPost<Topic[]>(
-      this.API_PATHNAME,
-      {}, // * Empty body
+      `${this.API_PATHNAME}/subscribe/`,
+      null, // * Empty body
       params
     ).pipe(tap(this.updateLoadingState), catchError(this.handleErrors));
   }
@@ -90,8 +90,8 @@ export class TopicService extends ApiService {
     const params = this.changeObjectParamsToArray({ themeId });
 
     return this.fetchPost<Topic[]>(
-      this.API_PATHNAME,
-      {}, // * Empty body
+      `${this.API_PATHNAME}/unsubscribe/`,
+      null, // * Empty body
       params
     ).pipe(tap(this.updateLoadingState), catchError(this.handleErrors));
   }
