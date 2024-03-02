@@ -9,3 +9,8 @@ export type TopicOptions = {
   id: number;
   theme: string;
 };
+
+export type TopicSubscription = {
+  themeId: number;
+  isSubscribed: boolean;
+};
