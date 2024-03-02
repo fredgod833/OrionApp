@@ -30,12 +30,13 @@ export class TopicsComponent {
   }
 
   ngOnInit() {
-    this.topicService
+    const subscription: Subscription = this.topicService
       .getAllThemesWithSubscription()
       .subscribe((res: Topic[]) => {
         this.topicsArray.update(() => {
           return res;
         });
+        subscription.unsubscribe();
       });
   }
 

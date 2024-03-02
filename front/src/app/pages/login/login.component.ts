@@ -86,7 +86,6 @@ export class LoginComponent {
         identifier: identifier as string,
         password: password as string,
       })
-      // TODO: Unsubscribe from this observable
       .subscribe((value: UserInfo) => {
         const { token, id, email, username } = value;
         // Setting the cookies

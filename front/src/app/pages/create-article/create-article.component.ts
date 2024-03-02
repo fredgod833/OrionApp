@@ -12,6 +12,7 @@ import { SpinLoaderComponent } from '@components/shared/spin-loader/spin-loader.
 import { ArticleService } from '@core/services/article/article.service';
 import { Message } from '@core/types/message.type';
 import { TopicOptions } from '@core/types/topic.type';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-create-article',
@@ -44,7 +45,7 @@ export class CreateArticleComponent {
 
   // Form for login
   public createArticleForm = this.formBuilder.group({
-    themeId: ['', [Validators.required]],
+    themeId: ['1', [Validators.required]],
     title: ['', Validators.required],
     description: ['', Validators.required],
   });
@@ -64,13 +65,14 @@ export class CreateArticleComponent {
 
     console.log('Form submission', normalizedThemeId, normalizedBody);
 
-    this.articleService
+    const subscription: Subscription = this.articleService
       .postArticle(normalizedThemeId, normalizedBody)
-      // TODO: Unsubscribe from this observable
       .subscribe((value: Message) => {
         this.hasSuccess.update(() => {
           return true;
         });
+
+        subscription.unsubscribe();
       });
   }
 }

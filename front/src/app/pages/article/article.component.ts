@@ -15,6 +15,7 @@ import { SpinLoaderComponent } from '@components/shared/spin-loader/spin-loader.
 import { Store } from '@ngrx/store';
 import { UserBasicInfo } from '@core/types/user.type';
 import { Message } from '@core/types/message.type';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-article',
@@ -87,7 +88,7 @@ export class ArticleComponent {
     console.log('onCommentSubmission', comment);
     console.log(this.commentTextareaRef);
 
-    this.articleService
+       const subscription: Subscription = this.articleService
       .createComment(this.id, { comment: comment as string })
       .subscribe((message: Message) => {
         const { username } = this.userInfo() as UserBasicInfo;
@@ -99,11 +100,14 @@ export class ArticleComponent {
         });
 
         this.resetTextAreaValue();
+
+                  subscription.unsubscribe();
+
       });
   }
 
   private setArticle() {
-    this.articleService
+      const subscription: Subscription =  this.articleService
       .getArticleById(this.id)
       .subscribe((article: Article) => {
         article.creationDate = new Date(
@@ -117,6 +121,9 @@ export class ArticleComponent {
         this.currentArticle.update(() => {
           return article;
         });
+
+                  subscription.unsubscribe();
+
       });
   }
 

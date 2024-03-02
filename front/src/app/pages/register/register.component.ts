@@ -16,6 +16,7 @@ import {
 
 import { Store } from '@ngrx/store';
 import { setInfo } from '@mdd-global-state-ngrx/actions/user-info.actions';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -81,13 +82,12 @@ export class RegisterComponent {
 
     const { username, email, password } = this.registerForm.getRawValue();
 
-    this.authService
+    const subscription: Subscription = this.authService
       .register({
         username: username as string,
         email: email as string,
         password: password as string,
       })
-      // TODO: Unsubscribe from this observable
       .subscribe((value: UserInfo) => {
         const { token, id, email, username } = value;
         // Setting the cookies
@@ -95,6 +95,8 @@ export class RegisterComponent {
 
         // Dispatching an action
         this.store.dispatch(setInfo({ id, email, username }));
+
+        subscription.unsubscribe();
 
         this.timeoutId = setTimeout(() => {
           this.router.navigate(['/articles']);

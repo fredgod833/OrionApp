@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/common/layout/header/header.component';
-import { filter, take } from 'rxjs';
+import { Subscription, filter, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { UserBasicInfo, UserEntity } from '@core/types/user.type';
@@ -44,13 +44,15 @@ export class AppComponent {
   ngOnInit() {
     const jwt: CookieType | null = this.cookiesService.getJwt();
     if (jwt) {
-      this.userService
+      const subscription: Subscription = this.userService
         .getUser()
         .pipe(take(1))
         .subscribe((userInfo: UserEntity) => {
           const { id, email, username } = userInfo;
 
           this.store.dispatch(setInfo({ id, email, username }));
+
+          subscription.unsubscribe();
         });
     }
 

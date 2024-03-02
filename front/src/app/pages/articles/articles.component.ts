@@ -68,12 +68,14 @@ export class ArticlesComponent {
   ngOnInit() {
     console.log(this.userInfo());
 
-    this.test = this.articleService
+    const subscription: Subscription = this.articleService
       .getAllArticles()
       .subscribe((articlesArray) => {
         this.arrOfArticles.update(() => {
           return articlesArray;
         });
+
+        subscription.unsubscribe();
       });
   }
 

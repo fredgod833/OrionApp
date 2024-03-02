@@ -77,7 +77,7 @@ export class UserComponent {
   }
 
   private initializeTopicsArray(): void {
-    this.topicService
+    const subscription: Subscription = this.topicService
       .getAllThemesWithSubscription()
       .subscribe((res: Topic[]) => {
         const subscribedTopics: Topic[] = res.filter(
@@ -87,6 +87,8 @@ export class UserComponent {
         this.topicsArray.update(() => {
           return subscribedTopics;
         });
+
+        subscription.unsubscribe();
       });
   }
 
