@@ -15,6 +15,7 @@ import { SpinLoaderComponent } from '@components/shared/spin-loader/spin-loader.
 import { Store } from '@ngrx/store';
 import { UserBasicInfo } from '@core/types/user.type';
 import { Message } from '@core/types/message.type';
+import { Title, Meta } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -30,6 +31,8 @@ import { Subscription } from 'rxjs';
   ],
 })
 export class ArticleComponent {
+  private titleMetaTagService = inject(Title);
+
   private store = inject(Store);
 
   public userInfo = toSignal<UserBasicInfo>(this.store.select('userInfo'));
@@ -82,7 +85,7 @@ export class ArticleComponent {
 
     const { comment } = this.commentCreationForm.getRawValue();
 
-       const subscription: Subscription = this.articleService
+    const subscription: Subscription = this.articleService
       .createComment(this.id, { comment: comment as string })
       .subscribe((message: Message) => {
         const { username } = this.userInfo() as UserBasicInfo;
@@ -95,13 +98,16 @@ export class ArticleComponent {
 
         this.resetTextAreaValue();
 
-                  subscription.unsubscribe();
-
+        subscription.unsubscribe();
       });
   }
 
   private setArticle() {
-      const subscription: Subscription =  this.articleService
+    this.titleMetaTagService.setTitle(
+      `Récupération de l'article d'ID: ${this.id}`
+    );
+
+    const subscription: Subscription = this.articleService
       .getArticleById(this.id)
       .subscribe((article: Article) => {
         article.creationDate = new Date(
@@ -116,14 +122,15 @@ export class ArticleComponent {
           return article;
         });
 
-                  subscription.unsubscribe();
+        this.titleMetaTagService.setTitle(article.title);
 
+        subscription.unsubscribe();
       });
   }
 
   private resetTextAreaValue() {
     this.commentCreationForm.setValue({
-      comment:""
+      comment: '',
     });
   }
 }
