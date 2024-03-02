@@ -34,7 +34,7 @@ export class ArticleService extends ApiService {
     this.isLoading$.next(true);
 
     return this.fetchGet<{ articles: Array<ArticleSummary> }>(
-      `${this.API_PATHNAME}`
+      this.API_PATHNAME
     ).pipe(tap(this.updateLoadingState), catchError(this.handleErrors));
   }
 

@@ -26,7 +26,7 @@ export class UserService extends ApiService {
   public getUser(): Observable<UserEntity> {
     this.isLoading$.next(true);
 
-    return this.fetchGet<UserEntity>(`${this.API_PATHNAME}`).pipe(
+    return this.fetchGet<UserEntity>(this.API_PATHNAME).pipe(
       tap(this.updateLoadingState),
       catchError(this.handleErrors)
     );
@@ -37,7 +37,7 @@ export class UserService extends ApiService {
   ): Observable<Message> {
     this.isLoading$.next(true);
 
-    return this.fetchPut<Message>(`${this.API_PATHNAME}`, updatedUser).pipe(
+    return this.fetchPut<Message>(this.API_PATHNAME, updatedUser).pipe(
       tap(this.updateLoadingState),
       catchError(this.handleErrors)
     );
