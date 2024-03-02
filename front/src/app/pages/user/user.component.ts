@@ -1,6 +1,9 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Topic } from '@core/types/topic.type';
 import { TopicsContainerComponent } from '@components/shared/topics-container/topics-container.component';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { UserBasicInfo } from '@core/types/user.type';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-user',
@@ -10,6 +13,10 @@ import { TopicsContainerComponent } from '@components/shared/topics-container/to
   styleUrl: './user.component.scss',
 })
 export class UserComponent {
+  private store = inject(Store);
+
+  public userInfo = toSignal<UserBasicInfo>(this.store.select('userInfo'));
+
   public topicsArray = signal<Topic[]>([
     {
       id: 1,
