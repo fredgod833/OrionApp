@@ -55,10 +55,15 @@ export class TopicService extends ApiService {
 
     return combineLatest([themesObs, subscribedIdsObs]).pipe(
       map(([themes, subscribedIds]) => {
+        console.log([themes, subscribedIds]);
+
         return themes.map((theme: Topic) => {
-          const isSubscribed = subscribedIds.some(
-            (subscription) => subscription.themeId === theme.id
-          );
+          const isSubscribed = subscribedIds.some((subscription) => {
+            return (
+              subscription.themeId === theme.id && subscription.isSubscribed
+            );
+            // Check if the subscription.themeId is present and isSubscribed is true
+          });
           return {
             id: theme.id,
             title: theme.title,
