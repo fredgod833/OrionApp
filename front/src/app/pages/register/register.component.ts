@@ -56,6 +56,8 @@ export class RegisterComponent {
 
   public userInfo = toSignal<UserBasicInfo>(this.store.select('userInfo'));
 
+  public hasJwt: boolean = false;
+
   public registerForm = this.formBuilder.group({
     username: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
@@ -92,6 +94,8 @@ export class RegisterComponent {
         const { token, id, email, username } = value;
         // Setting the cookies
         this.cookiesService.setJwt(token as string);
+
+        this.hasJwt = true;
 
         // Dispatching an action
         this.store.dispatch(setInfo({ id, email, username }));
