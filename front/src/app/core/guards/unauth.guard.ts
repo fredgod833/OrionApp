@@ -1,9 +1,24 @@
 import { inject } from '@angular/core';
-import { CanActivateFn, Router } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  CanActivateFn,
+  Router,
+  RouterStateSnapshot,
+} from '@angular/router';
 import { CookiesService } from '@core/services/cookies/cookies.service';
 import { CookieType } from '@lephenix47/cookies-utility';
 
-export const unauthGuard: CanActivateFn = (route, state) => {
+/**
+ * Guard function to protect routes that should not be accessible to authenticated users.
+ * Redirects authenticated users to the articles page.
+ * @param route The activated route snapshot.
+ * @param state The router state snapshot.
+ * @returns A boolean indicating whether the route can be activated.
+ */
+export const unauthGuard: CanActivateFn = (
+  route: ActivatedRouteSnapshot,
+  state: RouterStateSnapshot
+): boolean => {
   const router = inject(Router);
 
   const cookiesService = inject(CookiesService);
