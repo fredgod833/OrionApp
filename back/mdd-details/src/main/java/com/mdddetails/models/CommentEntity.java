@@ -18,7 +18,7 @@ public class CommentEntity {
     private Long id;
     private String content;
     private String author;
-    @ManyToOne
+    @ManyToOne( cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinColumn(name = "article_id")
     private ArticleEntity article;
 }

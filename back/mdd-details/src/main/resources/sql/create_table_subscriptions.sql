@@ -1,4 +1,4 @@
-CREATE TABLE `subscriptions` (
+CREATE TABLE `subscription` (
                                  `subscriptions_id` BIGINT AUTO_INCREMENT PRIMARY KEY,
                                  `subject_id` BIGINT,
                                  `user_id` BIGINT,

@@ -18,4 +18,7 @@ public interface AuthResource {
 
     @PostMapping("/login")
     CompletableFuture<AuthResponse> loginUser(@RequestBody SignInRequest signInRequest);
+
+    @PostMapping("/refresh-token")
+    CompletableFuture<String>  refreshToken(@RequestBody TokenRefreshRequest)
 }

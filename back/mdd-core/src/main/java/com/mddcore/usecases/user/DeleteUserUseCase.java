@@ -19,7 +19,6 @@ public class DeleteUserUseCase extends UseCase<DeleteUserUseCase.InputValues, De
             throw new IllegalArgumentException("User not found, cant delete it");
         }
 
-
         if(!user.getId().equals(input.authId)) {
             throw new IllegalStateException("You cant delete other user except you");
         }

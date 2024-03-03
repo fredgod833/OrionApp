@@ -5,13 +5,14 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.Authentication;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Key;
 import java.util.Date;
+import java.util.function.Function;
 
 @Component
 @Slf4j
@@ -19,17 +20,20 @@ public class JwtTokenProvider {
 
     Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
 
+    @Value("${mdd.app.jwtExpirationsMs}")
+    private long jwtExpiration;
+
+    @Value("${mdd.app.jwtRefreshExpirationsMs}")
+    private long refreshExpiration;
+
     /**
      * Crée un jeton JWT pour un utilisateur authentifié.
      *
-     * @param authentication Les informations d'authentification de l'utilisateur.
      * @return Un jeton JWT signé.
      */
-    public String createToken(Authentication authentication) {
-        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+    public String createToken(CustomUserDetails userDetails) {
         Date now = new Date();
-        Date expireDate = new Date(now.getTime() + 3600000);
-
+        Date expireDate = new Date(now.getTime() + jwtExpiration);
         return Jwts.builder()
                 .setSubject(String.valueOf(userDetails.getUser().getId()))
                 .setIssuedAt(new Date())
@@ -37,6 +41,19 @@ public class JwtTokenProvider {
                 .signWith(SignatureAlgorithm.HS512, key)
                 .compact();
     }
+
+    public String createRefreshToken(CustomUserDetails userDetails) {
+        Date now = new Date();
+        Date expiryDate = new Date(now.getTime() + refreshExpiration); // refreshExpiration est plus long que jwtExpiration
+
+        return Jwts.builder()
+                .setSubject(String.valueOf(userDetails.getUser().getId()))
+                .setIssuedAt(now)
+                .setExpiration(expiryDate)
+                .signWith(key)
+                .compact();
+    }
+
 
     /**
      * Extrait le jeton JWT de la requête HTTP.
@@ -82,12 +99,26 @@ public class JwtTokenProvider {
      * @param token Le jeton JWT.
      * @return Le nom d'utilisateur.
      */
-    public String getUsername(String token) {
-        return Jwts.parser()
+    public String extractUsername(String token) {
+        return extractAllClaims(token).getSubject();
+    }
+
+    private Claims extractAllClaims(String token) {
+        return Jwts
+                .parserBuilder()
                 .setSigningKey(key)
+                .build()
                 .parseClaimsJws(token)
-                .getBody()
-                .getSubject();
+                .getBody();
+    }
+
+    public Date getExpirationDate(String token) {
+        return extractAllClaims(token).getExpiration();
+    }
+
+    private <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+        final Claims claims = extractAllClaims(token);
+        return claimsResolver.apply(claims);
     }
 
     public Long getUserId(String token) {

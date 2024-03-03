@@ -5,6 +5,8 @@ import com.mddcore.domain.repository.ICommentRepository;
 import com.mdddetails.mapper.CommentMapper;
 import com.mdddetails.models.CommentEntity;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,6 +21,7 @@ public class CommentRepoImpl implements ICommentRepository {
     }
 
     @Override
+    @Transactional
     public List<Comment> findAll() {
         return jpaRepo.findAll().stream()
                 .map(commentMapper::toDomain)

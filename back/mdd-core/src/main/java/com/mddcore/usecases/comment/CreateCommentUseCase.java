@@ -17,6 +17,9 @@ public class CreateCommentUseCase extends UseCase<CreateCommentUseCase.InputValu
 
     @Override
     public OutputValues execute(InputValues input) {
+        if (isAlreadyComment(input)) {
+            return new OutputValues(false);
+        }
         try {
             Comment comment = Comment.newInstance(
                     input.inputRequest.content(),
@@ -33,6 +36,11 @@ public class CreateCommentUseCase extends UseCase<CreateCommentUseCase.InputValu
     private Article getArticle(InputValues input) {
         GetArticleUseCase.InputValues inputValues = new GetArticleUseCase.InputValues(input.inputRequest.articleId());
         return getArticleUseCase.execute(inputValues).article();
+    }
+
+    private Boolean isAlreadyComment(InputValues input) {
+        Article article = getArticle(input);
+        return article.getCommentsList().stream().anyMatch(comment -> comment.getAuthor().equals(input.inputRequest.username()));
     }
 
     public record InputValues(InputRequest inputRequest) implements UseCase.InputValues {}

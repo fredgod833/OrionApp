@@ -1,5 +1,6 @@
 package com.mddinfrastructure.security.jwt;
 
+import com.mddinfrastructure.security.userdetails.CustomUserDetails;
 import com.mddinfrastructure.security.userdetails.CustomUserDetailsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,9 +41,10 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
+//        try {
         String token = jwtTokenProvider.extractToken(request);
         if (token != null && jwtTokenProvider.validateToken(token)) {
-            logger.info("Jwt getUsername = {}", jwtTokenProvider.getUsername(token));
+            logger.info("Jwt getUsername = {}", jwtTokenProvider.extractUsername(token));
             UserDetails userDetails = customUserDetailsService.loadUserById(jwtTokenProvider.getUserId(token));
             logger.info("User details : {}", userDetails.toString());
             UsernamePasswordAuthenticationToken authentication =
@@ -51,6 +53,29 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             logger.info("auth principal : {}", authentication.getPrincipal());
         }
+//        } catch (ExpiredJwtException ex) {
+//            String isRefreshToken = request.getHeader("isRefreshToken");
+//            String requestUrl = request.getRequestURL().toString();
+//            if (isRefreshToken != null && isRefreshToken.equals("true") && requestUrl.contains("refreshtoken")) {
+//                allowForRefreshToken(ex, request);
+//            } else {
+//                request.setAttribute("exception", ex);
+//            }
+//    }
         filterChain.doFilter(request, response);
     }
+
+    public String refreshToken(String refreshToken) {
+        Long user = jwtTokenProvider.getUserId(refreshToken);
+        UserDetails userDetails = customUserDetailsService.loadUserById(user);
+       return jwtTokenProvider.createRefreshToken((CustomUserDetails) userDetails);
+    }
+
+//    private void allowForRefreshToken(ExpiredJwtException ex, HttpServletRequest request) {
+//        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+//                null, null, null
+//        );
+//        SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+//        request.setAttribute("claims", ex.getClaims());
+//    }
 }
