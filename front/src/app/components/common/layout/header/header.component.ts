@@ -1,11 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  ViewChild,
-  effect,
-  inject,
-} from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { Component, ElementRef, ViewChild, inject } from '@angular/core';
 import {
   NavigationEnd,
   Router,
@@ -16,6 +9,9 @@ import { CookiesService } from '@core/services/cookies/cookies.service';
 import { matchesCssMediaQuery } from '@utils/helpers/window.helpers';
 import { Subscription, filter } from 'rxjs';
 
+/**
+ * Represents the header of the application.
+ */
 @Component({
   selector: 'app-header',
   standalone: true,
@@ -24,17 +20,34 @@ import { Subscription, filter } from 'rxjs';
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
-  passedAuthentication: boolean = false;
-  // * Reference to the navigation bar element.
+  /**
+   * Reference to the navigation bar element.
+   *
+   * @type {ElementRef<HTMLElement> | undefined}
+   */
   @ViewChild('navigationBarRef') navigationBarRef!: ElementRef<HTMLElement>;
 
   // * Dependency injections
-  private router = inject(Router);
+  /**
+   * The Angular Router service.
+   */
+  private readonly router = inject(Router);
 
-  private cookiesService = inject(CookiesService);
+  /**
+   * The cookies service to set, get and delete the JWT
+   */
+  private readonly cookiesService = inject(CookiesService);
 
   // * Observables
+  /**
+   * Holds the subscription object for managing router navigation events.
+   */
   private routerNavigationEventsSubscription: Subscription = new Subscription();
+
+  /**
+   * Represents the authentication status of the user. Initially set to `false`.
+   */
+  public passedAuthentication: boolean = false;
 
   ngOnInit() {
     // Subscribe to NavigationEnd events to update authentication status on route changes
@@ -56,18 +69,18 @@ export class HeaderComponent {
   /**
    * Updates the authentication status based on the current route.
    */
-  private updateAuthenticationStatus(): void {
+  private updateAuthenticationStatus = (): void => {
     this.passedAuthentication =
       this.router.url !== '/register' &&
       this.router.url !== '/login' &&
       this.cookiesService.getJwt() !== null;
-  }
+  };
 
   /**
    * Toggles the visibility of the mobile burger menu sidebar.
    * @param isActive A boolean indicating whether the sidebar should be active.
    */
-  toggleMobileBurgerMenuSidebar(isActive: boolean): void {
+  toggleMobileBurgerMenuSidebar = (isActive: boolean): void => {
     const isNotMobile = matchesCssMediaQuery('width > 768px');
     if (isNotMobile || !this.passedAuthentication) {
       return;
@@ -76,5 +89,5 @@ export class HeaderComponent {
     const navigationBar: HTMLElement = this.navigationBarRef.nativeElement;
 
     navigationBar.classList.toggle('active', isActive);
-  }
+  };
 }

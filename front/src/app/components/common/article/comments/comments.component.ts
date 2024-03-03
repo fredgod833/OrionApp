@@ -1,5 +1,8 @@
 import { Component, input } from '@angular/core';
 
+/**
+ * Represents the component for comments.
+ */
 @Component({
   selector: 'app-comments',
   standalone: true,
@@ -8,7 +11,13 @@ import { Component, input } from '@angular/core';
   styleUrl: './comments.component.scss',
 })
 export class CommentsComponent {
-  public username = input.required<string>();
+  /**
+   * The username associated with the comment.
+   */
+  public readonly username = input.required<string>();
 
-  public comment = input.required<string>();
+  /**
+   * The content of the comment.
+   */
+  public readonly comment = input.required<string>();
 }

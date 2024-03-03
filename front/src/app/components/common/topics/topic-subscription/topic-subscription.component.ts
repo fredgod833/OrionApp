@@ -1,5 +1,8 @@
 import { Component, EventEmitter, Output, input } from '@angular/core';
 
+/**
+ * Represents the component for topic subscription.
+ */
 @Component({
   selector: 'app-topic-subscription',
   standalone: true,
@@ -10,17 +13,33 @@ import { Component, EventEmitter, Output, input } from '@angular/core';
 export class TopicSubscriptionComponent {
   @Output() toggleSubscription = new EventEmitter<number>();
 
-  public id = input.required<number>();
+  /**
+   * The ID of the topic.
+   */
+  public readonly id = input.required<number>();
 
-  public title = input.required<string>();
+  /**
+   * The title of the topic.
+   */
+  public readonly title = input.required<string>();
 
-  public description = input.required<string>();
+  /**
+   * The description of the topic.
+   */
+  public readonly description = input.required<string>();
 
-  public isSubscribed = input.required<boolean>();
+  /**
+   * Indicates whether the user is subscribed to the topic or not.
+   */
+  public readonly isSubscribed = input.required<boolean>();
 
-  toggleTopicSubscription(): void {
+  /**
+   * Toggles the subscription status of the topic.
+   * Emits the ID of the topic when toggling subscription.
+   */
+  toggleTopicSubscription = (): void => {
     const id = this.id();
 
     this.toggleSubscription.emit(id);
-  }
+  };
 }

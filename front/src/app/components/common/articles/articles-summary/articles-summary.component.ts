@@ -1,6 +1,9 @@
 import { Component, computed, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
+/**
+ * Represents the component for articles summary.
+ */
 @Component({
   selector: 'app-articles-summary',
   standalone: true,
@@ -10,16 +13,34 @@ import { RouterLink } from '@angular/router';
 })
 export class ArticlesSummaryComponent {
   // * Signal  inputs
-  public id = input.required<number>();
+  /**
+   * The ID of the article.
+   */
+  public readonly id = input.required<number>();
 
-  public title = input.required<string>();
+  /**
+   * The title of the article.
+   */
+  public readonly title = input.required<string>();
 
-  public description = input.required<string>();
+  /**
+   * The description of the article.
+   */
+  public readonly description = input.required<string>();
 
-  public author = input.required<string>();
+  /**
+   * The author of the article.
+   */
+  public readonly author = input.required<string>();
 
-  public date = input.required<string>();
+  /**
+   * The date of the article in string format.
+   */
+  public readonly date = input.required<string>();
 
+  /**
+   * The formatted publish date of the article
+   */
   public publishDate = computed(() => {
     const date = new Date(this.date()).toLocaleDateString();
 
