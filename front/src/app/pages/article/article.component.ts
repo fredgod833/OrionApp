@@ -1,8 +1,4 @@
-import {
-  Component,
-  inject,
-  signal,
-} from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Article, UserComment } from '@core/types/article.type';
 import { CommentsComponent } from '@components/common/article/comments/comments.component';
@@ -153,6 +149,14 @@ export class ArticleComponent {
 
         subscription.unsubscribe();
       });
+  };
+
+  submitCommentWithShortcut = (event: KeyboardEvent) => {
+    const userWantsToSendCommentWithShortcut: boolean =
+      event.ctrlKey && event.key === 'Enter';
+    if (userWantsToSendCommentWithShortcut) {
+      this.onCommentSubmission(event);
+    }
   };
 
   /**
