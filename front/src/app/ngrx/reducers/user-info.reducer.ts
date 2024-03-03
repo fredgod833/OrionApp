@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { setInfo } from '@mdd-global-state-ngrx/actions/user-info.actions';
-import { UserBasicInfo, UserInfo } from '@core/types/user.type';
+import { UserBasicInfo } from '@core/types/user.type';
 
 /**
  * Initial state for user information.
