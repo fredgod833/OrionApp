@@ -133,9 +133,9 @@ export class RegisterComponent {
 
     const subscription: Subscription = this.authService
       .register({
-        username: username as string,
-        email: email as string,
-        password: password as string,
+        username: username?.trim() as string,
+        email: email?.trim() as string,
+        password: password?.trim() as string,
       })
       .subscribe((value: UserInfo) => {
         const { token, id, email, username } = value;

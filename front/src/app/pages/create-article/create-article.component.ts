@@ -142,8 +142,8 @@ export class CreateArticleComponent {
     const normalizedThemeId: number = Number(themeId as string);
 
     const normalizedBody = {
-      title: title as string,
-      description: description as string,
+      title: title?.trim() as string,
+      description: description?.trim() as string,
     };
 
     const subscription: Subscription = this.articleService

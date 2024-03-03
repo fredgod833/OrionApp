@@ -135,7 +135,7 @@ export class ArticleComponent {
     const { comment } = this.commentCreationForm.getRawValue();
 
     const subscription: Subscription = this.articleService
-      .createComment(this.id, { comment: comment as string })
+      .createComment(this.id, { comment: comment?.trim() as string })
       .subscribe((message: Message) => {
         const { username } = this.userInfo() as UserBasicInfo;
 

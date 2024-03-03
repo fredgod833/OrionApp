@@ -155,8 +155,8 @@ export class UserComponent {
 
     const subscription: Subscription = this.userService
       .updateUser({
-        username: username as string,
-        email: email as string,
+        username: username?.trim() as string,
+        email: email?.trim() as string,
       })
       .subscribe((result: Message) => {
         this.userSuccessMessage = result.message;

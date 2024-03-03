@@ -132,8 +132,8 @@ export class LoginComponent {
 
     const subscription: Subscription = this.authService
       .login({
-        identifier: identifier as string,
-        password: password as string,
+        identifier: identifier?.trim() as string,
+        password: password?.trim() as string,
       })
       .subscribe((value: UserInfo) => {
         const { token, id, email, username } = value;
