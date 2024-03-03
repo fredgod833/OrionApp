@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { apiParams } from '@core/types/api.type';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment.development';
+import { environment } from '@environments/environment.development';
 
 /**
  * Service for making HTTP requests to the API.
