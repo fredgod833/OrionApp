@@ -1,3 +1,6 @@
+/**
+ * Represents a user entity.
+ */
 export type UserEntity = {
   id: number;
   username: string;
@@ -6,6 +9,9 @@ export type UserEntity = {
   updatedAt: string;
 };
 
+/**
+ * Represents user information.
+ */
 export type UserInfo = {
   token: string | null;
   id: number | null;
@@ -13,4 +19,7 @@ export type UserInfo = {
   email: string | null;
 };
 
+/**
+ * Represents basic user information.
+ */
 export type UserBasicInfo = Omit<UserInfo, 'token'>;
