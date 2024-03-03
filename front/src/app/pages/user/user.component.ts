@@ -1,11 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  ViewChild,
-  computed,
-  inject,
-  signal,
-} from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Topic } from '@core/types/topic.type';
 import { TopicsContainerComponent } from '@components/shared/topics-container/topics-container.component';
 import { toSignal } from '@angular/core/rxjs-interop';
