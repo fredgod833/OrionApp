@@ -21,6 +21,9 @@ import { Message } from '@core/types/message.type';
 import { Subscription } from 'rxjs';
 import { WebStorage } from '@lephenix47/webstorage-utility';
 
+/**
+ * Component representing the user profile and settings page
+ */
 @Component({
   selector: 'app-user',
   standalone: true,
@@ -30,54 +33,99 @@ import { WebStorage } from '@lephenix47/webstorage-utility';
 })
 export class UserComponent {
   // * Services
-  private router = inject(Router);
+  /**
+   * Angular router service.
+   */
+  private readonly router = inject(Router);
 
-  private store = inject(Store);
+  /**
+   * NgRx store service for managing application state.
+   */
+  private readonly store = inject(Store);
 
-  private cookiesService = inject(CookiesService);
+  /**
+   * Cookies service for managing browser cookies.
+   */
+  private readonly cookiesService = inject(CookiesService);
 
-  private userService = inject(UserService);
+  /**
+   * User service for managing user data and authentication.
+   */
+  private readonly userService = inject(UserService);
 
-  private topicService = inject(TopicService);
+  /**
+   * Topic service for managing topics and subscriptions.
+   */
+  private readonly topicService = inject(TopicService);
 
-  public formBuilder = inject(FormBuilder);
+  /**
+   * Form builder service for creating Angular reactive forms.
+   */
+  private readonly formBuilder = inject(FormBuilder);
 
   // * Signals
+  /**
+   * Signal representing user basic information fetched from the store.
+   */
   public userInfo = toSignal<UserBasicInfo>(this.store.select('userInfo'));
 
+  /**
+   * Signal indicating whether topics are currently loading.
+   */
   public topicsAreLoading = toSignal<boolean>(this.topicService.isLoading$);
 
+  /**
+   * Signal indicating whether there was an error loading topics.
+   */
   public topicsHaveAnError = toSignal<boolean>(this.topicService.hasError$);
 
+  /**
+   * Signal containing the error message related to topics.
+   */
   public topicsErrorMessage = toSignal<string>(this.topicService.errorMessage$);
 
+  /**
+   * Signal indicating whether the user update operation is currently loading.
+   */
   public userUpdateIsLoading = toSignal<boolean>(this.userService.isLoading$);
 
+  /**
+   * Signal indicating whether there was an error updating user information.
+   */
   public userHasAnError = toSignal<boolean>(this.userService.hasError$);
 
+  /**
+   * Signal containing the error message related to user operations.
+   */
   public userErrorMessage = toSignal<string>(this.userService.errorMessage$);
 
+  /**
+   * String containing the success message after user operations.
+   */
   public userSuccessMessage: string = '';
 
+  /**
+   * Signal containing the array of subscribed topics.
+   */
   public topicsArray = signal<Topic[]>([]);
 
-  public userCredentialsForm = this.formBuilder.group({
+  /**
+   * Form group for user credentials, including username and email.
+   */
+  public readonly userCredentialsForm = this.formBuilder.group({
     username: [this.userInfo()?.username, Validators.required],
     email: [this.userInfo()?.email, [Validators.required]],
   });
 
-  constructor() {
-    this.updateUserThemeSubscription =
-      this.updateUserThemeSubscription.bind(this);
-  }
-
   ngOnInit() {
-    console.log('ngOnInit', this.userInfo());
-
     this.initializeTopicsArray();
   }
 
-  private initializeTopicsArray(): void {
+  /**
+   * Fetches subscribed topics from the topic service.
+   * Subscribed topics are then stored in the topics array.
+   */
+  private initializeTopicsArray = (): void => {
     const subscription: Subscription = this.topicService
       .getAllThemesWithSubscription()
       .subscribe((res: Topic[]) => {
@@ -91,9 +139,14 @@ export class UserComponent {
 
         subscription.unsubscribe();
       });
-  }
+  };
 
-  onSubmit(event: Event): void {
+  /**
+   * Handles the submission of the user credentials form.
+   * Updates user information based on the form input.
+   * @param {Event} event - The form submission event.
+   */
+  onSubmit = (event: Event): void => {
     event.preventDefault();
 
     this.userSuccessMessage = '';
@@ -110,9 +163,14 @@ export class UserComponent {
 
         subscription.unsubscribe();
       });
-  }
+  };
 
-  public logout(): void {
+  /**
+   * Logs out the user by deleting the JWT token and redirecting to the home page.
+   *
+   * Also resets the local storage article-creation object for the article page
+   */
+  logout = (): void => {
     this.cookiesService.deleteJwt();
 
     WebStorage.setKey('article-creation', {
@@ -122,11 +180,13 @@ export class UserComponent {
     });
 
     this.router.navigate(['/']);
-  }
+  };
 
-  updateUserThemeSubscription(id: number) {
-    console.log('PARENT Clicked subs toggle btn', id);
-
+  /**
+   * Toggles the user's subscription to a topic.
+   * @param {number} id - The ID of the topic to subscribe or unsubscribe.
+   */
+  updateUserThemeSubscription = (id: number) => {
     this.updateTopicsArray(id);
 
     const subscription: Subscription = this.topicService
@@ -136,9 +196,13 @@ export class UserComponent {
 
         subscription.unsubscribe();
       });
-  }
+  };
 
-  private updateTopicsArray(id: number): void {
+  /**
+   * Updates the topics array by removing the specified topic.
+   * @param {number} id - The ID of the topic to remove from the array.
+   */
+  private updateTopicsArray = (id: number): void => {
     this.topicsArray.update((topics) => topics.filter((t) => t.id !== id));
-  }
+  };
 }

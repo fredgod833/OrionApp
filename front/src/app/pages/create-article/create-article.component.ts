@@ -1,18 +1,6 @@
-import {
-  Component,
-  ElementRef,
-  ViewChild,
-  inject,
-  signal,
-} from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import {
-  AbstractControl,
-  FormBuilder,
-  ReactiveFormsModule,
-  ValidationErrors,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { SpinLoaderComponent } from '@components/shared/spin-loader/spin-loader.component';
 import { ArticleService } from '@core/services/article/article.service';
@@ -22,6 +10,9 @@ import { TopicOptions } from '@core/types/topic.type';
 import { WebStorage } from '@lephenix47/webstorage-utility';
 import { Subscription } from 'rxjs';
 
+/**
+ * Represents the component for creating a new article.
+ */
 @Component({
   selector: 'app-create-article',
   standalone: true,
@@ -30,18 +21,39 @@ import { Subscription } from 'rxjs';
   styleUrl: './create-article.component.scss',
 })
 export class CreateArticleComponent {
-  private formBuilder = inject(FormBuilder);
+  /**
+   * Form builder service for creating reactive forms.
+   */
+  private readonly formBuilder = inject(FormBuilder);
 
-  private articleService = inject(ArticleService);
+  /**
+   * Service for managing article-related operations.
+   */
+  private readonly articleService = inject(ArticleService);
 
+  /**
+   * Signal indicating whether the article creation process is loading.
+   */
   public isLoading = toSignal<boolean>(this.articleService.isLoading$);
 
+  /**
+   * Signal indicating whether an error occurred during article creation.
+   */
   public hasError = toSignal<boolean>(this.articleService.hasError$);
 
+  /**
+   * Signal containing the error message during article creation.
+   */
   public errorMessage = toSignal<string>(this.articleService.errorMessage$);
 
+  /**
+   * Signal indicating whether the article creation was successful.
+   */
   public hasSuccess = signal<boolean>(false);
 
+  /**
+   * Array of available themes for articles.
+   */
   public themesArray: Array<TopicOptions> = [
     { id: 1, theme: 'Python' },
     { id: 2, theme: 'TypeScript' },
@@ -51,6 +63,9 @@ export class CreateArticleComponent {
     { id: 6, theme: 'C++' },
   ];
 
+  /**
+   * Default values for the article creation form obtained from local storage.
+   */
   public creationFormDefaultValues: ArticleCreationValues | null =
     WebStorage.getKey('article-creation');
 
@@ -60,8 +75,10 @@ export class CreateArticleComponent {
     }
   }
 
-  // Form for login
-  public createArticleForm = this.formBuilder.group({
+  /**
+   * Article creation form.
+   */
+  public readonly createArticleForm = this.formBuilder.group({
     themeId: [
       this.creationFormDefaultValues?.themeId || '1',
       [Validators.required],
@@ -73,7 +90,11 @@ export class CreateArticleComponent {
     ],
   });
 
-  public setDefaultValueToLocalStorage(event: Event): void {
+  /**
+   * Sets the default value to local storage based on user input.
+   * @param {Event} event - The input event.
+   */
+  public setDefaultValueToLocalStorage = (event: Event): void => {
     const element = event.target as HTMLElement;
 
     const articleCreationValues =
@@ -106,9 +127,13 @@ export class CreateArticleComponent {
     }
 
     WebStorage.setKey('article-creation', articleCreationValues);
-  }
+  };
 
-  public onSubmit(event: Event): void {
+  /**
+   * Handles the submission of the article creation form.
+   * @param {Event} event - The form submission event.
+   */
+  public onSubmit = (event: Event): void => {
     event.preventDefault();
 
     const { themeId, title, description } =
@@ -120,8 +145,6 @@ export class CreateArticleComponent {
       title: title as string,
       description: description as string,
     };
-
-    console.log('Form submission', normalizedThemeId, normalizedBody);
 
     const subscription: Subscription = this.articleService
       .postArticle(normalizedThemeId, normalizedBody)
@@ -135,8 +158,11 @@ export class CreateArticleComponent {
 
         subscription.unsubscribe();
       });
-  }
+  };
 
+  /**
+   * Resets the article creation form inputs.
+   */
   private resetForm() {
     this.createArticleForm.setValue({
       title: '',
@@ -145,6 +171,9 @@ export class CreateArticleComponent {
     });
   }
 
+  /**
+   * Resets the local storage values related to article creation.
+   */
   private resetLocalStorage() {
     WebStorage.setKey('article-creation', {
       themeId: '1',

@@ -1,7 +1,5 @@
 import {
   Component,
-  ElementRef,
-  ViewChild,
   inject,
   signal,
 } from '@angular/core';
@@ -15,9 +13,12 @@ import { SpinLoaderComponent } from '@components/shared/spin-loader/spin-loader.
 import { Store } from '@ngrx/store';
 import { UserBasicInfo } from '@core/types/user.type';
 import { Message } from '@core/types/message.type';
-import { Title, Meta } from '@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 
+/**
+ * Represents the component for displaying an article.
+ */
 @Component({
   selector: 'app-article',
   standalone: true,
@@ -31,38 +32,83 @@ import { Subscription } from 'rxjs';
   ],
 })
 export class ArticleComponent {
-  private titleMetaTagService = inject(Title);
+  /**
+   * Service for managing the title meta tag.
+   */
+  private readonly titleMetaTagService = inject(Title);
 
-  private store = inject(Store);
+  /**
+   * NgRx Store for managing application state.
+   */
+  private readonly store = inject(Store);
 
+  /**
+   * Service for managing articles.
+   */
+  private readonly articleService = inject(ArticleService);
+
+  /**
+   * Form builder service for creating reactive forms.
+   */
+  private readonly formBuilder = inject(FormBuilder);
+
+  /**
+   * The activated route service.
+   */
+  private readonly activatedRoute = inject(ActivatedRoute);
+
+  /**
+   * Signal representing user information.
+   */
   public userInfo = toSignal<UserBasicInfo>(this.store.select('userInfo'));
 
-  private formBuilder = inject(FormBuilder);
-
-  private articleService = inject(ArticleService);
-
+  /**
+   * Signal indicating whether the article is loading.
+   */
   public isLoading = toSignal<boolean>(this.articleService.isLoading$);
 
+  /**
+   * Signal indicating whether the component is waiting for comments response.
+   */
   public isWaitingForCommentsResponse = toSignal<boolean>(
     this.articleService.isWaitingForCommentsResponse$
   );
 
+  /**
+   * Signal indicating whether an error has occurred while fetching the article.
+   */
   public hasError = toSignal<boolean>(this.articleService.hasError$);
 
+  /**
+   * Signal indicating whether there was an error during comment submission.
+   */
   public hasCommentSubmissionError = toSignal<boolean>(
     this.articleService.hasCommentSubmissionError$
   );
 
+  /**
+   * Signal containing the error message when the article fetch fails.
+   */
   public errorMessage = toSignal<string>(this.articleService.errorMessage$);
 
+  /**
+   * Signal indicating whether the article fetch operation was successful.
+   */
   public hasSuccess = signal<boolean>(false);
 
-  public activatedRoute = inject(ActivatedRoute);
-
+  /**
+   * The ID of the article taken from the URI
+   */
   public id = Number(this.activatedRoute.snapshot.params['id']);
 
+  /**
+   * Signal containing the comments of the article.
+   */
   public articleComments = signal<UserComment[]>([]);
 
+  /**
+   * Signal containing the current article information
+   */
   public currentArticle = signal<Omit<Article, 'comments'>>({
     id: this.id,
     authorName: '',
@@ -72,7 +118,10 @@ export class ArticleComponent {
     creationDate: '',
   });
 
-  public commentCreationForm = this.formBuilder.group({
+  /**
+   * The form builder for creating comments.
+   */
+  public readonly commentCreationForm = this.formBuilder.group({
     comment: ['', [Validators.required]],
   });
 
@@ -80,7 +129,11 @@ export class ArticleComponent {
     this.setArticle();
   }
 
-  public onCommentSubmission(event: Event) {
+  /**
+   * Handles the submission of a comment.
+   * @param {Event} event - The submit event.
+   */
+  public onCommentSubmission = (event: Event): void => {
     event.preventDefault();
 
     const { comment } = this.commentCreationForm.getRawValue();
@@ -100,9 +153,12 @@ export class ArticleComponent {
 
         subscription.unsubscribe();
       });
-  }
+  };
 
-  private setArticle() {
+  /**
+   * Sets the article and updates the title meta tag.
+   */
+  private setArticle = (): void => {
     this.titleMetaTagService.setTitle(
       `Récupération de l'article d'ID: ${this.id}`
     );
@@ -126,11 +182,14 @@ export class ArticleComponent {
 
         subscription.unsubscribe();
       });
-  }
+  };
 
-  private resetTextAreaValue() {
+  /**
+   * Resets the value of the comment text area.
+   */
+  private resetTextAreaValue = (): void => {
     this.commentCreationForm.setValue({
       comment: '',
     });
-  }
+  };
 }

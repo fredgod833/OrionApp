@@ -2,15 +2,16 @@ import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ArticleSummary } from '@core/types/article.type';
 import { ArticlesSummaryComponent } from '@components/common/articles/articles-summary/articles-summary.component';
-import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { UserBasicInfo, UserEntity, UserInfo } from '@core/types/user.type';
+import { UserBasicInfo } from '@core/types/user.type';
 import { ArticleService } from '@core/services/article/article.service';
 import { SpinLoaderComponent } from '@components/shared/spin-loader/spin-loader.component';
-import { UserService } from '@core/services/user/user.service';
-import { setInfo } from '@mdd-global-state-ngrx/actions/user-info.actions';
 
+/**
+ * Represents the component for displaying a list of articles.
+ */
 @Component({
   selector: 'app-articles',
   standalone: true,
@@ -19,31 +20,52 @@ import { setInfo } from '@mdd-global-state-ngrx/actions/user-info.actions';
   imports: [RouterLink, ArticlesSummaryComponent, SpinLoaderComponent],
 })
 export class ArticlesComponent {
-  private store = inject(Store);
+  /**
+   * NgRx store for managing application state.
+   */
+  private readonly store = inject(Store);
 
-  public userService = inject(UserService);
+  /**
+   * Service for managing article-related operations.
+   */
+  private readonly articleService = inject(ArticleService);
 
-  public articleService = inject(ArticleService);
-
+  /**
+   * Signal containing user information.
+   */
   public userInfo = toSignal<UserBasicInfo>(this.store.select('userInfo'));
 
+  /**
+   * Signal indicating the sort order of articles.
+   */
   public isAscending = signal<boolean>(false);
 
+  /**
+   * Signal indicating whether articles are loading.
+   */
   public isLoading = toSignal<boolean>(this.articleService.isLoading$);
 
+  /**
+   * Signal indicating whether an error occurred while getting the list of articles.
+   */
   public hasError = toSignal<boolean>(this.articleService.hasError$);
 
+  /**
+   * Signal containing the error message if an error occurred while getting the list of articles.
+   */
   public errorMessage = toSignal<string>(this.articleService.errorMessage$);
 
-  // Array of articles
+  /**
+   * Signal containing an array of articles.
+   */
   public arrOfArticles = signal<{ articles: Array<ArticleSummary> }>({
     articles: [],
   });
 
-  // Create a Subject of type Article array
-  public test = new Subscription();
-
-  changeArticlesOrder() {
+  /**
+   * Toggles the order of articles based on publication date.
+   */
+  changeArticlesOrder = (): void => {
     this.isAscending.update((previousValue) => {
       return !previousValue;
     });
@@ -63,11 +85,9 @@ export class ArticlesComponent {
         articles: sortedArray,
       };
     });
-  }
+  };
 
   ngOnInit() {
-    console.log(this.userInfo());
-
     const subscription: Subscription = this.articleService
       .getAllArticles()
       .subscribe((articlesArray) => {
@@ -77,9 +97,5 @@ export class ArticlesComponent {
 
         subscription.unsubscribe();
       });
-  }
-
-  ngOnDestroy() {
-    this.test.unsubscribe();
   }
 }

@@ -16,6 +16,9 @@ import { Store } from '@ngrx/store';
 import { setInfo } from '@mdd-global-state-ngrx/actions/user-info.actions';
 import { Subscription } from 'rxjs';
 
+/**
+ * Represents the component for user login.
+ */
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -31,34 +34,73 @@ import { Subscription } from 'rxjs';
 })
 export class LoginComponent {
   // * Services
-  public cookiesService = inject(CookiesService);
+  /**
+   * Service for managing cookies.
+   */
+  private readonly cookiesService = inject(CookiesService);
 
-  public router = inject(Router);
+  /**
+   * Angular router service for navigation.
+   */
+  private readonly router = inject(Router);
 
-  public authService = inject(AuthService);
+  /**
+   * Authentication service for user login.
+   */
+  private readonly authService = inject(AuthService);
 
-  public formBuilder = inject(FormBuilder);
+  /**
+   * Form builder service for creating reactive forms.
+   */
+  private readonly formBuilder = inject(FormBuilder);
 
-  private store = inject(Store);
+  /**
+   * Store for managing application state.
+   */
+  private readonly store = inject(Store);
 
+  /**
+   * Holds the timeout ID for managing asynchronous actions.
+   */
   public timeoutId!: NodeJS.Timeout;
 
   // * Signals
 
+  /**
+   * Signal indicating whether to show the password.
+   */
   public showPassword = signal(false);
 
+  /**
+   * Signal indicating whether the login process is loading.
+   */
   public isLoading = toSignal<boolean>(this.authService.isLoading$);
 
+  /**
+   * Signal indicating whether an error occurred during login.
+   */
   public hasError = toSignal<boolean>(this.authService.hasError$);
 
+  /**
+   * Signal containing the error message during login.
+   */
   public errorMessage = toSignal<string>(this.authService.errorMessage$);
 
+  /**
+   * Signal containing user information.
+   */
   public userInfo = toSignal<UserBasicInfo>(this.store.select('userInfo'));
 
+  /**
+   * Indicates whether a JWT token is present.
+   * @type {boolean}
+   */
   public hasJwt: boolean = false;
 
-  // Form for login
-  public loginForm = this.formBuilder.group({
+  /**
+   * Login form for user authentication.
+   */
+  public readonly loginForm = this.formBuilder.group({
     identifier: ['', [Validators.required]],
     password: ['', Validators.required],
   });
@@ -70,13 +112,20 @@ export class LoginComponent {
     this.authService.hasError$.next(false);
   }
 
-  togglePasswordVisibility() {
+  /**
+   * Toggles the visibility of the password input
+   */
+  togglePasswordVisibility = (): void => {
     this.showPassword.update((oldValue: boolean) => {
       return !oldValue;
     });
-  }
+  };
 
-  onSubmit(event: Event) {
+  /**
+   * Handles the submission of the login form, if login is successful it will store the jwt and redirect to the articles page
+   * @param {Event} event - The submit event.
+   */
+  onSubmit = (event: Event) => {
     event.preventDefault();
 
     const { identifier, password } = this.loginForm.getRawValue();
@@ -102,5 +151,5 @@ export class LoginComponent {
           this.router.navigate(['/articles']);
         }, 3_000);
       });
-  }
+  };
 }

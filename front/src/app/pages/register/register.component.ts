@@ -18,6 +18,9 @@ import { Store } from '@ngrx/store';
 import { setInfo } from '@mdd-global-state-ngrx/actions/user-info.actions';
 import { Subscription } from 'rxjs';
 
+/**
+ * Represents the component for the registration page.
+ */
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -33,32 +36,71 @@ import { Subscription } from 'rxjs';
 })
 export class RegisterComponent {
   // * Services
-  public cookiesService = inject(CookiesService);
+  /**
+   * The CookiesService for managing cookies.
+   */
+  private readonly cookiesService = inject(CookiesService);
 
-  public router = inject(Router);
+  /**
+   * The Angular Router service.
+   */
+  private readonly router = inject(Router);
 
-  public authService = inject(AuthService);
+  /**
+   * The AuthService for handling user authentication.
+   */
+  private readonly authService = inject(AuthService);
 
-  public formBuilder = inject(FormBuilder);
+  /**
+   * The FormBuilder for building and managing forms.
+   */
+  private readonly formBuilder = inject(FormBuilder);
 
-  private store = inject(Store);
+  /**
+   * The NgRx Store for managing application state.
+   */
+  private readonly store = inject(Store);
 
+  /**
+   * Holds the timeout ID for managing asynchronous actions.
+   */
   public timeoutId!: NodeJS.Timeout;
 
   // * Signals
+  /**
+   * A signal indicating whether to show the password during registration.
+   */
   public showPassword = signal(false);
 
+  /**
+   * A signal indicating whether the registration process is in progress.
+   */
   public isLoading = toSignal<boolean>(this.authService.isLoading$);
 
+  /**
+   * A signal indicating whether an error occurred during registration.
+   */
   public hasError = toSignal<boolean>(this.authService.hasError$);
 
+  /**
+   * A signal containing the error message during registration.
+   */
   public errorMessage = toSignal<string>(this.authService.errorMessage$);
 
+  /**
+   * A signal containing the basic information of the registered user.
+   */
   public userInfo = toSignal<UserBasicInfo>(this.store.select('userInfo'));
 
+  /**
+   * Indicates whether a JWT token is present.
+   */
   public hasJwt: boolean = false;
 
-  public registerForm = this.formBuilder.group({
+  /**
+   * The registration form to collect user details.
+   */
+  public readonly registerForm = this.formBuilder.group({
     username: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required],
@@ -71,16 +113,21 @@ export class RegisterComponent {
     this.authService.hasError$.next(false);
   }
 
+  /**
+   * Toggles the visibility of the password input
+   */
   togglePasswordVisibility() {
     this.showPassword.update((oldValue: boolean) => {
       return !oldValue;
     });
   }
 
-  onSubmit(event: Event) {
+  /**
+   * Handles the form submission for user registration.
+   * @param event The form submission event.
+   */
+  onSubmit = (event: Event) => {
     event.preventDefault();
-
-    console.log(this.registerForm);
 
     const { username, email, password } = this.registerForm.getRawValue();
 
@@ -106,5 +153,5 @@ export class RegisterComponent {
           this.router.navigate(['/articles']);
         }, 3_000);
       });
-  }
+  };
 }
