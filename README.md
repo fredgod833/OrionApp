@@ -201,42 +201,6 @@ INSERT INTO Users (ID, username, email, password)
 VALUES 
     (1, 'user', 'user@user.com', '$2a$10$Cugtb5QEITQsbHMuuBWKqecku/5hup5afBWrVqJdU6nN9Ov/wNYy2'),
     (2, 'test', 'test@test.com', '$2a$10$Cugtb5QEITQsbHMuuBWKqecku/5hup5afBWrVqJdU6nN9Ov/wNYy2');
-
-INSERT INTO Themes (ID, title, description)
-VALUES 
-    (1, 'Python', 'Articles related to Python programming language'),
-    (2, 'TypeScript', 'Articles related to TypeScript programming language'),
-    (3, 'Java', 'Articles related to Java programming language'),
-    (4, 'SEO', 'Articles related to Search Engine Optimization'),
-    (5, 'SASS', 'Articles related to SASS (Syntactically Awesome Style Sheets)'),
-    (6, 'C++', 'Articles related to C++ programming language');
-
-INSERT INTO Articles (ID, userID, themeID, title, description)
-VALUES
-    (1, 1, 1, 'Introduction to Python Programming', 'Learn the basics of Python programming language, including variables, loops, and functions.'),
-    (2, 1, 2, 'Getting Started with TypeScript', 'Discover how to start using TypeScript for building scalable and maintainable web applications.'),
-    (3, 1, 3, 'Java Fundamentals for Beginners', 'Explore the fundamentals of Java programming language, including object-oriented concepts and syntax.'),
-    (4, 1, 4, 'Mastering SEO Techniques', 'Learn advanced SEO techniques to improve website ranking and visibility on search engines.'),
-    (5, 1, 5, 'SASS: Enhancing CSS Development', 'Explore the features of SASS and how it can streamline CSS development and maintainability.'),
-    (6, 1, 6, 'Advanced C++ Programming Concepts', 'Dive into advanced C++ programming concepts, including templates, polymorphism, and memory management.');
-
-INSERT INTO Comments (ID, userID, articleID, comment)
-VALUES
-    (1, 2, 1, 'Great introduction to Python!'),
-    (2, 2, 1, 'I found this article very helpful.'),
-    (3, 2, 2, 'Awesome guide to TypeScript!'),
-    (4, 2, 5, 'I learned a lot about SASS from this article.'),
-    (5, 2, 6, 'C++ programming concepts explained well.'),
-    (6, 2, 6, 'Looking forward to more articles on C++.'),
-    (7, 2, 6, 'Great article, thank you!');
-
-INSERT INTO Subscriptions (ID, userID, themeID, isSubscribed, createdAt, updatedAt)
-VALUES
-    (1, 1, 1, TRUE, NOW(), NOW()),
-    (2, 1, 3, TRUE, NOW(), NOW()),
-    (3, 1, 4, TRUE, NOW(), NOW()),
-    (4, 2, 2, TRUE, NOW(), NOW()),
-    (5, 2, 5, TRUE, NOW(), NOW());    
 ```
 
 ### 3. Node.js
@@ -352,6 +316,29 @@ logging.level.org.springframework.boot.web.embedded.tomcat=INFO
 ## Dependencies
 
 ### Front-End
+
+**Angular CLI Dependencies:**
+
+- `@angular-devkit/build-angular`
+- `@angular/cli`
+- `@angular/compiler-cli`
+
+**Utility Dependencies:**
+
+- `@lephenix47/cookies-utility@1.2.0`
+- `@lephenix47/webstorage-utility@1.2.1`
+
+**Icon Libraries:**
+
+- `@ng-icons/bootstrap-icons@27.1.0`
+- `@ng-icons/core@27.1.0`
+- `@ng-icons/heroicons@27.1.0`
+
+**State Management:**
+I chose NgRx to handle the global state management
+
+- `@ngrx/signals@17.1.1`
+- `@ngrx/store@17.1.1`
 
 ### Back-End
 
