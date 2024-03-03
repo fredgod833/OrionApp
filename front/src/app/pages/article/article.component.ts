@@ -151,9 +151,16 @@ export class ArticleComponent {
       });
   };
 
-  submitCommentWithShortcut = (event: KeyboardEvent) => {
+  /**
+   * Submits a comment when the user presses the `Ctrl` + `Enter` key combination.
+   *
+   * @param {KeyboardEvent} event - The keyboard event triggered by the user.
+   * @returns {void}
+   */
+  submitCommentWithShortcut = (event: KeyboardEvent): void => {
     const userWantsToSendCommentWithShortcut: boolean =
       event.ctrlKey && event.key === 'Enter';
+
     if (userWantsToSendCommentWithShortcut) {
       this.onCommentSubmission(event);
     }
