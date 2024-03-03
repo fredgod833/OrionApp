@@ -47,7 +47,10 @@ export class HeaderComponent {
   /**
    * Represents the authentication status of the user. Initially set to `false`.
    */
-  public passedAuthentication: boolean = false;
+  public passedAuthentication: boolean =
+    this.router.url !== '/register' &&
+    this.router.url !== '/login' &&
+    this.cookiesService.getJwt() !== null;
 
   ngOnInit() {
     // Subscribe to NavigationEnd events to update authentication status on route changes
