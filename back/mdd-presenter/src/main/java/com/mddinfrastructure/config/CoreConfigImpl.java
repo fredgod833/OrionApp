@@ -1,21 +1,19 @@
 package com.mddinfrastructure.config;
 
-import com.mddcore.domain.repository.IArticleRepository;
-import com.mddcore.domain.repository.ICommentRepository;
-import com.mddcore.domain.repository.ISubjectRepository;
-import com.mddcore.domain.repository.IUserRepository;
+import com.mddcore.domain.repository.*;
 import com.mddcore.usecases.article.CreateArticleUseCase;
 import com.mddcore.usecases.article.GetAllArticleUseCase;
 import com.mddcore.usecases.article.GetArticleUseCase;
-import com.mddcore.usecases.auth.IJwtExecFinal;
 import com.mddcore.usecases.auth.IPasswordEncodeFinal;
 import com.mddcore.usecases.comment.CreateCommentUseCase;
 import com.mddcore.usecases.comment.GetAllCommentUseCase;
 import com.mddcore.usecases.subject.GetAllSubjectUseCase;
 import com.mddcore.usecases.subject.GetSubjectUseCase;
 import com.mddcore.usecases.user.*;
+import com.mddcore.usecases.user.token.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.annotation.Transactional;
 
 @Configuration
 public class CoreConfigImpl {
@@ -30,6 +28,7 @@ public class CoreConfigImpl {
     public DeleteUserUseCase deleteUserUseCase(IUserRepository userRepository) {
         return new DeleteUserUseCase(userRepository);
     }
+
     @Bean
     public UpdateUserUseCase updateUserUseCase(IUserRepository userRepository, IPasswordEncodeFinal passwordEncodeFinal) {
         return new UpdateUserUseCase(userRepository, passwordEncodeFinal);
@@ -40,11 +39,39 @@ public class CoreConfigImpl {
     public RegisterUseCase registerUseCase(IUserRepository userRepository, IPasswordEncodeFinal passwordEncodeFinal) {
         return new RegisterUseCase(userRepository, passwordEncodeFinal);
     }
+
     @Bean
-    public LoginUseCase loginUseCase(IJwtExecFinal jwtExecFinal) {
-        return new LoginUseCase(jwtExecFinal);
+    public LogoutUserUseCase logoutUserUseCase(IRefreshTokenRepository repository) {
+        return new LogoutUserUseCase(repository);
     }
 
+    // REFRESH TOKEN
+
+    @Bean
+    public CreateRefreshTokenUseCase createRefreshTokenUseCase(IRefreshTokenRepository repository, IUserRepository userRepository) {
+        return new CreateRefreshTokenUseCase(repository, userRepository);
+    }
+
+    @Bean
+    @Transactional
+    public DeleteRefreshTokenUseCase deleteRefreshTokenUseCase(IRefreshTokenRepository repository) {
+        return new DeleteRefreshTokenUseCase(repository);
+    }
+
+    @Bean
+    public FindByTokenUseCase findByTokenUseCase(IRefreshTokenRepository repository) {
+        return new FindByTokenUseCase(repository);
+    }
+
+    @Bean
+    public VerifyExpirationUseCase verifyExpirationUseCase(IRefreshTokenRepository repository) {
+        return new VerifyExpirationUseCase(repository);
+    }
+
+    @Bean
+    public UpdateRefreshTokenUseCase updateRefreshTokenUseCase(IRefreshTokenRepository repository) {
+        return new UpdateRefreshTokenUseCase(repository);
+    }
     // COMMENT
     @Bean
     public CreateCommentUseCase createCommentUseCase(ICommentRepository commentRepository, GetArticleUseCase getArticleUseCase) {

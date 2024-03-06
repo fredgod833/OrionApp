@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 @RestController
-@RequestMapping("/subject")
+@RequestMapping("/api/subject")
 public interface SubjectResource {
 
     @GetMapping()

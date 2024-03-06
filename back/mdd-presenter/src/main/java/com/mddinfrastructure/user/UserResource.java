@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.concurrent.CompletableFuture;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 public interface UserResource {
     @GetMapping("/{id}")
     CompletableFuture<UserResponse> getUserById(@PathVariable Long id);

@@ -16,7 +16,7 @@ public class GetUserUseCase extends UseCase<GetUserUseCase.InputValues, GetUserU
         User user = userRepository.findById(input.id()).orElse(null);
 
         if(user == null) {
-            throw new IllegalArgumentException("User not found with id : " + input.id());
+            throw new IllegalArgumentException("User not found with userId : " + input.id());
         }
 
         return new OutputValues(user);

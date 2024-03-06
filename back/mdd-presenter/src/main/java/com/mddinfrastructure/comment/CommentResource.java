@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 @RestController
-@RequestMapping("/comment")
+@RequestMapping("/api/comment")
 public interface CommentResource {
 
     @GetMapping()

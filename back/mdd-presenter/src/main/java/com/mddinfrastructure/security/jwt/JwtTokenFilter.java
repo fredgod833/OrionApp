@@ -1,6 +1,5 @@
 package com.mddinfrastructure.security.jwt;
 
-import com.mddinfrastructure.security.userdetails.CustomUserDetails;
 import com.mddinfrastructure.security.userdetails.CustomUserDetailsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,13 +18,15 @@ import java.io.IOException;
 
 @Component
 public class JwtTokenFilter extends OncePerRequestFilter {
-    private JwtTokenProvider jwtTokenProvider;
-    private CustomUserDetailsService customUserDetailsService;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final CustomUserDetailsService customUserDetailsService;
+    private final CookieJwt cookieJwt;
     private final Logger logger = LoggerFactory.getLogger(JwtTokenFilter.class);
 
-    public JwtTokenFilter(JwtTokenProvider jwtTokenProvider, CustomUserDetailsService customUserDetailsService) {
+    public JwtTokenFilter(JwtTokenProvider jwtTokenProvider, CustomUserDetailsService customUserDetailsService, CookieJwt cookieJwt) {
         this.jwtTokenProvider = jwtTokenProvider;
         this.customUserDetailsService = customUserDetailsService;
+        this.cookieJwt = cookieJwt;
     }
 
     /**
@@ -41,41 +42,25 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-//        try {
-        String token = jwtTokenProvider.extractToken(request);
+        try {
+        String token = parseJwt(request);
         if (token != null && jwtTokenProvider.validateToken(token)) {
-            logger.info("Jwt getUsername = {}", jwtTokenProvider.extractUsername(token));
             UserDetails userDetails = customUserDetailsService.loadUserById(jwtTokenProvider.getUserId(token));
-            logger.info("User details : {}", userDetails.toString());
+
             UsernamePasswordAuthenticationToken authentication =
                     new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            logger.info("auth principal : {}", authentication.getPrincipal());
         }
-//        } catch (ExpiredJwtException ex) {
-//            String isRefreshToken = request.getHeader("isRefreshToken");
-//            String requestUrl = request.getRequestURL().toString();
-//            if (isRefreshToken != null && isRefreshToken.equals("true") && requestUrl.contains("refreshtoken")) {
-//                allowForRefreshToken(ex, request);
-//            } else {
-//                request.setAttribute("exception", ex);
-//            }
-//    }
+        } catch (Exception e) {
+            logger.error("Cannot set user authentication: {}", e);
+        }
         filterChain.doFilter(request, response);
     }
 
-    public String refreshToken(String refreshToken) {
-        Long user = jwtTokenProvider.getUserId(refreshToken);
-        UserDetails userDetails = customUserDetailsService.loadUserById(user);
-       return jwtTokenProvider.createRefreshToken((CustomUserDetails) userDetails);
+    private String parseJwt(HttpServletRequest request) {
+        return cookieJwt.getJwtFromCookies(request);
     }
-
-//    private void allowForRefreshToken(ExpiredJwtException ex, HttpServletRequest request) {
-//        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-//                null, null, null
-//        );
-//        SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-//        request.setAttribute("claims", ex.getClaims());
-//    }
 }

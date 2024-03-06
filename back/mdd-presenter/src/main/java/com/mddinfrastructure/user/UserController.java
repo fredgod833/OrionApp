@@ -1,7 +1,6 @@
 package com.mddinfrastructure.user;
 
 import com.mddcore.usecases.UseCaseExecutor;
-import com.mddcore.usecases.auth.IJwtExecFinal;
 import com.mddcore.usecases.user.DeleteUserUseCase;
 import com.mddcore.usecases.user.GetUserUseCase;
 import com.mddcore.usecases.user.UpdateUserUseCase;
@@ -10,6 +9,7 @@ import com.mddinfrastructure.mapper.UserUpdateMapper;
 import com.mddinfrastructure.request.UserSettingRequest;
 import com.mddinfrastructure.response.ApiResponse;
 import com.mddinfrastructure.response.UserResponse;
+import com.mddinfrastructure.security.jwt.JwtTokenProvider;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,15 +24,15 @@ public class UserController implements UserResource {
     private final GetUserUseCase getUserUseCase;
     private final DeleteUserUseCase deleteUserUseCase;
     private final UpdateUserUseCase updateUserUseCase;
-    private final IJwtExecFinal jwtExecFinal;
+    private final JwtTokenProvider jwtTokenProvider;
 
-    public UserController(UseCaseExecutor useCaseExecutor, GetUserUseCase getUserUseCase, DeleteUserUseCase deleteUserUseCase,
-                          UpdateUserUseCase updateUserUseCase, IJwtExecFinal jwtExecFinal) {
+    public UserController(UseCaseExecutor useCaseExecutor, GetUserUseCase getUserUseCase,
+                          DeleteUserUseCase deleteUserUseCase, UpdateUserUseCase updateUserUseCase, JwtTokenProvider jwtTokenProvider) {
         this.useCaseExecutor = useCaseExecutor;
         this.getUserUseCase = getUserUseCase;
         this.deleteUserUseCase = deleteUserUseCase;
         this.updateUserUseCase = updateUserUseCase;
-        this.jwtExecFinal = jwtExecFinal;
+        this.jwtTokenProvider = jwtTokenProvider;
     }
 
     @Override
@@ -46,7 +46,7 @@ public class UserController implements UserResource {
 
     @Override
     public CompletableFuture<ResponseEntity<ApiResponse>> deleteUserById(@PathVariable Long id) {
-        Long authId = jwtExecFinal.getAuthenticateUser();
+        Long authId = jwtTokenProvider.getAuthenticateUser();
         return useCaseExecutor.execute(
                 deleteUserUseCase,
                 new DeleteUserUseCase.InputValues(id, authId),
@@ -62,7 +62,7 @@ public class UserController implements UserResource {
 
     @Override
     public CompletableFuture<UserResponse> updateUser(@PathVariable Long id, @RequestBody UserSettingRequest userSettingRequest) {
-        Long authId = jwtExecFinal.getAuthenticateUser();
+        Long authId = jwtTokenProvider.getAuthenticateUser();
         return useCaseExecutor.execute(
                 updateUserUseCase,
                 new UpdateUserUseCase.InputValues(id, UserUpdateMapper.INSTANCE.toDomain(userSettingRequest), authId),
@@ -73,7 +73,7 @@ public class UserController implements UserResource {
 
     @Override
     public CompletableFuture<ResponseEntity<?>> getUserAuth() {
-        Long authId =  jwtExecFinal.getAuthenticateUser();
+        Long authId =  jwtTokenProvider.getAuthenticateUser();
         ResponseEntity<Long> responseEntity = ResponseEntity.ok(authId);
         return CompletableFuture.completedFuture(responseEntity);
     }

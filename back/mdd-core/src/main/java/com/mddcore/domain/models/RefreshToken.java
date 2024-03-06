@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
+
 @AllArgsConstructor
 @EqualsAndHashCode
 @Data
@@ -12,15 +14,15 @@ import lombok.NoArgsConstructor;
 public class RefreshToken {
     private Long id;
     private User user;
-    private String accessToken;
-    private String refreshToken;
+    private String token;
+    private Instant expirationDate;
 
-    public static RefreshToken newInstance(User user, String accessToken, String refreshToken) {
+    public static RefreshToken newInstance(User user, String token, Instant expiryDate) {
         return new RefreshToken(
                 null,
                 user,
-                accessToken,
-                refreshToken
+                token,
+                expiryDate
         );
     }
 }
