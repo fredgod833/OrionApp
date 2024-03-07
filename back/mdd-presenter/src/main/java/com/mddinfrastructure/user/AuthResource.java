@@ -3,10 +3,7 @@ package com.mddinfrastructure.user;
 import com.mddcore.usecases.auth.SignInRequest;
 import com.mddinfrastructure.request.UserSettingRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.concurrent.CompletableFuture;
@@ -20,7 +17,7 @@ public interface AuthResource {
     @PostMapping("/login")
     CompletableFuture<ResponseEntity<?>> loginUser(@RequestBody SignInRequest signInRequest);
 
-    @PostMapping("/signout")
+    @DeleteMapping("/signout")
     CompletableFuture<ResponseEntity<?>> logoutUser();
 
     @PostMapping("/refresh-token")

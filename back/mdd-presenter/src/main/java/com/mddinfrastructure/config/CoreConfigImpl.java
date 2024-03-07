@@ -9,6 +9,8 @@ import com.mddcore.usecases.comment.CreateCommentUseCase;
 import com.mddcore.usecases.comment.GetAllCommentUseCase;
 import com.mddcore.usecases.subject.GetAllSubjectUseCase;
 import com.mddcore.usecases.subject.GetSubjectUseCase;
+import com.mddcore.usecases.subscription.AddSubscriptionUseCase;
+import com.mddcore.usecases.subscription.RemoveSubscriptionUseCase;
 import com.mddcore.usecases.user.*;
 import com.mddcore.usecases.user.token.*;
 import org.springframework.context.annotation.Bean;
@@ -32,6 +34,18 @@ public class CoreConfigImpl {
     @Bean
     public UpdateUserUseCase updateUserUseCase(IUserRepository userRepository, IPasswordEncodeFinal passwordEncodeFinal) {
         return new UpdateUserUseCase(userRepository, passwordEncodeFinal);
+    }
+
+    // SUBSCRIPTION
+
+    @Bean
+    public AddSubscriptionUseCase addSubscriptionUseCase(ISubscriptionRepository subscriptionRepository, IUserRepository userRepository, ISubjectRepository subjectRepository) {
+        return new AddSubscriptionUseCase(subscriptionRepository, userRepository, subjectRepository);
+    }
+
+    @Bean
+    public RemoveSubscriptionUseCase removeSubscriptionUseCase(ISubscriptionRepository subscriptionRepository) {
+        return new RemoveSubscriptionUseCase(subscriptionRepository);
     }
 
     // AUTH

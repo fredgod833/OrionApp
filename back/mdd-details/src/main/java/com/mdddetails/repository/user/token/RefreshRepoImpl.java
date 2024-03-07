@@ -4,6 +4,8 @@ import com.mddcore.domain.models.RefreshToken;
 import com.mddcore.domain.repository.IRefreshTokenRepository;
 import com.mdddetails.mapper.RefreshMapper;
 import com.mdddetails.models.RefreshTokenEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -13,6 +15,8 @@ public class RefreshRepoImpl implements IRefreshTokenRepository {
 
     private final TokenJpaRepo repository;
     private final RefreshMapper refreshMapper;
+
+    Logger logger = LoggerFactory.getLogger(RefreshRepoImpl.class);
 
     public RefreshRepoImpl(TokenJpaRepo repository, RefreshMapper refreshMapper) {
         this.repository = repository;
@@ -26,7 +30,10 @@ public class RefreshRepoImpl implements IRefreshTokenRepository {
 
     @Override
     public void deleteByUserId(Long id) {
+        logger.info("Before deleteByUserId in refreshRepoImpl, user id {}", id);
         repository.deleteByUserId(id);
+
+        logger.info("after deleteByUserId in refreshRepoImpl");
     }
 
     @Override

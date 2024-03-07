@@ -95,11 +95,13 @@ public class AuthController implements AuthResource {
     public CompletableFuture<ResponseEntity<?>> logoutUser() {
         Long authId = jwtTokenProvider.getAuthenticateUser();
 
-        useCaseExecutor.execute(
+        CompletableFuture<?> deleteRefreshToken =  useCaseExecutor.execute(
                 deleteRefreshTokenUseCase,
                 new DeleteRefreshTokenUseCase.InputValues(authId),
                 outputValues -> outputValues
         );
+
+        deleteRefreshToken.join();
 
         ResponseCookie jwtCookie = cookieJwt.getCleanJwtCookie();
         ResponseCookie jwtRefreshCookie = cookieJwt.getCleanJwtRefreshCookie();
