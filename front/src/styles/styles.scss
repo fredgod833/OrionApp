@@ -1,4 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.mat-card-header-text {
+  margin: 0 !important;
+}
+
+.btn {
+  color: white;
+  background-color: #7763C5;
+  font-size: 16px;
+  font-weight: bold;
+  border: 0;
+  border-radius: 8px;
+  padding: 10px 20px;
+}
