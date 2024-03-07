@@ -1,5 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Router} from "@angular/router";
+import {SessionService} from "../../../services/session.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-navbar',
@@ -10,7 +12,7 @@ export class NavbarComponent implements OnInit {
 
   @Output() public sidenavToggle = new EventEmitter();
 
-  constructor(private router: Router,) { }
+  constructor(private sessionService: SessionService) { }
 
   ngOnInit(): void {
   }
@@ -19,7 +21,7 @@ export class NavbarComponent implements OnInit {
     this.sidenavToggle.emit();
   }
 
-  $isLogged() {
-    return false
+  public $isLogged(): Observable<boolean> {
+    return this.sessionService.$isLogged();
   }
 }

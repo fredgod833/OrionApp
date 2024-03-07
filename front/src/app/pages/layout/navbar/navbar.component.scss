@@ -11,6 +11,8 @@ a:hover, a:active {
   list-style-type: none;
   padding: 0;
   margin: 0;
+  display: grid;
+  place-items: center;
 }
 
 @media(max-width: 959px) {
@@ -31,7 +33,8 @@ a:hover, a:active {
 .toolbar {
   position: sticky;
   background: white;
-  width: 100%; height: 80px;
+  width: 100%;
+  height: 80px;
   border-bottom: 1px solid black;
 }
 
@@ -39,3 +42,4 @@ a:hover, a:active {
   max-height: 15vh;
   max-width: 20vh;
 }
+

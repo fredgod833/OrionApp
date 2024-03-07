@@ -1,0 +1,18 @@
+/* Displayed only on small screen */
+@media (min-width: 600px) {
+  .login {
+    display: none !important;
+  }
+}
+
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+img {
+  margin: 0;
+  max-width: 25vh;
+  max-height: 25vh;
+}
