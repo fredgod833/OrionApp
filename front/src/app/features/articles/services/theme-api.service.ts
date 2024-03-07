@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Theme} from "../interfaces/theme";
 import {ThemesResponse} from "../interfaces/api/themesResponse";
 
 @Injectable({

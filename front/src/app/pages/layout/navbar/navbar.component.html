@@ -11,14 +11,17 @@
     </a>
   </div>
 
-  <div fxFlex fxLayout fxLayoutAlign="end" fxHide.xs *ngIf="$isLogged();">
+  <div fxFlex fxLayout fxLayoutAlign="end" fxHide.xs *ngIf="$isLogged() | async;">
     <ul fxLayout fxLayoutGap="15px" class="navigation-items">
       <li>
-        <a routerLink="/owner">Articles</a>
+        <a routerLink="/articles">Articles</a>
       </li>
       <li>
-        <a routerLink="/account">Thèmes</a>
+        <a routerLink="/themes">Thèmes</a>
       </li>
+      <button id="user-profile-btn" mat-fab routerLink="/home/me" [color]="'primary'">
+        <mat-icon>person_filled</mat-icon>
+      </button>
     </ul>
   </div>
 </mat-toolbar>

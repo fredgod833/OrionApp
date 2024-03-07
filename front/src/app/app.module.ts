@@ -13,10 +13,13 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {MatCardModule} from "@angular/material/card";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {NgOptimizedImage} from "@angular/common";
+import {JwtInterceptor} from "./interceptors/jwt.interceptor";
+import {NotFoundComponent} from "./pages/not-found/not-found.component";
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, NavbarComponent, SidenavListComponent],
+  declarations: [AppComponent, HomeComponent, NavbarComponent, SidenavListComponent, NotFoundComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -29,8 +32,11 @@ import {HttpClientModule} from "@angular/common/http";
     FlexLayoutModule,
     MatCardModule,
     HttpClientModule,
+    NgOptimizedImage
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

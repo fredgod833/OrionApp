@@ -1,7 +1,7 @@
-/* You can add global styles to this file, and also import other style files */
-
 html, body {
+  margin: 0;
   height: 100%;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 body {
@@ -13,6 +13,11 @@ body {
   margin: 0 !important;
 }
 
+.mat-form-field-infix {
+  padding: 0;
+  border: 0;
+}
+
 .btn {
   color: white;
   background-color: #7763C5;
@@ -22,3 +27,31 @@ body {
   border-radius: 8px;
   padding: 10px 20px;
 }
+
+.btn:hover {
+  background-color: #9c8ce3;
+}
+
+#back-btn {
+  z-index: 1;
+  top: 2vh;
+  left: 2vh;
+  font-size: 2em;
+}
+
+.mat-form-field-underline {
+  height: 0 !important;
+}
+
+/*
+• style
+• display
+• box-sizing
+• margin, padding, width and height -> 1
+
+  ==== 1 ====
+• margin
+• border
+• padding
+• width and height
+ */
