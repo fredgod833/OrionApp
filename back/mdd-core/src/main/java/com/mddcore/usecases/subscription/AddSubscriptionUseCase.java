@@ -8,11 +8,13 @@ import com.mddcore.domain.repository.ISubscriptionRepository;
 import com.mddcore.domain.repository.IUserRepository;
 import com.mddcore.usecases.UseCase;
 
+
 public class AddSubscriptionUseCase extends UseCase<AddSubscriptionUseCase.InputValues, AddSubscriptionUseCase.OutputValues> {
 
     private final ISubscriptionRepository repository;
     private final IUserRepository userRepository;
     private final ISubjectRepository subjectRepository;
+
 
     public AddSubscriptionUseCase(ISubscriptionRepository repository, IUserRepository userRepository, ISubjectRepository subjectRepository) {
         this.repository = repository;
@@ -30,9 +32,13 @@ public class AddSubscriptionUseCase extends UseCase<AddSubscriptionUseCase.Input
                 throw new IllegalArgumentException("Subject or User can not be null");
             }
 
+            if (isAlreadySubscribed(user, input.subjectId())) {
+                throw new IllegalStateException("Already subscribed to this subject");
+            }
+
             Subscription subscription = Subscription.newInstance(
                     subject,
-                    user
+                    input.userId()
             );
 
             repository.save(subscription);
@@ -41,6 +47,10 @@ public class AddSubscriptionUseCase extends UseCase<AddSubscriptionUseCase.Input
         } catch (Exception e) {
             throw new IllegalArgumentException("Error while adding subscription", e);
         }
+    }
+
+    private Boolean isAlreadySubscribed(User user, Long subjectId) {
+        return user.getSubscriptionList().stream().anyMatch(listSubscriptionId -> listSubscriptionId.getSubject().getId().equals(subjectId));
     }
 
     public record InputValues(Long userId, Long subjectId) implements UseCase.InputValues {}

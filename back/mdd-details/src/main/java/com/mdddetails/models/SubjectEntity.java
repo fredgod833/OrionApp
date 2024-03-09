@@ -1,5 +1,6 @@
 package com.mdddetails.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,6 +25,10 @@ public class SubjectEntity {
     @NotNull
     private String description;
     @OneToMany(mappedBy = "subject", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<ArticleEntity> articleList = new ArrayList<>();
+    @OneToMany(mappedBy = "subject", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<SubscriptionEntity> subscriptionList = new ArrayList<>();
 }
 

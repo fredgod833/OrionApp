@@ -28,7 +28,7 @@ public class CreateCommentUseCase extends UseCase<CreateCommentUseCase.InputValu
             );
             commentRepository.save(comment);
         } catch (Exception e) {
-            throw new IllegalArgumentException("Error while creating new Article, cant be save : " + e);
+            throw new IllegalArgumentException("Error while creating new Comment, cant be save : " + e);
         }
         return new OutputValues(true);
     }

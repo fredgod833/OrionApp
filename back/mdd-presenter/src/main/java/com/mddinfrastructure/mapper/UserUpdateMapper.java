@@ -15,5 +15,4 @@ public interface UserUpdateMapper extends EntityMapper<User, UserSettingRequest>
     @Mapping(target = "subscriptionList", ignore = true)
     @Mapping(target = "picture", ignore = true)
     User toDomain(UserSettingRequest dto);
-
 }

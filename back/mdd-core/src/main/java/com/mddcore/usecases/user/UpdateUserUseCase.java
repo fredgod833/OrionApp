@@ -44,7 +44,6 @@ public class UpdateUserUseCase extends UseCase<UpdateUserUseCase.InputValues, Up
     }
 
 
-
     public record InputValues(Long id, User user, Long authId) implements UseCase.InputValues { }
 
 

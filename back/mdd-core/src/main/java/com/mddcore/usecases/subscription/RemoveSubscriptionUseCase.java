@@ -12,7 +12,7 @@ public class RemoveSubscriptionUseCase extends UseCase<RemoveSubscriptionUseCase
         public OutputValues execute(InputValues input) {
             try {
                 repository.deleteById(input.subscriptionId());
-                return new OutputValues();
+                return new OutputValues(true);
             } catch (Exception e) {
                 throw new IllegalArgumentException("Error while deleting subscription in db", e);
             }
@@ -20,6 +20,6 @@ public class RemoveSubscriptionUseCase extends UseCase<RemoveSubscriptionUseCase
 
         public record InputValues(Long subscriptionId) implements UseCase.InputValues {}
 
-        public record OutputValues() implements UseCase.OutputValues {}
+        public record OutputValues(Boolean success) implements UseCase.OutputValues {}
 }
 

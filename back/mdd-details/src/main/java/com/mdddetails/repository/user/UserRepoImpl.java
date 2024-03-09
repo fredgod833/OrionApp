@@ -5,7 +5,6 @@ import com.mddcore.domain.repository.IUserRepository;
 import com.mdddetails.mapper.UserDetailsMapper;
 import com.mdddetails.models.UserEntity;
 import org.springframework.stereotype.Repository;
-
 import java.util.Optional;
 
 @Repository

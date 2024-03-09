@@ -9,6 +9,4 @@ import org.mapstruct.Mapping;
 public interface CommentMapper extends EntMapper<Comment, CommentEntity> {
     @Mapping(target = "article", ignore = true)
     Comment toDomain(CommentEntity entity);
-
-    CommentEntity toEntity(Comment entity);
 }

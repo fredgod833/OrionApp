@@ -12,13 +12,13 @@ import lombok.NoArgsConstructor;
 public class Subscription {
     private Long id;
     private Subject subject;
-    private User user;
+    private Long userId;
 
-    public static Subscription newInstance(Subject subject, User user) {
+    public static Subscription newInstance(Subject subject, Long userId) {
         return new Subscription(
                 null,
                 subject,
-                user
+                userId
         );
     }
 }

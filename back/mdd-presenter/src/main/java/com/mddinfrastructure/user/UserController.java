@@ -4,7 +4,6 @@ import com.mddcore.usecases.UseCaseExecutor;
 import com.mddcore.usecases.user.DeleteUserUseCase;
 import com.mddcore.usecases.user.GetUserUseCase;
 import com.mddcore.usecases.user.UpdateUserUseCase;
-import com.mddinfrastructure.mapper.UserPresenterMapper;
 import com.mddinfrastructure.mapper.UserUpdateMapper;
 import com.mddinfrastructure.request.UserSettingRequest;
 import com.mddinfrastructure.response.ApiResponse;
@@ -40,8 +39,7 @@ public class UserController implements UserResource {
         return useCaseExecutor.execute(
                 getUserUseCase,
                 new GetUserUseCase.InputValues(id),
-                (outputValues) -> UserPresenterMapper.INSTANCE.toPresenter(outputValues.user())
-        );
+                (outputValues) -> UserResponse.from(outputValues.user()));
     }
 
     @Override
@@ -66,9 +64,7 @@ public class UserController implements UserResource {
         return useCaseExecutor.execute(
                 updateUserUseCase,
                 new UpdateUserUseCase.InputValues(id, UserUpdateMapper.INSTANCE.toDomain(userSettingRequest), authId),
-                outputValues -> UserPresenterMapper.INSTANCE.toPresenter(outputValues.user())
-        );
-
+                outputValues -> UserResponse.from(outputValues.user()));
     }
 
     @Override

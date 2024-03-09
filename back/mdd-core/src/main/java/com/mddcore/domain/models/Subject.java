@@ -16,13 +16,15 @@ public class Subject {
     private String name;
     private String description;
     private List<Article> articleList;
+    private List<Subscription> subscriptionList;
 
-    public static Subject newInstance(String name, String description, List<Article> articleList) {
+    public static Subject newInstance(String name, String description, List<Article> articleList, List<Subscription> subscriptionList) {
         return new Subject(
                 null,
                 name,
                 description,
-                articleList
+                articleList,
+                subscriptionList
         );
     }
 }

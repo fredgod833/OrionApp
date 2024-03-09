@@ -14,14 +14,12 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class SubscriptionEntity {
         @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        @Column(name = "subscriptions_id")
+        @GeneratedValue(strategy = GenerationType.AUTO)
+        @Column(name = "subscription_id")
         private Long id;
-
         @ManyToOne
         @JoinColumn(name = "subject_id", referencedColumnName = "subject_id")
         private SubjectEntity subject;
-
         @ManyToOne
         @JoinColumn(name = "user_id", referencedColumnName = "user_id")
         private UserEntity user;
