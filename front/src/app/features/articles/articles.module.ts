@@ -8,6 +8,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {ThemeApiService} from "./services/theme-api.service";
+import {MatInputModule} from "@angular/material/input";
 
 @NgModule({
   declarations: [ThemesComponent],
@@ -19,6 +20,10 @@ import {ThemeApiService} from "./services/theme-api.service";
     MatButtonModule,
     MatGridListModule,
     FlexLayoutModule,
+    MatInputModule
+  ],
+  exports: [
+    ThemesComponent
   ],
   providers: [ThemeApiService]
 })

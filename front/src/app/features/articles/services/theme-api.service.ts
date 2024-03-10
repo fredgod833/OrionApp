@@ -10,10 +10,10 @@ export class ThemeApiService {
 
   private pathService = '/api/themes';
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private http: HttpClient) {
   }
 
   public all(): Observable<ThemesResponse> {
-    return this.httpClient.get<ThemesResponse>(this.pathService);
+    return this.http.get<ThemesResponse>(this.pathService);
   }
 }

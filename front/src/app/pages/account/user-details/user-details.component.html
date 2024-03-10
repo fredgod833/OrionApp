@@ -1,0 +1,43 @@
+<div class="register" fxLayout="row" fxLayoutAlign="center center">
+  <mat-card class="mat-elevation-z0">
+    <mat-card-header fxLayoutAlign="center center">
+      <mat-card-title>Profil utilisateur</mat-card-title>
+    </mat-card-header>
+    <form class="register-form" [formGroup]="form" (ngSubmit)="submit()">
+      <mat-card-content fxLayout="column">
+        <mat-form-field>
+          <input matInput type="text" formControlName="email">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput type="text" formControlName="username">
+        </mat-form-field>
+      </mat-card-content>
+      <button class="btn" type="submit" [disabled]="form.pristine" [ngClass]="{ 'disabled-btn': form.pristine }">
+        Sauvegarder
+      </button>
+      <span *ngIf="onError" class="error">An error occurred</span>
+      <button id="logout" (click)="logout()" mat-button color="warn">Se déconnecter</button>
+    </form>
+  </mat-card>
+</div>
+
+<div class="list" style="display: flex; flex-direction: column; align-items: center; margin-top: 0">
+  <mat-divider style="padding: 10px; border-top-color: black; width: 90%"></mat-divider>
+  <div class="items" fxLayout="row wrap" fxLayout.lt-md="column">
+    <mat-card class="item" *ngFor="let theme of themes" fxFlex>
+      <mat-card-header>
+        <mat-card-title>{{ theme.name }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Description: {{ theme.description | slice: 0:250 }}
+          <span *ngIf="theme.description.length > 250">...</span></p>
+      </mat-card-content>
+      <mat-card-actions fxLayoutAlign="center">
+        <button class="btn" (click)="unSubscribe(theme.id)">
+          <span>Se désabonner</span>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
+

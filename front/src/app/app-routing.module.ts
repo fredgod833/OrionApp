@@ -4,6 +4,8 @@ import {HomeComponent} from './pages/home/home.component';
 import {NotFoundComponent} from "./pages/not-found/not-found.component";
 import {AuthGuard} from "./guards/auth.guard";
 import {UnauthGuard} from "./guards/unauth.guard";
+import {UserDetailsComponent} from "./pages/account/user-details/user-details.component";
+import {CanComponentDeactivateGuard} from "./guards/can-component-deactivate.guard";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -16,6 +18,12 @@ const routes: Routes = [
     path: 'themes',
     canActivate: [AuthGuard],
     loadChildren: () => import('./features/articles/articles.module').then(m => m.ArticlesModule)
+  },
+  {
+    path: 'user',
+    canActivate: [AuthGuard],
+    canDeactivate: [CanComponentDeactivateGuard],
+    component: UserDetailsComponent
   },
   {path: '404', component: NotFoundComponent},
   {path: '**', redirectTo: '404'}

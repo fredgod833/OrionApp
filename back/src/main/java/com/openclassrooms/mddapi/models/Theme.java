@@ -1,6 +1,5 @@
 package com.openclassrooms.mddapi.models;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
@@ -12,6 +11,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Entity
@@ -32,10 +32,11 @@ public class Theme {
     String description;
 
     @CreationTimestamp
-    @JsonProperty("created_at")
     LocalDateTime createdAt;
 
     @UpdateTimestamp
-    @JsonProperty("updated_at")
     LocalDateTime updatedAt;
+
+    @ManyToMany(mappedBy = "subscriptions")
+    List<User> users;
 }

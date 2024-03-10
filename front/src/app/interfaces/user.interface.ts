@@ -1,7 +1,10 @@
+import {Theme} from "../features/articles/interfaces/theme";
+
 export interface User {
 	id: number,
-	name: string,
+	username: string,
 	email: string,
-	created_at: Date,
-	updated_at: Date
+	createdAt: Date,
+	updatedAt: Date,
+  subscriptions: Theme[]
 }

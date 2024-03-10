@@ -1,17 +1,16 @@
-<mat-toolbar color="primary" class="toolbar" fxHide.xs>
+<mat-toolbar class="toolbar" fxLayout="row" fxLayoutAlign="space-between center">
+  <div class="image-wrapper">
+    <a routerLink="">
+      <img src="/assets/logo_p6.png" alt="Logo"/>
+    </a>
+  </div>
   <div fxHide.gt-xs>
     <button mat-icon-button (click)="onToggleSidenav()">
       <mat-icon style="color: black">menu</mat-icon>
     </button>
   </div>
 
-  <div class="image-wrapper">
-    <a href="#">
-      <img src="/assets/logo_p6.png" alt="Logo"/>
-    </a>
-  </div>
-
-  <div fxFlex fxLayout fxLayoutAlign="end" fxHide.xs *ngIf="$isLogged() | async;">
+  <div fxHide.xs *ngIf="$isLogged() | async;">
     <ul fxLayout fxLayoutGap="15px" class="navigation-items">
       <li>
         <a routerLink="/articles">Articles</a>
@@ -19,7 +18,7 @@
       <li>
         <a routerLink="/themes">Thèmes</a>
       </li>
-      <button id="user-profile-btn" mat-fab routerLink="/home/me" [color]="'primary'">
+      <button id="user-profile-btn" mat-fab routerLink="/user" [color]="'primary'">
         <mat-icon>person_filled</mat-icon>
       </button>
     </ul>

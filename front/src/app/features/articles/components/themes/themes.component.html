@@ -9,8 +9,8 @@
           <span *ngIf="theme.description.length > 250">...</span></p>
       </mat-card-content>
       <mat-card-actions fxLayoutAlign="center">
-        <button class="btn">
-          <span class="ml1">S'abonner</span>
+        <button class="btn" (click)="toggleSubscription(theme.id)">
+          <span>{{ getButtonText(theme.id) }}</span>
         </button>
       </mat-card-actions>
     </mat-card>
