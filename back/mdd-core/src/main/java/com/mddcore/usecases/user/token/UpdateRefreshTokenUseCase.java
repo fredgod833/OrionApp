@@ -21,10 +21,10 @@ public class UpdateRefreshTokenUseCase extends UseCase<UpdateRefreshTokenUseCase
        refreshToken.setToken(UUID.randomUUID().toString());
        refreshToken.setExpirationDate(Instant.now().plusMillis(input.expirationMs()));
        repository.save(refreshToken);
-       return new OutputValues(refreshToken.getToken());
+       return new OutputValues(refreshToken);
     }
 
     public record InputValues(RefreshToken refreshToken, Long expirationMs) implements UseCase.InputValues {}
 
-    public record OutputValues(String token) implements UseCase.OutputValues {}
+    public record OutputValues(RefreshToken token) implements UseCase.OutputValues {}
 }
