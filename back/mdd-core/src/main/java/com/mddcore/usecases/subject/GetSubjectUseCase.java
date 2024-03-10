@@ -16,7 +16,7 @@ public class GetSubjectUseCase extends UseCase<GetSubjectUseCase.InputValues, Ge
         Subject subject = subjectRepository.findById(input.id()).orElse(null);
 
         if (subject == null) {
-            throw new IllegalArgumentException("Subject not found with subscriptionId : " + input.id());
+            throw new IllegalArgumentException("Subject not found with id : " + input.id());
         }
 
         return new OutputValues(subject);

@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public record CommentResponse(String username, String content) {
-
     public static CommentResponse from(Comment comment) {
         return new CommentResponse(
                 comment.getAuthor(),

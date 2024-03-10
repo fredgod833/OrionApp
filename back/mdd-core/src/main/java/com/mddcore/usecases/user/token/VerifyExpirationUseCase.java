@@ -16,15 +16,17 @@ public class VerifyExpirationUseCase extends UseCase<VerifyExpirationUseCase.Inp
 
     @Override
     public OutputValues execute(InputValues input) {
-     if (input.token.getExpirationDate().compareTo(Instant.now()) < 0) {
-         repository.delete(input.token);
-         throw new RuntimeException("Refresh token was expired. Please make a new signin request");
-     }
+        if (input.token.getExpirationDate().compareTo(Instant.now()) < 0) {
+            repository.delete(input.token);
+            throw new RuntimeException("Refresh token was expired. Please make a new signIn request");
+        }
 
-     return new OutputValues(input.token);
+        return new OutputValues(input.token);
     }
 
-    public record InputValues(RefreshToken token) implements UseCase.InputValues {}
+    public record InputValues(RefreshToken token) implements UseCase.InputValues {
+    }
 
-    public record OutputValues(RefreshToken token) implements UseCase.OutputValues {}
+    public record OutputValues(RefreshToken token) implements UseCase.OutputValues {
+    }
 }

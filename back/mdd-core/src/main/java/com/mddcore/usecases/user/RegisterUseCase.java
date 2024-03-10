@@ -21,16 +21,15 @@ public class RegisterUseCase extends UseCase<RegisterUseCase.InputValues, Regist
         String password = input.user().getPassword();
         String encodePass = passwordEncodeFinal.encodePass(password);
 
-        if(userRepository.existByEmail(email)) {
+        if (userRepository.existByEmail(email)) {
             throw new IllegalArgumentException("User email already exist");
-        };
+        }
 
-        if(!validPassword(password)) {
+        if (!validPassword(password)) {
             throw new IllegalArgumentException("Password security check failed");
-        };
+        }
 
-        User user = User.newInstance(email, input.user().getUsername(),
-                encodePass, null, null);
+        User user = User.newInstance(email, input.user().getUsername(), encodePass, null, null);
 
         userRepository.save(user);
 
@@ -42,10 +41,12 @@ public class RegisterUseCase extends UseCase<RegisterUseCase.InputValues, Regist
     }
 
     private OutputValues setSignInRequest(String email, String password) {
-        return new OutputValues(new SignInRequest(email,password));
+        return new OutputValues(new SignInRequest(email, password));
     }
 
-    public record InputValues(User user) implements UseCase.InputValues {}
+    public record InputValues(User user) implements UseCase.InputValues {
+    }
 
-    public record OutputValues(SignInRequest signInRequest) implements UseCase.OutputValues {}
+    public record OutputValues(SignInRequest signInRequest) implements UseCase.OutputValues {
+    }
 }

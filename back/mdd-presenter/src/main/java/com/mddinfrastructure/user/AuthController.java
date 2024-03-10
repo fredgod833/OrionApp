@@ -8,11 +8,10 @@ import com.mddinfrastructure.request.UserSettingRequest;
 import com.mddinfrastructure.security.jwt.CookieJwt;
 import com.mddinfrastructure.security.jwt.JwtService;
 import com.mddinfrastructure.security.usecases.AuthenticateUserUseCase;
-import com.mddinfrastructure.security.userdetails.CustomUserDetails;
-import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.concurrent.CompletableFuture;
 
@@ -44,16 +43,14 @@ public class AuthController implements AuthResource {
 
     @Override
     public CompletableFuture<ResponseEntity<?>> loginUser(@RequestBody SignInRequest signInRequest) {
-        CompletableFuture<AuthenticateUserUseCase.OutputValues> authenticateUser = useCaseExecutor.execute(
+        CompletableFuture<AuthenticateUserUseCase.OutputValues> authenticate = useCaseExecutor.execute(
                 authenticateUserUseCase,
                 new AuthenticateUserUseCase.InputValues(signInRequest),
                 outputValues -> outputValues
         );
 
-        CustomUserDetails userDetails = authenticateUser.join().userDetails();
-        ResponseCookie jwtCookie = authenticateUser.join().jwtCookie();
-
-        return jwtService.generateAuthResponse(userDetails, jwtCookie);
+        return authenticate.thenCompose(value ->
+                jwtService.generateAuthResponse(value.userDetails(), value.jwtCookie()));
     }
 
     @Override

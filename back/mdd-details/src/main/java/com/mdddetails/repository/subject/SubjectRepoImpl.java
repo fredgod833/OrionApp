@@ -23,10 +23,7 @@ public class SubjectRepoImpl implements ISubjectRepository {
     @Override
     @Transactional
     public List<Subject> findAll() {
-        return jpaRepo.findAll()
-                .stream()
-                .map(subjectMapper::toDomain)
-                .collect(Collectors.toList());
+        return jpaRepo.findAll().stream().map(subjectMapper::toDomain).collect(Collectors.toList());
     }
 
     @Override

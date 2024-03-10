@@ -8,5 +8,7 @@ public abstract class UseCase<I extends UseCase.InputValues, O extends UseCase.O
 
     public interface OutputValues {
     }
-    public interface InputRequest{}
+
+    public interface InputRequest {
+    }
 }

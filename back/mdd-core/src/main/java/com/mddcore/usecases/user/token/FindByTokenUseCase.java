@@ -6,7 +6,6 @@ import com.mddcore.usecases.UseCase;
 
 public class FindByTokenUseCase extends UseCase<FindByTokenUseCase.InputValues, FindByTokenUseCase.OutputValues> {
 
-
     private final IRefreshTokenRepository repository;
 
     public FindByTokenUseCase(IRefreshTokenRepository repository) {
@@ -18,7 +17,9 @@ public class FindByTokenUseCase extends UseCase<FindByTokenUseCase.InputValues, 
         return new OutputValues(repository.findByToken(input.token()).orElse(null));
     }
 
-    public record InputValues(String token) implements UseCase.InputValues {}
+    public record InputValues(String token) implements UseCase.InputValues {
+    }
 
-    public record OutputValues(RefreshToken refreshToken) implements UseCase.OutputValues {}
+    public record OutputValues(RefreshToken refreshToken) implements UseCase.OutputValues {
+    }
 }

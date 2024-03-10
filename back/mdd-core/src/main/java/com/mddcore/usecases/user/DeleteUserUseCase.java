@@ -15,11 +15,11 @@ public class DeleteUserUseCase extends UseCase<DeleteUserUseCase.InputValues, De
     public OutputValues execute(InputValues input) {
         User user = userRepository.findById(input.id()).orElse(null);
 
-        if(user == null) {
+        if (user == null) {
             throw new IllegalArgumentException("User not found, cant delete it");
         }
 
-        if(!user.getId().equals(input.authId)) {
+        if (!user.getId().equals(input.authId)) {
             throw new IllegalStateException("You cant delete other user except you");
         }
 
@@ -28,8 +28,10 @@ public class DeleteUserUseCase extends UseCase<DeleteUserUseCase.InputValues, De
         return new OutputValues(true);
     }
 
-    public record InputValues(Long id, Long authId) implements UseCase.InputValues {}
+    public record InputValues(Long id, Long authId) implements UseCase.InputValues {
+    }
 
 
-    public record OutputValues(boolean isDeleted) implements UseCase.OutputValues {}
+    public record OutputValues(boolean isDeleted) implements UseCase.OutputValues {
+    }
 }

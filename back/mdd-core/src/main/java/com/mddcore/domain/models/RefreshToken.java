@@ -17,12 +17,19 @@ public class RefreshToken {
     private String token;
     private Instant expirationDate;
 
-    public static RefreshToken newInstance(User user, String token, Instant expiryDate) {
-        return new RefreshToken(
-                null,
-                user,
-                token,
-                expiryDate
-        );
-    }
+//    public static RefreshToken newInstance(User user, String token, Instant expiryDate) {
+//        return new RefreshToken(
+//                null,
+//                user,
+//                token,
+//                expiryDate
+//        );
+//    }
+//
+//    public RefreshToken(User user, String token, Instant expirationDate) {
+//        this.id = null;
+//        this.user = user;
+//        this.token = token;
+//        this.expirationDate = expirationDate;
+//    }
 }

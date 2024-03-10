@@ -1,8 +1,6 @@
 package com.mddinfrastructure.security.jwt;
 
 import com.mddinfrastructure.security.userdetails.CustomUserDetailsService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,7 +19,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     private final JwtTokenProvider jwtTokenProvider;
     private final CustomUserDetailsService customUserDetailsService;
     private final CookieJwt cookieJwt;
-    private final Logger logger = LoggerFactory.getLogger(JwtTokenFilter.class);
 
     public JwtTokenFilter(JwtTokenProvider jwtTokenProvider, CustomUserDetailsService customUserDetailsService, CookieJwt cookieJwt) {
         this.jwtTokenProvider = jwtTokenProvider;

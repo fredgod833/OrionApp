@@ -24,8 +24,7 @@ public class ArticleRepoImpl implements IArticleRepository {
     @Override
     @Transactional
     public List<Article> findAll() {
-        return jpaRepo.findAll().stream().map(articleMapper::toDomain)
-                .collect(Collectors.toList());
+        return jpaRepo.findAll().stream().map(articleMapper::toDomain).collect(Collectors.toList());
     }
 
     @Override

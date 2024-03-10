@@ -23,9 +23,7 @@ public class CommentRepoImpl implements ICommentRepository {
     @Override
     @Transactional
     public List<Comment> findAll() {
-        return jpaRepo.findAll().stream()
-                .map(commentMapper::toDomain)
-                .collect(Collectors.toList());
+        return jpaRepo.findAll().stream().map(commentMapper::toDomain).collect(Collectors.toList());
     }
 
     @Override

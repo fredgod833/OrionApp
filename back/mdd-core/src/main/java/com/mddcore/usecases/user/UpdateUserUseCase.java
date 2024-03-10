@@ -16,18 +16,14 @@ public class UpdateUserUseCase extends UseCase<UpdateUserUseCase.InputValues, Up
 
     @Override
     public OutputValues execute(InputValues input) {
-        return userRepository
-                .findById(input.id())
-                .map(user -> {
-                    if (!user.getId().equals(input.authId)) {
-                        throw new IllegalArgumentException("Authenticate user don't match user to update");
-                    } else {
-                            return persistAndReturn(user, input);
-                    }
-                })
-                .orElseThrow(() -> new IllegalArgumentException("User to update not found"));
+        return userRepository.findById(input.id()).map(user -> {
+            if (!user.getId().equals(input.authId)) {
+                throw new IllegalArgumentException("Authenticate user don't match user to update");
+            } else {
+                return persistAndReturn(user, input);
+            }
+        }).orElseThrow(() -> new IllegalArgumentException("User to update not found"));
     }
-
 
     private OutputValues persistAndReturn(User user, InputValues input) {
         if (!input.user.getEmail().equals(user.getEmail())) {
@@ -43,9 +39,9 @@ public class UpdateUserUseCase extends UseCase<UpdateUserUseCase.InputValues, Up
         return new OutputValues(userRepository.save(user));
     }
 
+    public record InputValues(Long id, User user, Long authId) implements UseCase.InputValues {
+    }
 
-    public record InputValues(Long id, User user, Long authId) implements UseCase.InputValues { }
-
-
-    public record OutputValues(User user) implements UseCase.OutputValues { }
+    public record OutputValues(User user) implements UseCase.OutputValues {
+    }
 }

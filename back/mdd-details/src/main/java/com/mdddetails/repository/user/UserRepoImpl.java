@@ -5,6 +5,7 @@ import com.mddcore.domain.repository.IUserRepository;
 import com.mdddetails.mapper.UserDetailsMapper;
 import com.mdddetails.models.UserEntity;
 import org.springframework.stereotype.Repository;
+
 import java.util.Optional;
 
 @Repository
@@ -42,6 +43,6 @@ public class UserRepoImpl implements IUserRepository {
     }
 
     public Optional<User> findByEmail(String email) {
-       return jpaUserRepository.findByEmail(email).map(userDetailsMapper::toDomain);
+        return jpaUserRepository.findByEmail(email).map(userDetailsMapper::toDomain);
     }
 }

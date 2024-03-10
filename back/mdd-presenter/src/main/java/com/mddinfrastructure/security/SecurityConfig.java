@@ -22,17 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 public class SecurityConfig {
 
     private final JwtTokenFilter jwtTokenFilter;
-
-//    private final AuthEntryPointJwt unauthorizedHandler;
-
     private final UserDetailsService userDetailsService;
-
-//    public SecurityConfig(JwtTokenFilter jwtTokenFilter, AuthEntryPointJwt unauthorizedHandler, UserDetailsService userDetailsService) {
-//        this.jwtTokenFilter = jwtTokenFilter;
-//        this.unauthorizedHandler = unauthorizedHandler;
-//        this.userDetailsService = userDetailsService;
-//    }
-
 
     public SecurityConfig(JwtTokenFilter jwtTokenFilter, UserDetailsService userDetailsService) {
         this.jwtTokenFilter = jwtTokenFilter;
@@ -54,7 +44,7 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return bCryptPasswordEncoder();
     }
 
     /**
@@ -96,23 +86,4 @@ public class SecurityConfig {
 
         return http.build();
     }
-
-//    @Bean
-//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//        http.csrf(csrf -> csrf.disable())
-//                .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
-//                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-//                .authorizeHttpRequests(auth ->
-//                        auth.requestMatchers("/api/auth/**").permitAll()
-//                                .requestMatchers("/api/test/**").permitAll()
-//                                .anyRequest().authenticated()
-//                ).addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
-//
-//        http.authenticationProvider(authenticationProvider());
-//
-//        http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
-//
-//        return http.build();
-//    }
-
 }

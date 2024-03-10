@@ -37,7 +37,6 @@ public class CoreConfigImpl {
     }
 
     // SUBSCRIPTION
-
     @Bean
     public AddSubscriptionUseCase addSubscriptionUseCase(ISubscriptionRepository subscriptionRepository, IUserRepository userRepository, ISubjectRepository subjectRepository) {
         return new AddSubscriptionUseCase(subscriptionRepository, userRepository, subjectRepository);
@@ -60,7 +59,6 @@ public class CoreConfigImpl {
     }
 
     // REFRESH TOKEN
-
     @Bean
     public CreateRefreshTokenUseCase createRefreshTokenUseCase(IRefreshTokenRepository repository, IUserRepository userRepository) {
         return new CreateRefreshTokenUseCase(repository, userRepository);

@@ -15,15 +15,13 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 @Component
-public class ArticleController implements ArticleResource{
+public class ArticleController implements ArticleResource {
     private final UseCaseExecutor useCaseExecutor;
     private final CreateArticleUseCase createArticleUseCase;
     private final GetAllArticleUseCase getAllArticleUseCase;
     private final GetArticleUseCase getArticleUseCase;
 
-
-    public ArticleController(UseCaseExecutor useCaseExecutor, CreateArticleUseCase createArticleUseCase,
-                             GetAllArticleUseCase getAllArticleUseCase, GetArticleUseCase getArticleUseCase) {
+    public ArticleController(UseCaseExecutor useCaseExecutor, CreateArticleUseCase createArticleUseCase, GetAllArticleUseCase getAllArticleUseCase, GetArticleUseCase getArticleUseCase) {
         this.useCaseExecutor = useCaseExecutor;
         this.createArticleUseCase = createArticleUseCase;
         this.getAllArticleUseCase = getAllArticleUseCase;
@@ -31,30 +29,17 @@ public class ArticleController implements ArticleResource{
     }
 
     @Override
-    public CompletableFuture<List<ArticleResponse>> getAllArticles(){
-        return useCaseExecutor.execute(
-            getAllArticleUseCase,
-                new GetAllArticleUseCase.InputValues(),
-                outputValues -> ArticleResponse.from(outputValues.articleList()));
+    public CompletableFuture<List<ArticleResponse>> getAllArticles() {
+        return useCaseExecutor.execute(getAllArticleUseCase, new GetAllArticleUseCase.InputValues(), outputValues -> ArticleResponse.from(outputValues.articleList()));
     }
+
     @Override
-    public CompletableFuture<ArticleResponse> getArticleById(@PathVariable Long id){
-        return useCaseExecutor.execute(
-            getArticleUseCase,
-             new GetArticleUseCase.InputValues(id),
-            outputValues -> ArticleResponse.from(outputValues.article()));
+    public CompletableFuture<ArticleResponse> getArticleById(@PathVariable Long id) {
+        return useCaseExecutor.execute(getArticleUseCase, new GetArticleUseCase.InputValues(id), outputValues -> ArticleResponse.from(outputValues.article()));
     }
+
     @Override
-    public CompletableFuture<ApiResponse> saveArticle(@RequestBody ArticleRequest articleRequest){
-        return useCaseExecutor.execute(
-                createArticleUseCase,
-                new CreateArticleUseCase.InputValues(new CreateArticleUseCase.InputRequest(
-                        articleRequest.subject_id(),
-                        articleRequest.user_id(),
-                        articleRequest.title(),
-                        articleRequest.content()
-                        )),
-                outputValues -> new ApiResponse(outputValues.success(), "Article created")
-        );
+    public CompletableFuture<ApiResponse> saveArticle(@RequestBody ArticleRequest articleRequest) {
+        return useCaseExecutor.execute(createArticleUseCase, new CreateArticleUseCase.InputValues(new CreateArticleUseCase.InputRequest(articleRequest.subject_id(), articleRequest.user_id(), articleRequest.title(), articleRequest.content())), outputValues -> new ApiResponse(outputValues.success(), "Article created"));
     }
 }
