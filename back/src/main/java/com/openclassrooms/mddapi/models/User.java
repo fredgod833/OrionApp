@@ -1,12 +1,16 @@
 package com.openclassrooms.mddapi.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Entity
@@ -19,24 +23,34 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
     String email;
-    String name;
+    String username;
     String password;
-    LocalDateTime created_at;
-    LocalDateTime updated_at;
+    @CreationTimestamp
+    LocalDateTime createdAt;
+    @UpdateTimestamp
+    LocalDateTime updatedAt;
 
-    public User(Integer id, String email, String name, LocalDateTime created_at, LocalDateTime updated_at) {
+    @ManyToMany()
+    @JoinTable(
+            name = "user_subscriptions",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "theme_id"))
+    @JsonIgnore
+    List<Theme> subscriptions;
+
+    public User(Integer id, String email, String username, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.email = email;
-        this.name = name;
-        this.created_at = created_at;
-        this.updated_at = updated_at;
+        this.username = username;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
-    public User(String email, String name, String password, LocalDateTime created_at, LocalDateTime updated_at) {
+    public User(String email, String username, String password, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.email = email;
-        this.name = name;
+        this.username = username;
         this.password = password;
-        this.created_at = created_at;
-        this.updated_at = updated_at;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 }

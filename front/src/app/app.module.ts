@@ -1,8 +1,5 @@
 import {NgModule} from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
-import {BrowserModule} from '@angular/platform-browser';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {HomeComponent} from './pages/home/home.component';
 import {NavbarComponent} from "./pages/layout/navbar/navbar.component";
@@ -11,28 +8,47 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatListModule} from "@angular/material/list";
 import {MatIconModule} from "@angular/material/icon";
 import {MatToolbarModule} from "@angular/material/toolbar";
-import {FlexLayoutModule} from "@angular/flex-layout";
 import {MatCardModule} from "@angular/material/card";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {NgOptimizedImage} from "@angular/common";
 import {JwtInterceptor} from "./interceptors/jwt.interceptor";
 import {NotFoundComponent} from "./pages/not-found/not-found.component";
+import {UserDetailsComponent} from './pages/account/user-details/user-details.component';
+import {ReactiveFormsModule} from "@angular/forms";
+import {MatInputModule} from "@angular/material/input";
+import {BrowserModule} from "@angular/platform-browser";
+import {AppRoutingModule} from "./app-routing.module";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {FlexLayoutModule} from "@angular/flex-layout";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
+
+const materialModule = [
+  MatCardModule,
+  MatCardModule,
+  MatButtonModule,
+  MatSidenavModule,
+  MatListModule,
+  MatIconModule,
+  MatToolbarModule,
+  MatInputModule,
+  MatSnackBarModule
+]
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, NavbarComponent, SidenavListComponent, NotFoundComponent],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    NavbarComponent,
+    SidenavListComponent,
+    NotFoundComponent,
+    UserDetailsComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatListModule,
-    MatIconModule,
-    MatToolbarModule,
     FlexLayoutModule,
-    MatCardModule,
     HttpClientModule,
-    NgOptimizedImage
+    ReactiveFormsModule,
+    ...materialModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},

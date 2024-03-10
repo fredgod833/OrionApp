@@ -32,6 +32,10 @@ body {
   background-color: #9c8ce3;
 }
 
+.btn:active {
+  background-color: #7763C5;
+}
+
 #back-btn {
   z-index: 1;
   top: 2vh;
@@ -39,8 +43,17 @@ body {
   font-size: 2em;
 }
 
-.mat-form-field-underline {
+/* login */
+mat-form-field-underline {
   height: 0 !important;
+}
+
+mat-sidenav-container {
+  height: 100%;
+}
+
+.mat-card-content {
+  margin: 0 !important;
 }
 
 /*

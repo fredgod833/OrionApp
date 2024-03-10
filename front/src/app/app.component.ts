@@ -1,7 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
 import {SessionService} from "./services/session.service";
-import {Observable} from "rxjs";
 import {AuthService} from "./features/auth/services/auth.service";
 import {User} from "./interfaces/user.interface";
 

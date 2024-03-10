@@ -30,7 +30,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterDTO registerDTO) {
-        if (userService.existsByEmail(registerDTO.getEmail())) {
+        if (userService.userExists(registerDTO.getEmail())) {
             return ResponseEntity.badRequest().body("Email already exists");
         }
         userService.register(registerDTO);
