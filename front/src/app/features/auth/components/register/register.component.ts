@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component} from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import {AuthService} from "../../services/auth.service";
 import {Router} from "@angular/router";
@@ -52,6 +52,7 @@ export class RegisterComponent {
       }
     );
   }
+
   public back(): void {
     window.history.back();
   }

@@ -2,8 +2,8 @@ package com.openclassrooms.mddapi.security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -11,16 +11,17 @@ import java.util.Date;
 
 @Component
 public class JWTGenerator {
-    public static final long JWT_EXPIRATION = 1000 * 60 * 60 * 10;
+    @Value("${jwt.expiration}")
+    private long JWT_EXPIRATION;
     private final String SECRET_KEY = System.getenv("SECRET_KEY");
     private final SecretKey secretKey = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
     private final JwtParser jwtParser = Jwts.parserBuilder().setSigningKey(secretKey).build();
 
-    public String generateToken(Authentication authentication) {
+    public String generateToken(String email) {
         Date expireDate = new Date(new Date().getTime() + JWT_EXPIRATION);
 
         return Jwts.builder()
-                .setSubject(authentication.getName())
+                .setSubject(email)
                 .setIssuedAt(new Date())
                 .setExpiration(expireDate)
                 .signWith(secretKey, SignatureAlgorithm.HS512)
@@ -46,4 +47,3 @@ public class JWTGenerator {
         }
     }
 }
-

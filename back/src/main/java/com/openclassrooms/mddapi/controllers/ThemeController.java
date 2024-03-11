@@ -2,6 +2,7 @@ package com.openclassrooms.mddapi.controllers;
 
 import com.openclassrooms.mddapi.responses.ThemesResponse;
 import com.openclassrooms.mddapi.services.ThemeService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,7 +18,7 @@ public class ThemeController {
     }
 
     @GetMapping()
-    public ThemesResponse getAll() {
-        return themeService.getAll();
+    public ResponseEntity<ThemesResponse> getAll() {
+        return ResponseEntity.ok(themeService.getAll());
     }
 }

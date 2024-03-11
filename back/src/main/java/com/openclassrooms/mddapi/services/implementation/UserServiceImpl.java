@@ -15,8 +15,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -25,7 +23,11 @@ public class UserServiceImpl implements UserService {
     private final ModelMapper modelMapper;
     private final ThemeRepository themeRepo;
 
-    public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepo, ModelMapper modelMapper, ThemeRepository themeRepo) {
+    public UserServiceImpl(
+            PasswordEncoder passwordEncoder,
+            UserRepository userRepo,
+            ModelMapper modelMapper,
+            ThemeRepository themeRepo) {
         this.passwordEncoder = passwordEncoder;
         this.userRepo = userRepo;
         this.modelMapper = modelMapper;
@@ -33,12 +35,10 @@ public class UserServiceImpl implements UserService {
     }
 
     public void register(RegisterDTO registerDTO) {
-        User user = new User(
-                registerDTO.getEmail(),
-                registerDTO.getUsername(),
-                passwordEncoder.encode(registerDTO.getPassword()),
-                LocalDateTime.now(),
-                LocalDateTime.now());
+        User user = new User();
+
+        modelMapper.map(registerDTO, user);
+        user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
 
         userRepo.save(user);
     }
@@ -58,8 +58,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public UpdatedUserDTO updateUser(int userId, UpdatedUserDTO updatedUser) {
         User user = userRepo.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
+
         modelMapper.map(updatedUser, user);
         userRepo.save(user);
+
         return modelMapper.map(user, UpdatedUserDTO.class);
     }
 
@@ -67,35 +69,29 @@ public class UserServiceImpl implements UserService {
         return userRepo.existsByEmail(email);
     }
 
-    @Override
     public UserDTO subscribeToTheme(int id, String username) {
-        Theme theme = themeRepo.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Theme with " + id + " id not found"));
-
-        User user = userRepo.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User with " + username + " email not found"));
-
-        if (!user.getSubscriptions().contains(theme)) {
-            user.getSubscriptions().add(theme);
-            userRepo.save(user);
-        }
-
+        User user = updateSubscriptions(id, username, true);
         return modelMapper.map(user, UserDTO.class);
     }
 
-    @Override
     public UserDTO unsubscribeFromTheme(int id, String username) {
-        Theme theme = themeRepo.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Theme with " + id + " id not found"));
+        User user = updateSubscriptions(id, username, false);
+        return modelMapper.map(user, UserDTO.class);
+    }
+
+    private User updateSubscriptions(int themeId, String username, boolean subscribe) {
+        Theme theme = themeRepo.findById(themeId)
+                .orElseThrow(() -> new ResourceNotFoundException("Theme with " + themeId + " id not found"));
 
         User user = userRepo.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User with " + username + " email not found"));
 
-        if (user.getSubscriptions().contains(theme)) {
-            user.getSubscriptions().remove(theme);
-            userRepo.save(user);
+        if (subscribe) {
+            user.getSubscriptions().add(theme);
+        } else {
+            user.getSubscriptions().removeIf(subscription -> subscription.equals(theme));
         }
 
-        return modelMapper.map(user, UserDTO.class);
+        return userRepo.save(user);
     }
 }

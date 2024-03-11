@@ -3,12 +3,9 @@ package com.openclassrooms.mddapi.services;
 import com.openclassrooms.mddapi.dtos.RegisterDTO;
 import com.openclassrooms.mddapi.dtos.UpdatedUserDTO;
 import com.openclassrooms.mddapi.dtos.UserDTO;
+import com.openclassrooms.mddapi.exceptions.ResourceNotFoundException;
 import com.openclassrooms.mddapi.exceptions.UserNotFoundException;
-import com.openclassrooms.mddapi.models.Theme;
-import com.openclassrooms.mddapi.responses.ThemesResponse;
-
-import java.util.List;
-import java.util.Set;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 public interface UserService {
 
@@ -39,9 +36,12 @@ public interface UserService {
     UserDTO getUserByEmail(String email);
 
     /**
+     * Updates a user with the specified information.
      *
-     * @param user
-     * @return
+     * @param userId The ID of the user to update.
+     * @param user   An {@link UpdatedUserDTO} containing the updated user data.
+     * @return An {@link UpdatedUserDTO} representing the updated user details.
+     * @throws UserNotFoundException If a user with the provided ID is not found.
      */
     UpdatedUserDTO updateUser(int userId, UpdatedUserDTO user);
 
@@ -54,16 +54,26 @@ public interface UserService {
     boolean userExists(String email);
 
     /**
+     * Subscribes a user to a theme.
      *
-     * @param id
-     * @param username
+     * @param id The ID of the theme to subscribe to.
+     * @param username The username of the user subscribing.
+     * @return A {@link UserDTO} representing the updated user with the subscribed theme.
+     * @throws ResourceNotFoundException If a theme with the provided ID is not found.
+     * @throws UsernameNotFoundException If a user with the provided username is not found.
+     * @throws IllegalArgumentException  If the user is already subscribed to the theme.
      */
     UserDTO subscribeToTheme(int id, String username);
 
     /**
+     * Unsubscribes a user from a theme.
      *
-     * @param id
-     * @param username
+     * @param id The ID of the theme to unsubscribe from.
+     * @param username The username of the user unsubscribing.
+     * @return A {@link UserDTO} representing the updated user with the unsubscribed theme.
+     * @throws ResourceNotFoundException If a theme with the provided ID is not found.
+     * @throws UsernameNotFoundException If a user with the provided username is not found.
+     * @throws IllegalArgumentException  If the user is not already subscribed to the theme.
      */
     UserDTO unsubscribeFromTheme(int id, String username);
 }
