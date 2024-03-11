@@ -3,8 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {ThemesComponent} from "./components/themes/themes.component";
 
 const routes: Routes = [
-  {title: 'Themes', path: '', component: ThemesComponent},
-  {title: 'Theme - subscribe', path: 'subscribe/:id', component: ThemesComponent},
+  {title: 'Themes', path: '', component: ThemesComponent}
 ];
 
 @NgModule({

@@ -6,7 +6,7 @@ import {UserDetailsComponent} from "../pages/account/user-details/user-details.c
 @Injectable({
   providedIn: 'root'
 })
-export class CanComponentDeactivateGuard implements CanDeactivate<UserDetailsComponent> {
+export class AccountGuard implements CanDeactivate<UserDetailsComponent> {
   canDeactivate(component: UserDetailsComponent, currentRoute: ActivatedRouteSnapshot, currentState: RouterStateSnapshot, nextState?: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return component.canExit();
   }

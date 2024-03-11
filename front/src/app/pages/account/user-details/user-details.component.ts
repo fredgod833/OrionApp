@@ -16,7 +16,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 export class UserDetailsComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
 
-  public themes!: Theme[];
+  public themes: Theme[] = [];
   public user!: User;
   public onError = false;
 
@@ -44,7 +44,9 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
   }
 
   public submit(): void {
-    this.userService.update(this.user.id, this.form).subscribe(data => {
+    this.userService.update(this.user.id, this.form)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(data => {
       this.matSnackBar.open("changes saved", "Close", { duration: 3000 });
       this.form.markAsPristine();
     });
@@ -52,7 +54,7 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
 
   public logout() {
     this.sessionService.logOut();
-    this.router.navigate([''])
+    this.router.navigate(['']).then(() => console.log("You are logged out"));
   }
 
   public unSubscribe(id: number) {

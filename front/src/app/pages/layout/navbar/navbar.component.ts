@@ -1,5 +1,4 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {Router} from "@angular/router";
 import {SessionService} from "../../../services/session.service";
 import {Observable} from "rxjs";
 
@@ -12,7 +11,8 @@ export class NavbarComponent implements OnInit {
 
   @Output() public sidenavToggle = new EventEmitter();
 
-  constructor(private sessionService: SessionService) { }
+  constructor(private sessionService: SessionService) {
+  }
 
   ngOnInit(): void {
   }

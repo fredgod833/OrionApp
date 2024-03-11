@@ -4,20 +4,65 @@ html, body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+/* Header */
+.navigation-items {
+  gap: 15px;
+
+  a.active {
+    color: #7763C5;
+  }
+
+  button.active {
+    background-color: #7763C5 !important;
+  }
 }
 
-.mat-card-header-text {
-  margin: 0 !important;
+/* Body */
+.card-container {
+  mat-card {
+    width: 100%;
+    max-width: 600px;
+  }
+
+  form {
+    max-width: 400px;
+    padding: 10px;
+    margin: 0 auto;
+
+    input {
+      width: 100%;
+      border: 1px black solid;
+      border-radius: 10px;
+      box-sizing: border-box;
+      padding: 15px;
+    }
+
+    mat-icon {
+      color: #757575;
+      position: absolute;
+      justify-content: center;
+      align-items: center;
+    }
+  }
 }
 
-.mat-form-field-infix {
-  padding: 0;
-  border: 0;
+.themes-list {
+  margin: 20px;
+
+  .items {
+    gap: 0.5rem;
+
+    .item {
+      background-color: #F5F5F5;
+      box-shadow: none;
+      min-width: 400px;
+      border-radius: 9px;
+      margin-bottom: 0.5rem;
+    }
+  }
 }
 
+/* Buttons */
 .btn {
   color: white;
   background-color: #7763C5;
@@ -26,6 +71,7 @@ body {
   border: 0;
   border-radius: 8px;
   padding: 10px 20px;
+  margin: 0 auto;
 }
 
 .btn:hover {
@@ -36,6 +82,11 @@ body {
   background-color: #7763C5;
 }
 
+.btn:disabled {
+  background-color: #7763C5;
+  cursor: not-allowed;
+}
+
 #back-btn {
   z-index: 1;
   top: 2vh;
@@ -43,17 +94,51 @@ body {
   font-size: 2em;
 }
 
-/* login */
-mat-form-field-underline {
-  height: 0 !important;
+/* Angular material component refactor */
+.mat-card-header-text {
+  margin: 0 !important;
 }
 
 mat-sidenav-container {
   height: 100%;
 }
 
+.mat-form-field-infix {
+  padding: 0;
+  border: 0;
+}
+
+.mat-form-field-underline {
+  height: 0 !important;
+}
+
+mat-form-field-flex {
+  border-bottom: 0 !important;
+}
+
 .mat-card-content {
   margin: 0 !important;
+}
+
+/* Positioning */
+.center-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.top-left-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding-bottom: 5px;
+}
+
+.top-center-content {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 /*

@@ -1,6 +1,9 @@
 server:
     port: 8075
 
+jwt:
+    expiration: ${JWT_EXPIRATION}
+
 spring:
     sql:
         init:

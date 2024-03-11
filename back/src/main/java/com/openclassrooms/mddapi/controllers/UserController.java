@@ -37,12 +37,12 @@ public class UserController {
     }
 
     @PostMapping("/follow/{id}")
-    public ResponseEntity<?> subscribe(@PathVariable("id") int id, @AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<UserDTO> subscribe(@PathVariable("id") int id, @AuthenticationPrincipal UserDetails userDetails) {
         return ResponseEntity.ok(userService.subscribeToTheme(id, userDetails.getUsername()));
     }
 
     @DeleteMapping("/unfollow/{id}")
-    public ResponseEntity<?> unSubscribe(@PathVariable("id") int id, @AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<UserDTO> unSubscribe(@PathVariable("id") int id, @AuthenticationPrincipal UserDetails userDetails) {
         return ResponseEntity.ok(userService.unsubscribeFromTheme(id, userDetails.getUsername()));
     }
 }
