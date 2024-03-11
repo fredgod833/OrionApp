@@ -20,21 +20,21 @@ public class JwtService {
     private final CreateRefreshTokenUseCase createRefreshTokenUseCase;
     private final UseCaseExecutor useCaseExecutor;
     private final FindByTokenUseCase findByTokenUseCase;
-    private final VerifyExpirationUseCase verifyExpirationUseCase;
+    private final VerifyTokenExpirationUseCase verifyTokenExpirationUseCase;
     private final UpdateRefreshTokenUseCase updateRefreshTokenUseCase;
     private final DeleteRefreshTokenUseCase deleteRefreshTokenUseCase;
 
     @Value("${mdd.app.jwtRefreshExpirationsMs}")
     private Long refreshTokenExpirationMs;
 
-    public JwtService(CookieJwt cookieJwt, JwtTokenProvider jwtTokenProvider, CreateRefreshTokenUseCase createRefreshTokenUseCase, UseCaseExecutor useCaseExecutor, FindByTokenUseCase findByTokenUseCase, VerifyExpirationUseCase verifyExpirationUseCase,
+    public JwtService(CookieJwt cookieJwt, JwtTokenProvider jwtTokenProvider, CreateRefreshTokenUseCase createRefreshTokenUseCase, UseCaseExecutor useCaseExecutor, FindByTokenUseCase findByTokenUseCase, VerifyTokenExpirationUseCase verifyTokenExpirationUseCase,
                       UpdateRefreshTokenUseCase updateRefreshTokenUseCase, DeleteRefreshTokenUseCase deleteRefreshTokenUseCase) {
         this.cookieJwt = cookieJwt;
         this.jwtTokenProvider = jwtTokenProvider;
         this.createRefreshTokenUseCase = createRefreshTokenUseCase;
         this.useCaseExecutor = useCaseExecutor;
         this.findByTokenUseCase = findByTokenUseCase;
-        this.verifyExpirationUseCase = verifyExpirationUseCase;
+        this.verifyTokenExpirationUseCase = verifyTokenExpirationUseCase;
         this.updateRefreshTokenUseCase = updateRefreshTokenUseCase;
         this.deleteRefreshTokenUseCase = deleteRefreshTokenUseCase;
     }
@@ -100,9 +100,9 @@ public class JwtService {
 
     private CompletableFuture<RefreshToken> verifyTokenNotExpire(RefreshToken token) {
         return useCaseExecutor.execute(
-                verifyExpirationUseCase,
-                new VerifyExpirationUseCase.InputValues(token),
-                VerifyExpirationUseCase.OutputValues::token);
+                verifyTokenExpirationUseCase,
+                new VerifyTokenExpirationUseCase.InputValues(token),
+                VerifyTokenExpirationUseCase.OutputValues::token);
     }
 
     private CompletableFuture<RefreshToken> updateRefreshToken(RefreshToken token) {

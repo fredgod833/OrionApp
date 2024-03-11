@@ -1,4 +1,4 @@
-package com.mddcore.usecases.ut.token;
+package com.mddcore.usecases.ut.user.token;
 
 
 import com.mddcore.domain.models.RefreshToken;

@@ -76,8 +76,8 @@ public class CoreConfigImpl {
     }
 
     @Bean
-    public VerifyExpirationUseCase verifyExpirationUseCase(IRefreshTokenRepository repository) {
-        return new VerifyExpirationUseCase(repository);
+    public VerifyTokenExpirationUseCase verifyExpirationUseCase(IRefreshTokenRepository repository) {
+        return new VerifyTokenExpirationUseCase(repository);
     }
 
     @Bean

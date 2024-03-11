@@ -6,11 +6,11 @@ import com.mddcore.usecases.UseCase;
 
 import java.time.Instant;
 
-public class VerifyExpirationUseCase extends UseCase<VerifyExpirationUseCase.InputValues, VerifyExpirationUseCase.OutputValues> {
+public class VerifyTokenExpirationUseCase extends UseCase<VerifyTokenExpirationUseCase.InputValues, VerifyTokenExpirationUseCase.OutputValues> {
 
     private final IRefreshTokenRepository repository;
 
-    public VerifyExpirationUseCase(IRefreshTokenRepository repository) {
+    public VerifyTokenExpirationUseCase(IRefreshTokenRepository repository) {
         this.repository = repository;
     }
 

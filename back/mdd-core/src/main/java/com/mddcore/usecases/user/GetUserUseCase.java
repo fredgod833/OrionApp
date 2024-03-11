@@ -13,11 +13,8 @@ public class GetUserUseCase extends UseCase<GetUserUseCase.InputValues, GetUserU
 
     @Override
     public OutputValues execute(InputValues input) {
-        User user = userRepository.findById(input.id()).orElse(null);
-
-        if (user == null) {
-            throw new IllegalArgumentException("User not found with id : " + input.id());
-        }
+        User user = userRepository.findById(input.id()).orElseThrow(() ->
+                new IllegalArgumentException("User not found with id : " + input.id()));
 
         return new OutputValues(user);
     }

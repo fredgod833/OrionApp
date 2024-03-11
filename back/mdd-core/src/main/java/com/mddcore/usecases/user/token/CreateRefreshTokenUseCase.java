@@ -20,11 +20,8 @@ public class CreateRefreshTokenUseCase extends UseCase<CreateRefreshTokenUseCase
 
     @Override
     public OutputValues execute(InputValues input) {
-        User user = userRepository.findById(input.id).orElse(null);
-
-        if (user == null) {
-            throw new IllegalArgumentException("User do not exist");
-        }
+        User user = userRepository.findById(input.id).orElseThrow(() ->
+                new IllegalArgumentException("User do not exist"));
 
         RefreshToken newRefreshToken = new RefreshToken(
                 null,
