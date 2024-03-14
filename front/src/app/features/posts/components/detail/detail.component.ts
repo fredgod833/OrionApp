@@ -1,8 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {PostApiService} from "../../services/post-api.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
 import {Post} from "../../interfaces/post";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {CommentApiService} from "../../services/comment-api.service";
+import {Comment} from "../../interfaces/comment";
 
 @Component({
   selector: 'app-detail',
@@ -12,7 +14,8 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 export class DetailComponent implements OnInit {
   public onError: boolean = false;
   public post!: Post;
-  public form = this.fb.group({
+  public comments!: Comment[]
+  public form: FormGroup = this.fb.group({
     content: [
       '',
       [
@@ -21,25 +24,33 @@ export class DetailComponent implements OnInit {
       ]
     ]
   });
+  private id!: number;
 
   constructor(
     private postApiService: PostApiService,
     private route: ActivatedRoute,
-    private router: Router,
+    private commentApiService: CommentApiService,
     private fb: FormBuilder) {
   }
 
   ngOnInit(): void {
-    this.postApiService.getPost(Number(this.route.snapshot.paramMap.get('id')!)).subscribe(post => {
+    this.id = this.route.snapshot.params['id'];
+    this.postApiService.getPost(this.id).subscribe(post => {
       this.post = post;
     });
+    this.commentApiService.getComments(this.id).subscribe(comments => {
+      this.comments = comments;
+    })
   }
 
   public back(): void {
     window.history.back();
   }
 
-  submit() {
-
+  public submit() {
+    this.commentApiService.saveComment(this.id, this.form).subscribe(comment => {
+        this.comments.push(comment);
+      }
+    );
   }
 }

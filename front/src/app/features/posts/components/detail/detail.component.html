@@ -20,14 +20,13 @@
 </div>
 
 <div class="card-container" fxLayout="column" fxLayoutAlign="center center">
-  <!--    <mat-card class="item" *ngFor="let theme of themes" fxFlex>-->
   <mat-card>
     <mat-card-header>
       <mat-card-title>Commentaires</mat-card-title>
     </mat-card-header>
-    <mat-card-content fxLayout="row" fxLayoutAlign="center start">
-      <p>username</p>
-      <mat-card class="comment">sakdkljsaldjasjdsadklasjdkasdljas</mat-card>
+    <mat-card-content fxLayout="row" fxLayoutAlign="center start" *ngFor="let comment of comments">
+      <p>{{ comment.author }}</p>
+      <p class="comment">{{ comment.content }}</p>
     </mat-card-content>
   </mat-card>
 
