@@ -20,16 +20,9 @@ public class CreateCommentUseCase extends UseCase<CreateCommentUseCase.InputValu
         if (isAlreadyComment(input)) {
             return new OutputValues(false);
         }
-        try {
-            Comment comment = Comment.newInstance(
-                    input.inputRequest.content(),
-                    getArticle(input),
-                    input.inputRequest.username()
-            );
-            commentRepository.save(comment);
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Error while creating new Comment, cant be save : " + e);
-        }
+
+        Comment comment = new Comment(null, input.inputRequest.content(), getArticle(input), input.inputRequest.username());
+        commentRepository.save(comment);
         return new OutputValues(true);
     }
 
@@ -40,13 +33,17 @@ public class CreateCommentUseCase extends UseCase<CreateCommentUseCase.InputValu
 
     private Boolean isAlreadyComment(InputValues input) {
         Article article = getArticle(input);
-        return article.getCommentsList().stream().anyMatch(comment -> comment.getAuthor().equals(input.inputRequest.username()));
+        return article.getCommentsList().stream()
+                .anyMatch(comment -> comment.getAuthor().equals(input.inputRequest.username()));
     }
 
-    public record InputValues(InputRequest inputRequest) implements UseCase.InputValues {}
+    public record InputValues(InputRequest inputRequest) implements UseCase.InputValues {
+    }
 
-    public record OutputValues(Boolean success) implements UseCase.OutputValues {}
+    public record OutputValues(Boolean success) implements UseCase.OutputValues {
+    }
 
-    public record InputRequest(String content, Long articleId, String username)  implements UseCase.InputRequest{}
+    public record InputRequest(String content, Long articleId, String username) implements UseCase.InputRequest {
+    }
 }
 

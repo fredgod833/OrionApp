@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.concurrent.CompletableFuture;
 
 @Component
-public class UserController implements UserResource {
+public class  UserController implements UserResource {
 
     private final UseCaseExecutor useCaseExecutor;
     private final GetUserUseCase getUserUseCase;

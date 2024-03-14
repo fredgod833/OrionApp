@@ -29,7 +29,7 @@ public class RegisterUseCase extends UseCase<RegisterUseCase.InputValues, Regist
             throw new IllegalArgumentException("Password security check failed");
         }
 
-        User user = User.newInstance(email, input.user().getUsername(), encodePass, null, null);
+        User user = new User(null, email, input.user().getUsername(), encodePass, null, null);
 
         userRepository.save(user);
 

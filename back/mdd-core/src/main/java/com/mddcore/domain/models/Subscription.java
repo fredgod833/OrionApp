@@ -13,12 +13,4 @@ public class Subscription {
     private Long id;
     private Subject subject;
     private Long userId;
-
-    public static Subscription newInstance(Subject subject, Long userId) {
-        return new Subscription(
-                null,
-                subject,
-                userId
-        );
-    }
 }

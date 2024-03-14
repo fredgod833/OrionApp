@@ -22,7 +22,8 @@ public class CreateArticleUseCase extends UseCase<CreateArticleUseCase.InputValu
     @Override
     public OutputValues execute(InputValues input) {
         try {
-            Article article = Article.newInstance(
+            Article article = new Article(
+                    null,
                     getSubject(input),
                     input.inputRequest.title(),
                     input.inputRequest.content(),

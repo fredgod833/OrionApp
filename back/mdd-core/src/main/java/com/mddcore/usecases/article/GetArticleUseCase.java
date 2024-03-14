@@ -13,10 +13,9 @@ public class GetArticleUseCase extends UseCase<GetArticleUseCase.InputValues, Ge
 
     @Override
     public OutputValues execute(InputValues input) {
-        Article article = articleRepository.findById(input.id()).orElse(null);
-        if (article == null) {
-            throw new IllegalArgumentException("Article not found with id : " + input.id());
-        }
+        Article article = articleRepository.findById(input.id())
+                .orElseThrow(() -> new IllegalArgumentException("Article not found with id : " + input.id()));
+
         return new OutputValues(article);
     }
 

@@ -20,15 +20,4 @@ public class User {
     private String password;
     private String picture;
     private List<Subscription> subscriptionList = new ArrayList<>();
-
-    public static User newInstance(String email, String username, String password, String picture, List<Subscription> subscriptionList) {
-        return new User(
-                null,
-                email,
-                username,
-                password,
-                picture,
-                subscriptionList
-        );
-    }
 }

@@ -13,11 +13,8 @@ public class GetSubjectUseCase extends UseCase<GetSubjectUseCase.InputValues, Ge
 
     @Override
     public OutputValues execute(InputValues input) {
-        Subject subject = subjectRepository.findById(input.id()).orElse(null);
-
-        if (subject == null) {
-            throw new IllegalArgumentException("Subject not found with id : " + input.id());
-        }
+        Subject subject = subjectRepository.findById(input.id())
+                .orElseThrow(() -> new IllegalArgumentException("Subject not found with id : " + input.id()));
 
         return new OutputValues(subject);
     }

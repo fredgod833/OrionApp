@@ -20,16 +20,4 @@ public class Article {
     private LocalDateTime createdAt;
     private User user;
     private List<Comment> commentsList;
-
-    public static Article newInstance(Subject subject, String title, String content, LocalDateTime date, User user, List<Comment> commentsList) {
-        return new Article(
-                null,
-                subject,
-                title,
-                content,
-                date,
-                user,
-                commentsList
-        );
-    }
 }

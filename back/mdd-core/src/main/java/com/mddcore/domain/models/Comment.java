@@ -14,13 +14,4 @@ public class  Comment {
     private String content;
     private Article article;
     private String author;
-
-    public static Comment newInstance(String content, Article article, String author) {
-        return new Comment(
-                null,
-                content,
-                article,
-                author
-        );
-    }
 }

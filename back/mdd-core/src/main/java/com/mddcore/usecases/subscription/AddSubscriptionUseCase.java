@@ -24,19 +24,19 @@ public class AddSubscriptionUseCase extends UseCase<AddSubscriptionUseCase.Input
 
     @Override
     public OutputValues execute(InputValues input) {
-        try {
-            User user = userRepository.findById(input.userId()).orElse(null);
-            Subject subject = subjectRepository.findById(input.subjectId()).orElse(null);
+            User user = userRepository.findById(input.userId())
+                    .orElseThrow(() -> new IllegalArgumentException("User cannot be null"));
 
-            if (subject == null || user == null) {
-                throw new IllegalArgumentException("Subject or User can not be null");
-            }
+            Subject subject = subjectRepository.findById(input.subjectId())
+                    .orElseThrow(() -> new IllegalArgumentException("Subject cannot be null"));
+
 
             if (isAlreadySubscribed(user, input.subjectId())) {
                 throw new IllegalStateException("Already subscribed to this subject");
             }
 
-            Subscription subscription = Subscription.newInstance(
+            Subscription subscription = new Subscription(
+                    null,
                     subject,
                     input.userId()
             );
@@ -44,9 +44,6 @@ public class AddSubscriptionUseCase extends UseCase<AddSubscriptionUseCase.Input
             repository.save(subscription);
 
             return new OutputValues(true);
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Error while adding subscription", e);
-        }
     }
 
     private Boolean isAlreadySubscribed(User user, Long subjectId) {
