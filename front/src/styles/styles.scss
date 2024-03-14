@@ -19,12 +19,14 @@ html, body {
 
 /* Body */
 .card-container {
-  mat-card {
+  .card-form {
     width: 100%;
-    max-width: 600px;
+    max-width: 1500px;
+    margin-bottom: 0;
+    padding: 0;
   }
 
-  form {
+  .form-inputs {
     max-width: 400px;
     padding: 10px;
     margin: 0 auto;
@@ -47,17 +49,21 @@ html, body {
 }
 
 .themes-list {
-  margin: 20px;
+  margin: 1.4rem;
+  justify-content: center;
 
   .items {
     gap: 0.5rem;
+    justify-content: center;
 
     .item {
       background-color: #F5F5F5;
       box-shadow: none;
-      min-width: 400px;
       border-radius: 9px;
       margin-bottom: 0.5rem;
+      max-width: 400px;
+      min-width: 400px;
+      min-height: 200px;
     }
   }
 }
@@ -116,10 +122,6 @@ mat-form-field-flex {
   border-bottom: 0 !important;
 }
 
-.mat-card-content {
-  margin: 0 !important;
-}
-
 /* Positioning */
 .center-content {
   display: flex;
@@ -127,19 +129,17 @@ mat-form-field-flex {
   align-items: center;
 }
 
-.top-left-content {
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding-bottom: 5px;
+@media (max-width: 430px) {
+  .themes-list {
+    .items {
+      .item {
+        min-width: auto;
+        min-height: auto;
+      }
+    }
+  }
 }
 
-.top-center-content {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-}
 
 /*
 • style

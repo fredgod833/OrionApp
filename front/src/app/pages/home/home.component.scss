@@ -1,9 +1,18 @@
 .center {
-  height: 100vh;
+  height: 80vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 6vh;
+
+  button {
+    width: 150px;
+  }
 }
 
 .btn {
@@ -11,3 +20,16 @@
   background-color: white;
   border: black solid 1px;
 }
+
+.center img {
+  width: 100%;
+  max-width: 600px;
+}
+
+@media (max-width: 430px) {
+  .button-container {
+    flex-direction: column;
+    gap: 4vh;
+  }
+}
+

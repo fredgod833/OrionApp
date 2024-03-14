@@ -1,9 +1,10 @@
 package com.openclassrooms.mddapi.controllers;
 
-import com.openclassrooms.mddapi.dtos.UpdatedUserDTO;
 import com.openclassrooms.mddapi.dtos.UserDTO;
 import com.openclassrooms.mddapi.exceptions.UserNotFoundException;
+import com.openclassrooms.mddapi.mappers.UserMapper;
 import com.openclassrooms.mddapi.services.UserService;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,33 +17,54 @@ import java.security.Principal;
 public class UserController {
 
     private final UserService userService;
+    private final ModelMapper modelMapper;
+    private final UserMapper userMapper;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, ModelMapper modelMapper, UserMapper userMapper) {
         this.userService = userService;
+        this.modelMapper = modelMapper;
+        this.userMapper = userMapper;
     }
 
     @GetMapping()
     public ResponseEntity<UserDTO> getUser(Principal principal) {
         try {
-            UserDTO userDTO = userService.getUserByEmail(principal.getName());
-            return ResponseEntity.ok(userDTO);
+            return ResponseEntity.ok(
+                    modelMapper.map(
+                            userService.getByEmail(principal.getName()), UserDTO.class));
         } catch (UserNotFoundException ex) {
             return ResponseEntity.notFound().build();
         }
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<UpdatedUserDTO> updateUser(@PathVariable("id") int id, @RequestBody UpdatedUserDTO updatedUser) {
-        return ResponseEntity.ok(userService.updateUser(id, updatedUser));
+    public ResponseEntity<UserDTO> updateUser(
+            @PathVariable("id") int id,
+            @RequestBody UserDTO userDTO) {
+        return ResponseEntity.ok(
+                modelMapper.map(
+                        userService.updateUser(id, userDTO), UserDTO.class));
     }
 
+    // InvalidDefinitionException
     @PostMapping("/follow/{id}")
-    public ResponseEntity<UserDTO> subscribe(@PathVariable("id") int id, @AuthenticationPrincipal UserDetails userDetails) {
-        return ResponseEntity.ok(userService.subscribeToTheme(id, userDetails.getUsername()));
+    public ResponseEntity<UserDTO> subscribe(
+            @PathVariable("id") int id,
+            @AuthenticationPrincipal UserDetails userDetails) {
+        return ResponseEntity.ok(
+          userMapper.toDTO(
+                  userService.subscribeToTheme(id, userDetails.getUsername()), userDetails.getUsername()));
+//        return ResponseEntity.ok(
+//                modelMapper.map(
+//                        userService.subscribeToTheme(id, userDetails.getUsername()), UserDTO.class));
     }
 
     @DeleteMapping("/unfollow/{id}")
-    public ResponseEntity<UserDTO> unSubscribe(@PathVariable("id") int id, @AuthenticationPrincipal UserDetails userDetails) {
-        return ResponseEntity.ok(userService.unsubscribeFromTheme(id, userDetails.getUsername()));
+    public ResponseEntity<UserDTO> unSubscribe(
+            @PathVariable("id") int id,
+            @AuthenticationPrincipal UserDetails userDetails) {
+        return ResponseEntity.ok(
+                modelMapper.map(
+                        userService.unsubscribeFromTheme(id, userDetails.getUsername()), UserDTO.class));
     }
 }

@@ -10,7 +10,7 @@
   </button>
 
   <div class="navigation-items" *ngIf="$isLogged() | async" fxLayout fxHide.xs>
-    <a routerLink="/articles" routerLinkActive="active">Articles</a>
+    <a routerLink="/posts" routerLinkActive="active">Articles</a>
     <a routerLink="/themes" routerLinkActive="active">Thèmes</a>
     <button mat-fab id="user-profile-btn" routerLink="/user" routerLinkActive="active">
       <mat-icon>person_filled</mat-icon>

@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserDTO {
-    int id;
+    Integer id;
     String email;
     String username;
     LocalDateTime createdAt;

@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
 import {Observable, Subject, takeUntil} from "rxjs";
 import {ThemeApiService} from "../../services/theme-api.service";
 import {ThemesResponse} from "../../interfaces/api/themesResponse";
@@ -31,11 +31,12 @@ export class ThemesComponent implements OnInit, OnDestroy {
     this.userService.getUser()
       .pipe(takeUntil(this.destroy$))
       .subscribe((user: User) => {
-        this.user = user
+        this.user = user;
       });
   }
 
   public isSubscribed(id: number): boolean {
+    // why sometimes user is undefined?
     return this.user.subscriptions.some((theme: Theme) => theme.id === id);
   }
 

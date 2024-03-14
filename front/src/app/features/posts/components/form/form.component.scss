@@ -1,0 +1,22 @@
+textarea, input {
+  border: #7763C5 solid 2px !important;
+  border-radius: 8px;
+}
+
+.mat-form-field textarea::placeholder {
+  color: darkgray;
+  padding: 15px;
+}
+
+.mat-select {
+  border: 2px solid #7763C5;
+  padding: 15px;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 360px) {
+  mat-card-header {
+    padding-top: 30px;
+  }
+}

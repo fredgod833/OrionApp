@@ -36,9 +36,9 @@ export class LoginComponent {
         localStorage.setItem('token', response.token);
         this.userService.getUser().subscribe((user: User) => {
           this.sessionService.logIn(user);
-          this.router.navigate(['/themes']).then(() => console.log("Redirected to themes page"));
+          this.router.navigate(['/articles']).then(() => console.log("Redirected to themes page"));
         });
-        this.router.navigate(['/themes']).then(() => console.log("Redirected to themes page"));
+        this.router.navigate(['/articles']).then(() => console.log("Redirected to themes page"));
       },
       error: _ => this.onError = true,
     });
