@@ -48,7 +48,10 @@ public class UserControllerUnitTest {
         List<SubscriptionResponse> subscriptionList = new ArrayList<>();
         UserResponse userResponse = new UserResponse("test@gmail.com", "theo", subscriptionList);
 
-        doReturn(CompletableFuture.completedFuture(userResponse)).when(useCaseExecutor).execute(any(), any(GetUserUseCase.InputValues.class), any());
+        doReturn(CompletableFuture.completedFuture(userResponse)).when(useCaseExecutor)
+                .execute(any(),
+                        any(GetUserUseCase.InputValues.class),
+                        any());
 
         CompletableFuture<UserResponse> result = userController.getUserById(1L);
 

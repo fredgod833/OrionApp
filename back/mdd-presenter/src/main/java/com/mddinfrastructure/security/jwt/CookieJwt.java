@@ -49,11 +49,11 @@ public class CookieJwt {
     }
 
     public ResponseCookie getCleanJwtCookie() {
-        return ResponseCookie.from(jwtRefreshCookie, null).path("/api").build();
+        return ResponseCookie.from(jwtRefreshCookie, "").path("/api").maxAge(0).build();
     }
 
     public ResponseCookie getCleanJwtRefreshCookie() {
-        return ResponseCookie.from(jwtRefreshCookie, null).path("/api/auth/refresh-token").build();
+        return ResponseCookie.from(jwtRefreshCookie, "").path("/api/auth/refresh-token").maxAge(0).build();
     }
 
     private ResponseCookie generateCookie(String name, String value, String path) {
