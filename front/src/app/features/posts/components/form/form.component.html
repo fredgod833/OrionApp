@@ -2,25 +2,28 @@
   <mat-icon>arrow_back</mat-icon>
 </button>
 
-<app-icon></app-icon>
-
 <div class="card-container" fxLayout="row" fxLayoutAlign="center center">
   <mat-card class="card-form mat-elevation-z0">
     <mat-card-header fxLayoutAlign="center center">
-      <mat-card-title>Se connecter</mat-card-title>
+      <mat-card-title>Créer un nouvel article</mat-card-title>
     </mat-card-header>
     <form class="form-inputs" [formGroup]="form" (ngSubmit)="submit()">
       <mat-card-content fxLayout="column">
         <mat-form-field appearance="standard">
-          <label>E-mail ou nom d'utilisateur</label>
-          <input matInput type="text" formControlName="email">
+          <mat-select placeholder="Sélectionner un thème" formControlName="theme">
+            <mat-option *ngFor="let theme of (themes$ | async)?.themes"
+                        [value]="theme.name"> {{ theme.name }}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
         <mat-form-field appearance="standard">
-          <label>Mot de passe</label>
-          <input matInput type="password" [type]="hide ? 'password' : 'text'" formControlName="password">
+          <input matInput formControlName="title" placeholder="Titre de l'article">
+        </mat-form-field>
+        <mat-form-field appearance="standard">
+          <textarea matInput rows="20" placeholder="Contenu de l'article" formControlName="content"></textarea>
         </mat-form-field>
       </mat-card-content>
-      <button class="btn center-content" type="submit">Se connecter</button>
+      <button class="btn center-content" type="submit">Créer</button>
       <span *ngIf="onError" class="error center-content">An error occurred</span>
     </form>
   </mat-card>

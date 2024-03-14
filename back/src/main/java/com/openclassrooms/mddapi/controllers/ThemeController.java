@@ -19,6 +19,6 @@ public class ThemeController {
 
     @GetMapping()
     public ResponseEntity<ThemesResponse> getAll() {
-        return ResponseEntity.ok(themeService.getAll());
+        return ResponseEntity.ok(new ThemesResponse(themeService.getAll()));
     }
 }

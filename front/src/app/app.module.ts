@@ -2,8 +2,6 @@ import {NgModule} from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import {AppComponent} from './app.component';
 import {HomeComponent} from './pages/home/home.component';
-import {NavbarComponent} from "./pages/layout/navbar/navbar.component";
-import {SidenavListComponent} from "./pages/layout/sidenav-list/sidenav-list.component";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatListModule} from "@angular/material/list";
 import {MatIconModule} from "@angular/material/icon";
@@ -20,6 +18,8 @@ import {AppRoutingModule} from "./app-routing.module";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {NavbarComponent} from "./pages/shared/navbar/navbar.component";
+import {SidenavListComponent} from "./pages/shared/sidenav-list/sidenav-list.component";
 
 const materialModule = [
   MatCardModule,

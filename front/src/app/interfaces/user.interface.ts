@@ -1,4 +1,4 @@
-import {Theme} from "../features/articles/interfaces/theme";
+import {Theme} from "../features/themes/interfaces/theme";
 
 export interface User {
 	id: number,

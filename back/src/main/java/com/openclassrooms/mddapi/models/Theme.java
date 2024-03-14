@@ -11,13 +11,12 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @Entity
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "Themes", schema = "mdd")
+@Table(name = "themes", schema = "mdd")
 public class Theme {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,11 +31,9 @@ public class Theme {
     String description;
 
     @CreationTimestamp
+    @Column(updatable = false)
     LocalDateTime createdAt;
 
     @UpdateTimestamp
     LocalDateTime updatedAt;
-
-    @ManyToMany(mappedBy = "subscriptions")
-    List<User> users;
 }

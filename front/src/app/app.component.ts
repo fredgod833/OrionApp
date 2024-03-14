@@ -5,6 +5,7 @@ import {User} from "./interfaces/user.interface";
 import {Observable, Subject, takeUntil} from "rxjs";
 import {Router} from "@angular/router";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
+import {UserService} from "./services/user.service";
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,7 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthService,
     private sessionService: SessionService,
+    private userService: UserService,
     private router: Router,
     private breakpointObserver: BreakpointObserver) {
   }
@@ -33,7 +35,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   public autoLog(): void {
     // do i need here to unsubcribe?????
-    this.authService.me().subscribe({
+    this.userService.getUser().subscribe({
         next: (user: User) => {
           this.sessionService.logIn(user);
         },

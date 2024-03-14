@@ -15,9 +15,14 @@ const routes: Routes = [
     loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule)
   },
   {
+    path: 'posts',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./features/posts/post.module').then(m => m.PostModule)
+  },
+  {
     path: 'themes',
     canActivate: [AuthGuard],
-    loadChildren: () => import('./features/articles/articles.module').then(m => m.ArticlesModule)
+    loadChildren: () => import('./features/themes/theme.module').then(m => m.ThemeModule)
   },
   {
     path: 'user',

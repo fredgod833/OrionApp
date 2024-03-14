@@ -4,7 +4,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../../../services/user.service";
 import {SessionService} from "../../../services/session.service";
 import {Router} from "@angular/router";
-import {Theme} from "../../../features/articles/interfaces/theme";
+import {Theme} from "../../../features/themes/interfaces/theme";
 import {Subject, takeUntil} from "rxjs";
 import {MatSnackBar} from "@angular/material/snack-bar";
 

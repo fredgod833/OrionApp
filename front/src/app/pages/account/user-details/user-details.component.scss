@@ -6,7 +6,9 @@
 }
 
 mat-divider {
-  padding: 10px; border-top-color: black; width: 95%
+  padding: 10px;
+  border-top-color: black;
+  width: 95%
 }
 
 #logout {
@@ -21,3 +23,6 @@ mat-divider {
   text-decoration: underline;
 }
 
+.card-form {
+  padding-top: 30px;
+}
