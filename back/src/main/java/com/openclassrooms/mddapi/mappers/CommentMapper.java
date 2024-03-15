@@ -27,7 +27,7 @@ public abstract class CommentMapper {
 
     @Mappings({
             @Mapping(target = "author", expression = "java(userService.getByEmail(email))"),
-            @Mapping(target = "post", expression = "java(postService.getPost(postId))")
+            @Mapping(target = "post", expression = "java(postService.get(postId))")
     })
     public abstract Comment toEntity(Integer postId, CommentDTO commentDTO, String email);
 }

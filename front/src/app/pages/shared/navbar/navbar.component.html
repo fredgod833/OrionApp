@@ -1,6 +1,6 @@
 <mat-toolbar class="toolbar" fxLayoutAlign="space-between center">
   <div class="image-wrapper">
-    <a routerLink="/">
+    <a [routerLink]="($isLogged() | async) ? '/posts' : '/'">
       <img src="/assets/logo_p6.png" alt="Logo"/>
     </a>
   </div>

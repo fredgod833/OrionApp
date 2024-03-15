@@ -1,77 +1,56 @@
 .card-container {
   padding-left: 5%;
   padding-right: 5%;
-}
+  max-width: 1500px;
+  margin: 0 auto;
 
-.mat-card {
-  display: block;
-  position: relative;
-  padding: 0;
-  border-radius: 4px;
-  box-shadow: none;
+  mat-form-field {
+    width: 70%;
 
-  .mat-card-header {
-    margin-bottom: 1.5rem
+    textarea {
+      border: black solid 1px;
+      border-radius: 8px;
+    }
   }
 }
 
-form, mat-card-content {
-  width: 100%;
+.comments-card {
+
+  mat-card-header {
+    padding-bottom: 20px;
+  }
+
+  .author {
+    min-width: 10%;
+    max-width: 10%;
+    text-align: end;
+  }
+
+  .comment {
+    width: auto;
+    max-width: 1000px;
+    padding: 1em;
+    background-color: #eaeaea;
+    border-radius: 15px;
+  }
+}
+
+.post-card {
+  padding-top: 0;
 }
 
 mat-card-content {
   gap: 2%;
 }
 
-mat-form-field {
-  max-width: 1000px;
-  width: 70%;
-}
-
-.send-btn {
-  margin-left: 1%;
-  margin-right: 0;
-}
-
-.error {
-  margin-left: 10px;
-}
-
-.mat-divider {
-  margin-top: 2rem;
-  margin-bottom: 2rem !important;
-  border-top-color: black;
-}
-
-.comment {
-  max-width: 70%;
-  padding: 1em;
-  background-color: #eaeaea;
-  border-radius: 15px;
-  box-shadow: none;
-  margin-bottom: 1.5rem !important;
-}
-
-.mat-form-content {
-  margin-bottom: 10px;
-}
-
-textarea {
-  border: black solid 1px;
-  border-radius: 8px;
-}
-
-.mat-form-field textarea::placeholder {
-  color: darkgray;
-  padding: 10px;
-}
-
 @media (max-width: 1500px) {
-  mat-card-header-text, .card-title {
-    margin-left: 4rem;
+  .card-title {
+    margin-left: 40px;
   }
+}
 
-  .send-btn {
-    margin-left: 1.5%;
+@media (max-width: 600px) {
+  .card-title {
+    margin-left: 60px;
   }
 }

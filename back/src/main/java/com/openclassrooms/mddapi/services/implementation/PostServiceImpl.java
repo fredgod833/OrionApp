@@ -29,7 +29,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Post getPost(int id) {
+    public Post get(int id) {
         return postRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post not found"));
     }
 

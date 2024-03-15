@@ -1,4 +1,10 @@
 package com.openclassrooms.mddapi.responses;
 
-public record MessageResponse(String message) {
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
+public class MessageResponse {
+    String message;
 }

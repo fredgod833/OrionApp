@@ -5,14 +5,15 @@ import com.openclassrooms.mddapi.dtos.UserDTO;
 import com.openclassrooms.mddapi.exceptions.ResourceNotFoundException;
 import com.openclassrooms.mddapi.exceptions.UserNotFoundException;
 import com.openclassrooms.mddapi.models.User;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 public interface UserService {
-    //TODO java doc
     /**
      * Registers a new user based on the provided registration details.
      *
      * @param registerDTO The registration details.
+     * @throws DuplicateKeyException If username or email already exist.
      */
     void register(RegisterDTO registerDTO);
 
@@ -24,7 +25,7 @@ public interface UserService {
      * @return A {@link User} object containing user details.
      * @throws UserNotFoundException If user with provided ID does not exist.
      */
-    User getUserById(int id);
+    User getById(int id);
 
     /**
      * Retrieves user details for the given email.
@@ -36,22 +37,44 @@ public interface UserService {
     User getByEmail(String email);
 
     /**
+     * Retrieves a user object based on the provided email address.
+     *
+     * @param username the name of the user to retrieve.
+     * @return A {@link User} with the matching email address.
+     * @throws UserNotFoundException If user with provided email does not exist.
+     */
+    User getByUsername(String username);
+
+    /**
      * Updates a user with the specified information.
      *
      * @param userId  The ID of the user to update.
      * @param userDTO An {@link UserDTO} containing the updated user data.
-     * @return An {@link User} representing the updated user details.
      * @throws UserNotFoundException If a user with the provided ID is not found.
+     * @throws DuplicateKeyException If identifier that need update already exist.
      */
-    User updateUser(int userId, UserDTO userDTO);
+    void update(int userId, UserDTO userDTO);
 
     /**
-     * Checks if a user with the given email exists.
+     * Checks if the provided email address does not exist in the system.
      *
-     * @param email The email to check.
-     * @return true If a user with the specified email exists; false otherwise.
+     * @param email The email address to check. (Must not be null)
+     * @return true if the email address does not exist.
+     * @throws UserNotFoundException If a user with the provided email is not found.
+     * @throws DuplicateKeyException If email already exist.
      */
-    boolean userExists(String email);
+    boolean emailDoesNotExist(String email);
+
+
+    /**
+     * Checks if the provided username does not exist in the system.
+     *
+     * @param username The username to check. (Must not be null)
+     * @return true if the username does not exist.
+     * @throws UserNotFoundException If a user with the provided username is not found.
+     * @throws DuplicateKeyException If username already exist.
+     */
+    boolean usernameDoesNotExist(String username);
 
     /**
      * Subscribes a user to a theme.
@@ -75,5 +98,5 @@ public interface UserService {
      * @throws UsernameNotFoundException If a user with the provided username is not found.
      * @throws IllegalArgumentException  If the user is not already subscribed to the theme.
      */
-    User unsubscribeFromTheme(int id, String username);
+    User unSubscribeFromTheme(int id, String username);
 }

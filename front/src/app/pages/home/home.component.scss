@@ -1,8 +1,13 @@
-.center {
+.home {
   height: 80vh;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  img {
+    width: 100%;
+    max-width: 600px;
+  }
 }
 
 .button-container {
@@ -10,20 +15,13 @@
   justify-content: center;
   gap: 6vh;
 
-  button {
+  .btn {
+    background-color: white;
+    color: black;
     width: 150px;
+    border: black solid 1px;
+    justify-content: center;
   }
-}
-
-.btn {
-  color: black;
-  background-color: white;
-  border: black solid 1px;
-}
-
-.center img {
-  width: 100%;
-  max-width: 600px;
 }
 
 @media (max-width: 430px) {

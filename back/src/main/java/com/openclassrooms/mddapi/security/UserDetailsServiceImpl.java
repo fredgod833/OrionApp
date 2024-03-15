@@ -1,7 +1,7 @@
 package com.openclassrooms.mddapi.security;
 
 import com.openclassrooms.mddapi.models.User;
-import com.openclassrooms.mddapi.repositories.UserRepository;
+import com.openclassrooms.mddapi.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,17 +11,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private final UserRepository userRepo;
+    private final UserService userService;
 
     @Autowired
-    public UserDetailsServiceImpl(UserRepository userRepo) {
-        this.userRepo = userRepo;
+    public UserDetailsServiceImpl(UserService userService) {
+        this.userService = userService;
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepo.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User with email " + email + " not found"));
+    public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
+        User user = usernameOrEmail.contains("@") ?
+                userService.getByEmail(usernameOrEmail) : userService.getByUsername(usernameOrEmail);
 
         return UserDetailsImpl
                 .builder()

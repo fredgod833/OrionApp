@@ -4,8 +4,8 @@ import {HomeComponent} from './pages/home/home.component';
 import {NotFoundComponent} from "./pages/not-found/not-found.component";
 import {AuthGuard} from "./guards/auth.guard";
 import {UnAuthGuard} from "./guards/unAuth.guard";
-import {UserDetailsComponent} from "./pages/account/user-details/user-details.component";
-import {AccountGuard} from "./guards/account.guard";
+import {UserDetailsComponent} from "./pages/account/user-details.component";
+import {DeActivateGuard} from "./guards/de-activate.guard";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -27,7 +27,7 @@ const routes: Routes = [
   {
     path: 'user',
     canActivate: [AuthGuard],
-    canDeactivate: [AccountGuard],
+    canDeactivate: [DeActivateGuard],
     component: UserDetailsComponent
   },
   {path: '404', component: NotFoundComponent},

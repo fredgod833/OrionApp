@@ -8,9 +8,12 @@ import com.openclassrooms.mddapi.repositories.UserRepository;
 import com.openclassrooms.mddapi.services.ThemeService;
 import com.openclassrooms.mddapi.services.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -32,14 +35,16 @@ public class UserServiceImpl implements UserService {
     }
 
     public void register(RegisterDTO registerDTO) {
-        User user = modelMapper.map(registerDTO, User.class);
+        if (usernameDoesNotExist(registerDTO.getUsername())
+                && emailDoesNotExist(registerDTO.getEmail())) {
+            User user = modelMapper.map(registerDTO, User.class);
 
-        user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
-
-        userRepo.save(user);
+            user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
+            userRepo.save(user);
+        }
     }
 
-    public User getUserById(int id) {
+    public User getById(int id) {
         return userRepo.findById(id)
                 .orElseThrow(() -> new UsernameNotFoundException("User with " + id + " id not found"));
     }
@@ -50,24 +55,53 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUser(int id, UserDTO userDTO) {
-        User user = getUserById(id);
-
-        user.setEmail(userDTO.getEmail());
-        user.setUsername(userDTO.getUsername());
-
-        return userRepo.save(user);
+    public User getByUsername(String username) {
+        return userRepo.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User with " + username + " name not found"));
     }
 
-    public boolean userExists(String email) {
-        return userRepo.existsByEmail(email);
+    @Override
+    public void update(int id, UserDTO userDTO) {
+        User user = getById(id);
+
+        if (!Objects.equals(user.getEmail(), userDTO.getEmail())) {
+            if (emailDoesNotExist(userDTO.getEmail())) {
+                user.setEmail(userDTO.getEmail());
+            }
+        }
+        if (!Objects.equals(user.getUsername(), userDTO.getUsername())) {
+            if (usernameDoesNotExist(userDTO.getUsername())) {
+                user.setUsername(userDTO.getUsername());
+            }
+        }
+        userRepo.save(user);
     }
 
+    @Override
+    public boolean emailDoesNotExist(String email) {
+        if (userRepo.existsByEmail(email)) {
+            throw new DuplicateKeyException("Email already exists");
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean usernameDoesNotExist(String username) {
+        if (userRepo.existsByUsername(username)) {
+            throw new DuplicateKeyException("Username already exists");
+        }
+
+        return true;
+    }
+
+    @Override
     public User subscribeToTheme(int id, String username) {
         return updateSubscriptions(id, username, true);
     }
 
-    public User unsubscribeFromTheme(int id, String username) {
+    @Override
+    public User unSubscribeFromTheme(int id, String username) {
         return updateSubscriptions(id, username, false);
     }
 
@@ -76,17 +110,10 @@ public class UserServiceImpl implements UserService {
         User user = getByEmail(email);
 
         if (request) {
-            if (!user.getSubscriptions().contains(theme)) {
-                user.getSubscriptions().add(theme);
-            } else {
-                throw new RuntimeException("Subscription already exists");
-            }
-        } else if (user.getSubscriptions().contains(theme)) {
-            user.getSubscriptions().removeIf(subscription -> subscription.equals(theme));
+            user.getSubscriptions().add(theme);
         } else {
-            throw new RuntimeException("Not subscribed to theme yet");
+            user.getSubscriptions().removeIf(theme::equals);
         }
-
         return userRepo.save(user);
     }
 }

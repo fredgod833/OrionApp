@@ -10,7 +10,7 @@ import {MatCardModule} from "@angular/material/card";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {JwtInterceptor} from "./interceptors/jwt.interceptor";
 import {NotFoundComponent} from "./pages/not-found/not-found.component";
-import {UserDetailsComponent} from './pages/account/user-details/user-details.component';
+import {UserDetailsComponent} from './pages/account/user-details.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {BrowserModule} from "@angular/platform-browser";
@@ -20,6 +20,7 @@ import {FlexLayoutModule} from "@angular/flex-layout";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {NavbarComponent} from "./pages/shared/navbar/navbar.component";
 import {SidenavListComponent} from "./pages/shared/sidenav-list/sidenav-list.component";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 const materialModule = [
   MatCardModule,
@@ -30,7 +31,8 @@ const materialModule = [
   MatIconModule,
   MatToolbarModule,
   MatInputModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatProgressSpinnerModule
 ]
 
 @NgModule({

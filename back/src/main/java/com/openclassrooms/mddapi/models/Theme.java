@@ -23,7 +23,8 @@ public class Theme {
     Integer id;
 
     @NotEmpty
-    @Size(max = 100)
+    @Size(max = 60)
+    @Column(unique = true)
     String name;
 
     @NotEmpty
@@ -31,9 +32,10 @@ public class Theme {
     String description;
 
     @CreationTimestamp
-    @Column(updatable = false)
+    @Column(updatable = false, nullable = false)
     LocalDateTime createdAt;
 
     @UpdateTimestamp
+    @Column(nullable = false)
     LocalDateTime updatedAt;
 }

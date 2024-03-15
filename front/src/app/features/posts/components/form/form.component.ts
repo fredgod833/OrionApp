@@ -1,40 +1,43 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Post} from "../../interfaces/post";
 import {PostApiService} from "../../services/post-api.service";
-import {Observable} from "rxjs";
-import {ThemesResponse} from "../../../themes/interfaces/api/themesResponse";
+import {Subject, takeUntil} from "rxjs";
 import {ThemeApiService} from "../../../themes/services/theme-api.service";
+import {Theme} from "../../../themes/interfaces/theme";
 
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss']
 })
-export class FormComponent {
-  public onError = false;
-  public themes$: Observable<ThemesResponse> = this.themeApiService.all();
+export class FormComponent implements OnInit, OnDestroy {
+  private destroy$: Subject<void> = new Subject<void>();
 
-  public form = this.fb.group({
+  public onError: boolean = false;
+  public themes!: Theme[];
+
+  public form: FormGroup = this.fb.group({
     theme: [
-      [
-        Validators.required,
-      ]
+      '',
+      Validators.required,
     ],
     title: [
       '',
       [
         Validators.required,
-        Validators.max(20)
+        Validators.minLength(3),
+        Validators.maxLength(20)
       ]
     ],
     content: [
       '',
       [
         Validators.required,
-        Validators.max(2000)
+        Validators.minLength(20),
+        Validators.maxLength(2000)
       ]
     ]
   });
@@ -49,16 +52,37 @@ export class FormComponent {
   }
 
   public submit(): void {
-    console.log(this.form.value);
-    this.postApiService.create(this.form).subscribe((_: Post) => this.exitPage());
+    this.postApiService.create(this.form)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((_: Post) => {
+        this.form.markAsPristine();
+        this.exitPage();
+      });
   }
 
   private exitPage(): void {
     this.matSnackBar.open('Post created !', 'Close', {duration: 3000});
-    this.router.navigate(['posts']);
+    this.router.navigate(['posts']).then(() => console.log("Redirected to posts page"));
   }
 
   public back(): void {
-    window.history.back();
+    this.router.navigate(['/posts']).then(() => console.log("Navigated to posts page"));
+  }
+
+  public canExit() {
+    return this.form.dirty ? confirm('You have unsaved changes. Do you want to navigate away?') : true;
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  ngOnInit(): void {
+    this.themeApiService.all()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((themes: Theme[]) => {
+        this.themes = themes;
+      });
   }
 }

@@ -2,7 +2,6 @@ package com.openclassrooms.mddapi.mappers;
 
 import com.openclassrooms.mddapi.dtos.PostDTO;
 import com.openclassrooms.mddapi.models.Post;
-import com.openclassrooms.mddapi.models.Theme;
 import com.openclassrooms.mddapi.services.ThemeService;
 import com.openclassrooms.mddapi.services.UserService;
 import org.mapstruct.Mapper;
@@ -12,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-@Mapper(componentModel = "spring", uses = {UserService.class, ThemeService.class}, imports = {Theme.class, Post.class})
+@Mapper(componentModel = "spring", uses = {UserService.class, ThemeService.class})
 public abstract class PostMapper implements EntityMapper<PostDTO, Post> {
 
     @Autowired
