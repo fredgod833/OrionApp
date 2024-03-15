@@ -1,12 +1,14 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {User} from "../../../interfaces/user.interface";
+import {User} from "../../interfaces/user.interface";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {UserService} from "../../../services/user.service";
-import {SessionService} from "../../../services/session.service";
+import {UserService} from "../../services/user.service";
+import {SessionService} from "../../services/session.service";
 import {Router} from "@angular/router";
-import {Theme} from "../../../features/themes/interfaces/theme";
+import {Theme} from "../../features/themes/interfaces/theme";
 import {Subject, takeUntil} from "rxjs";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {MessageResponse} from "../../interfaces/message-response";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-user-details',
@@ -18,7 +20,7 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
 
   public themes: Theme[] = [];
   public user!: User;
-  public onError: boolean = false;
+  public error: string = '';
   public isLoading: boolean = true;
   public form: FormGroup = this.fb.group({
     username: [
@@ -58,7 +60,7 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
           this.themes = user.subscriptions;
           this.isLoading = false;
         },
-        error: _ => this.onError = true
+        error: (err: HttpErrorResponse) => this.error = err.error.message
       });
   }
 
@@ -66,11 +68,12 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
     this.userService.update(this.user.id, this.form)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: () => {
+        next: (message: MessageResponse) => {
+          console.log(message);
           this.matSnackBar.open("changes saved", "Close", {duration: 3000});
           this.form.markAsPristine();
         },
-        error: _ => this.onError = true
+        error: (err: HttpErrorResponse) => this.error = err.error.message
       });
   }
 
@@ -80,13 +83,13 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
   }
 
   public unSubscribe(id: number): void {
-    this.userService.unFollow(id)
+    this.userService.unSubscribe(id)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (user: User) => {
           this.themes = user.subscriptions;
         },
-        error: _ => this.onError = true
+        error: (err: HttpErrorResponse) => this.error = err.error.message
       });
   }
 

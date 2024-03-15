@@ -8,7 +8,7 @@ import {Theme} from "../interfaces/theme";
 })
 export class ThemeApiService {
 
-  private pathService = '/api/themes';
+  private pathService: string = '/api/themes';
 
   constructor(private http: HttpClient) {
   }

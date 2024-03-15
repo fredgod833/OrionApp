@@ -9,6 +9,7 @@ import {User} from "../../../../interfaces/user.interface";
 import {UserService} from "../../../../services/user.service";
 import {Subject, takeUntil} from "rxjs";
 import {passwordValidator} from "../../../../util/password-validator";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-login',
@@ -19,15 +20,15 @@ export class LoginComponent implements OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
 
   public hide: boolean = true;
-  public onError: boolean = false;
+  public error: string = '';
 
   public form: FormGroup = this.fb.group({
     email: [
       '',
       [
         Validators.required,
-        Validators.pattern('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$'),
-        Validators.maxLength(60)
+        Validators.minLength(6),
+        Validators.maxLength(60),
       ]
     ],
     password: [
@@ -63,7 +64,7 @@ export class LoginComponent implements OnDestroy {
             });
           this.router.navigate(['/posts']).then(() => console.log("Redirected to posts page"));
         },
-        error: _ => this.onError = true,
+        error: (err: HttpErrorResponse) => this.error = err.error.message,
       });
   }
 

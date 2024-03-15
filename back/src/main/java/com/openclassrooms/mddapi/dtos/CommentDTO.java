@@ -13,6 +13,5 @@ public class CommentDTO {
     @Size(max = 500)
     String content;
 
-    @NotEmpty
     String author;
 }

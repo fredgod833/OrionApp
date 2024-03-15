@@ -4,7 +4,7 @@ import {HomeComponent} from './pages/home/home.component';
 import {NotFoundComponent} from "./pages/not-found/not-found.component";
 import {AuthGuard} from "./guards/auth.guard";
 import {UnAuthGuard} from "./guards/unAuth.guard";
-import {UserDetailsComponent} from "./pages/account/user-details/user-details.component";
+import {UserDetailsComponent} from "./pages/account/user-details.component";
 import {DeActivateGuard} from "./guards/de-activate.guard";
 
 const routes: Routes = [

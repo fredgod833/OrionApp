@@ -45,7 +45,7 @@ export class ThemesComponent implements OnInit, OnDestroy {
   }
 
   public toggleSubscription(themeId: number): void {
-    (this.isSubscribed(themeId) ? this.userService.unFollow(themeId) : this.userService.follow(themeId))
+    (this.isSubscribed(themeId) ? this.userService.unSubscribe(themeId) : this.userService.subscribe(themeId))
       .pipe(takeUntil(this.destroy$))
       .subscribe((user: User) => {
         this.user = user;

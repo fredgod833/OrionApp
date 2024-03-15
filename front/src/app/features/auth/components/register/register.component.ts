@@ -5,6 +5,11 @@ import {Router} from "@angular/router";
 import {RegisterRequest} from "../../interfaces/registerRequest.interface";
 import {passwordValidator} from "../../../../util/password-validator";
 import {Subject, takeUntil} from "rxjs";
+import {HttpErrorResponse} from "@angular/common/http";
+import {AuthSuccess} from "../../interfaces/authSuccess.interface";
+import {UserService} from "../../../../services/user.service";
+import {User} from "../../../../interfaces/user.interface";
+import {SessionService} from "../../../../services/session.service";
 
 @Component({
   selector: 'app-register',
@@ -14,7 +19,7 @@ import {Subject, takeUntil} from "rxjs";
 export class RegisterComponent implements OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
 
-  public onError: boolean = false;
+  public error: string = '';
 
   public form: FormGroup = this.fb.group({
     username: [
@@ -46,6 +51,8 @@ export class RegisterComponent implements OnDestroy {
   });
 
   constructor(private authService: AuthService,
+              private userService: UserService,
+              private sessionService: SessionService,
               private fb: FormBuilder,
               private router: Router) {
   }
@@ -55,10 +62,14 @@ export class RegisterComponent implements OnDestroy {
     this.authService.register(registerRequest)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (_: void) => this.router.navigate(['/login']),
-        error: _ => this.onError = true,
-      }
-    );
+        next: (response: AuthSuccess) => {
+          localStorage.setItem('token', response.token);
+          this.userService.getUser().subscribe((user: User) => {
+            this.sessionService.logIn(user);
+            this.router.navigate(['/posts']).then(() => console.log("Redirected to posts page"));
+          })
+        }, error: (err: HttpErrorResponse) => this.error = err.error.message
+      })
   }
 
   public back(): void {

@@ -23,7 +23,8 @@ public class ThemeServiceImpl implements ThemeService {
 
     @Override
     public Theme getById(int id) {
-        return themeRepo.getReferenceById(id);
+        return themeRepo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Theme with id " + id + " not found"));
     }
 
     @Override

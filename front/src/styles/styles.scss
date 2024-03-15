@@ -112,6 +112,11 @@ html, body {
   }
 }
 
+.error {
+  display: flex;
+  justify-content: center;
+}
+
 #loading {
   padding-top: 10rem;
 }
