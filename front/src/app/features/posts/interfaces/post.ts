@@ -4,6 +4,6 @@ export interface Post {
   content: string;
   author: string;
   theme: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: Date;
+  updatedAt: Date;
 }

@@ -31,7 +31,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterDTO registerDTO, Errors errors) {
-        if (errors.hasErrors() || userService.userExists(registerDTO.getEmail())) {
+        if (errors.hasErrors() || userService.exists(registerDTO.getEmail())) {
             return ResponseEntity.badRequest().build();
         }
         userService.register(registerDTO);

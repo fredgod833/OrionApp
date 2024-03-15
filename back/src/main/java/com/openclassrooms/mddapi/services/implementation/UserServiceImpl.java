@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
         userRepo.save(user);
     }
 
-    public User getUserById(int id) {
+    public User getById(int id) {
         return userRepo.findById(id)
                 .orElseThrow(() -> new UsernameNotFoundException("User with " + id + " id not found"));
     }
@@ -50,8 +50,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUser(int id, UserDTO userDTO) {
-        User user = getUserById(id);
+    public User update(int id, UserDTO userDTO) {
+        User user = getById(id);
 
         user.setEmail(userDTO.getEmail());
         user.setUsername(userDTO.getUsername());
@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
         return userRepo.save(user);
     }
 
-    public boolean userExists(String email) {
+    public boolean exists(String email) {
         return userRepo.existsByEmail(email);
     }
 
@@ -79,13 +79,22 @@ public class UserServiceImpl implements UserService {
             if (!user.getSubscriptions().contains(theme)) {
                 user.getSubscriptions().add(theme);
             } else {
-                throw new RuntimeException("Subscription already exists");
+                throw new IllegalArgumentException("Subscription already exists");
             }
-        } else if (user.getSubscriptions().contains(theme)) {
-            user.getSubscriptions().removeIf(subscription -> subscription.equals(theme));
         } else {
-            throw new RuntimeException("Not subscribed to theme yet");
+            if (user.getSubscriptions().contains(theme)) {
+                user.getSubscriptions().removeIf(subscription -> subscription.equals(theme));
+            } else {
+                throw new IllegalArgumentException("Not subscribed to theme yet");
+            }
         }
+
+//        or like this?
+//        if (request) {
+//            user.getSubscriptions().add(theme);
+//        } else {
+//            user.getSubscriptions().removeIf(theme::equals);
+//        }
 
         return userRepo.save(user);
     }

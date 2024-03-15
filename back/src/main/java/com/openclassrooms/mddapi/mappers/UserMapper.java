@@ -19,10 +19,12 @@ public abstract class UserMapper implements EntityMapper<UserDTO, User> {
     UserService userService;
 
     @Mappings({
-            @Mapping(target = "subscriptions", expression = "java(userService.getByEmail(email).getSubscriptions())")
+            @Mapping(target = "subscriptions", expression = "java(userService.getByEmail(email).getSubscriptions())"),
     })
     public abstract UserDTO toDTO(User user, String email);
 
-    @Mappings({})
+    @Mappings({
+            @Mapping(target = "createdAt", ignore = true)
+    })
     public abstract User toEntity(UserDTO userDTO, String email);
 }

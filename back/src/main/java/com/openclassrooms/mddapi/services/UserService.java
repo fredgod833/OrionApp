@@ -8,7 +8,6 @@ import com.openclassrooms.mddapi.models.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 public interface UserService {
-    //TODO java doc
     /**
      * Registers a new user based on the provided registration details.
      *
@@ -24,7 +23,7 @@ public interface UserService {
      * @return A {@link User} object containing user details.
      * @throws UserNotFoundException If user with provided ID does not exist.
      */
-    User getUserById(int id);
+    User getById(int id);
 
     /**
      * Retrieves user details for the given email.
@@ -43,7 +42,7 @@ public interface UserService {
      * @return An {@link User} representing the updated user details.
      * @throws UserNotFoundException If a user with the provided ID is not found.
      */
-    User updateUser(int userId, UserDTO userDTO);
+    User update(int userId, UserDTO userDTO);
 
     /**
      * Checks if a user with the given email exists.
@@ -51,7 +50,7 @@ public interface UserService {
      * @param email The email to check.
      * @return true If a user with the specified email exists; false otherwise.
      */
-    boolean userExists(String email);
+    boolean exists(String email);
 
     /**
      * Subscribes a user to a theme.

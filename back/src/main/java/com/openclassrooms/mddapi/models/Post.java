@@ -19,7 +19,6 @@ import java.time.LocalDateTime;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "posts", schema = "mdd")
 public class Post {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
@@ -42,9 +41,10 @@ public class Post {
     String content;
 
     @CreationTimestamp
-    @Column(updatable = false)
+    @Column(updatable = false, nullable = false)
     LocalDateTime createdAt;
 
     @UpdateTimestamp
+    @Column(nullable = false)
     LocalDateTime updatedAt;
 }

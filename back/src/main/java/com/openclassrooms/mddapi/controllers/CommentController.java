@@ -25,10 +25,7 @@ public class CommentController {
     @GetMapping("/{id}/comments")
     public ResponseEntity<List<CommentDTO>> getComments(@PathVariable int id) {
         List<Comment> comments = commentService.getComments(id);
-        List<CommentDTO> commentDTOS = comments.stream()
-                .map(commentMapper::toDTO)
-                .toList();
-        return ResponseEntity.ok(commentDTOS);
+        return ResponseEntity.ok(comments.stream().map(commentMapper::toDTO).toList());
     }
 
     @PostMapping("/{id}")
@@ -37,8 +34,6 @@ public class CommentController {
             @RequestBody CommentDTO commentDTO,
             Principal principal) {
         Comment comment = commentMapper.toEntity(id, commentDTO, principal.getName());
-        return ResponseEntity.ok(
-                commentMapper.toDTO(
-                        commentService.saveComment(comment)));
+        return ResponseEntity.ok(commentMapper.toDTO(commentService.saveComment(comment)));
     }
 }

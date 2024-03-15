@@ -1,8 +1,8 @@
 <!--User details-->
-<div class="card-container" fxLayout="row" fxLayoutAlign="center center">
-  <mat-card class="card-form  mat-elevation-z0">
+<div class="card-container" fxLayoutAlign="center center">
+  <mat-card class="card-form">
     <mat-card-header fxLayoutAlign="center center">
-      <mat-card-title>Profil utilisateur</mat-card-title>
+      <mat-card-title><h1>Profil utilisateur</h1></mat-card-title>
     </mat-card-header>
     <form class="form-inputs" [formGroup]="form" (ngSubmit)="submit()">
       <mat-card-content fxLayout="column">
@@ -13,28 +13,33 @@
           <input matInput type="text" formControlName="username">
         </mat-form-field>
       </mat-card-content>
-      <button class="btn center-content" type="submit" [disabled]="form.pristine">Sauvegarder</button>
+      <button class="btn" type="submit" [disabled]="form.pristine">Sauvegarder</button>
       <button id="logout" (click)="logout()">Se déconnecter</button>
       <span *ngIf="onError" class="error">An error occurred</span>
     </form>
   </mat-card>
 </div>
 
-<!--Subscriptions-->
-<div class="themes-list" fxLayout="column" fxLayoutAlign="center center">
+<div class="mat-divider-container">
   <mat-divider></mat-divider>
-  <div class="items" fxLayout="row wrap" fxLayout.lt-md="column">
-    <mat-card class="item" *ngFor="let theme of themes" fxFlex>
-      <mat-card-header>
-        <mat-card-title>{{ theme.name }}</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <p>Description: {{ theme.description | slice: 0:250 }}
-          <span *ngIf="theme.description.length > 250">...</span></p>
-      </mat-card-content>
-      <mat-card-actions fxLayoutAlign="center">
-        <button class="btn" (click)="unSubscribe(theme.id)">Se désabonner</button>
-      </mat-card-actions>
-    </mat-card>
+</div>
+
+<!--Subscriptions-->
+<h1>Abonnements</h1>
+<div class="items">
+  <div id="loading" *ngIf="isLoading">
+    <mat-spinner diameter="80" mode="indeterminate"></mat-spinner>
   </div>
+  <mat-card class="item" *ngFor="let theme of themes">
+    <mat-card-header>
+      <mat-card-title>{{ theme.name }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>Description: {{ theme.description | slice: 0:250 }}
+        <span *ngIf="theme.description.length > 250">...</span></p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button class="btn" (click)="unSubscribe(theme.id)">Se désabonner</button>
+    </mat-card-actions>
+  </mat-card>
 </div>

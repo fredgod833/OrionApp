@@ -20,6 +20,7 @@ import {FlexLayoutModule} from "@angular/flex-layout";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {NavbarComponent} from "./pages/shared/navbar/navbar.component";
 import {SidenavListComponent} from "./pages/shared/sidenav-list/sidenav-list.component";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 const materialModule = [
   MatCardModule,
@@ -30,7 +31,8 @@ const materialModule = [
   MatIconModule,
   MatToolbarModule,
   MatInputModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatProgressSpinnerModule
 ]
 
 @NgModule({
@@ -41,15 +43,15 @@ const materialModule = [
     SidenavListComponent,
     NotFoundComponent,
     UserDetailsComponent],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    FlexLayoutModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    ...materialModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        FlexLayoutModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        ...materialModule
+    ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
   ],

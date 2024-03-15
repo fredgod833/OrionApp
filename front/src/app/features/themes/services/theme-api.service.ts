@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {ThemesResponse} from "../interfaces/api/themesResponse";
+import {Theme} from "../interfaces/theme";
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class ThemeApiService {
   constructor(private http: HttpClient) {
   }
 
-  public all(): Observable<ThemesResponse> {
-    return this.http.get<ThemesResponse>(this.pathService);
+  public all(): Observable<Theme[]> {
+    return this.http.get<Theme[]>(this.pathService);
   }
 }

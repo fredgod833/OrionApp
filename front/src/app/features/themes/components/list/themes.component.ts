@@ -1,7 +1,6 @@
-import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
-import {Observable, Subject, takeUntil} from "rxjs";
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Subject, takeUntil} from "rxjs";
 import {ThemeApiService} from "../../services/theme-api.service";
-import {ThemesResponse} from "../../interfaces/api/themesResponse";
 import {User} from "../../../../interfaces/user.interface";
 import {UserService} from "../../../../services/user.service";
 import {Theme} from "../../interfaces/theme";
@@ -13,10 +12,11 @@ import {Theme} from "../../interfaces/theme";
   // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ThemesComponent implements OnInit, OnDestroy {
-  public themes$!: Observable<ThemesResponse>;
-  public user!: User;
-
   private destroy$: Subject<void> = new Subject<void>();
+
+  public isLoading: boolean = true;
+  public themes!: Theme[];
+  public user!: User;
 
   constructor(private themeApiService: ThemeApiService,
               private userService: UserService) {
@@ -27,7 +27,11 @@ export class ThemesComponent implements OnInit, OnDestroy {
   }
 
   private loadData(): void {
-    this.themes$ = this.themeApiService.all();
+    this.themeApiService.all().subscribe((themes: Theme[]) => {
+        this.isLoading = false;
+        this.themes = themes;
+      }
+    );
     this.userService.getUser()
       .pipe(takeUntil(this.destroy$))
       .subscribe((user: User) => {

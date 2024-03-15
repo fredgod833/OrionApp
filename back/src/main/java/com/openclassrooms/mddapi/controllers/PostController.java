@@ -1,6 +1,8 @@
 package com.openclassrooms.mddapi.controllers;
 
 import com.openclassrooms.mddapi.dtos.PostDTO;
+import com.openclassrooms.mddapi.exceptions.ResourceNotFoundException;
+import com.openclassrooms.mddapi.exceptions.UserNotFoundException;
 import com.openclassrooms.mddapi.mappers.PostMapper;
 import com.openclassrooms.mddapi.services.PostService;
 import org.springframework.http.ResponseEntity;
@@ -23,22 +25,24 @@ public class PostController {
 
     @GetMapping()
     public ResponseEntity<List<PostDTO>> getPosts(Principal principal) {
-        return ResponseEntity.ok(
-                postMapper.toDTO(
-                        postService.getAll(principal.getName())));
+        try {
+            return ResponseEntity.ok(postMapper.toDTO(postService.getAll(principal.getName())));
+        } catch (UserNotFoundException ex) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<PostDTO> getPost(@PathVariable("id") int id) {
-        return ResponseEntity.ok(
-                postMapper.toDTO(
-                        postService.getPost(id)));
+        try {
+            return ResponseEntity.ok(postMapper.toDTO(postService.get(id)));
+        } catch (ResourceNotFoundException ex) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping()
     public ResponseEntity<PostDTO> savePost(Principal principal, @RequestBody PostDTO postDTO) {
-        return ResponseEntity.ok(
-                postMapper.toDTO(
-                        postService.save(principal.getName(), postDTO)));
+        return ResponseEntity.ok(postMapper.toDTO(postService.save(principal.getName(), postDTO)));
     }
 }
