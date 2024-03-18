@@ -23,6 +23,11 @@ public class SubjectController implements SubjectResource{
         this.getAllSubjectUseCase = getAllSubjectUseCase;
     }
 
+    /**
+     * Retrieves all subjects asynchronously.
+     *
+     * @return A CompletableFuture containing a list of SubjectResponse objects.
+     */
     @Override
     public CompletableFuture<List<SubjectResponse>> getAllSubject() {
         return useCaseExecutor.execute(
@@ -32,6 +37,12 @@ public class SubjectController implements SubjectResource{
         );
     }
 
+    /**
+     * Retrieves a specific subject by ID asynchronously.
+     *
+     * @param id The ID of the subject to retrieve.
+     * @return A CompletableFuture containing a SubjectResponse object.
+     */
     @Override
     public CompletableFuture<SubjectResponse> getSubjectById(@PathVariable Long id) {
         return useCaseExecutor.execute(

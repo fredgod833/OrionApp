@@ -18,6 +18,13 @@ public class CustomUserDetailsService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
+    /**
+     * Loads user details by username (email).
+     *
+     * @param email The email of the user.
+     * @return UserDetails object representing the user.
+     * @throws UsernameNotFoundException if the user is not found.
+     */
     @Transactional
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -26,6 +33,13 @@ public class CustomUserDetailsService implements UserDetailsService {
         return new CustomUserDetails(user);
     }
 
+    /**
+     * Loads user details by user ID.
+     *
+     * @param userId The ID of the user.
+     * @return UserDetails object representing the user.
+     * @throws UsernameNotFoundException if the user is not found.
+     */
     @Transactional
     public UserDetails loadUserById(Long userId) {
         User user = userRepository.findById(userId)

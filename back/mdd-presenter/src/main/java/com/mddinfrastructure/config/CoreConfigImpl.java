@@ -17,9 +17,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Configuration class for defining beans related to core use cases.
+ */
 @Configuration
 public class CoreConfigImpl {
-
 
     // USER
     @Bean

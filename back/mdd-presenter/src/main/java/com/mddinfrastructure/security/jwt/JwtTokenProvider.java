@@ -23,9 +23,9 @@ public class JwtTokenProvider {
     private long jwtExpiration;
 
     /**
-     * Crée un jeton JWT pour un utilisateur authentifié.
+     * Creates a JWT token for an authenticated user.
      *
-     * @return Un jeton JWT signé.
+     * @return A signed JWT token.
      */
     public String createToken(CustomUserDetails userDetails) {
         Date now = new Date();
@@ -39,10 +39,10 @@ public class JwtTokenProvider {
     }
 
     /**
-     * Valide le jeton JWT.
+     * Validates the JWT token.
      *
-     * @param token Le jeton JWT à valider.
-     * @return True si le jeton est valide, False sinon.
+     * @param token The JWT token to validate.
+     * @return True if the token is valid, False otherwise.
      */
     public Boolean validateToken(String token) {
         try {

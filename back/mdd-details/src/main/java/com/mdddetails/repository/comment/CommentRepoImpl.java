@@ -10,6 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Manages comment data operations.
+ */
 @Repository
 public class CommentRepoImpl implements ICommentRepository {
     private final CommentJpaRepo jpaRepo;
@@ -20,12 +23,21 @@ public class CommentRepoImpl implements ICommentRepository {
         this.commentMapper = commentMapper;
     }
 
+
+    /**
+     * Gets all comments.
+     * @return list of comments
+     */
     @Override
     @Transactional
     public List<Comment> findAll() {
         return jpaRepo.findAll().stream().map(commentMapper::toDomain).collect(Collectors.toList());
     }
 
+    /**
+     * Saves a comment.
+     * @param entity comment to save
+     */
     @Override
     public void save(Comment entity) {
         CommentEntity comment = commentMapper.toEntity(entity);

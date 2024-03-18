@@ -5,19 +5,19 @@ import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 
 /**
- * Initialisateur de contexte d'application pour charger les variables d'environnement.
+ * Application context initializer to load environment variables.
  * <p>
- * Cette classe est utilisée pour charger les variables d'environnement depuis un fichier .env
- * au démarrage de l'application Spring Boot. Elle implémente {@link ApplicationContextInitializer}
- * pour garantir que ces variables soient chargées avant l'initialisation du contexte de l'application.
+ * This class is used to load environment variables from a .env file
+ * at the startup of the Spring Boot application. It implements {@link ApplicationContextInitializer}
+ * to ensure these variables are loaded before the application context is initialized.
  * </p>
  */
 public class EnvInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
     /**
-     * Charge les variables d'environnement et les définit comme propriétés système.
+     * Loads environment variables and sets them as system properties.
      *
-     * @param applicationContext Le contexte d'application configurable de Spring Boot.
+     * @param applicationContext The Spring Boot configurable application context.
      */
     @Override
     public void initialize(ConfigurableApplicationContext applicationContext) {

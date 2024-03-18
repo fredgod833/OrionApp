@@ -48,12 +48,12 @@ public class SecurityConfig {
     }
 
     /**
-     * Gestionnaire d'authentification pour l'application.
+     * Authentication manager for the application.
      *
-     * @param authenticationConfiguration La configuration d'authentification.
-     * Cette configuration automatique utilise généralement le premier AuthenticationProvider ici authenticationProvider() déclaré au dessus
-     * @return Le gestionnaire d'authentification.
-     * @throws Exception En cas d'erreur dans la configuration.
+     * @param authenticationConfiguration The authentication configuration.
+     * This auto configuration typically uses the first AuthenticationProvider here authenticationProvider() declared above
+     * @return The authentication manager.
+     * @throws Exception If there's an error in configuration.
      */
     @Bean
     AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws  Exception {
@@ -61,10 +61,10 @@ public class SecurityConfig {
     }
 
     /**
-     * Configuration de la chaîne de filtres de sécurité pour les requêtes HTTP.
+     * Configuration of the security filter chain for HTTP requests.
      *
-     * @return La chaîne de filtres de sécurité.
-     * @throws Exception En cas d'erreur dans la configuration.
+     * @return The security filter chain.
+     * @throws Exception If there's an error in configuration.
      */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {

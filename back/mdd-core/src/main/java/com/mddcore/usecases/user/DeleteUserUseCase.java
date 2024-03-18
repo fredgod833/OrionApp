@@ -4,6 +4,9 @@ import com.mddcore.domain.models.User;
 import com.mddcore.domain.repository.IUserRepository;
 import com.mddcore.usecases.UseCase;
 
+/**
+ * Use case for deleting a user.
+ */
 public class DeleteUserUseCase extends UseCase<DeleteUserUseCase.InputValues, DeleteUserUseCase.OutputValues> {
     private final IUserRepository userRepository;
 
@@ -11,6 +14,13 @@ public class DeleteUserUseCase extends UseCase<DeleteUserUseCase.InputValues, De
         this.userRepository = userRepository;
     }
 
+    /**
+     * Deletes a user based on the provided user ID.
+     * @param input the input values containing the user ID and the ID of the authenticated user
+     * @return the output values indicating whether the user was successfully deleted
+     * @throws IllegalArgumentException if the specified user is not found
+     * @throws IllegalStateException if the authenticated user does not have permission to delete the specified user
+     */
     @Override
     public OutputValues execute(InputValues input) {
         User user = userRepository.findById(input.id()).orElseThrow(() ->

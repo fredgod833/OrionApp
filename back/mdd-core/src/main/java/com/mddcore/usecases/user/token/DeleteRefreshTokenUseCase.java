@@ -3,6 +3,9 @@ package com.mddcore.usecases.user.token;
 import com.mddcore.domain.repository.IRefreshTokenRepository;
 import com.mddcore.usecases.UseCase;
 
+/**
+ * Use case for deleting a refresh token associated with a specific user.
+ */
 public class DeleteRefreshTokenUseCase extends UseCase<DeleteRefreshTokenUseCase.InputValues, DeleteRefreshTokenUseCase.OutputValues> {
     private final IRefreshTokenRepository repository;
 
@@ -10,6 +13,12 @@ public class DeleteRefreshTokenUseCase extends UseCase<DeleteRefreshTokenUseCase
         this.repository = repository;
     }
 
+    /**
+     * Deletes all refresh tokens associated with the specified user ID.
+     * @param input the input values containing the user ID whose tokens are to be deleted
+     * @return the output values indicating the completion of the operation
+     * @throws IllegalArgumentException if there's an error during the token deletion process
+     */
     @Override
     public OutputValues execute(InputValues input) {
         try {

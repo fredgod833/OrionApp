@@ -8,6 +8,9 @@ import com.mddcore.usecases.UseCase;
 import com.mddcore.usecases.subject.GetSubjectUseCase;
 import com.mddcore.usecases.user.GetUserUseCase;
 
+/**
+ * Handles the creation of articles, incorporating subject and user information.
+ */
 public class CreateArticleUseCase extends UseCase<CreateArticleUseCase.InputValues, CreateArticleUseCase.OutputValues> {
     private final IArticleRepository articleRepository;
     private final GetSubjectUseCase getSubjectUseCase;
@@ -19,6 +22,12 @@ public class CreateArticleUseCase extends UseCase<CreateArticleUseCase.InputValu
         this.getUserUseCase = getUserUseCase;
     }
 
+    /**
+     * Executes the use case to create an article with the provided details.
+     * @param input the input values containing the article details
+     * @return the output values indicating success
+     * @throws IllegalArgumentException if the article cannot be saved
+     */
     @Override
     public OutputValues execute(InputValues input) {
         try {
@@ -38,11 +47,21 @@ public class CreateArticleUseCase extends UseCase<CreateArticleUseCase.InputValu
         return new OutputValues(true);
     }
 
+    /**
+     * Retrieves the subject based on the provided input.
+     * @param input the input values
+     * @return the found subject
+     */
     private Subject getSubject(InputValues input) {
         GetSubjectUseCase.InputValues inputValues = new GetSubjectUseCase.InputValues(input.inputRequest.subject_id());
         return getSubjectUseCase.execute(inputValues).subject();
     }
 
+    /**
+     * Retrieves the user based on the provided input.
+     * @param input the input values
+     * @return the found user
+     */
     private User getUser(InputValues input) {
         GetUserUseCase.InputValues inputValues = new GetUserUseCase.InputValues(input.inputRequest.user_id());
         return getUserUseCase.execute(inputValues).user();

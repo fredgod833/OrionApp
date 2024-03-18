@@ -6,6 +6,9 @@ import com.mddcore.domain.repository.ICommentRepository;
 import com.mddcore.usecases.UseCase;
 import com.mddcore.usecases.article.GetArticleUseCase;
 
+/**
+ * Use case for creating a comment on an article.
+ */
 public class CreateCommentUseCase extends UseCase<CreateCommentUseCase.InputValues, CreateCommentUseCase.OutputValues> {
     private final ICommentRepository commentRepository;
     private final GetArticleUseCase getArticleUseCase;
@@ -15,6 +18,12 @@ public class CreateCommentUseCase extends UseCase<CreateCommentUseCase.InputValu
         this.getArticleUseCase = getArticleUseCase;
     }
 
+    /**
+     * Attempts to create a comment for an article. Checks if the user has already commented on the article.
+     * If the user has not commented, it saves a new comment.
+     * @param input the input values containing the comment content, article ID, and username
+     * @return the output values indicating success or failure (true if successful, false otherwise)
+     */
     @Override
     public OutputValues execute(InputValues input) {
         if (isAlreadyComment(input)) {
