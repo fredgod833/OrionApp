@@ -1,6 +1,7 @@
 package com.mddinfrastructure.security.userdetails;
 
 import com.mddcore.domain.models.User;
+import com.mddcore.domain.repository.IUserRepository;
 import com.mdddetails.repository.user.UserRepoImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final UserRepoImpl userRepository;
+    private final IUserRepository userRepository;
 
     public CustomUserDetailsService(UserRepoImpl userRepository) {
         this.userRepository = userRepository;

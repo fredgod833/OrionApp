@@ -42,6 +42,7 @@ public class UserRepoImpl implements IUserRepository {
         return jpaUserRepository.existsByEmail(email);
     }
 
+    @Override
     public Optional<User> findByEmail(String email) {
         return jpaUserRepository.findByEmail(email).map(userDetailsMapper::toDomain);
     }

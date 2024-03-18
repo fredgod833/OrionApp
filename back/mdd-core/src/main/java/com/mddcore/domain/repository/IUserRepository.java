@@ -9,4 +9,5 @@ public interface IUserRepository {
     Optional<User> findById(Long id);
     User save(User entity);
     void delete(User entity);
+    Optional<User> findByEmail(String email);
 }
