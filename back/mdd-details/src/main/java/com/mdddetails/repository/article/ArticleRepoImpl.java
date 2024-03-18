@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Handles article data operations.
+ */
 @Repository
 public class ArticleRepoImpl implements IArticleRepository {
     private final ArticleJpaRepo jpaRepo;
@@ -21,18 +24,31 @@ public class ArticleRepoImpl implements IArticleRepository {
         this.articleMapper = articleMapper;
     }
 
+    /**
+     * Finds all articles.
+     * @return list of articles
+     */
     @Override
     @Transactional
     public List<Article> findAll() {
         return jpaRepo.findAll().stream().map(articleMapper::toDomain).collect(Collectors.toList());
     }
 
+    /**
+     * Finds an article by id.
+     * @param id article ID
+     * @return optional article
+     */
     @Override
     @Transactional
     public Optional<Article> findById(Long id) {
         return jpaRepo.findById(id).map(articleMapper::toDomain);
     }
 
+    /**
+     * Saves an article.
+     * @param entity article to save
+     */
     @Override
     public void save(Article entity) {
         ArticleEntity article = articleMapper.toEntity(entity);

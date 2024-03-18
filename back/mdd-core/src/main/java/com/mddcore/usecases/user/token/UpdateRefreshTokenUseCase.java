@@ -7,6 +7,9 @@ import com.mddcore.usecases.UseCase;
 import java.time.Instant;
 import java.util.UUID;
 
+/**
+ * Use case for updating a refresh token with a new token string and expiration date.
+ */
 public class UpdateRefreshTokenUseCase extends UseCase<UpdateRefreshTokenUseCase.InputValues, UpdateRefreshTokenUseCase.OutputValues> {
 
     private final IRefreshTokenRepository repository;
@@ -15,6 +18,11 @@ public class UpdateRefreshTokenUseCase extends UseCase<UpdateRefreshTokenUseCase
         this.repository = repository;
     }
 
+    /**
+     * Updates a refresh token with a new token string and expiration date.
+     * @param input the input values containing the refresh token to update and the new expiration time in milliseconds
+     * @return the output values containing the updated refresh token
+     */
     @Override
     public OutputValues execute(InputValues input) {
         RefreshToken refreshToken = input.refreshToken();

@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * Controller for managing comments.
+ */
 @Component
 public class CommentController implements CommentResource{
     private final UseCaseExecutor useCaseExecutor;
@@ -24,6 +27,10 @@ public class CommentController implements CommentResource{
         this.createCommentUseCase = createCommentUseCase;
     }
 
+    /**
+     * Retrieves all comments.
+     * @return A CompletableFuture containing a list of CommentResponse objects.
+     */
     @Override
     public CompletableFuture<List<CommentResponse>> getComments() {
      return useCaseExecutor.execute(
@@ -32,6 +39,11 @@ public class CommentController implements CommentResource{
                 outputValues -> CommentResponse.from(outputValues.commentList()));
     }
 
+    /**
+     * Creates a new comment.
+     * @param request The request object containing information about the comment.
+     * @return A CompletableFuture containing an ApiResponse indicating the success of the operation.
+     */
     @Override
     public CompletableFuture<ApiResponse> create(@RequestBody CommentRequest request) {
         return useCaseExecutor.execute(

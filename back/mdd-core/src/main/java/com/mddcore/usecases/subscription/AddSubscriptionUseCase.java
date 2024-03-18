@@ -8,14 +8,23 @@ import com.mddcore.domain.repository.ISubscriptionRepository;
 import com.mddcore.domain.repository.IUserRepository;
 import com.mddcore.usecases.UseCase;
 
-
+/**
+ * Use case for adding a subscription to a subject for a user.
+ */
 public class AddSubscriptionUseCase extends UseCase<AddSubscriptionUseCase.InputValues, AddSubscriptionUseCase.OutputValues> {
 
     private final ISubscriptionRepository repository;
     private final IUserRepository userRepository;
     private final ISubjectRepository subjectRepository;
 
-
+    /**
+     * Adds a subscription for a user to a subject. Validates that the user and subject exist
+     * and checks that the user is not already subscribed to the subject before adding the subscription.
+     * @param input the input values containing the user and subject IDs for the subscription
+     * @return the output values indicating whether the subscription was added successfully
+     * @throws IllegalArgumentException if the user or subject does not exist
+     * @throws IllegalStateException if the user is already subscribed to the subject
+     */
     public AddSubscriptionUseCase(ISubscriptionRepository repository, IUserRepository userRepository, ISubjectRepository subjectRepository) {
         this.repository = repository;
         this.userRepository = userRepository;

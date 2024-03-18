@@ -6,6 +6,9 @@ import com.mddcore.usecases.UseCase;
 
 import java.util.List;
 
+/**
+ * Retrieves all articles from the repository.
+ */
 public class GetAllArticleUseCase extends UseCase<GetAllArticleUseCase.InputValues, GetAllArticleUseCase.OutputValues> {
     private final IArticleRepository articleRepository;
 
@@ -13,6 +16,11 @@ public class GetAllArticleUseCase extends UseCase<GetAllArticleUseCase.InputValu
         this.articleRepository = articleRepository;
     }
 
+    /**
+     * Executes the use case to fetch all articles.
+     * @param inputValues the (empty) input values for this use case
+     * @return the output values containing a list of all articles
+     */
     @Override
     public OutputValues execute(InputValues inputValues) {
         return new OutputValues(articleRepository.findAll());

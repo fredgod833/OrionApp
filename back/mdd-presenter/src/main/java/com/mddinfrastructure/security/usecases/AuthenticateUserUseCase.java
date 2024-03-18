@@ -21,6 +21,12 @@ public class AuthenticateUserUseCase  extends UseCase<AuthenticateUserUseCase.In
         this.jwtCookie = jwtCookie;
     }
 
+    /**
+     * Executes the authentication process for a user.
+     *
+     * @param input The input values containing the user's sign-in request.
+     * @return The output values containing the JWT cookie and user details upon successful authentication.
+     */
     @Override
     public  OutputValues execute(InputValues input) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(

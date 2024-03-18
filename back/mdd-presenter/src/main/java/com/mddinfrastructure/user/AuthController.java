@@ -32,6 +32,12 @@ public class AuthController implements AuthResource {
         this.jwtService = jwtService;
     }
 
+    /**
+     * Registers a user asynchronously.
+     *
+     * @param userSettingRequest The UserSettingRequest object containing user details.
+     * @return A CompletableFuture containing the SignInRequest for the registered user.
+     */
     @Override
     public CompletableFuture<SignInRequest> registerUser(@RequestBody UserSettingRequest userSettingRequest) {
         return useCaseExecutor.execute(
@@ -41,6 +47,12 @@ public class AuthController implements AuthResource {
         );
     }
 
+    /**
+     * Logs in a user asynchronously.
+     *
+     * @param signInRequest The SignInRequest object containing user credentials.
+     * @return A CompletableFuture containing a ResponseEntity with authentication details.
+     */
     @Override
     public CompletableFuture<ResponseEntity<?>> loginUser(@RequestBody SignInRequest signInRequest) {
         CompletableFuture<AuthenticateUserUseCase.OutputValues> authenticate = useCaseExecutor.execute(
@@ -53,11 +65,22 @@ public class AuthController implements AuthResource {
                 jwtService.generateAuthResponse(value.userDetails(), value.jwtCookie()));
     }
 
+    /**
+     * Logs out a user asynchronously.
+     *
+     * @return A CompletableFuture containing a ResponseEntity indicating the success or failure of the operation.
+     */
     @Override
     public CompletableFuture<ResponseEntity<?>> logoutUser() {
         return jwtService.generateLogoutResponse();
     }
 
+    /**
+     * Refreshes a token asynchronously.
+     *
+     * @param request The HttpServletRequest containing the refresh token.
+     * @return A CompletableFuture containing a ResponseEntity indicating the success or failure of the operation.
+     */
     @Override
     public CompletableFuture<ResponseEntity<?>> refreshToken(HttpServletRequest request) {
         String token = cookieJwt.getJwtRefreshFromCookies(request);

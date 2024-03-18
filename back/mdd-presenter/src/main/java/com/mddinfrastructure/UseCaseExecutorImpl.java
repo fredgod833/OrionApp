@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 
+/**
+ * Implementation of the UseCaseExecutor interface responsible for executing use cases asynchronously.
+ */
 @Service
 public class UseCaseExecutorImpl implements UseCaseExecutor {
 

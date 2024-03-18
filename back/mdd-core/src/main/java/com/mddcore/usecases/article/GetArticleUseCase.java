@@ -4,6 +4,9 @@ import com.mddcore.domain.models.Article;
 import com.mddcore.domain.repository.IArticleRepository;
 import com.mddcore.usecases.UseCase;
 
+/**
+ * Use case for retrieving a single article by its ID.
+ */
 public class GetArticleUseCase extends UseCase<GetArticleUseCase.InputValues, GetArticleUseCase.OutputValues> {
     private final IArticleRepository articleRepository;
 
@@ -11,6 +14,12 @@ public class GetArticleUseCase extends UseCase<GetArticleUseCase.InputValues, Ge
         this.articleRepository = articleRepository;
     }
 
+    /**
+     * Fetches an article by its ID, or throws an exception if not found.
+     * @param input the input values containing the ID of the article to retrieve
+     * @return the output values containing the retrieved article
+     * @throws IllegalArgumentException if an article with the given ID cannot be found
+     */
     @Override
     public OutputValues execute(InputValues input) {
         Article article = articleRepository.findById(input.id())

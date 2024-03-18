@@ -9,6 +9,9 @@ import com.mddcore.usecases.UseCase;
 import java.time.Instant;
 import java.util.UUID;
 
+/**
+ * Use case for creating a new refresh token for a user.
+ */
 public class CreateRefreshTokenUseCase extends UseCase<CreateRefreshTokenUseCase.InputValues, CreateRefreshTokenUseCase.OutputValues> {
     private final IRefreshTokenRepository repository;
     private final IUserRepository userRepository;
@@ -18,6 +21,12 @@ public class CreateRefreshTokenUseCase extends UseCase<CreateRefreshTokenUseCase
         this.userRepository = userRepository;
     }
 
+    /**
+     * Generates and persists a new refresh token for the specified user, with a specified expiration time.
+     * @param input the input values containing the user ID and the expiration time in milliseconds
+     * @return the output values containing the generated refresh token
+     * @throws IllegalArgumentException if the specified user does not exist
+     */
     @Override
     public OutputValues execute(InputValues input) {
         User user = userRepository.findById(input.id).orElseThrow(() ->

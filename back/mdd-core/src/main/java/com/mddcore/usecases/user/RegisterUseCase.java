@@ -6,6 +6,9 @@ import com.mddcore.usecases.UseCase;
 import com.mddcore.usecases.auth.IPasswordEncodeFinal;
 import com.mddcore.usecases.auth.SignInRequest;
 
+/**
+ * Use case for registering a new user.
+ */
 public class RegisterUseCase extends UseCase<RegisterUseCase.InputValues, RegisterUseCase.OutputValues> {
     private final IUserRepository userRepository;
     private final IPasswordEncodeFinal passwordEncodeFinal;
@@ -15,6 +18,12 @@ public class RegisterUseCase extends UseCase<RegisterUseCase.InputValues, Regist
         this.passwordEncodeFinal = passwordEncodeFinal;
     }
 
+    /**
+     * Registers a new user.
+     * @param input the input values containing the user to register
+     * @return the output values containing the sign-in request for the registered user
+     * @throws IllegalArgumentException if the user email already exists or the password fails security checks
+     */
     @Override
     public OutputValues execute(InputValues input) {
         String email = input.user().getEmail();

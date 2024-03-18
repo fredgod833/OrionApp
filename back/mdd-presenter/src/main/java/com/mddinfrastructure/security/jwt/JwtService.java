@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * Service class for JWT-related operations.
+ */
 @Service
 public class JwtService {
     private final CookieJwt cookieJwt;
@@ -39,6 +42,13 @@ public class JwtService {
         this.deleteRefreshTokenUseCase = deleteRefreshTokenUseCase;
     }
 
+    /**
+     * Generates an authentication response containing JWT cookies.
+     *
+     * @param userDetails The UserDetails object containing user details.
+     * @param jwtCookie   The JWT cookie to be included in the response.
+     * @return A CompletableFuture containing the ResponseEntity with the authentication response.
+     */
     public CompletableFuture<ResponseEntity<?>> generateAuthResponse(CustomUserDetails userDetails, ResponseCookie jwtCookie) {
         return useCaseExecutor.execute(
                 createRefreshTokenUseCase,
@@ -55,6 +65,11 @@ public class JwtService {
         );
     }
 
+    /**
+     * Generates a logout response by deleting JWT cookies.
+     *
+     * @return A CompletableFuture containing the ResponseEntity with the logout response.
+     */
     public CompletableFuture<ResponseEntity<?>> generateLogoutResponse() {
         Long authId = jwtTokenProvider.getAuthenticateUser();
         return useCaseExecutor.execute(
@@ -72,6 +87,12 @@ public class JwtService {
         );
     }
 
+    /**
+     * Generates a response for refreshing the JWT token.
+     *
+     * @param token The refresh token.
+     * @return A CompletableFuture containing the ResponseEntity with the refresh token response.
+     */
     public CompletableFuture<ResponseEntity<?>> generateRefreshTokenResponse(String token) {
         if ((token == null) || (token.isEmpty())) {
             return CompletableFuture.completedFuture(ResponseEntity.badRequest().body("Refresh token is empty"));

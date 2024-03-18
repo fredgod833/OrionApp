@@ -6,6 +6,9 @@ import com.mddcore.usecases.UseCase;
 
 import java.time.Instant;
 
+/**
+ * Use case for verifying the expiration of a refresh token.
+ */
 public class VerifyTokenExpirationUseCase extends UseCase<VerifyTokenExpirationUseCase.InputValues, VerifyTokenExpirationUseCase.OutputValues> {
 
     private final IRefreshTokenRepository repository;
@@ -14,6 +17,12 @@ public class VerifyTokenExpirationUseCase extends UseCase<VerifyTokenExpirationU
         this.repository = repository;
     }
 
+    /**
+     * Verifies the expiration of a refresh token.
+     * @param input the input values containing the refresh token to verify
+     * @return the output values containing the verified refresh token
+     * @throws RuntimeException if the refresh token has expired
+     */
     @Override
     public OutputValues execute(InputValues input) {
         if (input.token.getExpirationDate().compareTo(Instant.now()) < 0) {

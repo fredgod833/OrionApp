@@ -34,6 +34,12 @@ public class  UserController implements UserResource {
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
+    /**
+     * Retrieves a user by ID asynchronously.
+     *
+     * @param id The ID of the user to retrieve.
+     * @return A CompletableFuture containing the UserResponse for the retrieved user.
+     */
     @Override
     public CompletableFuture<UserResponse> getUserById(@PathVariable Long id) {
         return useCaseExecutor.execute(
@@ -42,6 +48,12 @@ public class  UserController implements UserResource {
                 (outputValues) -> UserResponse.from(outputValues.user()));
     }
 
+    /**
+     * Deletes a user by ID asynchronously.
+     *
+     * @param id The ID of the user to delete.
+     * @return A CompletableFuture containing a ResponseEntity indicating the success or failure of the operation.
+     */
     @Override
     public CompletableFuture<ResponseEntity<ApiResponse>> deleteUserById(@PathVariable Long id) {
         Long authId = jwtTokenProvider.getAuthenticateUser();
@@ -58,6 +70,13 @@ public class  UserController implements UserResource {
         );
     }
 
+    /**
+     * Updates a user asynchronously.
+     *
+     * @param id                The ID of the user to update.
+     * @param userSettingRequest The UserSettingRequest containing the updated user details.
+     * @return A CompletableFuture containing the updated UserResponse.
+     */
     @Override
     public CompletableFuture<UserResponse> updateUser(@PathVariable Long id, @RequestBody UserSettingRequest userSettingRequest) {
         Long authId = jwtTokenProvider.getAuthenticateUser();
@@ -66,6 +85,12 @@ public class  UserController implements UserResource {
                 new UpdateUserUseCase.InputValues(id, UserUpdateMapper.INSTANCE.toDomain(userSettingRequest), authId),
                 outputValues -> UserResponse.from(outputValues.user()));
     }
+
+    /**
+     * Retrieves the authenticated user ID asynchronously.
+     *
+     * @return A CompletableFuture containing a ResponseEntity with the authenticated user ID.
+     */
 
     @Override
     public CompletableFuture<ResponseEntity<?>> getUserAuth() {

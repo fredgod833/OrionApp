@@ -5,6 +5,9 @@ import com.mddcore.domain.repository.IUserRepository;
 import com.mddcore.usecases.UseCase;
 import com.mddcore.usecases.auth.IPasswordEncodeFinal;
 
+/**
+ * Use case for updating user information.
+ */
 public class UpdateUserUseCase extends UseCase<UpdateUserUseCase.InputValues, UpdateUserUseCase.OutputValues> {
     private final IUserRepository userRepository;
     private final IPasswordEncodeFinal passwordEncodeFinal;
@@ -14,6 +17,12 @@ public class UpdateUserUseCase extends UseCase<UpdateUserUseCase.InputValues, Up
         this.passwordEncodeFinal = passwordEncodeFinal;
     }
 
+   /**
+     * Updates user information.
+     * @param input the input values containing the user ID, updated user data, and authentication ID
+     * @return the output values containing the updated user
+     * @throws IllegalArgumentException if the user to update is not found or authentication fails
+     */
     @Override
     public OutputValues execute(InputValues input) {
         return userRepository.findById(input.id()).map(user -> {

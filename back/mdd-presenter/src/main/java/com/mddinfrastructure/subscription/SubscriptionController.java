@@ -23,6 +23,13 @@ public class SubscriptionController implements SubscriptionResource {
         this.useCaseExecutor = useCaseExecutor;
     }
 
+    /**
+     * Saves a subscription asynchronously.
+     *
+     * @param userId    The ID of the user to subscribe.
+     * @param subjectId The ID of the subject to subscribe to.
+     * @return A CompletableFuture containing an ApiResponse indicating the success or failure of the operation.
+     */
     @Override
     public CompletableFuture<ApiResponse> saveSubscription(@PathVariable Long userId,
                                                            @PathVariable Long subjectId) {
@@ -38,6 +45,13 @@ public class SubscriptionController implements SubscriptionResource {
                 }
         );
     }
+
+    /**
+     * Removes a subscription asynchronously.
+     *
+     * @param subscriptionId The ID of the subscription to remove.
+     * @return A CompletableFuture containing an ApiResponse indicating the success or failure of the operation.
+     */
     @Override
     public CompletableFuture<ApiResponse> removeSubscription(@PathVariable Long subscriptionId) {
        return useCaseExecutor.execute(

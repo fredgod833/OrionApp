@@ -27,13 +27,13 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     }
 
     /**
-     * Filtre les requêtes pour extraire et valider le jeton JWT.
+     * Filters requests to extract and validate the JWT token.
      *
-     * @param request La requête HTTP entrante.
-     * @param response La réponse HTTP.
-     * @param filterChain La chaîne de filtres.
-     * @throws ServletException Si une erreur de servlet survient.
-     * @throws IOException Si une erreur d'entrée/sortie survient.
+     * @param request     The incoming HTTP request.
+     * @param response    The HTTP response.
+     * @param filterChain The filter chain.
+     * @throws ServletException If a servlet error occurs.
+     * @throws IOException      If an I/O error occurs.
      */
     @Override
     protected void doFilterInternal(HttpServletRequest request,
