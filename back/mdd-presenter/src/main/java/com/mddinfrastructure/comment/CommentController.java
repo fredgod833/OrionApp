@@ -1,5 +1,6 @@
 package com.mddinfrastructure.comment;
 
+import com.mddcore.domain.models.Comment;
 import com.mddcore.usecases.UseCaseExecutor;
 import com.mddcore.usecases.comment.CreateCommentUseCase;
 import com.mddcore.usecases.comment.GetAllCommentUseCase;
@@ -33,10 +34,13 @@ public class CommentController implements CommentResource{
      */
     @Override
     public CompletableFuture<List<CommentResponse>> getComments() {
-     return useCaseExecutor.execute(
+     CompletableFuture<List<Comment>> commentList =
+             useCaseExecutor.execute(
                 getAllCommentUseCase,
                 new GetAllCommentUseCase.InputValues(),
-                outputValues -> CommentResponse.from(outputValues.commentList()));
+                GetAllCommentUseCase.OutputValues::commentList);
+
+     return commentList.thenApply(CommentResponse::from);
     }
 
     /**
@@ -46,18 +50,23 @@ public class CommentController implements CommentResource{
      */
     @Override
     public CompletableFuture<ApiResponse> create(@RequestBody CommentRequest request) {
-        return useCaseExecutor.execute(
+        CompletableFuture<Boolean> isSuccess =
+                useCaseExecutor.execute(
                 createCommentUseCase,
                 new CreateCommentUseCase.InputValues(new CreateCommentUseCase.InputRequest(
                         request.content(),
                         request.article_id(),
                         request.userName())),
-                outputValues -> {
-                        if(outputValues.success()) {
-                          return new ApiResponse(true, "Create Comment successfully");
-                        }
-                        return new ApiResponse(false, "Already Commented");
-                }
-        );
+                        CreateCommentUseCase.OutputValues::success);
+
+        return isSuccess.thenApply(this::handleCreateCommentResponse);
+    }
+
+    private ApiResponse handleCreateCommentResponse(Boolean success) {
+        if (success) {
+           return new ApiResponse(true, "Create Comment successfully");
+        } else {
+           return new ApiResponse(false, "Already Commented");
+        }
     }
 }

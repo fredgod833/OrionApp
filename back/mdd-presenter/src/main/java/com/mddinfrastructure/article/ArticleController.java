@@ -37,7 +37,9 @@ public class ArticleController implements ArticleResource {
      */
     @Override
     public CompletableFuture<List<ArticleResponse>> getAllArticles() {
-        return useCaseExecutor.execute(getAllArticleUseCase, new GetAllArticleUseCase.InputValues(), outputValues -> ArticleResponse.from(outputValues.articleList()));
+        return useCaseExecutor
+                .execute(getAllArticleUseCase, new GetAllArticleUseCase.InputValues(),
+                        outputValues -> ArticleResponse.from(outputValues.articleList()));
     }
 
     /**
@@ -47,7 +49,9 @@ public class ArticleController implements ArticleResource {
      */
     @Override
     public CompletableFuture<ArticleResponse> getArticleById(@PathVariable Long id) {
-        return useCaseExecutor.execute(getArticleUseCase, new GetArticleUseCase.InputValues(id), outputValues -> ArticleResponse.from(outputValues.article()));
+        return useCaseExecutor.execute(getArticleUseCase,
+                new GetArticleUseCase.InputValues(id),
+                outputValues -> ArticleResponse.from(outputValues.article()));
     }
 
     /**
@@ -57,6 +61,8 @@ public class ArticleController implements ArticleResource {
      */
     @Override
     public CompletableFuture<ApiResponse> saveArticle(@RequestBody ArticleRequest articleRequest) {
-        return useCaseExecutor.execute(createArticleUseCase, new CreateArticleUseCase.InputValues(new CreateArticleUseCase.InputRequest(articleRequest.subject_id(), articleRequest.user_id(), articleRequest.title(), articleRequest.content())), outputValues -> new ApiResponse(outputValues.success(), "Article created"));
+        return useCaseExecutor.execute(createArticleUseCase,
+                new CreateArticleUseCase.InputValues(new CreateArticleUseCase.InputRequest(articleRequest.subject_id(), articleRequest.user_id(), articleRequest.title(), articleRequest.content())),
+                outputValues -> new ApiResponse(outputValues.success(), "Article created"));
     }
 }

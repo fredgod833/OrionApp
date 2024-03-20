@@ -1,5 +1,6 @@
 package com.mddcore.usecases.ut.comment;
 
+import com.mddcore.domain.models.Comment;
 import com.mddcore.usecases.UseCaseExecutor;
 import com.mddcore.usecases.comment.CreateCommentUseCase;
 import com.mddcore.usecases.comment.GetAllCommentUseCase;
@@ -20,7 +21,7 @@ import java.util.concurrent.CompletableFuture;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class CommentControllerUnitTest {
@@ -37,11 +38,11 @@ public class CommentControllerUnitTest {
 
     @Test
     public void GetAllComment_ShouldReturnListOfCommentResponse() {
-        CommentResponse commentResponse = new CommentResponse("theo", "this is a test");
-        List<CommentResponse> commentResponseList = new ArrayList<>();
-        commentResponseList.add(commentResponse);
+        Comment comment = new Comment(null, "this is content", null, "theo");
+        List<Comment> commentList = new ArrayList<>();
+        commentList.add(comment);
 
-        doReturn(CompletableFuture.completedFuture(commentResponseList))
+        doReturn(CompletableFuture.completedFuture(commentList))
                 .when(useCaseExecutor)
                 .execute(eq(getAllCommentUseCase),
                         any(GetAllCommentUseCase.InputValues.class),
@@ -49,14 +50,14 @@ public class CommentControllerUnitTest {
 
         List<CommentResponse> resultList = commentController.getComments().join();
 
-        assertThat(resultList).isEqualTo(commentResponseList);
+        assertThat(resultList.get(0).username()).isEqualTo(commentList.get(0).getAuthor());
+        assertThat(resultList.get(0).content()).isEqualTo(commentList.get(0).getContent());
     }
-
     @Test
     public void create_ShouldReturnSuccessApiResponse() {
-        ApiResponse apiResponse = new ApiResponse(true, "Create Comment successfully");
+        ApiResponse expectedApiResponse = new ApiResponse(true, "Create Comment successfully");
 
-        doReturn(CompletableFuture.completedFuture(apiResponse))
+        doReturn(CompletableFuture.completedFuture(true))
                 .when(useCaseExecutor)
                 .execute(eq(createCommentUseCase),
                         any(CreateCommentUseCase.InputValues.class),
@@ -64,21 +65,22 @@ public class CommentControllerUnitTest {
 
         ApiResponse response = commentController.create(commentRequest).join();
 
-        assertThat(response).isEqualTo(apiResponse);
+        assertThat(response).isEqualTo(expectedApiResponse);
     }
 
     @Test
     public void create_ShouldReturnFalseInApiResponse() {
-        ApiResponse apiResponse = new ApiResponse(false, "Already Commented");
+        ApiResponse expectedApiResponse = new ApiResponse(false, "Already Commented");
 
-        doReturn(CompletableFuture.completedFuture(apiResponse))
+        doReturn(CompletableFuture.completedFuture(false))
                 .when(useCaseExecutor)
                 .execute(eq(createCommentUseCase),
                         any(CreateCommentUseCase.InputValues.class),
                         any());
 
-        ApiResponse response = commentController.create(commentRequest).join();
+        ApiResponse actualApiResponse = commentController.create(commentRequest).join();
 
-        assertThat(response).isEqualTo(apiResponse);
+
+        assertThat(actualApiResponse).isEqualTo(expectedApiResponse);
     }
 }
