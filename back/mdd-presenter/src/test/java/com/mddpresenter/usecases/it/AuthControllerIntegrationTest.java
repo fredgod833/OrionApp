@@ -1,0 +1,132 @@
+package com.mddpresenter.usecases.it;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mddcore.usecases.auth.SignInRequest;
+import com.mddinfrastructure.MddApiApplication;
+import com.mddinfrastructure.request.UserSettingRequest;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.RequestBuilder;
+
+import static org.hamcrest.Matchers.is;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+@SpringBootTest(classes = MddApiApplication.class)
+@AutoConfigureMockMvc
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+public class AuthControllerIntegrationTest extends BaseControllerTest {
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Override
+    protected MockMvc getMockMvc() {
+        return mockMvc;
+    }
+
+    @Value("${mdd.app.jwtCookieName}")
+    private String cookieName;
+
+    @Value("${mdd.app.jwtRefreshCookieName}")
+    private String jwtRefreshCookie;
+
+    @Test
+    @Order(1)
+    public void RegisterAndLoginUser_ShouldRegisterUserThenLogin_WithStatusOkForBoth() throws Exception {
+        UserSettingRequest settingRequest = new UserSettingRequest(
+                "theokennel@gmail.com",
+                "123456&Theo",
+                "theo");
+
+        String signInRequestJson = new ObjectMapper().writeValueAsString(settingRequest);
+        RequestBuilder requestBuilder = asyncPostRequestWithoutCookie("/api/auth/register", signInRequestJson);
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.email", is(settingRequest.email())));
+    }
+    @Test
+    @Order(2)
+    public void RegisterUser_ShouldThrowUserAlreadyExist( ) throws Exception {
+        UserSettingRequest userSettingRequest = new UserSettingRequest(
+                "theokennel@gmail.com",
+                "123456&Theo",
+                "theo");
+        String settingRequest = new ObjectMapper().writeValueAsString(userSettingRequest);
+        RequestBuilder requestBuilder = asyncPostRequestWithoutCookie("/api/auth/register", settingRequest);
+
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("User email already exist"))
+                .andExpect(jsonPath("$.success").value(false))
+                .andReturn();
+
+    }
+
+    @Test
+    @Order(3)
+    public void LoginUser_ShouldThrowException_WhenUserEnterWrongEmail() throws Exception {
+        SignInRequest signInRequest = new SignInRequest(
+                "wrong@gmail.com",
+                "123456&Theo"
+        );
+
+        String request = new ObjectMapper().writeValueAsString(signInRequest);
+        RequestBuilder requestBuilder = asyncPostRequestWithoutCookie("/api/auth/login", request);
+
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("Bad credential"))
+                .andExpect(jsonPath("$.success").value(false))
+                .andReturn();
+    }
+
+    @Test
+    @Order(4)
+    public void LoginUser_ShouldLogUser_AndReturnAuthResponseWithStatus200() throws Exception {
+        SignInRequest signInRequest = new SignInRequest(
+                "theokennel@gmail.com",
+                "123456&Theo"
+        );
+
+        String request = new ObjectMapper().writeValueAsString(signInRequest);
+        RequestBuilder requestBuilder = asyncPostRequestWithoutCookie("/api/auth/login", request);
+
+      mockMvc.perform(requestBuilder)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1L))
+                .andExpect(cookie().exists(cookieName))
+                .andExpect(cookie().exists(jwtRefreshCookie))
+                .andReturn();
+
+
+    }
+
+    @Test
+    @Order(5)
+    @WithMockUser
+    public void LogoutUser_ShouldLogoutUser_AndReturnAuthResponseWithStatus200ThanCleanCookies() throws Exception {
+        RequestBuilder requestBuilder = asyncDeleteRequest("/api/auth/signout/1", cookieName, jwtRefreshCookie);
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().isOk())
+                .andExpect(cookie().maxAge(jwtRefreshCookie, 0))
+                .andExpect(content().string("You've been signed out successfully!"));
+    }
+
+//    @Test
+//    @Order(5)
+//    @WithMockUser
+//    public void refreshToken_ShouldReturnNewAccessToken() throws Exception {
+//        RequestBuilder requestBuilder = asyncPostRequestWithCookies("/api/auth/refresh-token", "", cookieName, jwtRefreshCookie);
+//        mockMvc.perform(requestBuilder)
+//                .andExpect(status().isOk())
+//                .andExpect(content().string(containsString("Token is refreshed successfully!")));
+//
+}

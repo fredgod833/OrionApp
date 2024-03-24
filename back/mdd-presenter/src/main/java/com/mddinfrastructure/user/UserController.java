@@ -56,10 +56,9 @@ public class  UserController implements UserResource {
      */
     @Override
     public CompletableFuture<ResponseEntity<ApiResponse>> deleteUserById(@PathVariable Long id) {
-        Long authId = jwtTokenProvider.getAuthenticateUser();
         return useCaseExecutor.execute(
                 deleteUserUseCase,
-                new DeleteUserUseCase.InputValues(id, authId),
+                new DeleteUserUseCase.InputValues(id),
                 outputValues -> {
                     if (outputValues.isDeleted()) {
                         return ResponseEntity.ok(new ApiResponse(true, "Delete user successfully"));

@@ -17,8 +17,8 @@ public interface AuthResource {
     @PostMapping("/login")
     CompletableFuture<ResponseEntity<?>> loginUser(@RequestBody SignInRequest signInRequest);
 
-    @DeleteMapping("/signout")
-    CompletableFuture<ResponseEntity<?>> logoutUser();
+    @DeleteMapping("/signout/{authId}")
+    CompletableFuture<ResponseEntity<?>> logoutUser(@PathVariable Long authId);
 
     @PostMapping("/refresh-token")
     CompletableFuture<ResponseEntity<?>> refreshToken(HttpServletRequest request);

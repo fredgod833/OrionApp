@@ -70,8 +70,7 @@ public class JwtService {
      *
      * @return A CompletableFuture containing the ResponseEntity with the logout response.
      */
-    public CompletableFuture<ResponseEntity<?>> generateLogoutResponse() {
-        Long authId = jwtTokenProvider.getAuthenticateUser();
+    public CompletableFuture<ResponseEntity<?>> generateLogoutResponse(Long authId) {
         return useCaseExecutor.execute(
                 deleteRefreshTokenUseCase,
                 new DeleteRefreshTokenUseCase.InputValues(authId),

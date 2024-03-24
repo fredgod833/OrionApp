@@ -52,7 +52,7 @@
                 <configuration>
                     <excludes>
                         <exclude>**/models/**</exclude>
-                        <exclude>**/dto/**</exclude>
+                        <exclude>**/mapper/**</exclude>
                         <exclude>**/SpringBootSecurityJwtApplication.class</exclude>
                     </excludes>
                 </configuration>

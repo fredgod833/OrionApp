@@ -10,6 +10,7 @@ import com.mddinfrastructure.security.jwt.JwtService;
 import com.mddinfrastructure.security.usecases.AuthenticateUserUseCase;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -71,8 +72,8 @@ public class AuthController implements AuthResource {
      * @return A CompletableFuture containing a ResponseEntity indicating the success or failure of the operation.
      */
     @Override
-    public CompletableFuture<ResponseEntity<?>> logoutUser() {
-        return jwtService.generateLogoutResponse();
+    public CompletableFuture<ResponseEntity<?>> logoutUser(@PathVariable Long authId) {
+        return jwtService.generateLogoutResponse(authId);
     }
 
     /**

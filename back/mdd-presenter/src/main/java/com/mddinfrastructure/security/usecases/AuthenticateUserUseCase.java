@@ -29,6 +29,8 @@ public class AuthenticateUserUseCase  extends UseCase<AuthenticateUserUseCase.In
      */
     @Override
     public  OutputValues execute(InputValues input) {
+        try {
+
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 input.signInRequest.email(), input.signInRequest.password()
         ));
@@ -37,6 +39,9 @@ public class AuthenticateUserUseCase  extends UseCase<AuthenticateUserUseCase.In
         ResponseCookie cookie = jwtCookie.generateJwtCookie((CustomUserDetails) authentication.getPrincipal());
 
         return new OutputValues(cookie, ((CustomUserDetails) authentication.getPrincipal()));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Bad credential");
+        }
     }
 
     public record InputValues(SignInRequest signInRequest) implements UseCase.InputValues {}
