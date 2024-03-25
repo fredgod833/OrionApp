@@ -1,15 +1,15 @@
 package com.openclassrooms.mddapi.services.implementation;
 
-import com.openclassrooms.mddapi.dtos.RegisterDTO;
 import com.openclassrooms.mddapi.dtos.UserDTO;
+import com.openclassrooms.mddapi.exceptions.UserNotFoundException;
 import com.openclassrooms.mddapi.models.Theme;
 import com.openclassrooms.mddapi.models.User;
+import com.openclassrooms.mddapi.payload.requests.RegisterRequest;
 import com.openclassrooms.mddapi.repositories.UserRepository;
 import com.openclassrooms.mddapi.services.ThemeService;
 import com.openclassrooms.mddapi.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -34,30 +34,30 @@ public class UserServiceImpl implements UserService {
         this.themeService = themeService;
     }
 
-    public void register(RegisterDTO registerDTO) {
-        if (usernameDoesNotExist(registerDTO.getUsername())
-                && emailDoesNotExist(registerDTO.getEmail())) {
-            User user = modelMapper.map(registerDTO, User.class);
+    @Override
+    public void register(RegisterRequest registerRequest) {
+        if (usernameDoesNotExist(registerRequest.getUsername())
+                && emailDoesNotExist(registerRequest.getEmail())) {
+            User user = modelMapper.map(registerRequest, User.class);
 
-            user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
+            user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
             userRepo.save(user);
         }
     }
 
+    @Override
     public User getById(int id) {
-        return userRepo.findById(id)
-                .orElseThrow(() -> new UsernameNotFoundException("User with " + id + " id not found"));
+        return userRepo.findById(id).orElseThrow(() -> new UserNotFoundException(id));
     }
 
+    @Override
     public User getByEmail(String email) {
-        return userRepo.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User with " + email + " email not found"));
+        return userRepo.findByEmail(email).orElseThrow(() -> new UserNotFoundException(email));
     }
 
     @Override
     public User getByUsername(String username) {
-        return userRepo.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User with " + username + " name not found"));
+        return userRepo.findByUsername(username).orElseThrow(() -> new UserNotFoundException(username));
     }
 
     @Override

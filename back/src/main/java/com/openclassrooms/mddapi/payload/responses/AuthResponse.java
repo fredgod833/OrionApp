@@ -1,4 +1,4 @@
-package com.openclassrooms.mddapi.responses;
+package com.openclassrooms.mddapi.payload.responses;
 
 import lombok.AccessLevel;
 import lombok.Data;

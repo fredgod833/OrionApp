@@ -1,9 +1,9 @@
 package com.openclassrooms.mddapi.controllers;
 
-import com.openclassrooms.mddapi.dtos.LoginDTO;
-import com.openclassrooms.mddapi.dtos.RegisterDTO;
-import com.openclassrooms.mddapi.responses.AuthResponse;
-import com.openclassrooms.mddapi.responses.MessageResponse;
+import com.openclassrooms.mddapi.payload.requests.LoginRequest;
+import com.openclassrooms.mddapi.payload.requests.RegisterRequest;
+import com.openclassrooms.mddapi.payload.responses.AuthResponse;
+import com.openclassrooms.mddapi.payload.responses.MessageResponse;
 import com.openclassrooms.mddapi.services.AuthService;
 import com.openclassrooms.mddapi.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -42,17 +42,17 @@ public class AuthController {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = AuthResponse.class))),
             @ApiResponse(responseCode = "400", description = "Bad request - Email already exists", content = @Content)})
-    public ResponseEntity<?> register(@RequestBody RegisterDTO registerDTO, Errors errors) {
+    public ResponseEntity<?> register(@RequestBody RegisterRequest registerRequest, Errors errors) {
         if (errors.hasErrors()) {
             return ResponseEntity.badRequest().build();
         }
         try {
-            userService.register(registerDTO);
+            userService.register(registerRequest);
         } catch (DuplicateKeyException ex) {
             return ResponseEntity.badRequest().body(new MessageResponse(ex.getMessage()));
         }
 
-        return ResponseEntity.ok(new AuthResponse(authService.generateToken(registerDTO.getEmail())));
+        return ResponseEntity.ok(new AuthResponse(authService.generateToken(registerRequest.getEmail())));
     }
 
     @PostMapping("/login")
@@ -62,16 +62,16 @@ public class AuthController {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = AuthResponse.class))),
             @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content)})
-    public ResponseEntity<?> login(@RequestBody LoginDTO loginDto, Errors errors) {
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest, Errors errors) {
         if (errors.hasErrors()) {
             return new ResponseEntity<>(new MessageResponse("error"), HttpStatus.UNAUTHORIZED);
         }
         try {
-            authService.authenticate(loginDto.getEmail(), loginDto.getPassword());
+            authService.authenticate(loginRequest.getEmail(), loginRequest.getPassword());
         } catch (BadCredentialsException ex) {
             return new ResponseEntity<>(new MessageResponse("Bad credentials"), HttpStatus.UNAUTHORIZED);
         }
 
-        return ResponseEntity.ok(new AuthResponse(authService.generateToken(loginDto.getEmail())));
+        return ResponseEntity.ok(new AuthResponse(authService.generateToken(loginRequest.getEmail())));
     }
 }
