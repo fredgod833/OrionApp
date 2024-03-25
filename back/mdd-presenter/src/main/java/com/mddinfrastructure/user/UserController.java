@@ -55,17 +55,12 @@ public class  UserController implements UserResource {
      * @return A CompletableFuture containing a ResponseEntity indicating the success or failure of the operation.
      */
     @Override
-    public CompletableFuture<ResponseEntity<ApiResponse>> deleteUserById(@PathVariable Long id) {
+    public CompletableFuture<ApiResponse> deleteUserById(@PathVariable Long id) {
+        Long authId = jwtTokenProvider.getAuthenticateUser();
         return useCaseExecutor.execute(
                 deleteUserUseCase,
-                new DeleteUserUseCase.InputValues(id),
-                outputValues -> {
-                    if (outputValues.isDeleted()) {
-                        return ResponseEntity.ok(new ApiResponse(true, "Delete user successfully"));
-                    } else {
-                        return ResponseEntity.badRequest().body(new ApiResponse(false, "A problem occurred while deleting user"));
-                    }
-                }
+                new DeleteUserUseCase.InputValues(id, authId),
+                outputValues -> new ApiResponse(outputValues.isDeleted(), "Delete user successfully")
         );
     }
 

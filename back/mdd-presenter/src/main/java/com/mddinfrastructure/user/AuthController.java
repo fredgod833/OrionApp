@@ -7,6 +7,7 @@ import com.mddinfrastructure.mapper.UserUpdateMapper;
 import com.mddinfrastructure.request.UserSettingRequest;
 import com.mddinfrastructure.security.jwt.CookieJwt;
 import com.mddinfrastructure.security.jwt.JwtService;
+import com.mddinfrastructure.security.jwt.JwtTokenProvider;
 import com.mddinfrastructure.security.usecases.AuthenticateUserUseCase;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -23,14 +24,16 @@ public class AuthController implements AuthResource {
     private final AuthenticateUserUseCase authenticateUserUseCase;
     private final CookieJwt cookieJwt;
     private final JwtService jwtService;
+    private final JwtTokenProvider jwtTokenProvider;
 
     public AuthController(UseCaseExecutor useCaseExecutor, RegisterUseCase registerUseCase,
-                          AuthenticateUserUseCase authenticateUserUseCase, CookieJwt cookieJwt, JwtService jwtService) {
+                          AuthenticateUserUseCase authenticateUserUseCase, CookieJwt cookieJwt, JwtService jwtService, JwtTokenProvider jwtTokenProvider) {
         this.useCaseExecutor = useCaseExecutor;
         this.registerUseCase = registerUseCase;
         this.authenticateUserUseCase = authenticateUserUseCase;
         this.cookieJwt = cookieJwt;
         this.jwtService = jwtService;
+        this.jwtTokenProvider = jwtTokenProvider;
     }
 
     /**
@@ -72,7 +75,8 @@ public class AuthController implements AuthResource {
      * @return A CompletableFuture containing a ResponseEntity indicating the success or failure of the operation.
      */
     @Override
-    public CompletableFuture<ResponseEntity<?>> logoutUser(@PathVariable Long authId) {
+    public CompletableFuture<ResponseEntity<?>> logoutUser() {
+        Long authId = jwtTokenProvider.getAuthenticateUser();
         return jwtService.generateLogoutResponse(authId);
     }
 

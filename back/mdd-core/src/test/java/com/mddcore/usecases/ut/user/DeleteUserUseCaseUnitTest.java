@@ -28,11 +28,12 @@ public class DeleteUserUseCaseUnitTest {
         Long userId = 1L;
         User user = new User();
         user.setId(1L);
+        Long authId = 1L;
 
         doReturn(Optional.of(user)).when(repository).findById(userId);
         doNothing().when(repository).delete(user);
 
-        DeleteUserUseCase.InputValues inputValues = new DeleteUserUseCase.InputValues(userId);
+        DeleteUserUseCase.InputValues inputValues = new DeleteUserUseCase.InputValues(userId, authId);
 
         DeleteUserUseCase.OutputValues outputValues = useCase.execute(inputValues);
 
@@ -46,7 +47,7 @@ public class DeleteUserUseCaseUnitTest {
 
         doThrow(new IllegalArgumentException("User not found, cant delete it")).when(repository).findById(1L);
 
-        DeleteUserUseCase.InputValues inputValues = new DeleteUserUseCase.InputValues(1L);
+        DeleteUserUseCase.InputValues inputValues = new DeleteUserUseCase.InputValues(1L, 4L);
 
         assertThatThrownBy(() -> useCase.execute(inputValues))
                 .isInstanceOf(IllegalArgumentException.class)

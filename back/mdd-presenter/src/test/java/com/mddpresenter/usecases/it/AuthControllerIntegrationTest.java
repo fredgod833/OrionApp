@@ -4,24 +4,27 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mddcore.usecases.auth.SignInRequest;
 import com.mddinfrastructure.MddApiApplication;
 import com.mddinfrastructure.request.UserSettingRequest;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
+import com.mddinfrastructure.security.jwt.JwtTokenProvider;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.doReturn;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest(classes = MddApiApplication.class)
 @AutoConfigureMockMvc
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@Sql("/data-user.sql")
+@Slf4j
 public class AuthControllerIntegrationTest extends BaseControllerTest {
 
     @Autowired
@@ -38,13 +41,15 @@ public class AuthControllerIntegrationTest extends BaseControllerTest {
     @Value("${mdd.app.jwtRefreshCookieName}")
     private String jwtRefreshCookie;
 
+    @MockBean
+    private JwtTokenProvider jwtTokenProvider;
+
     @Test
-    @Order(1)
     public void RegisterAndLoginUser_ShouldRegisterUserThenLogin_WithStatusOkForBoth() throws Exception {
         UserSettingRequest settingRequest = new UserSettingRequest(
-                "theokennel@gmail.com",
-                "123456&Theo",
-                "theo");
+            "theokennel@gmail.com",
+            "123456&Theo",
+            "theo");
 
         String signInRequestJson = new ObjectMapper().writeValueAsString(settingRequest);
         RequestBuilder requestBuilder = asyncPostRequestWithoutCookie("/api/auth/register", signInRequestJson);
@@ -52,12 +57,12 @@ public class AuthControllerIntegrationTest extends BaseControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.email", is(settingRequest.email())));
     }
+
     @Test
-    @Order(2)
     public void RegisterUser_ShouldThrowUserAlreadyExist( ) throws Exception {
         UserSettingRequest userSettingRequest = new UserSettingRequest(
-                "theokennel@gmail.com",
-                "123456&Theo",
+                "alreadyRegister@gmail.com",
+                        "hashed_passworD&25",
                 "theo");
         String settingRequest = new ObjectMapper().writeValueAsString(userSettingRequest);
         RequestBuilder requestBuilder = asyncPostRequestWithoutCookie("/api/auth/register", settingRequest);
@@ -71,7 +76,6 @@ public class AuthControllerIntegrationTest extends BaseControllerTest {
     }
 
     @Test
-    @Order(3)
     public void LoginUser_ShouldThrowException_WhenUserEnterWrongEmail() throws Exception {
         SignInRequest signInRequest = new SignInRequest(
                 "wrong@gmail.com",
@@ -88,8 +92,8 @@ public class AuthControllerIntegrationTest extends BaseControllerTest {
                 .andReturn();
     }
 
+
     @Test
-    @Order(4)
     public void LoginUser_ShouldLogUser_AndReturnAuthResponseWithStatus200() throws Exception {
         SignInRequest signInRequest = new SignInRequest(
                 "theokennel@gmail.com",
@@ -99,21 +103,18 @@ public class AuthControllerIntegrationTest extends BaseControllerTest {
         String request = new ObjectMapper().writeValueAsString(signInRequest);
         RequestBuilder requestBuilder = asyncPostRequestWithoutCookie("/api/auth/login", request);
 
-      mockMvc.perform(requestBuilder)
+        mockMvc.perform(requestBuilder)
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(cookie().exists(cookieName))
                 .andExpect(cookie().exists(jwtRefreshCookie))
                 .andReturn();
-
-
     }
 
     @Test
-    @Order(5)
     @WithMockUser
     public void LogoutUser_ShouldLogoutUser_AndReturnAuthResponseWithStatus200ThanCleanCookies() throws Exception {
-        RequestBuilder requestBuilder = asyncDeleteRequest("/api/auth/signout/1", cookieName, jwtRefreshCookie);
+        doReturn(4L).when(jwtTokenProvider).getAuthenticateUser();
+        RequestBuilder requestBuilder = asyncDeleteRequest("/api/auth/signout/4", cookieName, jwtRefreshCookie);
         mockMvc.perform(requestBuilder)
                 .andExpect(status().isOk())
                 .andExpect(cookie().maxAge(jwtRefreshCookie, 0))

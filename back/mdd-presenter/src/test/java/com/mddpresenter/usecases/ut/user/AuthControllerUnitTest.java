@@ -6,6 +6,7 @@ import com.mddcore.usecases.user.RegisterUseCase;
 import com.mddinfrastructure.request.UserSettingRequest;
 import com.mddinfrastructure.security.jwt.CookieJwt;
 import com.mddinfrastructure.security.jwt.JwtService;
+import com.mddinfrastructure.security.jwt.JwtTokenProvider;
 import com.mddinfrastructure.security.usecases.AuthenticateUserUseCase;
 import com.mddinfrastructure.security.userdetails.CustomUserDetails;
 import com.mddinfrastructure.user.AuthController;
@@ -33,6 +34,8 @@ public class AuthControllerUnitTest {
     private CookieJwt cookieJwt;
     @Mock
     private JwtService jwtService;
+    @Mock
+    private JwtTokenProvider jwtTokenProvider;
     private String email = "email@test.com";
     private String password = "123456789&";
 
@@ -80,8 +83,9 @@ public class AuthControllerUnitTest {
 
         doReturn(CompletableFuture.completedFuture(expectedResponse))
                 .when(jwtService).generateLogoutResponse(1L);
+        doReturn(1L).when(jwtTokenProvider).getAuthenticateUser();
 
-        CompletableFuture<?> result = authController.logoutUser(1L);
+        CompletableFuture<?> result = authController.logoutUser();
 
         assertThat(result.join()).isEqualTo(expectedResponse);
     }

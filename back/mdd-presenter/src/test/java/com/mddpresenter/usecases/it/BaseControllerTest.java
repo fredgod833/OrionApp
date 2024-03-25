@@ -49,6 +49,21 @@ public abstract class BaseControllerTest {
                 .andReturn());
     }
 
+    protected RequestBuilder asyncPutRequestWithCookies(String url, String payload, String jwtToken, String refreshToken) throws Exception {
+        MockHttpServletRequestBuilder content = put(url)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(payload)
+                .header(HttpHeaders.COOKIE, jwtToken)
+                .header(HttpHeaders.COOKIE, refreshToken);
+
+        return asyncDispatch(getMockMvc()
+                .perform(content)
+                .andExpect(request()
+                        .asyncStarted())
+                .andReturn());
+    }
+
+
     protected RequestBuilder asyncPostRequestWithoutCookie(String url, String payload) throws Exception {
         return asyncDispatch(
                 getMockMvc().perform(

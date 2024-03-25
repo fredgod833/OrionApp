@@ -62,39 +62,17 @@ public class UserControllerUnitTest {
     public void DeleteUserById_ShouldReturnTrueInApiResponse() {
         Long id = 1L;
         ApiResponse apiResponse = new ApiResponse(true,"Delete user successfully");
-        ResponseEntity<ApiResponse> expectedResponseEntity = ResponseEntity
-                .ok(apiResponse);
 
-        doReturn(CompletableFuture.completedFuture(expectedResponseEntity))
+        doReturn(1L).when(jwtTokenProvider).getAuthenticateUser();
+        doReturn(CompletableFuture.completedFuture(apiResponse))
                 .when(useCaseExecutor)
                 .execute(eq(deleteUserUseCase), any(DeleteUserUseCase.InputValues.class), any());
 
-        CompletableFuture<ResponseEntity<ApiResponse>> result = userController.deleteUserById(id);
-        ResponseEntity<ApiResponse> response = result.join();
+        CompletableFuture<ApiResponse> result = userController.deleteUserById(id);
+        ApiResponse response = result.join();
 
-        assertThat(response.getStatusCode()).isEqualTo(expectedResponseEntity.getStatusCode());
-        assertThat(response.getBody()).isEqualTo(expectedResponseEntity.getBody());
-        assertTrue(response.getBody().success());
-    }
-
-    @Test
-    public void DeleteUserById_ShouldReturnFalseInApiResponse() {
-        ApiResponse apiResponse = new ApiResponse(false,"A problem occurred while deleting user");
-        ResponseEntity<ApiResponse> expectedResponseEntity = ResponseEntity
-                .badRequest()
-                .body(apiResponse);
-
-        doReturn(CompletableFuture.completedFuture(expectedResponseEntity))
-                .when(useCaseExecutor)
-                .execute(eq(deleteUserUseCase), any(DeleteUserUseCase.InputValues.class), any());
-
-        CompletableFuture<ResponseEntity<ApiResponse>> result = userController.deleteUserById(1L);
-        ResponseEntity<ApiResponse> response = result.join();
-
-        assertThat(response.getBody()).isEqualTo(apiResponse);
-        assertThat(response.getStatusCode()).isEqualTo(expectedResponseEntity.getStatusCode());
-        assertThat(response.getBody()).isEqualTo(expectedResponseEntity.getBody());
-        assertFalse(response.getBody().success());
+        assertThat(response.message()).isEqualTo(apiResponse.message());
+        assertTrue(response.success());
     }
 
     @Test

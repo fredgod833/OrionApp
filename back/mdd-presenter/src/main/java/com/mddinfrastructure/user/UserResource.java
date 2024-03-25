@@ -15,7 +15,7 @@ public interface UserResource {
     CompletableFuture<UserResponse> getUserById(@PathVariable Long id);
 
     @DeleteMapping("/{id}")
-    CompletableFuture<ResponseEntity<ApiResponse>> deleteUserById(@PathVariable Long id);
+    CompletableFuture<ApiResponse> deleteUserById(@PathVariable Long id);
 
     @PutMapping("/{id}")
     CompletableFuture<UserResponse> updateUser(@PathVariable Long id, @RequestBody UserSettingRequest userSettingRequest);
