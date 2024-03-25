@@ -1,4 +1,4 @@
-package com.openclassrooms.mddapi.dtos;
+package com.openclassrooms.mddapi.payload.requests;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -9,7 +9,7 @@ import lombok.experimental.FieldDefaults;
 
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class LoginDTO {
+public class LoginRequest {
     @Email
     @NotEmpty
     @Size(max = 60)

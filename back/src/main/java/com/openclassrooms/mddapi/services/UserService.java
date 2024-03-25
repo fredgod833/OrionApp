@@ -1,9 +1,10 @@
 package com.openclassrooms.mddapi.services;
 
-import com.openclassrooms.mddapi.dtos.RegisterDTO;
+import com.openclassrooms.mddapi.payload.requests.RegisterRequest;
 import com.openclassrooms.mddapi.dtos.UserDTO;
 import com.openclassrooms.mddapi.exceptions.ResourceNotFoundException;
 import com.openclassrooms.mddapi.exceptions.UserNotFoundException;
+import com.openclassrooms.mddapi.mappers.DoIgnore;
 import com.openclassrooms.mddapi.models.User;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,10 +13,10 @@ public interface UserService {
     /**
      * Registers a new user based on the provided registration details.
      *
-     * @param registerDTO The registration details.
+     * @param registerRequest The registration details.
      * @throws DuplicateKeyException If username or email already exist.
      */
-    void register(RegisterDTO registerDTO);
+    void register(RegisterRequest registerRequest);
 
 
     /**
@@ -43,6 +44,7 @@ public interface UserService {
      * @return A {@link User} with the matching email address.
      * @throws UserNotFoundException If user with provided email does not exist.
      */
+    @DoIgnore
     User getByUsername(String username);
 
     /**

@@ -4,7 +4,7 @@ import com.openclassrooms.mddapi.dtos.UserDTO;
 import com.openclassrooms.mddapi.exceptions.ResourceNotFoundException;
 import com.openclassrooms.mddapi.exceptions.UserNotFoundException;
 import com.openclassrooms.mddapi.mappers.UserMapper;
-import com.openclassrooms.mddapi.responses.MessageResponse;
+import com.openclassrooms.mddapi.payload.responses.MessageResponse;
 import com.openclassrooms.mddapi.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -16,10 +16,17 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
-import java.sql.SQLIntegrityConstraintViolationException;
 
 @RestController
 @RequestMapping("/api/user")
@@ -64,7 +71,7 @@ public class UserController {
         try {
             userService.update(id, userDTO);
             return ResponseEntity.ok(new MessageResponse("User updated successfully"));
-        } catch (ResourceNotFoundException ex) {
+        } catch (UsernameNotFoundException ex) {
             return ResponseEntity.notFound().build();
         } catch (DuplicateKeyException ex) {
             return ResponseEntity.badRequest().body(new MessageResponse(ex.getMessage()));
@@ -110,7 +117,7 @@ public class UserController {
             return ResponseEntity.ok(
                     userMapper.toDTO(
                             userService.unSubscribeFromTheme(id, userDetails.getUsername())));
-        } catch (ResourceNotFoundException ex) {
+        } catch (ResourceNotFoundException | UsernameNotFoundException ex) {
             return ResponseEntity.notFound().build();
         } catch (IllegalArgumentException ex) {
             return ResponseEntity.badRequest().build();
