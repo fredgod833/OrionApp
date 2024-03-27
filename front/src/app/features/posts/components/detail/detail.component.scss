@@ -32,6 +32,8 @@
     padding: 1em;
     background-color: #eaeaea;
     border-radius: 15px;
+    display: inline-block;
+    word-wrap: break-word;
   }
 }
 
@@ -52,5 +54,18 @@ mat-card-content {
 @media (max-width: 600px) {
   .card-title {
     margin-left: 60px;
+  }
+
+  textarea {
+    padding-right: 20% !important;
+  }
+
+  mat-form-field {
+    width: 95% !important;
+  }
+
+  .send-btn {
+    right: 6%;
+    position: absolute;
   }
 }

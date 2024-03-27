@@ -14,7 +14,7 @@ export class PostApiService {
   constructor(private http: HttpClient) {
   }
 
-  public getPosts(): Observable<Post[]> {
+  public getAll(): Observable<Post[]> {
     return this.http.get<Post[]>(this.pathService);
   }
 
@@ -22,7 +22,7 @@ export class PostApiService {
     return this.http.post<Post>(this.pathService, form.value);
   }
 
-  public getPost(id: number): Observable<Post> {
+  public getById(id: number): Observable<Post> {
     return this.http.get<Post>(`${this.pathService}/${id}`);
   }
 }

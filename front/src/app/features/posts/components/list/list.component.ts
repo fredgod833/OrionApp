@@ -1,7 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subject, takeUntil} from "rxjs";
 import {PostApiService} from "../../services/post-api.service";
-import {Router} from "@angular/router";
 import {Post} from "../../interfaces/post";
 
 @Component({
@@ -17,11 +16,11 @@ export class ListComponent implements OnInit, OnDestroy {
   public isAscending: boolean = true;
   public isLoading: boolean = true;
 
-  constructor(private postApiService: PostApiService, private router: Router) {
+  constructor(private postApiService: PostApiService) {
   }
 
   ngOnInit(): void {
-    this.postApiService.getPosts()
+    this.postApiService.getAll()
       .pipe(takeUntil(this.destroy$))
       .subscribe((posts: Post[]) => {
         this.posts = posts;

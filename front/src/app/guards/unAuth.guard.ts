@@ -13,7 +13,7 @@ export class UnAuthGuard implements CanActivate {
 
   public canActivate(): boolean {
     if (this.sessionService.isLogged) {
-      this.router.navigate(['articles']).then(() => console.log("Redirected to articles page"));
+      this.router.navigate(['posts']).then(() => console.log("Redirected to posts page"));
       return false;
     }
     return true;

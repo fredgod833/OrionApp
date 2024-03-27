@@ -29,7 +29,7 @@
   </mat-card>
 
   <!-- If there are no posts -->
-  <div *ngIf="!posts?.length && !isLoading">
+  <div class="empty-state" *ngIf="!posts?.length && !isLoading">
     <div fxLayout="column" fxLayoutAlign="space-around center">
       <h1>Aucun article correspond à vos abonnements.</h1>
       <button class="btn" routerLink="/themes">S'abonner</button>

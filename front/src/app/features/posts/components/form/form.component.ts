@@ -7,6 +7,7 @@ import {PostApiService} from "../../services/post-api.service";
 import {Subject, takeUntil} from "rxjs";
 import {ThemeApiService} from "../../../themes/services/theme-api.service";
 import {Theme} from "../../../themes/interfaces/theme";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-form',
@@ -16,7 +17,7 @@ import {Theme} from "../../../themes/interfaces/theme";
 export class FormComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
 
-  public onError: boolean = false;
+  public onError: string = '';
   public themes!: Theme[];
 
   public form: FormGroup = this.fb.group({
@@ -54,9 +55,11 @@ export class FormComponent implements OnInit, OnDestroy {
   public submit(): void {
     this.postApiService.create(this.form)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((_: Post) => {
-        this.form.markAsPristine();
-        this.exitPage();
+      .subscribe({
+        next: (_: Post) => {
+          this.form.markAsPristine();
+          this.exitPage();
+        }, error: (err: HttpErrorResponse) => this.onError = err.error.message
       });
   }
 
