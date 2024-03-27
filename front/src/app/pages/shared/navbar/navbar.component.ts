@@ -9,12 +9,12 @@ import {Observable} from "rxjs";
 })
 export class NavbarComponent {
 
-  @Output() public sidenavToggle = new EventEmitter();
+  @Output() public sidenavToggle: EventEmitter<any> = new EventEmitter();
 
   constructor(private sessionService: SessionService) {
   }
 
-  public onToggleSidenav = () => {
+  public onToggleSidenav = (): void => {
     this.sidenavToggle.emit();
   }
 

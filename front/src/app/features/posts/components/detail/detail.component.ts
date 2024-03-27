@@ -38,7 +38,7 @@ export class DetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'];
-    this.postApiService.getPost(this.id)
+    this.postApiService.getById(this.id)
       .pipe(takeUntil(this.destroy$))
       .subscribe((post: Post) => {
         this.post = post;

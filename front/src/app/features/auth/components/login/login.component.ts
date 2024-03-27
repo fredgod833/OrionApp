@@ -50,7 +50,7 @@ export class LoginComponent implements OnDestroy {
   }
 
   public submit(): void {
-    const loginRequest = this.form.value as LoginRequest;
+    const loginRequest: LoginRequest = this.form.value as LoginRequest;
     this.authService.login(loginRequest)
       .pipe(takeUntil(this.destroy$))
       .subscribe({

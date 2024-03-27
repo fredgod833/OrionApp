@@ -69,8 +69,9 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (message: MessageResponse) => {
+          // TODO: verify id needed
           console.log(message);
-          this.matSnackBar.open("changes saved", "Close", {duration: 3000});
+          this.matSnackBar.open("Changes saved", "Close", {duration: 3000});
           this.form.markAsPristine();
         },
         error: (err: HttpErrorResponse) => this.error = err.error.message

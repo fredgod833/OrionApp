@@ -6,12 +6,12 @@ import {Component, EventEmitter, Output} from '@angular/core';
   styleUrls: ['./sidenav-list.component.scss']
 })
 export class SidenavListComponent {
-  @Output() sidenavClose = new EventEmitter();
+  @Output() sidenavClose: EventEmitter<any> = new EventEmitter();
 
   constructor() {
   }
 
-  public onSidenavClose = () => {
+  public onSidenavClose = (): void => {
     this.sidenavClose.emit();
   }
 }

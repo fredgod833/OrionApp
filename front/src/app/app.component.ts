@@ -1,6 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SessionService} from "./services/session.service";
-import {AuthService} from "./features/auth/services/auth.service";
 import {User} from "./interfaces/user.interface";
 import {Observable, Subject, takeUntil} from "rxjs";
 import {Router} from "@angular/router";
@@ -17,7 +16,6 @@ export class AppComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
 
   constructor(
-    private authService: AuthService,
     private sessionService: SessionService,
     private userService: UserService,
     private router: Router,
@@ -34,7 +32,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   public autoLog(): void {
-    // do i need here to unsubcribe?????
     this.userService.getUser().subscribe({
         next: (user: User) => {
           this.sessionService.logIn(user);
