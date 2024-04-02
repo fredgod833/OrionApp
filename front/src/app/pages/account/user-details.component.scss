@@ -1,7 +1,6 @@
 h1 {
   text-align: center;
   font-weight: bold;
-  margin: 20px 0 0;
 }
 
 #logout {
@@ -11,9 +10,13 @@ h1 {
   display: flex;
   border: none;
   margin: 0 auto;
-  padding: 10px;
 }
 
 #logout:hover {
   text-decoration: underline;
+}
+
+#title {
+  padding-top: 15px;
+  margin-bottom: 0;
 }

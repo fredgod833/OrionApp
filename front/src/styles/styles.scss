@@ -19,6 +19,10 @@ html, body {
 
 /* Body */
 .card-container {
+  padding-top: 28px;
+  padding-left: 5%;
+  padding-right: 5%;
+
   .card-form {
     width: 100%;
     margin-bottom: 0;
@@ -46,7 +50,6 @@ html, body {
   }
 }
 
-
 .items {
   padding: 20px;
   display: flex;
@@ -67,7 +70,6 @@ html, body {
   }
 }
 
-
 /* Buttons */
 .btn {
   display: flex;
@@ -79,26 +81,26 @@ html, body {
   border-radius: 8px;
   padding: 10px 20px;
   margin: 0 auto 8px;
-}
 
-.btn:hover {
-  background-color: #9c8ce3;
-}
+  &:hover {
+    background-color: #9c8ce3;
+  }
 
-.btn:active {
-  background-color: #7763C5;
-}
+  &:active {
+    background-color: #7763C5;
+  }
 
-.btn:disabled {
-  background-color: #7763C5;
-  cursor: not-allowed;
+  &:disabled {
+    background-color: #7763C5;
+    cursor: not-allowed;
+  }
 }
 
 #back-btn {
+  position: absolute;
   z-index: 1;
-  top: 2vh;
-  left: 2vh;
-  font-size: 2em;
+  top: 100px;
+  left: 20px;
 }
 
 .mat-divider-container {

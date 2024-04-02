@@ -8,8 +8,7 @@ import {Theme} from "../../interfaces/theme";
 @Component({
   selector: 'app-themes',
   templateUrl: './themes.component.html',
-  styleUrls: ['./themes.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./themes.component.scss']
 })
 export class ThemesComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
@@ -40,8 +39,7 @@ export class ThemesComponent implements OnInit, OnDestroy {
   }
 
   public isSubscribed(id: number): boolean {
-    // why sometimes user is undefined?
-    return this.user.subscriptions.some((theme: Theme) => theme.id === id);
+    return this.user?.subscriptions.some((theme: Theme) => theme.id === id);
   }
 
   public toggleSubscription(themeId: number): void {
@@ -53,7 +51,6 @@ export class ThemesComponent implements OnInit, OnDestroy {
   }
 
   public getButtonText(id: number): string {
-    console.log("called with " + id);
     return this.isSubscribed(id) ? 'Se désabonner' : "S'abonner";
   }
 
