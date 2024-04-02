@@ -1,5 +1,5 @@
 <button mat-button (click)="back()" id="back-btn">
-  <mat-icon>arrow_back</mat-icon>
+  <img src="assets/arrow_back.png" alt="Back Button Image">
 </button>
 
 <!--Post detail-->
@@ -9,7 +9,7 @@
       <mat-card-title class="card-title">{{ post.title | titlecase }}</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <div fxLayout="row" fxLayoutGap="5%">
+      <div class="info-container" fxLayout="row" fxLayoutGap="5%">
         <p>{{ post.createdAt | date : "dd/MM/yyyy" }}</p>
         <p>{{ post.author }}</p>
         <p>{{ post.theme }}</p>
@@ -39,8 +39,8 @@
       <mat-form-field appearance="standard">
         <textarea matInput rows="7" placeholder="Ecrivez ici votre commentaire" formControlName="content"></textarea>
       </mat-form-field>
-      <button mat-button class="send-btn" type="submit" [disabled]="!this.form.controls['content'].value">
-        <mat-icon>send</mat-icon>
+      <button class="send-btn" type="submit" [disabled]="!this.form.controls['content'].value">
+        <img src="assets/icon_send.png" alt="Send Button Image" class="send-btn-img">
       </button>
       <span *ngIf="onError" class="error">An error occurred</span>
     </mat-card-content>

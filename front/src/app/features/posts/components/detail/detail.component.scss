@@ -1,6 +1,4 @@
 .card-container {
-  padding-left: 5%;
-  padding-right: 5%;
   max-width: 1500px;
   margin: 0 auto;
 
@@ -14,7 +12,13 @@
   }
 }
 
+.info-container p {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
 .comments-card {
+  padding-top: 0;
 
   mat-card-header {
     padding-bottom: 20px;
@@ -27,7 +31,7 @@
   }
 
   .comment {
-    width: auto;
+    width: 80%;
     max-width: 1000px;
     padding: 1em;
     background-color: #eaeaea;
@@ -45,6 +49,24 @@ mat-card-content {
   gap: 2%;
 }
 
+.send-btn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.send-btn-img {
+  transition: transform 0.3s ease;
+}
+
+.send-btn[disabled] .send-btn-img {
+  cursor: not-allowed;
+}
+
+.send-btn:not([disabled]):hover .send-btn-img {
+  transform: scale(1.2);
+}
+
 @media (max-width: 1500px) {
   .card-title {
     margin-left: 40px;
@@ -52,12 +74,20 @@ mat-card-content {
 }
 
 @media (max-width: 600px) {
+  .comments-card {
+    width: auto;
+
+    .comment {
+      width: inherit;
+    }
+  }
+
   .card-title {
     margin-left: 60px;
   }
 
   textarea {
-    padding-right: 20% !important;
+    padding-right: 21% !important;
   }
 
   mat-form-field {
@@ -65,7 +95,7 @@ mat-card-content {
   }
 
   .send-btn {
-    right: 6%;
+    right: 8%;
     position: absolute;
   }
 }

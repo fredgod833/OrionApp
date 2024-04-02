@@ -3,10 +3,8 @@
     <app-sidenav-list (sidenavClose)="sidenav.close()"></app-sidenav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <app-navbar id="navbar" *ngIf="(!isHomePage() && !isSmallScreen) || ($isLogged() | async)"
+    <app-navbar *ngIf="(!isHomePage() && !isSmallScreen) || ($isLogged() | async)"
                 (sidenavToggle)="sidenav.toggle()"></app-navbar>
-    <main>
       <router-outlet></router-outlet>
-    </main>
   </mat-sidenav-content>
 </mat-sidenav-container>
