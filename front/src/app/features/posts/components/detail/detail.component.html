@@ -4,7 +4,7 @@
 
 <!--Post detail-->
 <div class="card-container">
-  <mat-card class="post-card">
+  <mat-card class="post-card" *ngIf="post">
     <mat-card-header>
       <mat-card-title class="card-title">{{ post.title | titlecase }}</mat-card-title>
     </mat-card-header>
