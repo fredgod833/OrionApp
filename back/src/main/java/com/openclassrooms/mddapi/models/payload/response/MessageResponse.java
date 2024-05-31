@@ -1,4 +1,4 @@
-package com.openclassrooms.mddapi.payload.response;
+package com.openclassrooms.mddapi.models.payload.response;
 
 public class MessageResponse {
   private String message;

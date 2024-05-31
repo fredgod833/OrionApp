@@ -1,11 +1,11 @@
 package com.openclassrooms.mddapi.controllers;
 
-import com.openclassrooms.mddapi.exceptions.InvalidUserRegistrationException;
-import com.openclassrooms.mddapi.models.UserEntity;
-import com.openclassrooms.mddapi.payload.request.LoginRequest;
-import com.openclassrooms.mddapi.payload.request.SignupRequest;
-import com.openclassrooms.mddapi.payload.response.JwtResponse;
-import com.openclassrooms.mddapi.payload.response.MessageResponse;
+import com.openclassrooms.mddapi.exceptions.InvalidRegistrationException;
+import com.openclassrooms.mddapi.models.entities.UserEntity;
+import com.openclassrooms.mddapi.models.payload.request.LoginRequest;
+import com.openclassrooms.mddapi.models.payload.request.SignupRequest;
+import com.openclassrooms.mddapi.models.payload.response.JwtResponse;
+import com.openclassrooms.mddapi.models.payload.response.MessageResponse;
 import com.openclassrooms.mddapi.repository.UserRepository;
 import com.openclassrooms.mddapi.security.jwt.JwtService;
 import com.openclassrooms.mddapi.security.services.UserDetailsImpl;
@@ -24,9 +24,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 
@@ -80,14 +77,14 @@ public class AuthController {
     }
 
     @PostMapping(value ="/register", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<JwtResponse> registerUser(@Valid @RequestBody SignupRequest signUpRequest) throws InvalidUserRegistrationException {
+    public ResponseEntity<JwtResponse> registerUser(@Valid @RequestBody SignupRequest signUpRequest) throws InvalidRegistrationException {
 
         if (userRepository.existsByLoginOrEmail(signUpRequest.getEmail(), signUpRequest.getEmail())) {
-            throw new InvalidUserRegistrationException("Un compte existe avec cet email ! Veuillez vous logger.");
+            throw new InvalidRegistrationException("Un compte existe avec cet email ! Veuillez vous logger.");
         }
 
         if (userRepository.existsByLoginOrEmail(signUpRequest.getLogin(), signUpRequest.getLogin())) {
-            throw new InvalidUserRegistrationException("Ce nom d'utilisateur est déjà pris, veuillez en choisir un autre.");
+            throw new InvalidRegistrationException("Ce nom d'utilisateur est déjà pris, veuillez en choisir un autre.");
         }
 
         // Create new user's account

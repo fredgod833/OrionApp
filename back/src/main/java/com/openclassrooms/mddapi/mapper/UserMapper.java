@@ -1,7 +1,7 @@
 package com.openclassrooms.mddapi.mapper;
 
-import com.openclassrooms.mddapi.dto.UserDto;
-import com.openclassrooms.mddapi.models.UserEntity;
+import com.openclassrooms.mddapi.models.dto.UserDto;
+import com.openclassrooms.mddapi.models.entities.UserEntity;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 

@@ -1,12 +1,12 @@
-package com.openclassrooms.mddapi.models;
+package com.openclassrooms.mddapi.models.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.Accessors;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
@@ -19,7 +19,6 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(of = {"id"})
 @RequiredArgsConstructor
 @NoArgsConstructor
-
 public class UserEntity {
 
     @Id

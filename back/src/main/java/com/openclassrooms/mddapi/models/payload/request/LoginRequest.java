@@ -1,4 +1,4 @@
-package com.openclassrooms.mddapi.payload.request;
+package com.openclassrooms.mddapi.models.payload.request;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 

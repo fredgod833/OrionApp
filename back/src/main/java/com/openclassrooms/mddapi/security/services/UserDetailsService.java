@@ -1,6 +1,6 @@
 package com.openclassrooms.mddapi.security.services;
 
-import com.openclassrooms.mddapi.models.UserEntity;
+import com.openclassrooms.mddapi.models.entities.UserEntity;
 import com.openclassrooms.mddapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

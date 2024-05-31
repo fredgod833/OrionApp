@@ -1,13 +1,12 @@
 package com.openclassrooms.mddapi.controllers;
 
 import com.openclassrooms.mddapi.mapper.UserMapper;
-import com.openclassrooms.mddapi.models.UserEntity;
+import com.openclassrooms.mddapi.models.entities.UserEntity;
 import com.openclassrooms.mddapi.security.services.UserDetailsImpl;
 import com.openclassrooms.mddapi.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
@@ -30,8 +29,7 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable("id") String id) {
         try {
-            UserEntity userEntity = this.userService.findById(Long.valueOf(id));
-
+            UserEntity userEntity = this.userService.findById(Integer.valueOf(id));
             if (userEntity == null) {
                 return ResponseEntity.notFound().build();
             }
@@ -45,7 +43,7 @@ public class UserController {
     @DeleteMapping("{id}")
     public ResponseEntity<?> save(@PathVariable("id") String id) {
         try {
-            UserEntity userEntity = this.userService.findById(Long.valueOf(id));
+            UserEntity userEntity = this.userService.findById(Integer.valueOf(id));
             if (userEntity == null) {
                 return ResponseEntity.notFound().build();
             }
@@ -56,7 +54,7 @@ public class UserController {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
             }
 
-            this.userService.delete(Long.parseLong(id));
+            this.userService.delete(Integer.parseInt(id));
             return ResponseEntity.ok().build();
 
         } catch (NumberFormatException e) {

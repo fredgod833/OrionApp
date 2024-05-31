@@ -1,6 +1,6 @@
 package com.openclassrooms.mddapi.exceptions;
 
-import com.openclassrooms.mddapi.payload.response.MessageResponse;
+import com.openclassrooms.mddapi.models.payload.response.MessageResponse;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -11,13 +11,12 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
-
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(InvalidUserRegistrationException.class)
-    protected ResponseEntity<MessageResponse> handleStorageException(InvalidUserRegistrationException e) {
+    @ExceptionHandler(InvalidRegistrationException.class)
+    protected ResponseEntity<MessageResponse> handleStorageException(InvalidRegistrationException e) {
         MessageResponse apiResponse = new MessageResponse(e.getMessage());
         apiResponse.setMessage(e.getMessage());
         logger.info(e);
