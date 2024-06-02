@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+//import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { Router } from '@angular/router';
 import { User } from '../../interfaces/user.interface';
 import { SessionService } from '../../services/session.service';
@@ -16,7 +16,6 @@ export class MeComponent implements OnInit {
 
   constructor(private router: Router,
               private sessionService: SessionService,
-              private matSnackBar: MatSnackBar,
               private userService: UserService) {
   }
 
@@ -26,18 +25,17 @@ export class MeComponent implements OnInit {
       .subscribe((user: User) => this.user = user);
   }
 
-  public back(): void {
-    window.history.back();
-  }
-
-  public delete(): void {
+  public updateProfil(): void {
+    //TODO
+    /*
     this.userService
       .delete(this.sessionService.sessionInformation!.id.toString())
       .subscribe((_) => {
-        this.matSnackBar.open("Your account has been deleted !", 'Close', { duration: 3000 });
+        //this.matSnackBar.open("Your account has been deleted !", 'Close', { duration: 3000 });
         this.sessionService.logOut();
         this.router.navigate(['/']);
       })
+     */
   }
 
 }

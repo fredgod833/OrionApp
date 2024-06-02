@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
-import { RegisterRequest } from '../../interfaces/registerRequest.interface';
+import { AuthService } from '../../features/auth/services/auth.service';
+import { RegisterRequest } from '../../features/auth/interfaces/registerRequest.interface';
+import {SessionInformation} from "../../interfaces/sessionInformation.interface";
+import {SessionService} from "../../services/session.service";
 
 @Component({
   selector: 'app-register',
@@ -21,15 +23,7 @@ export class RegisterComponent {
         Validators.email
       ]
     ],
-    firstName: [
-      '',
-      [
-        Validators.required,
-        Validators.min(3),
-        Validators.max(20)
-      ]
-    ],
-    lastName: [
+    login: [
       '',
       [
         Validators.required,
@@ -48,6 +42,7 @@ export class RegisterComponent {
   });
 
   constructor(private authService: AuthService,
+              private sessionService: SessionService,
               private fb: FormBuilder,
               private router: Router) {
   }
@@ -55,10 +50,13 @@ export class RegisterComponent {
   public submit(): void {
     const registerRequest = this.form.value as RegisterRequest;
     this.authService.register(registerRequest).subscribe({
-        next: (_: void) => this.router.navigate(['/login']),
-        error: _ => this.onError = true,
-      }
-    );
+      next: (response: SessionInformation) => {
+        this.sessionService.logIn(response);
+        this.router.navigate(['/me']);
+      },
+      error: error => this.onError = true,
+    });
+
   }
 
 }

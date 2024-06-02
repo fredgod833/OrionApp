@@ -1,7 +1,19 @@
 .center {
-  height: 100vh;
+  height: 75vh;
+  width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+}
+
+.img {
+  width: 75vw;
+  min-width: 300px;
+}
+
+.button-spacer {
+  display: inline-block;
+  width:10vw;
+  height:15vh;
 }

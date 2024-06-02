@@ -11,6 +11,7 @@ export class SessionService {
   public sessionInformation: SessionInformation | undefined;
 
   private isLoggedSubject = new BehaviorSubject<boolean>(this.isLogged);
+  private currentPage = new BehaviorSubject<boolean>(this.isLogged);
 
   public $isLogged(): Observable<boolean> {
     return this.isLoggedSubject.asObservable();

@@ -3,8 +3,8 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SessionInformation } from 'src/app/interfaces/sessionInformation.interface';
 import { SessionService } from 'src/app/services/session.service';
-import { LoginRequest } from '../../interfaces/loginRequest.interface';
-import { AuthService } from '../../services/auth.service';
+import { LoginRequest } from '../../features/auth/interfaces/loginRequest.interface';
+import { AuthService } from '../../features/auth/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -16,11 +16,10 @@ export class LoginComponent {
   public onError = false;
 
   public form = this.fb.group({
-    email: [
-      '',
+      login: [      '',
       [
         Validators.required,
-        Validators.email
+        Validators.min(3)
       ]
     ],
     password: [
@@ -43,7 +42,7 @@ export class LoginComponent {
     this.authService.login(loginRequest).subscribe({
       next: (response: SessionInformation) => {
         this.sessionService.logIn(response);
-        this.router.navigate(['/sessions']);
+        this.router.navigate(['/me']);
       },
       error: error => this.onError = true,
     });
