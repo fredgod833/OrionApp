@@ -3,7 +3,6 @@ export interface User {
   email: string;
   login: string;
   admin: boolean;
-  password: string;
   createdAt: Date;
   updatedAt?: Date;
 }
