@@ -1,0 +1,32 @@
+<div class="register">
+    <div>
+      <h1>Inscription</h1>
+    </div>
+    <div fxLayout="column">
+      <span *ngIf="onError" class="error">{{this.errorMessage}}</span>
+    </div>
+    <form class="register-form" [formGroup]="form" (ngSubmit)="submit()">
+      <div fxLayout="column">
+          <mat-form-field fxFlex appearance="outline" hideRequiredMarker="true" floatLabel="always">
+            <mat-label>Nom d'utilisateur</mat-label>
+            <input matInput formControlName="login">
+          </mat-form-field>
+          <mat-form-field fxFlex appearance="outline" hideRequiredMarker="true" floatLabel="always">
+            <mat-label>Adresse e-mail</mat-label>
+            <input matInput formControlName="email">
+          </mat-form-field>
+          <mat-form-field fxFlex appearance="outline" hideRequiredMarker="true" floatLabel="always">
+            <mat-label>Mot de passe</mat-label>
+            <input matInput [type]="hide ? 'password' : 'text'"
+                   formControlName="password">
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+          </mat-form-field>
+      </div>
+      <div fxLayout="column">
+        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">S'inscrire</button>
+      </div>
+    </form>
+</div>

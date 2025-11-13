@@ -1,0 +1,29 @@
+<div class="m3">
+  <mat-card>
+    <mat-card-title>
+      <div fxLayout="row" fxLayoutAlign="center">
+        <h1>Profil Utilisateur</h1>
+      </div>
+    </mat-card-title>
+    <mat-card-content>
+      <form class="mdd-form-content" [formGroup]="form" (ngSubmit)="submit()">
+        <div *ngIf="user" fxLayout="column" fxLayoutAlign="start center">
+          <mat-form-field appearance="outline" fxFlex hideRequiredMarker="true" floatLabel="always">
+            <mat-label>Nom d'utilisateur</mat-label>
+            <input matInput formControlName="login">
+          </mat-form-field>
+          <mat-form-field appearance="outline" fxFlex hideRequiredMarker="true" floatLabel="always">
+            <mat-label>E-mail</mat-label>
+            <input matInput formControlName="email">
+          </mat-form-field>
+          <div fxLayout="column" class="my2" fxLayoutAlign="center center">
+            <button mat-raised-button color="primary" (click)="updateProfil()">Sauvegarder</button>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  <div *ngIf="$topics() | async as topics">
+    <app-topic-list [topics]="topics" title="Abonnements" topicBtnLabel="Se désabonner" (clickTopicBtn)="unsubsribeTopic($event)" ></app-topic-list>
+  </div>
+</div>
