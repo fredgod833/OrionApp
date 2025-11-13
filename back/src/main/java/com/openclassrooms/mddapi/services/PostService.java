@@ -91,6 +91,7 @@ public class PostService {
 
         Collection<CommentEntity> comments = this.commentRepository.findCommentEntitiesByPostId(postId);
         return commentMapper.toDto(comments);
+
     }
 
     public CommentDto addComment(final int postId, final int readerId, final String comment) throws InvalidPostIdException {
@@ -111,6 +112,7 @@ public class PostService {
         commentEntity = commentRepository.save(commentEntity);
 
         return commentMapper.toDto(commentEntity);
+
     }
 
     public CommentDto updateComment(final int postId, final int commentId, final int readerId, final String comment) throws InvalidPostIdException, InvalidUserException, InvalidCommentIdException {
@@ -130,6 +132,7 @@ public class PostService {
         commentEntity = commentRepository.save(commentEntity);
 
         return commentMapper.toDto(commentEntity);
+
     }
 
     public void deleteComment(final int postId, final int commentId, final int readerId) throws InvalidPostIdException, InvalidUserException {
@@ -146,15 +149,7 @@ public class PostService {
         }
 
         commentRepository.delete(commentEntity);
+
     }
-
-
-
-
-
-
-
-
-
 
 }

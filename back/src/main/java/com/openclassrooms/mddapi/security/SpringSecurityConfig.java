@@ -44,10 +44,15 @@ public class SpringSecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/auth/**").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/api/auth/me/**").authenticated()
                         .requestMatchers("/api/posts/**").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/api/topics/**").authenticated()
-                        .requestMatchers(HttpMethod.POST, "/api/topics/**").hasRole("ADMIN")
-                        .requestMatchers("/api/topics/subscribtion/**").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/topics").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/api/topics").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET,"/api/topics/available").authenticated()
+                        .requestMatchers(HttpMethod.GET,"/api/topics/subscribed").authenticated()
+                        .requestMatchers(HttpMethod.DELETE,"/api/topics/subscription/**").authenticated()
+                        .requestMatchers(HttpMethod.POST,"/api/topics/subscription/**").authenticated()
+
                         .requestMatchers("/api/user/**").authenticated()
                         .requestMatchers(HttpMethod.GET,"/swagger-ui.html").permitAll()
                         .requestMatchers(HttpMethod.GET,"/swagger-ui/**").permitAll()

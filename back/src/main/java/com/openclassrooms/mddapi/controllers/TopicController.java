@@ -64,7 +64,21 @@ public class TopicController {
         return ResponseEntity.ok().body(new TopicListResponse(topics));
     }
 
-    @GetMapping(value="/subscribtion", produces = APPLICATION_JSON_VALUE)
+    @GetMapping(value="/available", produces = APPLICATION_JSON_VALUE)
+    @Operation(summary="List available (not subscribed) topics for connected user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Return list of all subsribed topics.",
+                    content = @Content(schema = @Schema(implementation = TopicListResponse.class))
+            )})
+    @SecurityRequirement(name = "Bearer JWT Authentication")
+    public ResponseEntity<TopicListResponse> findAvailableTopics(Authentication auth) throws InvalidUserException {
+        UserDetailsImpl user = (UserDetailsImpl) auth.getPrincipal();
+        Collection<TopicDto> topics = this.topicService.getAvailableTopics(user.getId());
+        return ResponseEntity.ok().body(new TopicListResponse(topics));
+    }
+
+    @GetMapping(value="/subscribed", produces = APPLICATION_JSON_VALUE)
     @Operation(summary="List subsribed topics for connected user")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
@@ -74,11 +88,11 @@ public class TopicController {
     @SecurityRequirement(name = "Bearer JWT Authentication")
     public ResponseEntity<TopicListResponse> findUserTopics(Authentication auth) throws InvalidUserException {
         UserDetailsImpl user = (UserDetailsImpl) auth.getPrincipal();
-        Collection<TopicDto> topics = this.topicService.getAllUserTopics(user.getId());
+        Collection<TopicDto> topics = this.topicService.getSubscribedTopics(user.getId());
         return ResponseEntity.ok().body(new TopicListResponse(topics));
     }
 
-    @PostMapping("/subscribtion/{topicId}")
+    @PostMapping("/subscription/{topicId}")
     @Operation(summary="User subsribed to new topic")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
@@ -91,7 +105,7 @@ public class TopicController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/subscribtion/{topicId}")
+    @DeleteMapping("/subscription/{topicId}")
     @Operation(summary="User unsubsribe to existing topic")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",

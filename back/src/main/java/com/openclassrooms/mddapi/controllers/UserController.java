@@ -1,64 +1,34 @@
 package com.openclassrooms.mddapi.controllers;
 
-import com.openclassrooms.mddapi.mapper.UserMapper;
-import com.openclassrooms.mddapi.models.entities.UserEntity;
+import com.openclassrooms.mddapi.exceptions.InvalidUserException;
+import com.openclassrooms.mddapi.models.dto.UserDto;
+import com.openclassrooms.mddapi.models.payload.request.UserRequest;
 import com.openclassrooms.mddapi.security.services.UserDetailsImpl;
 import com.openclassrooms.mddapi.services.UserService;
-import org.springframework.http.HttpStatus;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Objects;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
 
-    private final UserMapper userMapper;
     private final UserService userService;
 
-
-    public UserController(UserService userService,
-                             UserMapper userMapper) {
-        this.userMapper = userMapper;
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findById(@PathVariable("id") String id) {
+    public ResponseEntity<UserDto> findById(@PathVariable("id") String id) throws InvalidUserException {
         try {
-            UserEntity userEntity = this.userService.findById(Integer.valueOf(id));
-            if (userEntity == null) {
-                return ResponseEntity.notFound().build();
-            }
-
-            return ResponseEntity.ok().body(this.userMapper.toDto(userEntity));
+            UserDto user = this.userService.findById(Integer.valueOf(id));
+            return ResponseEntity.ok().body(user);
         } catch (NumberFormatException e) {
-            return ResponseEntity.badRequest().build();
+            throw new InvalidUserException("Identifiant utilisateur invalide");
         }
     }
 
-    @DeleteMapping("{id}")
-    public ResponseEntity<?> save(@PathVariable("id") String id) {
-        try {
-            UserEntity userEntity = this.userService.findById(Integer.valueOf(id));
-            if (userEntity == null) {
-                return ResponseEntity.notFound().build();
-            }
-
-            final UserDetailsImpl user = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-            if(!Objects.equals(user.getUsername(), userEntity.getLogin())) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-            }
-
-            this.userService.delete(Integer.parseInt(id));
-            return ResponseEntity.ok().build();
-
-        } catch (NumberFormatException e) {
-            return ResponseEntity.badRequest().build();
-        }
-    }
 }

@@ -95,7 +95,7 @@ public class PostController {
     }
 
     @GetMapping(value="/subscribed", produces = APPLICATION_JSON_VALUE)
-    @Operation(summary="List All Posts for connected User (from his subscibtions).")
+    @Operation(summary="List All Posts for connected User (from his subscriptions).")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
                     description = "Creation success, post list.",
@@ -108,7 +108,7 @@ public class PostController {
     @SecurityRequirement(name = "Bearer JWT Authentication")
     public ResponseEntity<PostListResponse> listPosts(Authentication auth) throws InvalidUserException {
         UserDetailsImpl user = (UserDetailsImpl) auth.getPrincipal();
-        Collection<TopicDto> topics = this.topicService.getAllUserTopics(user.getId());
+        Collection<TopicDto> topics = this.topicService.getSubscribedTopics(user.getId());
 
         PostListResponse result = new PostListResponse(new ArrayList<>());
         for (TopicDto topic : topics) {
@@ -123,7 +123,7 @@ public class PostController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
                     description = "Creation success, post list.",
-                    content = @Content(schema = @Schema(implementation = PostListResponse.class))
+                    content = @Content(schema = @Schema(implementation = CommentsListResponse.class))
             ),
             @ApiResponse(responseCode = "400",
                     description = "Invalid request with reason message.",
@@ -140,7 +140,7 @@ public class PostController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
                     description = "Creation success, recorded comment.",
-                    content = @Content(schema = @Schema(implementation = PostListResponse.class))
+                    content = @Content(schema = @Schema(implementation = CommentDto.class))
             ),
             @ApiResponse(responseCode = "400",
                     description = "Invalid request with reason message.",
@@ -158,7 +158,7 @@ public class PostController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
                     description = "Creation success, post list.",
-                    content = @Content(schema = @Schema(implementation = PostListResponse.class))
+                    content = @Content(schema = @Schema(implementation = CommentDto.class))
             ),
             @ApiResponse(responseCode = "400",
                     description = "Invalid request with reason message.",

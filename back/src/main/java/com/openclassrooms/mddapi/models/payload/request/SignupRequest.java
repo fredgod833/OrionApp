@@ -9,16 +9,16 @@ import lombok.Data;
 public class SignupRequest {
 
   @NotBlank
-  @Size(max = 50)
+  @Size(max = 50, message="l'email ne doit pas dépasser 50 caratères.")
   @Email
   private String email;
 
   @NotBlank
-  @Size(min = 3, max = 20)
+  @Size(min = 3, max = 20, message="le nom doit avoir entre 3 et 20 caratères.")
   private String login;
 
   @NotBlank
-  @Size(min = 6, max = 40)
+  @Size(min = 8, max = 40)
   private String password;
 
 }
