@@ -1,11 +1,18 @@
-<div class="register">
-    <div>
+<div fxLayout="row" fxLayoutAlign="start center">
+  <span routerLink="/" class="link" routerLinkActive="active"><mat-icon>arrow_back</mat-icon></span>
+</div>
+
+<div class="mdd-form">
+
+    <div fxLayout="row" fxLayoutAlign="start center">
       <h1>Inscription</h1>
     </div>
-    <div fxLayout="column">
-      <span *ngIf="onError" class="error">{{this.errorMessage}}</span>
+
+    <div fxLayout="column" class="mdd-error-box">
+      <p *ngIf="onError">{{this.errorMessage}}</p>
     </div>
-    <form class="register-form" [formGroup]="form" (ngSubmit)="submit()">
+
+    <form class="mdd-form-content" [formGroup]="form" (ngSubmit)="submit()">
       <div fxLayout="column">
           <mat-form-field fxFlex appearance="outline" hideRequiredMarker="true" floatLabel="always">
             <mat-label>Nom d'utilisateur</mat-label>
@@ -21,12 +28,13 @@
                    formControlName="password">
             <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
                     [attr.aria-pressed]="hide">
-              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              <mat-icon class="pwd-view-icon">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
           </mat-form-field>
       </div>
-      <div fxLayout="column">
+      <div fxLayout="for" class="mdd-form-action">
         <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">S'inscrire</button>
       </div>
     </form>
+
 </div>

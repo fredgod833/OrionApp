@@ -1,0 +1,15 @@
+.commentary-editor {
+     display:flex;
+     flex-direction: row;
+     flex-flow: row;
+     width: 90vw;
+     form {
+        width:100%;
+     }
+     .commentary-text-div {
+       flex-grow: 1;
+     }
+    .commentary-send-div {
+      vertical-align: top;
+    }
+}

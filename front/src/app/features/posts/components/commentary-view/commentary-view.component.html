@@ -1,0 +1,10 @@
+<mat-card class="commentary-view" appearance="outlined">
+  <mat-card-header>
+    <mat-card-title-group>
+      <mat-card-title>{{this.comment.user.login}}, le {{this.comment.updatedAt | date: 'longDate'  }}</mat-card-title>
+    </mat-card-title-group>
+  </mat-card-header>
+  <mat-card-content>
+    <p>{{this.comment.content}}</p>
+  </mat-card-content>
+</mat-card>

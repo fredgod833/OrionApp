@@ -1,7 +1,48 @@
-.home-logo {
-  height:7vh;
+.topBar{
+  display:flex;
+  justify-content: space-between;
+  height: 15vh;
+  .mdd-icon-display  {
+    transform: scale(3.8) translateX(30%) translateY(6%);
+  }
+  margin-bottom: 5vh;
 }
-.bar-spacer {
-  display: inline-block;
-  width:2vh;
+
+@media (orientation: landscape) or (min-width : 680px) {
+  .menuBar {
+    display: flex;
+    flex-direction: row;
+
+    .menuLink {
+      display: inline-block;
+      margin-right: 1vw;
+    }
+    .avatar-icon-display {
+      transform: scale(1.6) translateY(13%);
+    }
+  }
+  .menuDiscret {
+    display: none;
+  }
 }
+
+@media (orientation: portrait) and (max-width : 680px) {
+  .menuBar {
+    display: none;
+  }
+  .menuDiscret {
+    display: flex;
+  }
+}
+
+.active {
+  color:#7451EB;
+}
+
+.main-page {
+  height:80vh;
+}
+
+
+
+

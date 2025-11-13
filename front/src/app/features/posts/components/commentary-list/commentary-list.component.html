@@ -1,0 +1,6 @@
+<div class="comments-list" *ngIf="this.$commentaryList && this.$commentaryList | async as comments">
+    <div
+      *ngFor="let comment of comments" >
+      <app-commentary-view [comment]="comment"></app-commentary-view>
+    </div>
+</div>

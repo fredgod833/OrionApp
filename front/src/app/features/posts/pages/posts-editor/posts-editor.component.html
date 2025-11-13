@@ -1,0 +1,40 @@
+<div fxLayout="row" fxLayoutAlign="start center">
+  <span routerLink="/posts" class="link" routerLinkActive="active"><mat-icon>arrow_back</mat-icon></span>
+</div>
+
+<div class="post">
+
+  <div>
+    <h1>Créer un nouvel Article</h1>
+  </div>
+
+  <div>
+    <span *ngIf="onError" class="error">{{this.errorMessage}}</span>
+  </div>
+
+  <form class="post-form" [formGroup]="form" (ngSubmit)="submitPost()">
+    <div fxLayout="column" class="form-content">
+      <mat-form-field appearance="outline" fxFlex hideRequiredMarker="true" floatLabel="always">
+        <mat-label>Thème</mat-label>
+        <mat-select ngDefaultControl formControlName="topicId">
+          <mat-option *ngFor="let topic of topics$ | async" [value]="topic.id">
+            {{topic.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" fxFlex hideRequiredMarker="true" floatLabel="always">
+        <mat-label>Titre</mat-label>
+        <input matInput formControlName="title">
+      </mat-form-field>
+      <mat-form-field appearance="outline" fxFlex hideRequiredMarker="true" floatLabel="always">
+        <mat-label>Contenu</mat-label>
+        <textarea matInput rows="10" formControlName="content"></textarea>
+      </mat-form-field>
+    </div>
+    <div fxLayout="row" class="form-action">
+      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Publier</button>
+    </div>
+  </form>
+</div>
+
+

@@ -1,6 +1,4 @@
-export interface RegisterRequest {
+export interface UpdateUserRequest {
     email: string;
-    firstName: string;
-    lastName: string;
-    password: string;
+    login: string;
 }

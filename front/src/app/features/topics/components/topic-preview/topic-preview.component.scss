@@ -1,0 +1,31 @@
+.topic-preview {
+  background-color: #f0f0f0;
+  margin-bottom: 1em;
+  margin-right: 1vw;
+  height:11em;
+}
+
+@media (max-width: 680px) {
+  .topic-preview {
+    width:90vw;
+  }
+}
+
+@media (min-width: 680px) and (max-width: 1024px){
+  .topic-preview {
+    width:44vw;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1430px) {
+  .topic-preview {
+    width:29vw;
+  }
+}
+
+@media (min-width: 1430px) {
+  .topic-preview {
+    width:21.5vw;
+  }
+}
+

@@ -1,0 +1,22 @@
+.post {
+
+  height: 75vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  .subtitle {
+    flex-direction: row;
+  }
+
+  .form-content {
+    width:75vw;
+  }
+
+  .form-action {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+}

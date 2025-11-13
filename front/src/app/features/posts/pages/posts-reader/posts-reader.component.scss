@@ -1,0 +1,22 @@
+.post-reader {
+
+  display: flex;
+  flex-direction: column;
+  margin-left: 5vw;
+
+  .post-view {
+    width: 90vw;
+    .subtitle {
+      display:flex;
+      flex-direction: row;
+      p {
+        margin-left: 1vw;
+      }
+    }
+    margin-bottom: 5vh;
+  }
+
+}
+
+
+

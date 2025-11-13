@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { SessionInformation } from '../interfaces/sessionInformation.interface';
+import { SessionInformation } from '../../../interfaces/sessionInformation.interface';
+import {User} from "../../../interfaces/user.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,6 @@ export class SessionService {
   public sessionInformation: SessionInformation | undefined;
 
   private isLoggedSubject = new BehaviorSubject<boolean>(this.isLogged);
-  private currentPage = new BehaviorSubject<boolean>(this.isLogged);
 
   public $isLogged(): Observable<boolean> {
     return this.isLoggedSubject.asObservable();

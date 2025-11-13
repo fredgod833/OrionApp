@@ -1,0 +1,27 @@
+<div >
+  <span routerLink="/posts" class="link" routerLinkActive="active"><mat-icon>arrow_back</mat-icon></span>
+</div>
+
+<div *ngIf="this.post" class="post-reader">
+  <div class="post-view">
+    <div>
+      <h1>{{this.post.title | titlecase}}</h1>
+    </div>
+    <div class="subtitle">
+      <p>par {{this.post.author.login}}</p>
+      <p>,le {{this.post.updatedAt | date : 'longDate' }}</p>
+      <p>sujet: {{this.post.topic.name}}</p>
+    </div>
+    <div>
+      {{this.post.content}}
+    </div>
+  </div>
+  <div class="post-comments">
+    <app-commentary-list [postId]="this.post.id"></app-commentary-list>
+  </div>
+  <div class="post-commentary-editor">
+    <app-commentary-editor [postId]="this.post.id" ></app-commentary-editor>
+  </div>
+</div>
+
+

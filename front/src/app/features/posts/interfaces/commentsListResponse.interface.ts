@@ -1,5 +1,5 @@
-import {Post} from "./post.interface";
+import {Commentary} from "./comment.interface";
 
-export interface PostListResponse {
-  posts : Post[];
+export interface CommentsListResponse {
+  comments : Commentary[];
 }

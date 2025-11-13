@@ -1,0 +1,15 @@
+.topic-select {
+  width: 92vw;
+  height: 35vh;
+  margin-left: 5vw;
+  margin-top: 2em;
+  .topic-list {
+    width: 92vw;
+    display: flex;
+    flex-flow: wrap;
+    .post-preview {
+      margin-bottom:2vh;
+    }
+  }
+  overflow-y: scroll;
+}

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { RegisterRequest } from '../../interfaces/registerRequest.interface';
 import {SessionInformation} from "../../../../interfaces/sessionInformation.interface";
-import {SessionService} from "../../../../services/session.service";
+import {SessionService} from "../../services/session.service";
 
 import {take} from "rxjs";
 

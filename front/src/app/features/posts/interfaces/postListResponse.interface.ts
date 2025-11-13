@@ -1,9 +1,5 @@
-export interface PostRequest {
+import {Post} from "./post.interface";
 
-  topicId: number;
-
-  title: string;
-
-  content: string;
-
+export interface PostListResponse {
+  posts : Post[];
 }

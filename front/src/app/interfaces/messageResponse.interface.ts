@@ -1,3 +1,3 @@
-export interface Message {
+export interface MessageResponse {
   message: string;
 }

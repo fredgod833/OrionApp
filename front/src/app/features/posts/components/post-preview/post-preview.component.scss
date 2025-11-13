@@ -1,0 +1,39 @@
+.post-preview {
+
+  background-color: #f0f0f0;
+  margin-bottom: 1em;
+  margin-right: 1vw;
+  height:18em;
+
+  .post-content {
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+}
+
+@media (max-width: 680px) {
+  .post-preview {
+    width:90vw;
+  }
+}
+
+@media (min-width: 680px) and (max-width: 1024px){
+  .post-preview {
+    width:44vw;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1430px) {
+  .post-preview {
+    width:29vw;
+  }
+}
+
+@media (min-width: 1430px) {
+  .post-preview {
+    width:21.5vw;
+  }
+}

@@ -1,9 +1,9 @@
 import {User} from "../../../interfaces/user.interface";
 
-export interface Comment {
+export interface Commentary {
   id: number;
   postId: number;
-  author: User;
+  user: User;
   content: string;
   createdAt: Date;
   updatedAt: Date;

@@ -1,20 +1,40 @@
 <div class="app">
 
   <div *ngIf="(pageUrl$ | async) !== '/'">
-    <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center">
-      <img src="/assets/logo_p6.png" alt="accueil" (click)="logout()" class="home-logo"/>
-      <!-- <span>[{{(this.pageUrl$ | async)}}]</span> -->
-        <div *ngIf="$isLogged() | async">
-            <span routerLink="articles" class="link">Articles</span>
-            <span class="bar-spacer"></span>
-            <span routerLink="themes" class="link">Thèmes</span>
-            <span class="bar-spacer"></span>
-            <span routerLink="me" class="link">Account</span>
+    <mat-toolbar class="topBar" *ngIf="$isLogged() | async">
+        <div class="appIcon">
+          <mat-icon class="mdd-icon-display" svgIcon="mdd" (click)="logout()">mdd</mat-icon>
         </div>
+        <div class="menuBar">
+            <span class="menuLink" routerLink="posts" routerLinkActive="active">Articles</span>
+            <span class="menuLink" routerLink="themes" routerLinkActive="active" >Thèmes</span>
+            <span class="menuLink" routerLink="me" routerLinkActive="active">
+              <mat-icon class="avatar-icon-display">account_circle</mat-icon>
+            </span>
+        </div>
+      <div class="menuDiscret">
+        <button class="mobileMenu"  mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+      </div>
     </mat-toolbar>
   </div>
 
-  <div>
+  <mat-menu #menu="matMenu" xPosition="before">
+    <button mat-menu-item>
+      <span routerLink="/posts" class="menuLink" routerLinkActive="active">Articles</span>
+    </button>
+    <button mat-menu-item>
+      <span routerLink="/themes" class="menuLink" routerLinkActive="active">Thèmes</span>
+    </button>
+    <button mat-menu-item>
+      <span routerLink="/me" class="menuLink" routerLinkActive="active">
+        <mat-icon>account_circle</mat-icon>
+      </span>
+    </button>
+  </mat-menu>
+
+  <div class="main-page">
     <router-outlet></router-outlet>
   </div>
 

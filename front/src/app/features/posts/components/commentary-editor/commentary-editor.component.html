@@ -1,0 +1,14 @@
+
+    <div class="commentary-editor">
+      <form [formGroup]="form" (ngSubmit)="this.sendComment()" fxLayout="row">
+          <mat-form-field appearance="outline" hideRequiredMarker="true" floatLabel="always" fxFlex>
+            <mat-label>Votre Commentaire</mat-label>
+            <textarea matInput rows="4" formControlName="comment"></textarea>
+          </mat-form-field>
+        <div class="commentary-send-div" fxLayout="row" fxLayoutAlign="left top">
+          <button mat-icon-button type="submit" [disabled]="form.invalid">
+            <mat-icon>send</mat-icon>
+          </button>
+        </div>
+      </form>
+    </div>

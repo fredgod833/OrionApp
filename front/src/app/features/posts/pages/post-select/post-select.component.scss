@@ -1,0 +1,16 @@
+.post-select {
+  width: 92vw;
+  margin-left: 5vw;
+  .create-post-button {
+    margin-bottom: 2vh;
+    width: 90vw;
+  }
+  .post-list {
+    width: 92vw;
+    display: flex;
+    flex-flow: wrap;
+    .post-preview {
+      margin-bottom:2vh;
+    }
+  }
+}
