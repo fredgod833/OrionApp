@@ -6,7 +6,7 @@
 
   <div class="topic-list">
     <div *ngFor="let topic of $topics() | async" >
-      <app-topic-preview [topic]="topic" (clickBtn)="this.onClickBtn($event)" [btnLabel]="this.topicBtnLabel" ></app-topic-preview>
+      <app-topic-preview [topic]="topic" (clickBtn)="this.onClickBtn($event)" ></app-topic-preview>
     </div>
   </div>
 

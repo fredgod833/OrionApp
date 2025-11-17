@@ -18,8 +18,16 @@ export class PostsReaderComponent {
     this.post = postService.getSelectedPost();
   }
 
-  public addComment(  comment : Commentary ) {
-    // TODO
+  public getContent() : string {
+
+    if (this.post !== undefined && this.post?.content !== undefined) {
+      return this.post.content.replace(/(\r\n|\r|\n)/g, '<br>');
+
+    } else {
+      return '';
+
+    }
+
   }
 
 }

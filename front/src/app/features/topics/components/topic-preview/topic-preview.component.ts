@@ -11,13 +11,10 @@ export class TopicPreviewComponent {
   @Input()
   topic!:Topic;
 
-  @Input()
-  btnLabel?:string;
-
   @Output()
   public clickBtn: EventEmitter<Topic> = new EventEmitter();
 
-  constructor() { }
+  constructor() {}
 
   onClickBtn(): void {
     this.clickBtn.emit(this.topic);

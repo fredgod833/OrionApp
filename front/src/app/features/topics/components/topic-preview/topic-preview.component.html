@@ -5,8 +5,11 @@
   <mat-card-content>
     <p></p>
     <p>&ensp;Description:{{ topic.description }}</p>
-    <div *ngIf="btnLabel" fxLayout="column" class="my2" fxLayoutAlign="center center">
-      <button mat-raised-button color="primary" (click)="onClickBtn()">{{ this.btnLabel }}</button>
+    <div *ngIf=topic.subscribed fxLayout="column" class="my2" fxLayoutAlign="center center">
+      <button mat-raised-button color="accent" (click)="onClickBtn()">Se désabonner</button>
+    </div>
+    <div *ngIf=!topic.subscribed fxLayout="column" class="my2" fxLayoutAlign="center center">
+      <button mat-raised-button color="primary" (click)="onClickBtn()">S'abonner</button>
     </div>
   </mat-card-content>
 </mat-card>

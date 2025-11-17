@@ -32,17 +32,26 @@ export class TopicsPageComponent {
     return this.topicListSubject.asObservable();
   }
 
-  public subsribeTopic(t:Topic) {
+  public switchSubscription(t:Topic) {
+    if (t.subscribed) {
+      this.unsubsribeTopic(t);
+    } else {
+      this.subscribeTopic(t);
+    }
+  }
+
+  private subscribeTopic(t:Topic) {
     //Appel de l'api pour se desabonner
     this.topicService.subscribeTopic(t.id).subscribe();
-    // Appel ok -> on supprime l'element de la liste courante pour eviter un nouvel appel d'API
-    if (this.currenTopics != undefined) {
-      let i: number = this.currenTopics.indexOf(t);
-      if (i != undefined && i>=0) {
-        this.currenTopics.splice(i,1);
-        this.topicListSubject.next(this.currenTopics);
-      }
-    }
+    // Appel ok -> on met à jour l'état de l'abonnement pour eviter un nouvel appel d'API
+    t.subscribed = true;
+  }
+
+  private unsubsribeTopic(t:Topic) {
+    //Appel de l'api pour se desabonner
+    this.topicService.unSubscribeTopic(t.id).pipe(take(1)).subscribe();
+    // Appel ok -> on met à jour l'état de l'abonnement pour eviter un nouvel appel d'API
+    t.subscribed = false;
   }
 
 }

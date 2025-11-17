@@ -13,6 +13,8 @@ public class TopicDto {
 
     private Integer id;
 
+    private boolean subscribed = false;
+
     @NonNull
     @Size(max = 30)
     private String name;

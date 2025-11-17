@@ -1,4 +1,4 @@
 
 <div *ngIf="$topics() | async as topics">
-  <app-topic-list [topics]="topics" title="Thèmes disponibles" topicBtnLabel="S'abonner" (clickTopicBtn)="subsribeTopic($event)" ></app-topic-list>
+  <app-topic-list [topics]="topics" title="Thèmes disponibles" (clickTopicBtn)="switchSubscription($event)" ></app-topic-list>
 </div>

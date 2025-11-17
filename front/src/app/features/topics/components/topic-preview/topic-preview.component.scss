@@ -1,3 +1,16 @@
+@use '@angular/material' as mat;
+
+// Créer votre thème avec la nouvelle palette accent
+$my-theme: mat.define-light-theme((
+  color: (
+    primary: mat.define-palette(mat.$deep-purple-palette),
+    accent: mat.define-palette(mat.$gray-palette)
+  )
+));
+
+// Appliquer le thème
+@include mat.all-component-themes($my-theme);
+
 .topic-preview {
   background-color: #f0f0f0;
   margin-bottom: 1em;

@@ -12,8 +12,7 @@
       <p>,le {{this.post.updatedAt | date : 'longDate' }}</p>
       <p>sujet: {{this.post.topic.name}}</p>
     </div>
-    <div>
-      {{this.post.content}}
+    <div class="post-content" [innerHTML]="getContent()">
     </div>
   </div>
   <div class="post-comments">

@@ -133,7 +133,8 @@ export class MeComponent implements OnInit {
       .pipe(take(1))
       .subscribe({
         next: (response: SessionInformation) => {
-          this.sessionService.logIn(response);
+          this.sessionService.logOut();
+          this.router.navigateByUrl('/');
         },
         error: error => {
           this.onError = true;

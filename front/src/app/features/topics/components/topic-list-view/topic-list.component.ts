@@ -12,9 +12,6 @@ export class TopicListComponent {
   @Input()
   title?:string;
 
-  @Input()
-  topicBtnLabel?:string;
-
   @Output()
   public clickTopicBtn: EventEmitter<Topic> = new EventEmitter();
 

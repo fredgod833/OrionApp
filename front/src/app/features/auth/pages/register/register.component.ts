@@ -54,14 +54,19 @@ export class RegisterComponent {
   }
 
   public submit(): void {
+
     const registerRequest:RegisterRequest = this.form.value as RegisterRequest;
     this.authService.register(registerRequest)
       .pipe(take(1))
       .subscribe({
       next: (response: SessionInformation) => {
-        this.sessionService.logIn(response);
-        this.router.navigate(['/me']);
+        this.onError = false;
+        //this.sessionService.logIn(response);
+        //this.router.navigate(["/me"]);
+        this.sessionService.logOut();
+        this.router.navigateByUrl("/");
       },
+
       error: error => {
         this.onError = true;
         if (error.error instanceof Object && error.error.hasOwnProperty("message")) {
@@ -70,6 +75,7 @@ export class RegisterComponent {
           this.errorMessage = "une erreur est survenue.";
         }
       },
+
     });
 
   }

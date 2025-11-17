@@ -58,7 +58,10 @@ public class TopicService {
        if (userTopics.isEmpty()) {
            return Collections.emptyList();
        }
-       return topicMapper.toDto(userTopics.get().getTopics());
+
+       Collection<TopicDto> results = topicMapper.toDto(userTopics.get().getTopics());
+       results.forEach(t -> t.setSubscribed(true));
+       return results;
 
     }
 
@@ -70,8 +73,8 @@ public class TopicService {
             return all;
         }
         Collection<TopicDto> subscribed = topicMapper.toDto(userTopics.get().getTopics());
-        return all.stream().filter(topicDto -> !subscribed.contains(topicDto)).toList();
-
+        all.stream().filter(subscribed::contains).forEach(topicDto -> topicDto.setSubscribed(true));
+        return all;
     }
 
     public void subscribeTopic(Integer userId, Integer topicId) throws InvalidUserException, InvalidTopicIdException {
