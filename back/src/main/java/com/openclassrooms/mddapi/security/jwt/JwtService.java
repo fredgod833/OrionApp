@@ -12,6 +12,9 @@ import javax.crypto.spec.SecretKeySpec;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
+/**
+ * Service de génération et de validation de token JWT
+ */
 @Slf4j
 @Service
 public class JwtService {
@@ -22,6 +25,10 @@ public class JwtService {
 
     private final JwtDecoder jwtDecoder;
 
+    /**
+     * Constructeur
+     * @param env : accès aux paramètress d'environnement
+     */
     public JwtService(Environment env) {
         this.secret = env.getProperty("secret.key");
         SecretKeySpec secretKey = new SecretKeySpec(secret.getBytes(), "RSA");
@@ -29,6 +36,11 @@ public class JwtService {
         this.jwtDecoder = NimbusJwtDecoder.withSecretKey(secretKey).macAlgorithm(MacAlgorithm.HS256).build();
     }
 
+    /**
+     * Génère un Token JWT
+     * @param user l'utilisateur à associer au token
+     * @return le Token JWT encodé
+     */
     public String generateAccessToken(UserDetailsImpl user) {
         Instant now = Instant.now();
         JwtClaimsSet claims = JwtClaimsSet.builder()
@@ -42,6 +54,11 @@ public class JwtService {
 
     }
 
+    /**
+     * Controle un token JWT
+     * @param token : le token Jwt encodé
+     * @return true si le token est valide.
+     */
     public boolean validateAccessToken(String token) {
         try {
             Jwt jwt = this.jwtDecoder.decode(token);
@@ -53,6 +70,11 @@ public class JwtService {
         return false;
     }
 
+    /**
+     * Lit un token Jwt encodé
+     * @param token : le token Jwt encodé
+     * @return le token Jwt décodé
+     */
     public Jwt readJwt(final String token) {
         return this.jwtDecoder.decode(token);
     }

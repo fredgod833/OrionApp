@@ -8,6 +8,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 import java.util.Collection;
 
+/**
+ * Entité Themes Utilisateur
+ */
 @Getter
 @Setter
 @Entity

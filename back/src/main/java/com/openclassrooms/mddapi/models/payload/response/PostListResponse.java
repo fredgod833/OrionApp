@@ -6,6 +6,9 @@ import lombok.Data;
 
 import java.util.Collection;
 
+/**
+ * Format de message d'echange Rest pour l'obtention d'une liste d'articles
+ */
 @Data
 @AllArgsConstructor
 public class PostListResponse {

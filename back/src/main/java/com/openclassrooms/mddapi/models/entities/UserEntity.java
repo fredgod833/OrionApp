@@ -11,6 +11,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
+/**
+ * Entité Utilisateur
+ */
 @Entity
 @Table(name = "USER")
 @Data

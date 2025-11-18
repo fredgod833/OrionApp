@@ -11,12 +11,14 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
+/**
+ * Entité Articles
+ */
 @Entity
 @Table(name = "POST")
 @Data
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
-
 public class PostEntity {
 
     @Id

@@ -4,6 +4,9 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+/**
+ * Format de message d'echange Rest pour les requetes d'Article
+ */
 @Data
 public class PostRequest {
 

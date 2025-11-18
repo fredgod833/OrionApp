@@ -5,6 +5,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+/**
+ * Format de message d'echange Rest pour les requetes de profil user
+ */
 @Data
 public class UserRequest {
 

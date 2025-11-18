@@ -18,6 +18,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 
+/**
+ * Service de gestion des Articles
+ */
 @Service
 public class PostService {
 
@@ -33,6 +36,15 @@ public class PostService {
 
     private final CommentMapper commentMapper;
 
+    /**
+     * Constructeur
+     * @param postRepository : repository des articles
+     * @param topicRepository : repository des themes
+     * @param userRepository : repository utilisateur
+     * @param commentRepository : repository des commentaires
+     * @param postMapper : Mapper DTO <-> Entity mapstruct des articles
+     * @param commentMapper  : Mapper DTO <-> Entity mapstruct des commentaires
+     */
     public PostService(PostRepository postRepository,
                        TopicRepository topicRepository,
                        UserRepository userRepository,
@@ -48,6 +60,16 @@ public class PostService {
         this.commentMapper = commentMapper;
     }
 
+    /**
+     * Création d'un article
+     *
+     * @param title : titre de l'article
+     * @param content : contenu de l'article
+     * @param topicId : theme de l'article (identifiant)
+     * @param authorId : auteur de l'article (identifiant)
+     * @return le DTO article
+     * @throws InvalidTopicIdException si le theme indiqué n'existe pas
+     */
     public PostDto createPost(final String title, final String content, final int topicId, final int authorId) throws InvalidTopicIdException {
 
         TopicEntity topic = this.topicRepository.findById(topicId).orElseThrow(() -> new InvalidTopicIdException(String.format("identifiant de theme %s non trouvé.",authorId)));
@@ -62,6 +84,19 @@ public class PostService {
         return postMapper.toDto(this.postRepository.save(post));
     }
 
+    /**
+     * Modification d'un article
+     *
+     * @param postId : identifiant de l'article
+     * @param title : nouveau titre
+     * @param content : nouveau contenu
+     * @param topicId : theme de l'article (identifiant)
+     * @param authorId : auteur de l'article (identifiant)
+     * @return le DTO de l'article
+     * @throws InvalidAuthorException si l'auteur n'est pas le bon
+     * @throws InvalidPostIdException si l'article n'est pas trouvé
+     * @throws InvalidTopicIdException si le theme n'est pas trouvé
+     */
     public PostDto updatePost(final int postId, final String title, final String content, final int topicId, final int authorId) throws InvalidAuthorException, InvalidPostIdException, InvalidTopicIdException {
 
         PostEntity post = this.postRepository.findById(postId)
@@ -82,11 +117,23 @@ public class PostService {
         return postMapper.toDto(post);
     }
 
+    /**
+     * Recupère la liste des articles associés à un thème
+     *
+     * @param topicId : theme de l'article (identifiant)
+     * @return la liste des DTO Articles
+     */
     public Collection<PostDto> listPostsByTopicId(final int topicId) {
         Collection<PostEntity> postEntities = this.postRepository.findPostEntitiesByTopicId(topicId);
         return postMapper.toDto(postEntities);
     }
 
+    /**
+     * Récupère la liste des commentaires associés à un article
+     *
+     * @param postId : identifiant de l'article
+     * @return la liste des DTO Commentaire
+     */
     public Collection<CommentDto> listPostsComments(final int postId) {
 
         Collection<CommentEntity> comments = this.commentRepository.findCommentEntitiesByPostId(postId);
@@ -94,6 +141,15 @@ public class PostService {
 
     }
 
+    /**
+     * Enregistre un commentaire d'un article
+     *
+     * @param postId : identifiant de l'article
+     * @param readerId : l'identifiant du lecteur (utilisateur a l'origine du commentaire)
+     * @param comment : le texte du commentaire
+     * @return Le DTO Commentaire
+     * @throws InvalidPostIdException si l'identifiant de l'article est invalide.
+     */
     public CommentDto addComment(final int postId, final int readerId, final String comment) throws InvalidPostIdException {
 
         UserEntity reader = this.userRepository.findById(readerId)
@@ -108,13 +164,24 @@ public class PostService {
         commentEntity.setPostId(postId);
         commentEntity.setUser(reader);
         commentEntity.setContent(comment);
-
         commentEntity = commentRepository.save(commentEntity);
 
         return commentMapper.toDto(commentEntity);
 
     }
 
+    /**
+     * Met à jour un commentaire
+     *
+     * @param postId : identifiant de l'article
+     * @param commentId : identifiant du commentaire
+     * @param readerId : l'identifiant du lecteur (utilisateur a l'origine du commentaire)
+     * @param comment : nouveau texte du commentaire
+     * @return Le DTO Commentaire
+     * @throws InvalidPostIdException si l'identifiant de l'article est invalide.
+     * @throws InvalidUserException si le lecteur n'est pas l'auteur du commentaire
+     * @throws InvalidCommentIdException si le commentaire n'est pas trouvé.
+     */
     public CommentDto updateComment(final int postId, final int commentId, final int readerId, final String comment) throws InvalidPostIdException, InvalidUserException, InvalidCommentIdException {
 
         CommentEntity commentEntity = this.commentRepository.findById(commentId)
@@ -135,6 +202,15 @@ public class PostService {
 
     }
 
+    /**
+     * Supprime un commentaire associé à un article
+     *
+     * @param postId : identifiant de l'article
+     * @param commentId : identifiant du commentaire
+     * @param readerId : l'identifiant du lecteur (utilisateur a l'origine du commentaire)
+     * @throws InvalidPostIdException si l'identifiant de l'article est invalide.
+     * @throws InvalidUserException si le lecteur n'est pas l'auteur du commentaire
+     */
     public void deleteComment(final int postId, final int commentId, final int readerId) throws InvalidPostIdException, InvalidUserException {
 
         CommentEntity commentEntity = this.commentRepository.findById(commentId)

@@ -3,6 +3,9 @@ package com.openclassrooms.mddapi.models.payload.response;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Format de message d'echange Rest pour l'obtention d'un token JWT
+ */
 @Getter
 @Setter
 public class JwtResponse {

@@ -7,6 +7,9 @@ import com.openclassrooms.mddapi.models.entities.UserEntity;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
+/**
+ * Mapper Mapstruct Entity <-> DTO des objets Commentaires
+ */
 @Component
 @Mapper(componentModel = "spring")
 public interface CommentMapper extends EntityMapper<CommentDto, CommentEntity> {

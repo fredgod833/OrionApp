@@ -5,6 +5,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+/**
+ * Format de message d'echange Rest pour les requetes d'enregistrement utilisateur
+ */
 @Data
 public class SignupRequest {
 
@@ -18,7 +21,7 @@ public class SignupRequest {
   private String login;
 
   @NotBlank
-  @Size(min = 8, max = 40)
+  @Size(min = 8, max = 40, message="le mot de passe doit avoir entre 8 et 40 caratères.")
   private String password;
 
 }

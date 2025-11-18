@@ -24,15 +24,19 @@ public class UserService {
         this.userMapper = userMapper;
     }
 
+    /**
+     * Supprime un utilisateur par son identifiant
+     * @param id : l'identifiant de l'utilisateur
+     */
     public void delete(Integer id) {
         this.userRepository.deleteById(id);
     }
 
     /**
      * Recherche l'utilisateur par son id
-     * @param id
-     * @return
-     * @throws InvalidUserException
+     * @param id : l'identifiant de l'utilisateur
+     * @return le DTO de l'utilisateur
+     * @throws InvalidUserException si l'utilisateur n'est pas trouvé.
      */
     public UserDto findById(Integer id) throws InvalidUserException {
         UserEntity user =  this.userRepository.findById(id).orElseThrow(() -> new InvalidUserException("utilisateur non trouvé"));

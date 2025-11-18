@@ -6,6 +6,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+/**
+ * Repo Spring Data JPA pour les themes utilisateur
+ */
 @Repository
 public interface UserTopicRepository extends JpaRepository<UserTopicEntity, Integer> {
 

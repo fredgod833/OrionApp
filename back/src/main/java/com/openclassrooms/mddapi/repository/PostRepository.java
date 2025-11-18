@@ -7,6 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 
+/**
+ * Repo Spring Data JPA pour les articles
+ */
 @Repository
 public interface PostRepository extends JpaRepository<PostEntity, Integer> {
 

@@ -19,6 +19,10 @@ import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
+
+/**
+ * Handler permettant de convertir les Exceptions en message de réponses Rest.
+ */
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {

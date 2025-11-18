@@ -15,15 +15,23 @@ import java.util.Collections;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Service de gestion des Themes
+ */
 @Service
 public class TopicService {
 
     private final TopicRepository topicRepository;
     private final TopicMapper topicMapper;
-
     private final UserTopicRepository userTopicRepository;
 
-
+    /**
+     * Constructeur
+     *
+     * @param topicRepository : repository des themes
+     * @param userTopicRepository : repository des themes utilisateur
+     * @param topicMapper : mapper entity <-> DTO mapstruct des themes
+     */
     public TopicService(TopicRepository topicRepository, UserTopicRepository userTopicRepository, TopicMapper topicMapper) {
 
         this.topicRepository = topicRepository;
@@ -32,12 +40,21 @@ public class TopicService {
 
     }
 
+    /**
+     * Liste la totalité des thèmes existants
+     * @return la liste des DTO themes.
+     */
     public Collection<TopicDto> findAll() {
 
         return topicMapper.toDto(this.topicRepository.findAll());
 
     }
 
+    /**
+     * Recherche un thème avec son identifiant.
+     * @param id : identifiant du thème
+     * @return le DTO du theme si il a été trouvé
+     */
     public Optional<TopicDto> findById(Integer id) {
 
         TopicEntity topic = topicRepository.findById(id).orElse(null);
@@ -45,6 +62,12 @@ public class TopicService {
 
     }
 
+    /**
+     * Créé un nouveau thème
+     * @param name : le nom du thème
+     * @param description : la description du thème
+     * @return le DTO du theme
+     */
     public TopicDto createTopic(final String name, final String description) {
 
         TopicEntity result = this.topicRepository.save(new TopicEntity(name,description));
@@ -52,7 +75,12 @@ public class TopicService {
 
     }
 
-    public Collection<TopicDto> getSubscribedTopics(Integer userId) throws InvalidUserException {
+    /**
+     * Recherche les thèmes souscrits par l'utilisateur
+     * @param userId : l'identifiant de l'utilisateur
+     * @return la liste des DTO themes
+     */
+    public Collection<TopicDto> getSubscribedTopics(Integer userId) {
 
        Optional<UserTopicEntity> userTopics = this.userTopicRepository.getUserTopicEntitiesById(userId);
        if (userTopics.isEmpty()) {
@@ -65,7 +93,12 @@ public class TopicService {
 
     }
 
-    public Collection<TopicDto> getAvailableTopics(Integer userId) throws InvalidUserException {
+    /**
+     * Recherche la liste des themes disponibles pour un utilisateur (déjà souscrits ou non)
+     * @param userId : l'identifiant de l'utilisateur
+     * @return la liste des DTO themes
+     */
+    public Collection<TopicDto> getAvailableTopics(Integer userId) {
 
         Collection<TopicDto> all = topicMapper.toDto(this.topicRepository.findAll());
         Optional<UserTopicEntity> userTopics = this.userTopicRepository.getUserTopicEntitiesById(userId);
@@ -77,6 +110,13 @@ public class TopicService {
         return all;
     }
 
+    /**
+     * Enregistre la souscription de l'utilisateur pour un theme.
+     * @param userId : l'identifiant de l'utilisateur
+     * @param topicId : identifiant du thème
+     * @throws InvalidUserException si l'utilisateur n'existe pas
+     * @throws InvalidTopicIdException si le theme est inconnu
+     */
     public void subscribeTopic(Integer userId, Integer topicId) throws InvalidUserException, InvalidTopicIdException {
 
         UserTopicEntity userTopics = this.userTopicRepository.getUserTopicEntitiesById(userId).orElseThrow(() -> new InvalidUserException("Utilisateur non reconnu"));
@@ -90,6 +130,12 @@ public class TopicService {
 
     }
 
+    /**
+     * Enregistre le désabonnement de l'utilisateur pour un theme
+     * @param userId : l'identifiant de l'utilisateur
+     * @param topicId : identifiant du thème
+     * @throws InvalidUserException si l'utilisateur n'existe pas
+     */
     public void unSubscribeTopic(Integer userId, Integer topicId) throws InvalidUserException {
 
         UserTopicEntity userTopics = this.userTopicRepository.getUserTopicEntitiesById(userId).orElseThrow(() -> new InvalidUserException("Utilisateur non reconnu"));

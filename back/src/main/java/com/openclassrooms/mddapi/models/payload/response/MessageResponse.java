@@ -1,5 +1,8 @@
 package com.openclassrooms.mddapi.models.payload.response;
 
+/**
+ * Format de message d'echange Rest pour l'obtention d'un message utilisateur
+ */
 public class MessageResponse {
   private String message;
 

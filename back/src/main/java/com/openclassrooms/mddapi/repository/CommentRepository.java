@@ -7,6 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 
+/**
+ * Repo Spring Data JPA pour les commentaires
+ */
 @Repository
 public interface CommentRepository extends JpaRepository<CommentEntity, Integer> {
 

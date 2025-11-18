@@ -9,6 +9,9 @@ import com.openclassrooms.mddapi.models.entities.UserEntity;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
+/**
+ * Mapper Mapstruct Entity <-> DTO des objets Articles
+ */
 @Component
 @Mapper(componentModel = "spring")
 public interface PostMapper extends EntityMapper<PostDto, PostEntity> {
